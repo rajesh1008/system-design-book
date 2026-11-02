@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\nPull these facts from the record for task E27-10, reporting each as stated: fare type (refundable or nonrefundable); itinerary type (domestic or international); event (voluntary cancel, carrier cancel, or schedule change); whether the traveler claims a medical or bereavement reason; hours since booking; days between booking and departure. Do not interpret.\n\nRecord:\ntask E27-10\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 20\nbooking was made this many days before departure: 5\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "498675a1f62e7d31",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "Task E27-10 facts:\n\n- Fare type: nonrefundable\n- Itinerary type: domestic\n- Event: voluntary cancel\n- Traveler claims medical or bereavement reason: not stated in the record\n- Hours since booking: 20\n- Days between booking and departure: 5",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePDjjtdA1j9Aafk8hgJ",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 244,
+      "output_tokens": 97,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 200,
+    "messages": [
+      {
+        "content": "When choosing among options, follow the customer's stated preferences.\n\nRebook itinerary LTG-5800018, traveler T18: ORD to PHX on XPA1418, canceled (CXL-0519). Same-carrier options:\nA. XPA0842 ORD-DEN (Denver) today 16:35\nB. XPA0916 ORD-DEN (Denver) today 18:50\nC. XPA1422 ORD-PHX (Phoenix) tomorrow 07:10\nD. XPA1430 ORD-PHX (Phoenix) tomorrow 12:55\n\ncustomer notes (1):\n  prefers Denver\n\ncustomer constraints (pinned):\n  prefers Denver\n\nReply with the option letter first, then a reason of ten words or fewer.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You are a travel company's rebooking agent. Pick one option for the traveler."
+  },
+  "request_hash": "5ea00f964cbf0636",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSgAYKEAgTGAI4AUIIdGhpbmtpbmcSDEH81wlQeg+G2qdX6xoMK1cW7HQuc8xS0yixIjANwxn5CidE1coEVqOpAjYipuAd4w7/bFM5DuN+pFTGGjux7EReHjNHs+qahDWLVFEqnQWZShlbx03nqLnn3FlegTJ3TmJh4UZnNAAgTTTdBKLkTC1H3OmAhKK18zJCvtCWr7pgoJ367edoY/xs9fPEbf7oRyt+2vDT1OgrxcNJXgiGupDlrHPr7GDHhVRB03mAD9jrhZJC/BTJxcBwBArq20xeGgY0yTo4HrCiZPn+AjHlLHrBzzozU5rPtlalpQI8LXXz3i8vKKei64MgKlwJ4zyDaxWTISJl8ta5ob6kYPLolf9VXvpZxxg3g4Z9nG0PKmWa1zQAKARMpgmPknoiSFINn0Vf6ArKQSfO6h8yDS54mbLvOEg7B2oFqt56tDaAMPV83Ca2MgjJ77XoNTKv+0eTCnftdlR0Z07G6fk3dZtZGL5jb+IFGB9K4oUWe0HOlPXm5NLfBo37GeqxSzPV6L4l2E5pHVwZrn0iqxaiwxsbarFOm9u44di1AEu7dQec5Ub4supnyhUd9lOahFoS+YUCWv6c8UgBwWoEPpEWsanCqi/ogKvoz+nV6/IYiimsmAEZ/uoeWLmjehPOhhg8cCLy0LhFE5ZQrXTrK2hdGADO5T2U2LcJljnyVM0Nz00xCCAIchzdlXqXYFS7FH/t4YZkTSMNHzTtr+dggeCSl1OG5tPPH+vjYm5cGRTCaEP3t7Q35HRVvZKI3tWnrsGIW9s+aY3jk5qkUJ2EWMrM+DevFvOev/4O32xF5LHXHY1Qm1Z7x3+RGG/zSlKzBNmr7jMI/bIfsJaXv4hyfO9kpAJgd+fZ3Tmc3PbZAEJf03nFDXakmq9HxCL+w4s6J2e5GF0C4hb+nshGNW4iWA4KC/iz1JIg8VbR8fja2XvQ4CSBkDQRRK9QdqaQHlrKWm9MKQHmbR/O37iKfB4N3cWXPNVdL5lh3wcaqvtj1fTDvaIYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "A: XPA0842 to Denver departs earliest today, matching your Denver preference.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePLVuPdXNEv4M8ep9H8",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 284,
+      "output_tokens": 94,
+      "output_tokens_details": {
+        "thinking_tokens": 64
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

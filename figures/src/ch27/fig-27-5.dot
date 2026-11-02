@@ -1,0 +1,25 @@
+// Figure 27.5  Hierarchies and their failure modes
+// Reading order: top to bottom, one level a row. Each level rewrites
+// the brief: a free summary loses facts, a pinned fact list keeps
+// them, and each level adds 4.4 seconds. Counts are cases of 1,200
+// with all eight facts intact, from topology.hierarchy.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  lead [label="Lead", class="model"];
+  m1 [label="Sub-lead", class="model"];
+  m2 [label="Sub-sub-lead", class="model"];
+  w [label="Worker", class="model"];
+  f1 [label="free 1,062\npinned 1,200", class="knowledge note"];
+  f2 [label="free 913\npinned 1,197", class="knowledge note"];
+  f3 [label="free 830\npinned 1,195", class="fail note"];
+  lead -> m1 [class="data"];
+  m1 -> m2 [class="data"];
+  m2 -> w [class="data"];
+  m1 -> f1 [class="trail", style="dotted", arrowhead="none"];
+  m2 -> f2 [class="trail", style="dotted", arrowhead="none"];
+  w -> f3 [class="trail", style="dotted", arrowhead="none"];
+  { rank=same; m1; f1; }
+  { rank=same; m2; f2; }
+  { rank=same; w; f3; }
+}

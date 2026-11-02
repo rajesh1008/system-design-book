@@ -1,0 +1,26 @@
+// Figure 27.2  Orchestrator-worker
+// Reading order: top to bottom. The lead writes one brief per worker
+// with the pinned facts; leg workers search one leg each and the rules
+// worker reads fare rules. Summaries return to the lead, the verifier
+// checks the merged plan, and only the lead's one effect goes through
+// the gateway. From topology.compare and topology.lock.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.3;
+  lead [label="Lead\nplans, briefs", class="model"];
+  w1 [label="Leg\nworker", class="model"];
+  w2 [label="Leg\nworker", class="model"];
+  wr [label="Rules\nworker", class="model"];
+  merge [label="Lead\nmerges", class="model"];
+  ver [label="Verifier", class="verified gate"];
+  gw [label="Gateway", class="policy gate"];
+  lead -> w1 [class="data", label=" brief"];
+  lead -> w2 [class="data"];
+  lead -> wr [class="data"];
+  w1 -> merge [class="data", label=" summary"];
+  w2 -> merge [class="data"];
+  wr -> merge [class="data"];
+  merge -> ver [class="data"];
+  ver -> gw [class="emphasis", label=" one effect"];
+  { rank=same; w1; w2; wr; }
+}

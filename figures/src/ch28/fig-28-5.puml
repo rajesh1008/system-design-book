@@ -1,0 +1,19 @@
+@startuml
+' Figure 28.5  Verification independent of the actor (sequence)
+' Reading order: top to bottom. The actor reads and acts through the
+' gateway, which writes one trail line per call; the verifier, under
+' its own identity, counts the actor's allowed reads on the trail,
+' re-reads a sample, and re-derives each voucher. A mismatch goes to
+' the owner. From loops.fare_watch.
+!include plantuml-theme.puml
+participant "Actor" as A <<model>>
+participant "Gateway" as G <<policy>>
+participant "Verifier" as V <<verified>>
+participant "Owner" as O <<org>>
+A -> G : Read fare
+A -> G : Issue voucher
+V -> G : Count reads on trail
+V -> G : Own re-read, 2%
+V -> V : Re-derive vouchers
+V -[$FAIL]> O : Mismatch
+@enduml

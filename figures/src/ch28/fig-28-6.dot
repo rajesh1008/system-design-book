@@ -1,0 +1,25 @@
+// Figure 28.6  Bounded cost and restricted change
+// Reading order: top to bottom. A model call reserves its worst case
+// on three scopes before it runs; a voucher passes the control check
+// and a single-use permission before the gateway sends it. A refusal
+// on either path becomes a hand-off. From loops.budget and
+// loops.fare_watch.Control.
+digraph bounds {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  call [label="Model call\nworst case", class="model"];
+  enf [label="Budget enforcer\nrun, loop day,\nloops day", class="policy gate"];
+  vou [label="Voucher\nproposed", class="model"];
+  ctl [label="Control\n$100, $5,000 a day", class="policy gate"];
+  gw [label="Gateway\npermission", class="policy gate"];
+  pay [label="Payments", class="ops external"];
+  desk [label="Hand-off\nagent desk", class="org human"];
+  call -> enf [class="data"];
+  vou -> ctl [class="data"];
+  ctl -> gw [class="emphasis"];
+  gw -> pay [class="emphasis"];
+  enf -> desk [class="fail", label=" refused"];
+  ctl -> desk [class="fail", label=" over"];
+  { rank=same; call; vou; }
+  { rank=same; enf; ctl; }
+}

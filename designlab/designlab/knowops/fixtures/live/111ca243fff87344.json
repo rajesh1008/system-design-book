@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 200,
+    "messages": [
+      {
+        "content": "When choosing among options, follow the customer's stated preferences.\n\nRebook itinerary LTG-5800031, traveler T31: MSP to PHX on XPA1662, canceled (CXL-0519). Same-carrier options:\nA. XPA0730 MSP-DEN (Denver) today 17:20\nB. XPA1668 MSP-PHX (Phoenix) tomorrow 08:05\nC. XPA1676 MSP-PHX (Phoenix) tomorrow 13:15\n\ncustomer notes (1):\n  prefers Denver\n\ncustomer constraints (pinned):\n  prefers Denver\n\nReply with the option letter first, then a reason of ten words or fewer.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You are a travel company's rebooking agent. Pick one option for the traveler."
+  },
+  "request_hash": "111ca243fff87344",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSvQgKEAgTGAI4AUIIdGhpbmtpbmcSDMUHw5qWwfC9k1YsgxoMdsDrweeOr6QsfIXbIjC+GrolxbnZJaBLArk5LqafJ+3yVjYgacU9HbcokFhl2aVMZF/VGlFtbXx6Xw90iCoq2gceCxNhfMZzugktTbKrJPdkQRySrKRHuqLHhteDpsxTPY8xBa+oodIIkG2aC3b8JIOjmEcYj8r97zDc1pasxF3w8O78kfjIZzFVt3B5C4ljLPYI5GNN/kHejS6GhOzz+NtMjM/wDRWcqusGAcyl9TE20y82+hT0MtiBVH8y+BLIR4LoK/bmF+OPZ+onUm7/qnrTUc/jG/0fB1unLQNVwxP+ZUg4a0cn23lbEc6+k+pyr9HZ7chTogaV2dWC5fqfXaqoB5Q1wvasY3HoGvN+YDQ0SoIs7J91i/qA2Rr4ZKdy9lksky+yhjImbM+cZhwwH2xCGS16vn8Rfjp2yv3XymyjkhMtNJyT5Q0gUeCQR77daJOin9c8U9VdrTox/a6AIQLOhHxE4PsvjgWULFc2YJyv6yx/hHgR7Fll3uQmrmGwNCWHemm9lOrVP0cVn9KvTbxOG2mdlT+Z2Ayjq4vnVD3ZHHcUVKkiqvAP7L9pPIni8jTslUk9+7vFvGejDmPFG2VNpyIfdIpyjrMZ/y+AfyrtK+Lcq7dkt2cZ0W2SmuBXAZ00trg/qnaPNL5I5NCRUCHvjhLCxAfpmvBLw0MvDZ9npAb/hdnQ8vUjah0bJRXzEZwSrQKlER8jg4eQUQymEiC6weVbCFfIqQsPERCEHTVCL62rGEmf/kc2jCEqnGiQiouOarIRmcB8q/XD+X1K7LD8N1aaJTaEcb2fITsitieaJYSmVEE1+P1X9VXRKo1E1tI+hivnf/4niplSMToEQ6DuNclCCzxwxu1B3WXyJWRPVq5N8EspoZF1eHh4vwUEYgK6aVGjhHBxs5Djqu8W/snEAWEbSHcFVcQiuQS0e4naAWJC7H7p6vW6gMo/H6z7R33CcL3f7Flt/FdZDcqy8t4dPd7110tIyw94SVtQh/8OKbl6B5BZWo9NtJS6Nz9UbUyDfGai2uXJ/FJdrKflA91itJlcYr07LQ7S9ks+pCaTUQbNW0isOf91EiIBD38GZSYTBTF/mxblRGhSC7sRrR9dgNi2SYyUrGS1RRD7Qj117MdkqOZahdyIpi/8H3dHm+KXHV4W7YjfA8A54q07GIXpEfqYywgH+IRu3FZQHf45KXU5kpe3O1gKDzuUwuB2J6JkQbkJj/D7pLYyalnwSGtOYmTd1Q1uQtac3m0nXnfWifY6Gz6m47oxvaV1jdYA2ClH34PzGeHJUVPVAuR8knkb9h766ZneivtfPhKKGadQp7jngeNxVNAT/a2BfkWTrq+1+qm5mXaP3KD7YbwX86IMtREQCUuuVoQBL/gSVzr0PBRjrODgebAP6BgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "A. Customer prefers",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePLh5Lqid6vbS7HR4HP",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 258,
+      "output_tokens": 200,
+      "output_tokens_details": {
+        "thinking_tokens": 192
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

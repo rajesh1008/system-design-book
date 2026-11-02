@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n**Facts worker brief:** Pull these from the record exactly as stated: event type (schedule change or cancellation); itinerary type (domestic or international); minutes departure and arrival each moved; whether the traveler accepted the alternative; fare type; any medical or bereavement claim; hours since booking; days booked before departure. Flag anything missing rather than inferring it.\n\nRecord:\ntask E27-07\nfare: nonrefundable\nitinerary: international\nevent: schedule-change\nschedule moved by: 240 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "026c568d4386ae4d",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQStwgKEAgTGAI4AUIIdGhpbmtpbmcSDBRbBXzFbK6FdAEnMxoMFVIfxMVZYat37t5bIjA7ISGk9wFcCMM8gZXCgozNbS24wGTy2vjDo60g1J0iwaKwU67A41s9sOJzcA0tz7kq1AfsYPCHhoLgF/8mK5F+e96j40DvlMyzgwNZmAQexoJl/AwviCw7Lnam609Ts+W+rEYv7h64+jdOaa0YtnedhJiUm/4wYaY2fPuqCjIqTybJ816nuQFn/vpVH9y7oVfQvJJKyaDOZnQh7pEoNt+1YSDKPJzLqBs3iD6dMq7TltpCi0XAk11Qgdjpeegv9Hh2eUtKJrk4BeU2RCWVxIpb3tbWuMXNuP20Plhl9GH92fJf6xBOn/c0jnNoKP9sjPwwk5Tw1mDeUN3DmGUZjRzqPUCNyUC4BFLRhMBkA7K7U7VD9m3iJdDjxnjZ6B/XPzdVUbkptvWmNqgmSpbJhvfkKrcy62rrnzggXeE/pGqt5WFAccVI0ZQ1/WS91C3I+vmzR5LkCMbGhGfdGQnSzm3F9IML/uryqmhihYWFe/30xqzEQSzyFy7CeVI1B/vQJIVVrjsY11TvsoH3ectTjHFaF/FHRNTkZ2xlqxo33vTzcK0ALkmVQDUDaq1flT6UtwLsYepoKUykcbjbJRo2fJb0KJ6SP4DX9w4K35Y6YmB7b61H6hQoOTlsR9owtROVnFp1Iz5rrUHE2BsgiMAXME0f3XLDm4/ClGu3M2hBRDH/Iza/JZ3DpXolyHRuG+GfwEBdc0k6VmHuQsHNbPnzN2wMd/Lyk/WwhNOt5EwHJHX0Q4T5o+rz1gjslIUJiVMe0chtN127clty03wHhkYCfqJI3Q74NGu6iyCmX7DZEQVBj+l7WJbVQu8zuks5ZZB5PZrRX51RVHHvBSXje6vQgsdT/DzAn7CvmWi7iH+/AEuCyxG2NApE4+36DdxlzuZE43baZs1/3wAafeE+QM7N0sqJsRA1DIF9AceQU0ZnW73GQeJJSQDNLHT9JqwgeTWllsTQoxndV2bCT2N1FlmBOF55u5n5p3w1NVtU1WxDTTvgOGnZ+D3csPLZhinGLr0U0/3YjlAUc7gauJbOTa1IaEhMITdNvl2UPQB47C1h3SVjsWJkwAQwHWMKbBSs+1AX917dn0TMWmybfXyinw/w4sXruJie+x0iFbPTAieFl8wbVo125tUu8v+T10Sd2IPmr1wQ3UejAhYqVjU1256lYhg7WSzkPE42HzjEkSSz283+k2NI6mTyaOcnJH/LzGc0mMsKWKXhNkxk2M9KLAxgOzoE5kDmhhNqbyUqLewIIzkdoHPdmaLbN4Eprk9vzfum4AhzTbGgpue8QOOXZWeCk/VQtlGeQm4lyfS/SaP8mdvC/H6wA8PcXLLWEO0IN/+YUME6kb5OyfOjTWYWusRkD6mp2vky8Jfn7BgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Facts \u2013 E27-07**\n- Event type: Schedule change\n- Itinerary type: International\n- Minutes moved: 240 (schedule moved by; departure and arrival figures not separately recorded, flagged)\n- Alternative accepted: No\n- Fare type: Nonrefundable\n- Medical or bereavement claim: Not in record (flagged)\n- Hours since booking: 400\n- Days booked before departure: 30",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePA2tABETXpcsu2cb6A",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 271,
+      "output_tokens": 300,
+      "output_tokens_details": {
+        "thinking_tokens": 158
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

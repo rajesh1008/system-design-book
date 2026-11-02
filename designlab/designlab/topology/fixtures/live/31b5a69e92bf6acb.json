@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Case E27-23.\nRefund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nFacts from the facts worker:\nFare type: nonrefundable\nItinerary type: international\nEvent type: schedule change\nMinutes the schedule moved: 300\nTraveler accepted the alternative: no\nMedical or bereavement reason claimed: not stated in the record\nHours since booking: 400\nDays between booking and departure: 30\n\nAnswer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "31b5a69e92bf6acb",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSywgKEAgTGAI4AUIIdGhpbmtpbmcSDITLMaa+e/uJuBKjChoMftrInK9ALi+eOiBfIjD6VEBIpjrwRhh3x8ScFZwGrRvmTMKvyDe9pLQ286PqHDjsXjuIk29fLVuxwepoaQ8q6AdW+SbRZcBw7FJIJ6QOFIkpYGM0+fFEg/h15kPPWncInO7Qgqke1dZraBmYd6sclVZ03ECtSEnyWHIZ41EYoaBl3NzZLnvCc1cz5EPu57UdSLity1ZV657gcV+Vs1cL5/hH9pCclBnRHi3k8NFCmT4jwXcl8H/gYDp8YOxLSHgRanhCSuCCJAQ25507fG3n7soX+QbgqyR7aQK+iLCmZVjYh2IGWv/3Qcz728wjeJSZCnqKiUHJhJvZRB+8gtKPH9pPqc+dAM7iiBMQ2OnwSkkS2oqDn1ARD/BSSIWRCrareJxhziMLP96F6cSN5pROn0yRNaIu+fA2QTdwD+iY283BJHf+78992YrMyrolqTAB+oBc+UlZs+hZxERynP3oG2bOn1JElPtgRzQnqO9z+gO6ZpmulrV9jQNx0knotfOJSVRV9WZdXQvH6BdMpdJo+Yw3iuF6ddudQBygRgWPshacE4q0oXvPNVK12fej3v/6QFRrvd0B//bJ6ElCxuUK5hVSko7j5hpo2tresagc+GSpKCtRdcUct+wkfq3Ksb88aSCAuazdxgWRZKwEvGPZHkjhH6x54xvEZ6KfpmuOmJdXBCxmgxgtgiTy2q4f6Sa7E2Jfx1PqjG08cN8rFmKw+4UMqGcSr9TSH0/Cq9vdFPxvR4B9Koi75Jdj6MhuoizBZDg7fqCLUD6pvRitPoecQ9b3YvHVrQqAxMPO2NACu0PbhiR6hkgsy3NTPnJs9X+zobTnyul8E0S69l89NgMgYgUi78sOZsTVOTJBl1GwaugatFD5SENVy1nQCL98MNi0RRg2ISjX83HCuatv+0uq2p0nBYBVvoCUJhAUHx7zh2nIUlxpNHytjr0fGYxsSpPEVnvHdOOdSDEhklr40Ci1vLxRY4xlakQy4j13mQtlcnLF9wpT/NMkalfSc6gx9mSY8npGFnUWeY0bKRxfYCJV6BRIpPtXGwlt9FGyWqzAfLc/WCXTfRQINssobParkcPWD/ri7OfHh6CEwJyw1QnMxixLvhmIQMLQQ1DkLO0zMwmlkRGZJQfbMgYR85HCUwr9I3BMeimr5Edtx+pBMWCV8vuW7VhAaZr9lHpqbBu+Am7iO4RVKTA9vNHvg0aDHK07/fObTNNMWwoLOR31znPSy6iRG+/Fl53bkNzo2YMUc+FT11T+JS1tYPRCPG49BicIEcpbfTH72heXKscdG8bIPCuAsj4Hfb0QmEEK2zyt7Is8mfMbQZS/CeqMBrv7EeUQKs0hLbsXyyyOn4ZKCX6gR04XkIFSD+zYNVpdlFWHX8IcDiVTyFuSVc9s2U+WO/vfCjZV0opoJhhmGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"eligible\": \"no\", \"rule\": \"R3\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePUkYg1wUvGqUTo2qr9",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 507,
+      "output_tokens": 203,
+      "output_tokens_details": {
+        "thinking_tokens": 183
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

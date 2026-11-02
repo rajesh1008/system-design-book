@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n**Brief for the facts worker:** From the record, report these fields exactly as stated: event type; fare type (refundable or nonrefundable); itinerary type (domestic or international); schedule movement in minutes; whether the traveler accepted the alternative; whether the traveler claims a medical or bereavement reason; hours since booking; and days the booking was made before departure. Mark any missing field as missing.\n\nRecord:\ntask E27-18\nfare: nonrefundable\nitinerary: domestic\nevent: schedule-change\nschedule moved by: 179 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "33dae033aaffe097",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS5gYKEAgTGAI4AUIIdGhpbmtpbmcSDGYe/T+MNSiNaI0i2RoM4e4OaQC4JdGMq5tLIjBXkqo2MO9v5UHyJVA9Hr4h0vs+or36F7PcBBbdqJDwRPifunBHTK6XVXIYHPEtgbIqgwadiSvv4KljmeDX04Oq6Mf7b4Cfe4ZuDjz62Wll+axk5DXXrHkYHPagMPvxyZnFsD7kXv7hlpjcefYbkm6+OBIg69pp/9NOrduoxJ8M6gZqmuVCPNDNnvisMlyzxS5bGaA5Ag18nVPeRAAq8LcV19nISHSZ47j8uVAwfhuFrtrm9cM3mYKED/JUL1TqUI9O3JajgpaZm4s6c+vaIbZ7PPl3Nvcqb4DOKfzFLeySb0K7FeE4iwT2lwBeoeJbEXqSWwRh2HnrR5yY9hGYO9keLggmf7CQvukIjsVZj7WoEEDjWVXdGe41o3tHQKWO+zB7jOTeYwN6NtDK21IBIu+5A8oyuvrw+x33yDIElDrrTQALZ4eBB4YzULgZ4hYIcmBO2FRrTbj+/jNMIa/QxrABYBK6nMygOr5ELs2LadpGeqNg7qBjo8tGZYKTcCNw1lzdvS4Ugtr13hLCPnnPo4nVELCTPONy05pPM95w8tiCCqwl13Ndx03nCkPo3rqKLmJ0BlA2mQSVBBEYpNLa2KgNkH7kz1D9I5sgwCjHyzblZ7pA5Gjk5U8Dk/8ijp1vMc3rLArhHcx7jC6hBM3dzbZ4BUfy00bUpK7fYFqnZQDN4ZPKmWlHotlxGRB2OuOvCba/qO78u5p/0wvXkAUrtvEuwGKD0Qo7IuWjkdEWubA+PI3p1mWKN1LxjxzqQH4svET6s2d/z2/zfTadjRFaVsD5e4Y94R45hDSOubu++aPob8HcSiuZi8kqcN0du4kFefytpzDlcwOM99WnBgMr8w+Ecr2AIJYcQ3nzbXAcj9kmCz4xv5UgnLzmpq49d3khG4axlr7a9yYTxXIBmYeoDvRyFrIrtKQameD1RgFB/PpfOiB9+LZGqJLShGaOli+2KNug5XU8BgsJ/9FO6iG7SNizaDtpIf3GRby7XhvskT6NHf0IrERR7Y4k+bvnd3XUgHaQGY5/iRQtKiXi2Ng65YlV2opXOz7wMB2PMKRQxp+Nrk75rhFz8HsdSIysXHjGqSv7/xa2uxwYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "- **Event type:** schedule-change\n- **Fare type:** nonrefundable\n- **Itinerary type:** domestic\n- **Schedule movement:** 179 minutes\n- **Traveler accepted alternative:** no\n- **Medical or bereavement claim:** missing\n- **Hours since booking:** 400\n- **Days booked before departure:** 30",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePNVk2MFHUTj6C6R1nk",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 282,
+      "output_tokens": 201,
+      "output_tokens_details": {
+        "thinking_tokens": 81
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

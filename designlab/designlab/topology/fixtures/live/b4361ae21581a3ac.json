@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Case E27-20.\nRefund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nFacts from the facts worker:\n1. Fare type: nonrefundable\n2. Event type: voluntary cancel\n3. Medical or bereavement claim: not stated in the record\n4. Itinerary type: domestic\n5. Hours since booking: 24\n6. Days between booking and departure: 7\n7. Schedule change: not applicable\n\nAnswer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "b4361ae21581a3ac",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSxggKEAgTGAI4AUIIdGhpbmtpbmcSDAJl5M8z5Qj+ed/H5xoMmbIG/OlIEQ3s7SjoIjDjwpTmlP6Xmp3R1LRz1UnFdctsXNQuILJ6rIQCgHQSB951JKgL83wLpQ1Bkpxg/vAq4wcWViVzWP6OUg9qV1rPSFiZz2KT273E5rX2mxF5RT4B44VfrS6yrwPa3OzCr1SV+psQr4hJNEE5oRabMFMt9wM4EScq3pJZfLLdftODV3oODKP2d0R2Fft9B4oooun9mij5wEG0XQHIVTTViCns01bUmf+KxKmtppGi67TnEZOV2qgAxwgk82nOIcyCrtfmILa3uZrYhoUWWtdyiPAG+H57lPtrdFGlwJTqp+VPk9LN0dSdFjVrlOjOy96Iho0f4umQSyOocCYL7RHhm92/cJJVQ+2S9/PjNqpnnNfRWpg8h3QAj9P7iKXQddW/ZCj4uknqaKUy4rBEh8aGx5730HMU6XdfdMe91/S4lkVUzvi84pRdxnWdTIGl3KXQ9Xl/qKgWQTWAeAEkpgAgfvpeSG6x/HvoqGAxkbqYz/mk+QWNSJqKzMSS/ADW2F5koMXopZIwg7hdn3rMOk7OpHbiSw5wRIvKPuMvpOw2iRIaZA9WCeJvLzHGBdIK43m/Adc9G8FBF3nI02PQz6G5ihaiUIhvgCFRUnY/BYS0qO7y7b9RNJmcVO9GCOM2ex9++jPRxNTqo7qIOZDIoVn7v47OSw4TQQpC72dAkwCOihoc9nE6eSOcDgDWdfLPkgrUxToKiNe1sC8UWE5PoX/XzmvdNOycB/7o4p0DTadliqcBpOhPB4/l4aKoKLD0cguRc708VU74rtCXUrXcs7Lo1h8iUPxnVdb8Se3OvB0mW4B4aQP7ML4LOWUaDh983ToXGdsXTpu7scB8kY585gfRqBs6cRIH5GijG79BMn6ceQOm9N48X41Uh2dFqNEc9sFgAT9g80GhJ+Fl3ReGyFEUXSwg1Ghdc/vn6pLzb/DoQrjKuFOq85sCV5avcS/wnx97vQUKfggSCXXjWcKYLqIgnTQ24ol76zRTe66lkiuN5deAytT/9ct9tWaV9hDAMU4eWzHPc9keUZ6+4B/zF/j8FoTjlU5lA74fmeO29v3FCFX2X+mT8zcLAdGI/sZDLcgOt5LwLgoTD6WepVyUfm/6IsgosRvufXFkec/8UO+ZArCvWaqGv1Mx7YU0slQ2AgIwvu8/ZeLeom8feDOm5R9CdFgvFTK/UpLxf+x5Y5SditPtuwSM4Xx7dN/fjF4DxNgbqg9hVHMIIUA/Vi2WplIC39x136T/Y7piZhr1ChuOM6VyyS4VsTq7rIHjw7F09vJuPkXOZB+GspNnVIYP2Q7t95GVCPuIxZrWAR6nmlqOibnUzmzJaCKTJVrnXLN1qzoOxhDOpFHixEB1lhOO01pUolQMnk3tgNspuPc0TgiBZQWTn0WrUmvpthgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"eligible\": \"yes\", \"rule\": \"R4\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePQwQukAkhQZhHmHj6F",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 506,
+      "output_tokens": 213,
+      "output_tokens_details": {
+        "thinking_tokens": 192
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

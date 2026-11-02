@@ -1,0 +1,10 @@
+# fare-rules CI. Owner: Daniel Price (platform).
+[[job]]
+name = "unit"
+run = "python3 -m unittest discover -s tests -t ."
+required = true
+
+[[job]]
+name = "as-of-golden"
+run = "python3 -m unittest tests.test_rules"
+required = true

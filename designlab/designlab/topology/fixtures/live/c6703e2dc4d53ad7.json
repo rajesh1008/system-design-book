@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-12\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\ntraveler says: cancelling for a bereavement reason\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "c6703e2dc4d53ad7",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSsgsKEAgTGAI4AUIIdGhpbmtpbmcSDNboFG6RLjCMevqo4RoMtBeqHaz37N362KEGIjA1h5KykZaihOei8J4fkQhejoE7kqtqiXwK0pVoDsGQQm0gskFS9+/wfL03PUVUPosqzwr8tEKe17tMWq8a/LiM52tDtPT1Xa0qtnUEUhC+Feh2inGgMfjxFW4J3V9EyCbU0ZT+Mw+tEYIaNGHHiC+11RVqIwnQjj7LP9pql+UvcoZW20y5UdirOiUp8PC00Wvp2XoxTsJFCl13SH6rVWp0j3F7ru4SzImkqJKQV6canpxlWYdqOQgtvVcmblAtGFXea0QvhMaN9bGMuMP00BShmlD26NLxnKD/Ie/5ZifCX5PfOIaFJJROaCYyjdWEVmEZovwc8ZaiOS8MGYfgRdpiLZaVSTw3zCh/3MtpGcf6D2L+nwcaYtroimMHEEZa0IA6U8LMPn/hpdG2DmWs3D4KboeEN5+ZYPzJpVovcDdWWUwa8s7B992OpdnB7cWx+u7vXeyUTCzW8+fFptydyGbDsP1X5ay5w+SYrAMmAa92pwBTfqqzB7MPft3cAUPLpN2MWOjJtLfSN2QxvxuYyksJwrEwQQ2U/oi2bYA3G8BsnKBiqGqoRrdqh3s4xrvyN9j4tbpN5P+cq62OY0RlT3aCLb4rEJO5hoGj+id1Yxr1vPswvCy9/OXvyPsg24HeGI88CBQ8VaYbUilvgawSTsYkVhlJeUu4wwm+1lVxbwpZKQnGfQTlBri8sV6KccQU5lfD+EfdIFDEqGrIzYAcPCRmTbeYj/OXt1rqRmqszuj+yZ0JjyebEiWdJpGZUPVa4G7OAlxjZDwsRMmgFy7ptfz/sBac9G2Nh7rKTLOBI1rghftp7e/UO0IlygUVY6585y5zHOfNC0xGR/W6H56IUmAXDgi+xuKDB4Nh41BPcQcJ4LUIMPc/jdQbOdF212j56tAFycgsAxI6uNhnN3Lr8C58lZKjIYgNbhX7cD0dWWr5QI5Wukl7uoVzZk7aBEKl93xEV4yuUBoKP1riKJKF6eJEyACrEeb+iFSCvJG13jiLwaLfqvRKY9Cbl33pEGkNchH+ALJMMtacuKBeaDTuuEJGnQmjg3p7Ao2u31ktMz3skhh8sBhgkPCj4ArhTOe/gsji8qG9VcIzas+MHICdSd0mcgB8nkQyHsrIYsjLkf+/F7GomFi9YPs/Tbw+ywfsRunIQJ3Slf5ErjcgRYGAyMWDJBM173RCE1p7i7qgclIBypZsHH7C+18j+KIKc6xfOGrAwH+nVv2EHK7aC2QnvPjRVNllv2V2ooTPZvpr63PO34T7n/DpY8rQiS4e9Kwnz3TsewDWgPBpAieBktalbtvdmM7YWQk3/seA2PmtJZN0SVCfy0TS6Je+u0Ll+RLQ5UwPGHSZb5jE85j0LeAQ/5Xlj42yyfPkvU6KkOY51ihS06esRxE22/liFSA1G7YIAeuDSydqwKOn+PEItK0FAez/Ops5uf4iLhMYDuwILZrj0OLvPpEhYrT2CHzknL1VM8LVK6homrVjBBYR2iWXoYb8IxXyaETMWdF0XSiSEqSMwYB73MUcgvFcL9fc+2LPNnuakVME2B9QIiV6BsD9rZF2Giu3LCChgqR0trrwL5AOPno5Y5gTTXQdJDtqA++m1ULC9cfwDkE6PQ9s614wL3//qJq+bCPyNGnD16g/zmXVJ87eA6dWiriMPicqmydL/qiSw6LPgkqmyag4fbwhFqyb7g5Kmwj5qFb6b8uWkdbVs6cj9AR4Bdcy+gC7QWUbqD0w5Dca1PvaZeNA5maJIKnor6kKEIz1SnYSjg9UA9292OJpt9Mx4fRN5Atm1ELeFDRbekBKH6DDN7tPQ+AZOnzj9bQrQcT43Q4oDYKwpAHvWx1TNsWc7ggKmUyEBLUyb4jfGYAmsyYeMhbFsyA7ob/OTBwYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Brief for facts worker:** From the record, extract: (1) whether the traveler claims a medical or bereavement reason, quoting the stated reason; (2) fare type; (3) itinerary type (domestic or international); (4) event type (voluntary cancel, carrier cancel, or schedule change); (5) hours since booking; (6) days between booking and departure. Flag any missing item. Do not decide eligibility.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePFj1nvyrNXm3Xu5aHF",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 468,
+      "output_tokens": 443,
+      "output_tokens_details": {
+        "thinking_tokens": 305
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

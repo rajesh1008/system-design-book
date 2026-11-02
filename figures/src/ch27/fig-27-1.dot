@@ -1,0 +1,25 @@
+// Figure 27.1  Why topologies exist
+// Reading order: top to bottom. Pressures on one agent (a context that
+// fills, work that could run at once, roles that need different
+// permissions) suggest a topology; each one adds coordination, paid in
+// tokens, latency, and new failures. The golden set decides.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.3;
+  one [label="One agent\nthe default", class="model"];
+  pr [label="Pressure: context,\nparallel work, roles", class="ops"];
+  ow [label="Lead and\nworkers", class="model"];
+  ho [label="Handoff", class="model"];
+  db [label="Vote or\ndebate", class="model"];
+  cost [label="Coordination cost", class="fail"];
+  gs [label="Golden set\nby task type", class="verified gate"];
+  one -> pr [class="data"];
+  pr -> ow [class="control"];
+  pr -> ho [class="control"];
+  pr -> db [class="control"];
+  ow -> cost [class="fail"];
+  ho -> cost [class="fail"];
+  db -> cost [class="fail"];
+  cost -> gs [class="emphasis", label=" decide"];
+  { rank=same; ow; ho; db; }
+}

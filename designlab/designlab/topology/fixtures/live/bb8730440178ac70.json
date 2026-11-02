@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-23\nfare: nonrefundable\nitinerary: international\nevent: schedule-change\nschedule moved by: 300 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "bb8730440178ac70",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQShgoKEAgTGAI4AUIIdGhpbmtpbmcSDAoUysWORXytEF4mvBoMXNOKiNozZTNC2e5WIjCBPMaMCC1Mlg3QN+EX+lSj8WKBsZ3jZgxN/mcY02pLIHLOf0Gfm3R/4nKeClOeag4qowlIFC4vpVLVZfxudw2OWPOfijNil6qKC8mo27Cix56JmWCE8bp3jhy8Z8q5GMMU+XiEqCN48twR4o9pAS2YFgNMQZmzcFPIV6mifEJEn4FcKW+dPVlnAnO2plwoi2Q4LkhY12Xb+GatBE+k1Cjp9iK6Fo0PQoG1+6Deqf0HV5tHFzIFyiTukDJxD36EcbzpZrc8DGuJJfxHORjv81Fnt4Y2ZFCeVvRprUAnNWsATXvjhnC95SUNAn9FnUulCPCYQ+0Ce3HqpOMvJH1UpSOKdjgpCLHp1WfOk5aku2YT6EdvDg6rulx/dIj+WZOVOJKyKh7xQ9iZCQHAVzuswJ0dLWDuITUBZ5GzSpMHgRefhIIcAjPyiOdh83bUTwCXXtMqE5CNgjsKDqJEAPNvdiV1SU1DPXSx1SYmZEUBU3omwbS23cva8cShhll3qYchQr9znuoLYJFTKOsagAqIar3jWxUZpw2pOpLu0Eel1kEMAenty6T5HJ4nz+H/j6hHUUhtyr3khe1oB4hf4xyeqyuRjJIzbdmv927JQgsDWAfDpqqIegDHhbMQC9c07zuUkgUBQeGAo26oawY+a0kDVPNOGKkMqzSF7tVLIDzmxP+4bs27QdZDQ71xsxWRGwWxhKO5xmvUrGf5MORQ7z5GFgtFGUo8G8FEmmEEL1bjVScq2EnMiRKS71Oax3TAh3+kCTuqGPMA+IrUpwnu34JNBr85IQAY11iuIQcnJcRUAabRR75sfYsysd4C1BCVBY1bL8Z/L24z8VhJUw5P4xYuAC25/VEBSYbc+FL3/3xPI2UB0bajQkEW+J/AhIqwzzXHdtxwjvb6/9DgpodtUzY3YG/9dgGsA5bcWB0SR6EWt/eS5vKO/WCM6/jjUp+jqpYFBxpO+5acHR2tXsehwMkIR+hqWWzgt9RxoF79yanQMpEKsRemDiR2+mBrt8886p2jk9q/4MDhf0xz8SkK3wjkVB8ZfirsH+LfgdA54x9ZViPX5Vzv/v8hKJAO4p+QxNDEBCHKcRxzCtY3cIhOSI/iAL4hZfU9L4FKLAUeRQbvHfp1HbiqMxLBVEhjpVSFIRjTPC65u+/VbMU39Z9GYiEYJRmbTlByhzqcIKEOdQcjlYE35xQevMoHvzVgbuYWyGc6eXN4+6l6atfR4C71nT6WTlKHRcJOufF5+vZJSw5X4nj0CdiAND44lQAf5V/emRvJ3/osHwIclGSyUkonOauwhBu4AObA6ARRwWh6Wti7dEyEaYXHuRtTES/DDezVXzPuj5lzqOYQdpPN5DGsa/RaUcsu2+xr8HyQgb1vi9IcisaffhD6JDKzaPTmDueyS+bV8H0BAiuMkZBuLfXDmmbskG32KeZsr7hPysii8i3yBOMno6stUxc/xNLfiSKl5tLw5umWEdswvvffaJuJZrVchhGG4empseKPzZrEpRz5yoP407Z47JoajiWuv4Dx4JRqQao0dRVNltce1PkjUjR0c8TCH9Zr8FekOTCr1iqCEASRRcqti04Xh9u64i/SfAJdyn0S8rq9AvPvbiTn+834oBTlV1TtVru6T/xm1fB3Ar72P8q292bCuRgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Brief for facts worker (task E27-23):** From the record, pull these facts exactly as stated: fare type; itinerary type (domestic or international); event type; minutes the schedule moved; whether the traveler accepted the alternative; whether the traveler claimed a medical or bereavement reason; hours since booking; days between booking and departure. Do not interpret or decide.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePUX6YDR7R4cFYFrEff",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 472,
+      "output_tokens": 359,
+      "output_tokens_details": {
+        "thinking_tokens": 237
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

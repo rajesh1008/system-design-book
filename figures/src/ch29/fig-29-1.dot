@@ -1,0 +1,19 @@
+// Figure 29.1  Code is the most general tool
+// Reading order: top to bottom. A named tool does one reviewed thing;
+// code can do anything the interpreter can reach, so the boundary
+// moves from the tool definition to the sandbox around the run.
+// From sandbox.profiles and gateway.core.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  agent [label="Agent loop", class="model"];
+  named [label="Named tool\none reviewed action", class="ops"];
+  code [label="Code run\nany action reachable", class="ops code"];
+  box [label="Sandbox\nper run", class="policy gate"];
+  world [label="Systems and\nhost", class="ops store external"];
+  agent -> named [class="data"];
+  agent -> code [class="data"];
+  named -> world [class="data", label=" schema"];
+  code -> box [class="emphasis"];
+  box -> world [class="control", label=" egress list"];
+}

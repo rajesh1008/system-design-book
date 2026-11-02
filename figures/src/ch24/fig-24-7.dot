@@ -1,0 +1,22 @@
+// Figure 24.7  Destination verification against the record of fact
+// Reading order: top to bottom. The pnr-reconciler checks that the
+// airline holds what the agent proposed. The destination verifier
+// checks the airline's ticket against the booking record's
+// destination; a city that differs goes to the desk. From
+// knowops.verify.
+digraph verify {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  pnr [label="Airline PNR", class="knowledge external"];
+  r1 [label="Reconciler\nPNR = proposal", class="policy gate"];
+  rec [label="Booking record", class="knowledge store"];
+  r2 [label="Verifier\nticket = record", class="policy gate"];
+  ok [label="Verified", class="verified"];
+  desk [label="Desk", class="fail"];
+  pnr -> r1 [class="data"];
+  r1 -> r2 [class="control"];
+  rec -> r2 [class="emphasis"];
+  r2 -> ok [class="control", label=" same city"];
+  r2 -> desk [class="fail", label=" differs"];
+  { rank=same; r1; rec; }
+}

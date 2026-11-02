@@ -58,11 +58,16 @@ def _iso(dt: datetime) -> str:
 
 class MemoryStore:
     def __init__(self, clock, trail, trip_ends: dict | None = None,
-                 retention_days: int = RETENTION_DAYS):
+                 retention_days: int = RETENTION_DAYS,
+                 ttl_days: dict | None = None):
         self.clock = clock
         self.trail = trail
         self.trip_ends = trip_ends or {}
         self.retention = timedelta(days=retention_days)
+        # Chapter 24: standing memories may expire by subject (for
+        # example 30 days for a destination preference). None keeps
+        # Chapter 22's single retention for every subject.
+        self.ttl_days = dict(ttl_days or {})
         self.records: dict[str, MemoryRecord] = {}
         self.heads: dict[tuple, str] = {}
         self.tombstones: list[dict] = []
@@ -149,6 +154,9 @@ class MemoryStore:
         if draft.scope == "trip":
             end = self.trip_ends.get(draft.trip)
             return end or _iso(now + timedelta(days=TRIP_DAYS_DEFAULT))
+        days = self.ttl_days.get(draft.subject)
+        if days is not None:
+            return _iso(now + timedelta(days=days))
         return _iso(now + self.retention)
 
     def _refuse(self, token, draft, missing) -> None:

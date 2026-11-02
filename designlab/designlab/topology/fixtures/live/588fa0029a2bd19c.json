@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-15\nfare: nonrefundable\nitinerary: domestic\nevent: carrier-cancel\ntraveler accepted the alternative: no\nhours since booking: 10\nbooking was made this many days before departure: 3\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "588fa0029a2bd19c",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSnggKEAgTGAI4AUIIdGhpbmtpbmcSDFBm9/z5eVKwiSVMMBoMTM7AcINY0Etv5Df9IjBuEi+3C7GkR6hJx5tKjwsAbx79YRzA3jpirCqyaaE6rq3xaR2IEz+xH+gOjc0TqJUquwelTKGLrrsoKxIF9zaNzuKrJTdHL8LsOPHMk3AtSeJMsKrCo8D0BCbbGWqgmhwwsdTo0kKRV3M/MrvBoI6JIhjcyCL06kEhd8MzptjvAr30UuP8AgH4gJ+pPwjIvAH1Cl4ZMW2973Me1muxVRo+l8OHRgFw3C7qKmg3GrAALlZMFWZUQtyxzaWPPFqXxJNcQsKv0mIvQXm8NMr0iRE4GPLpwwjJwYDfyZ20BCk9KpFVFZylTfzR5JaBAbBLyNhzC80VAbH2iiizauAf9+4k88fiXfYz2T68j2rFPX7Q2j4FWAE3OLCEZ+4byESXOPc2EbBX7kDgi6fDHCx0dbHjo86NQcgh0slGAyH7A619w0nOUXAnmNSYRyMTGjvdCpnCZYljUZ5NroofJBXjZWkZUyz/ewXITMHTsA7+wP1IvPixmuqSf4GbsoJZvYuEB+T7cT8+zioLkt+3wtNUjYgSSyW1UyqbIksrlSO/OBRtjT+eo7MYlPqv+iFTTNEUnFU4ZSqclT3LVX6w9CEzOXS4LDzlrBj1+lR8rAnz9FcHsSc9n09a8LumvmvBrqwmGtjzCW+p0bY1X/6V7FD9nGi/9kCYJMSWJwUQ1T95t3WPPWsZdA5Y2fZFc+V2JTTvZQGfzoI9VBkj09d69AmmBl7e3qDtz7RRUW7+ZqVVmj5B0+RZlZvK58S8D/8AduisdZVk5PAhfjPADOAkjSFCOSO+RD/6evDE7pz8ZDWBM9+O5pr0UDqZkpCyYyadRiW3oL7+TA0V5VnDAKK5gTVMg+5YR58JAynTNUcRsUThSZwVhGwYwj3AvaDM4xYBpfgQpQR/xemQ3X9rZHX7eujLMAqJCmdBEQgl2KerPdrWmLlQCCZePW+lvs6qvWXdlOlUTBOF7XXmyW61K0e9OGVPtswaWzhW7s2uq1TnbWOpT2RqWZ3L0T2sLTn7PeRCWumnTWHFZ47Fzk8TIJ7nyxFALRdb/8p8KzdO5l5b/4fpWu76tf8bbWo4qnNMCt7VLw8HsWRHj4NaIJbpiRPfbX7uHU78FeroIOVR/h/ugURlNQiJAnMLo091RdJoPcwRr6Sq6oT8gVgoABDFAZ70l5cJwNhWdFKzwj4BKqAslAoA1zlp+2s118faBxaDp6Mvt/NnsRJsqP3BJU4BOkEhtlSrNAHFkWNox/h9zEpkkrIdYiwrWBYt4IKbeMO5iygxbYhkvp5Lx42BJTfh56l2e2DK+KWx+1pnnvx5UVeZ+nb2Yv2w/U/o275sy3r6uTrAv0oIGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Brief for facts worker:** Extract from the record: (1) whether the traveler claims a medical or bereavement reason; (2) fare type (refundable or nonrefundable); (3) itinerary type (domestic or international); (4) event type (carrier cancel, schedule change, or traveler cancel); (5) whether the traveler accepted the alternative; (6) hours since booking; (7) days between booking and departure. Report each as stated, with no interpretation.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePJwBrp2Tdq8umVUcLY",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 462,
+      "output_tokens": 299,
+      "output_tokens_details": {
+        "thinking_tokens": 147
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

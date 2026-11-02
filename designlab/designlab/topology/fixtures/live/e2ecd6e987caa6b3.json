@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Reviewer 3 of 3, round two. The three first-round answers were:\nReviewer 1: {\"eligible\": \"no\", \"rule\": \"R4\"}\nReviewer 2: {\"eligible\": \"no\", \"rule\": \"R4\"}\nReviewer 3: {\"eligible\": \"no\", \"rule\": \"R4\"}\nConsider them, then give your own final answer.\n\nRefund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-02\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nAnswer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "e2ecd6e987caa6b3",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSkAgKEAgTGAI4AUIIdGhpbmtpbmcSDNvqwxxUQyhdj+de+RoMib2zORr4FwcBiz+KIjBmdXOpGW1XxeLhvE0qX5pcjrbHHBRd30bjz12Lk982GaOnzIrOS0ruD29Z++B/qj0qrQcQO9V53s15ubDi5SpNFISuTd6dwIGECIqwA0QRU9Q3IMf8bCXx5XWCWzQ6akUEd8zk4yqqvSXBtzQf4JioLaPuiP+0VM1x9XBSn3hQQpps/EXgPBdC++NWXg17UE6laLBec2fY8XZAhItifKuxwYwkHElgSAxQtUL4RUpazfo2F2Yhp5KLH0vImWXAuVU+HrW2832I9Fk4MdcvaIl6/FPC7f+vjg/pSsF5hkylPx0J31aSmeNtr/EdVHDrD8cPM7pxsPC9M5jJn61vwZSkZt3wz4FKUA0hAFYKEgsOpS1tYnMou0X58Vr51LjzQjqR2F500DKCT2XmmbeaT2ygqLE8fddSwdUdC7P0TUkhQQ+aW2q8yFdFLnUf52y6/PRCYVBAtGthUSUKdjcyQSnppJYpdEGJWwwgwGJMryGdvxIvxbrKO974Q1aUcMsxiGl6FdPLGQ9A5HKx8iY3EDL2yWuP4MPylmyKS7fZeLkhkuORdfRxUzyRKq3lArwIjGCdC4MEfc3hFHgfdoK+VzK1h/Ozsby4FjFiSBrCu2KjEPIeJxauT4poTrmLGldcRCErrMM9X14Btr7UZ37l8Dkkk5rcp2BUNHBxp+r+jHiSImlLCa1OktxIkM6nIZlAvrO2r93GAWffsnuFfWMvNwmsGqv0Hw/AqZ5a9FrcFwp/KLVZsWVSMn9jovvM0JxFUepEu9++O5Y/vAntjdSNBlZw/GbqN9sbuhWjThgzomPr48/LVkc5Gi1Ugl5j8xvY4CdqkLubtJ0WI85+wGCYKC9zOtT3qVoDpyy57pK8ZQpjr87p2Mszmm/qiVbwEuWaJz5uMM9WpgCeSEZilvOVckMJwBAivLbx/vUxMshns/foOR4YWwS4PY5He98mShN7mSjSueLCXiV60sXNxCyZ/qKppOFGQ6rTA7heAphPaDmF69pxS/0NvPthtuyqp+YCFyhWS9FDxRkNeMaP8jdX4+VzN0vJyXNbdKGd/vyi1D0x8E5uomOURo6Hlbt6ABURwIVI5hrRKa9jbN79v8syxVqw3K30WZXlqMoSdJ+nzDsQnakUoc98pM3b6lrGP7+f5ly3r2Co2zSbeBQBeJtEnj+XwB8e/l4yaj8ywy2LrwZ2T7+m9qBySfp35fH9Q/ogyoe36GQ4S+hGnIcz283OChWyCsSKEJ1TgTZSeeEb7IbVmA6NTdrmVSnGLaxWOWVstBEhI5nggmUpD0cj/UDZ2vCGU/cyG6Hyjn8do5dIuphi9xgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"eligible\": \"no\", \"rule\": \"R4\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeP4c6WZwBYGYqw5YAD8",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 570,
+      "output_tokens": 195,
+      "output_tokens_details": {
+        "thinking_tokens": 175
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

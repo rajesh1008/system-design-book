@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Reviewer 2 of 3, round two. The three first-round answers were:\nReviewer 1: {\"eligible\": \"no\", \"rule\": \"R3\"}\nReviewer 2: {\"eligible\": \"no\", \"rule\": \"R3\"}\nReviewer 3: {\"eligible\": \"no\", \"rule\": \"R3\"}\nConsider them, then give your own final answer.\n\nRefund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-14\nfare: nonrefundable\nitinerary: domestic\nevent: schedule-change\nschedule moved by: 240 minutes\ntraveler accepted the alternative: yes\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nAnswer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "fdc85b9e49f82cf6",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSwggKEAgTGAI4AUIIdGhpbmtpbmcSDNeAqINrXMfTX5JslRoMsIsIsHQVsoMlE647IjCF5i5pcy0m8slgjNA4RR7E/8JW/bl6NFF3jEFdfy0IPQb7BlDrdhziReRsNdq98fUq3weuFAOpCNLiMGb1Omc5cBrdf1f+xbVbnSH5Gpfvq3tvfPKDxvcPieE0jEjD6P0HB64WaLnNxuojdLlKQamnl2am9ZYTGQhf6uZGpAivx0lRA8h5xaxrV6XJhU+AHFDuS39KNd36hVJMzv2pVfPfA5DZAEOG4poCohGxcsvfNAw19dl7yiqepCKw/CPQlN5H0aV7NHCnI7L3ArbXKcCf4+kAbL3J5fyiDJAQt/NsaEqYvhwUh6nlTCCfLBN18+/9MOi1Y03tNgriyc+M+Ni/88rU+a3QpD1KOPsBH58Z9yIH+YU0Pz8PcjhMa/w+SqY3vQ/2u789b6jcVssqh+vrVvPGcsgvefUVpFn84vQeN5pqerq5GZLbYnu8BNmLtbAKY39Mlwa9Vm85Qc15PPFlpH24yu0ZrVZl0++wLro751uGX98INyVsu6pYfPmQAcur+VjaeFToAXirvI7rYz4yLWeKtwCTjEE07L2U9fNBwHzFaYsBXifTwaffEOoPlGvi4pqV0KImWQ7eGgrB2tSduJCG2NnXeMyLRrWGJGF9+EqNcKBQ1K2shv5I7kxrOiQfNju0cnLhb3d3iHTufBvb6U8DS5KgTyJV9ItHtCgj6/ijTp/T0mvCEQ5Z7NlWdLeEIbiQtR1HcrQ68pQ2qaTSL/ToW4+QDegoN8gdFv/m1g7nPG4sh7vPftS3v4zBH+tcgBgHVonSh6fp+NYc5lpELan9bo0S1CeJyJSQc7e+8S46Rseqp0+3LCCzVo765L3mfni1iCaV2lS3i03DDGh90H8xV0Z6sxAsY1JNQLSWfuzTDKgaAXTK3166sRAWTQ4G6mdO9dPnTMGQ2ixtYD2lyMSX8frxezyaGOPsvUwLxQtTjF+TABlA4RcmBwTtqhjJ7YbN9D1oE1sjsndpELtOHQL+Pr57zFec9A1GPUF7WEdPqg7M/B/RdlDwkXiSYJ7n+O6/b8gy48+jMb8M1byzVqwVjFVjCEV6FAVFMu7FIS1oaQwc3SqH6JF9x2kNNQL3B3ffbwyY2L/Bw/f/MR0tEqieVWSSebaF7S73gfvAzjlcYLeDkcgk4HVm/wW9khrl0/2HxpHCXytEuIr2tKlqTcZiZv/BXNjFYyyPGwEJ5S8Ubm1QGXd4N/rQMKkM8zxWigtdCtX40cYiW4CTGEGs9/fv7j5W6Q1hPK0VhUuAHgrndmGaaN3xXuarQfoyaCQ1A9u1ttf0ZpoBw1toyI3f3em9htbf0OxrmK2KUC16UEYUwVq0GWABIPWreEqexcGG6IhFtCYkBIwZOVDowICvPtOBTabGZTkuf6DMdSq8TdzdGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"eligible\": \"no\", \"rule\": \"R3\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePJeuZRkQykFpqd6NYf",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 595,
+      "output_tokens": 217,
+      "output_tokens_details": {
+        "thinking_tokens": 197
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

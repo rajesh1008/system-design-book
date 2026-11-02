@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n**Brief for facts worker (task E27-21):** Extract these from the record: the traveler's exact medical statement and whether they request a waiver; fare type (nonrefundable); itinerary (domestic); event (carrier-cancel); whether the traveler accepted the alternative (no); hours since booking (400); days booked before departure (30). Flag that the medical claim matches R5, which is checked first.\n\nRecord:\ntask E27-21\nfare: nonrefundable\nitinerary: domestic\nevent: carrier-cancel\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\ntraveler says: cancelling for a medical reason\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "b432d24e1549b85a",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSiQkKEAgTGAI4AUIIdGhpbmtpbmcSDPefd4jWt9wm4SmTshoM/GmjliaIzK1EZrC7IjB8eH95j/0RJUNx9IlBDEM1uOGktRkTVJ2hsj5vFWb2Icfg0qDpHsd7LfyuSOmsR1cqpgjkUGU/+MNWVitMMZxQ3zw614V9PSl7ElfEzdLyk2ZxBVgRNAdFf5PhkvuH7QfybNyH1mS3EcS6dXhv/eVeDNQaJMpoAVAqZdbOg8Az/1jUJqIqd2Gy0jkF+dBSuFqYWuG6tZMVLd2VcqLPcp3N6+/b4CxBneZGB8YwKWtdFA5+YqQ7wbkJ0/JP2pUP/GbT4ck/hPbOKfbA7KqwiG/ZYtuIYiq5si/xXYWDfh9GKB28ubevDWad7ae5FopqKOtSfXzu++yMHTb9tedjaDxPMMNfopQDfIX3HavfXGRU+XX1v+jubKEb8LV0WvJcXAP224jp0hOHiwzQmg5SHgHlWPhlmd6rt5/hOT6W8NZV1LT9s3zUFLqC+Kx1XCLLNzUGhmEL2+QI9DMRaQeiTBa1Og534pF8FhR+8DC5HQLSYqQLeySjkyLgVnbtMn6M3GPtr6mb9h4FwLj+kCQVqYeokqFAgeM0OEE1xufcsjM2U/XCzOH8jsauhZT7xUxDvvmnG3gPOaOXRhfnLhmALu3ZfE0aeftcD3tjhOnV6mNIG4rrNaIRDpQmWdqTKqKjConDb95VGGe/ORo3msANDz+Z05Y+wChH0jlQPY/GLsVgEB7nEDZjkHeOHBDwmkIdIK8dcn2Xo2+TBVpJLgXDhs/iV2HDAcj6WAHo0lH+Q4LLcnXLInXh8MNnW1v4IbWVQ9hjn9f0/ImuDjxZ9GqtUcPiFzO8J8rfhKDvCiVBcUGPI4IQ8bvrNfN2SE+HMTntahteKCLABqk+dSzr8Tpx4bCPkDofJpcTVyrX2coHYPruN0uvtmjStnyi6Wd2HbDQjPYFSrPrSepHWeTPboHRMTPPh/2DTkSFbRUx/RxDW497PpRR4XOt8hhWXBRbU+PNW+UKzbg1/pDRBunZczBSgwDaheoOpsPELw250xi3z+IDqV/PK6SU33YJ7818OQFP+lkgNch69FzxHLsbbIWd+vMpLJT9nK5XCuaH9hfNG2dnngH57j5jX8jaSgE1201KqnLvccsBxjJu7JT131iJKbl+PsW/liGW5RPE02kliNPeJBuW2q8ouswXuwW1nbfTCRz+Ugf7NzFpiY1zPl/9LRUfb+84wfuywi1Fxnx4roGm7Op9+LuNfqAYhB71la3yUcllrPlWfYUZ70ZBGR96Tj7DDQozX2FDx3jzVIEm27S+5IbgbjMf5aHllvC0tTzSYLJ8M16yAJ0fj0xusgx9CO5EBx4vIqPij7/wlGWlIzsGRnok3y0hnooUEidM0OWFBKdoNDpeO4nRpmV/y0iPhiZKHm4WL9KQQZr88QHfn195QgMcD6t1HY+Jw9cplxWSJ8YHulzrkFcvyEUJPkBf6NK+hym7x/Grj0egLrDyv28aciIqZOVv3/rxUr7SO2jKIkRCM6vzQcRFb4cYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Extracted facts (task E27-21):**\n\n- **Traveler's medical statement (exact):** \"cancelling for a medical reason\"\n- **Waiver requested:** Not stated in the record.\n- **Fare type:** Nonrefundable\n- **Itinerary:** Domestic\n- **Event:** Carrier-cancel\n- **Accepted alternative:** No\n- **Hours since booking:** 400\n- **Days booked before departure:** 30\n- **Flag:** The medical claim is flagged as matching R5, which is checked first. I could not confirm this, because the rule card text was not included in the record.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePSbgZhkJTv789gyuMk",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 287,
+      "output_tokens": 377,
+      "output_tokens_details": {
+        "thinking_tokens": 177
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

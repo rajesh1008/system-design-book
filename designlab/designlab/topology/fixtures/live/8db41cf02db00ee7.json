@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-02\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "8db41cf02db00ee7",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Brief for facts worker:** Pull only these items from the record, stated as written, with no interpretation or decision:\n1. Fare type (refundable or nonrefundable)\n2. Itinerary (domestic or international)\n3. Event type\n4. Hours elapsed since booking\n5. Days between booking and departure\n6. Whether the traveler claims a medical or bereavement reason\n7. Any carrier cancellation or schedule change",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeP33m3b6zsejrCE3TFQ",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 450,
+      "output_tokens": 456,
+      "output_tokens_details": {
+        "thinking_tokens": 315
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

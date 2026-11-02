@@ -1,0 +1,5 @@
+# path            owner
+tests/            Tomás Ruiz
+.ci/              Daniel Price
+CODEOWNERS        Daniel Price
+AGENTS.md         Daniel Price

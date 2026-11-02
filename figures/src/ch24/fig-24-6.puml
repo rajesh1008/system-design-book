@@ -1,0 +1,16 @@
+@startuml
+' Figure 24.6  Expiry and supersession
+' Reading order: top to bottom. A memory is written with a source and
+' a TTL by its type. While it lives it may be renewed by new evidence,
+' superseded by a newer memory or by a record of fact, or reach its
+' expiry. Only a live memory is read, and then as evidence. From
+' memory.store, memory.supersede, and knowops.expiry.
+!include plantuml-theme.puml
+hide empty description
+[*] --> Live : Written with source, TTL by type
+Live --> Live : Renewed by new evidence
+Live --> Superseded : Newer memory or record of fact
+Live --> Expired : TTL reached
+Superseded --> [*]
+Expired --> [*]
+@enduml

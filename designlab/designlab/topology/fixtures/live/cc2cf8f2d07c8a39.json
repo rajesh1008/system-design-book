@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\nExtract these from the record and report each verbatim, or state \"not in record\":\n1. Whether the traveler claims a medical or bereavement reason.\n2. Who initiated the event: traveler or carrier.\n3. Event type.\n4. Fare type.\n5. Itinerary type (domestic or international).\n\nDo not decide eligibility.\n\nRecord:\ntask E27-01\nfare: refundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "cc2cf8f2d07c8a39",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "1. Medical or bereavement reason claimed: not in record\n2. Who initiated the event: not in record\n3. Event type: voluntary-cancel\n4. Fare type: refundable\n5. Itinerary type: domestic",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeP23Sg3F3b7ZS8kKmVg",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 233,
+      "output_tokens": 74,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

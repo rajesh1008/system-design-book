@@ -1,0 +1,17 @@
+@startuml
+' Figure 24.4  How the memory outranked the itinerary
+' Reading order: top to bottom, one rebooking run at 11:31 a.m. CDT on
+' May 19, 2026. The legacy adapter passes the note's text without its
+' id; the run store pins it as a customer constraint, last in the
+' packet; the model proposes Denver; the grounds check sees a
+' constraint, not a memory, and lets it act. From knowops.pilot and
+' corpus.fall2.
+!include plantuml-theme.puml
+participant "Run" as R <<knowledge>>
+participant "Model" as M <<model>>
+participant "Check" as G <<policy>>
+R -> R : Pin note, no id
+R -> M : PHX; pin last
+M -> G : DEN
+G -[$FAIL]> R : No memory cited
+@enduml

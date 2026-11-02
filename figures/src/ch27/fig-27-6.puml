@@ -1,0 +1,20 @@
+@startuml
+' Figure 27.6  Two workers, one itinerary (sequence)
+' Reading order: top to bottom. June 16, staging: both workers carry
+' the lead's token and the token-only check applies two rebookings.
+' The fix: each worker takes the stick in its own name and the gateway
+' checks the caller; the second waits, re-reads, and stands down.
+' From topology.lock.
+!include plantuml-theme.puml
+participant "Worker 1" as A <<model>>
+participant "Worker 2" as B <<model>>
+participant "Gateway" as G <<policy>>
+== June 16 ==
+A -> G : Rebook, lead's token
+B -[$FAIL]> G : Rebook, lead's token
+G -[$FAIL]-> B : Applied twice
+== Fix ==
+A -> G : Rebook, own token
+B -> B : Wait, re-read
+B -> G : Stand down
+@enduml

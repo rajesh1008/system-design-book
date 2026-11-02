@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-09\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 20\nbooking was made this many days before departure: 10\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "36c3371d4e0f125b",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS9hIKEAgTGAI4AUIIdGhpbmtpbmcSDH70niHPVHLlUz7ccRoMqHtXg6D0CsQbSuErIjAaUNAP7cAYh1QCh2yaEHm0SDb4NPyFEoetbRYzxmv8SX3tWERSqrrMNFs8vM6ZXFkqkxIsKqPLY5vvfVHTPFWz9b5ydJ1x5MKj5kpHV3JHfZ85O15w4JYod1d3fhzTdAB7uTA7IlSnNCSbFxgEAzieOMFXS5pZ4upmzQ87E/vruMRs5gbWOXMlGHD57MJSr+MppQfFTDjpzbf8zNAK9af06cJf0EbIVzosw4C0pZbkJYeSdx/Uhl7qqCqhlFeDSYpeqwg1e/uSYn6zP+AAIlSDGQvfMcULYBQCQchzY7nAH0EK4l3q5aPho4eshTUTdLFHFB4heGKV9Uv1dRbAghIYiJeMM/L7kDAXcHu7hbmXHV4J8WkagJNWnajxOKIMqMim4xyhaB5hUF0EkhCgJ2ebQan9FUwTzgL03oczGUfzaQc8FbQFxbV4T0OuYDxyS65qzlOcJAxHz6w+DC5dQkPcdBPJq93rSCuYmWbII4BdbNZIcwISDgEGhoVb3BAhCrS8FhU3JWy5vUoL+ytKpc8F7EII5XisCY0ItAE1lf8705f6nlqTHJxLURAjn48QUg2Vb4BwICejclAh7rZI5tNaNT4ldnHUGROnZ4LkVP8N1FdDbDnO9k+wCDl6WxcFyGp9dr0ppL6smQD/+xqPmgxpvzPBzNJoduuEcO5r+vc+Ta/L2U8xASfnsmqvZNLRxMOyPLWU9Z1g+66QMyaJ+2ZG3MNKLogjmyI5B2LwY/JU7DgSBZFCMQu0CyIUq8yGoYIfNxMVYfQdrmv0ntgxtg+7kEYDSJeD/WwoiAvC2BznQVPUGM2Hr5fWgME2fBomojDN0Vxx6zwpnZJtbYQJkioLCz4DsgnxKEOd9vbkCxvpnzssPTTJbjnnjoNuo7iXjzIvgwQALxp7kcC8TldYw6kTSq3kBwRJdgUOTTdr8YEAU6xMp43OOGB8Gzs6ark9N+0dADm8zFGhoTfIYfRAHl6tDRQ6GIWtfsoYI1xvMdQ3wxO9mbsSU+VQfDe7ra0FL6PTzWRKzk2Sm+dxkvncjbuC3VuK1vq0dPydL78OR0H4xQ/qFBJ0LydExk+SekEKl5FbauxIx0e2xoFk/M+FrVewR6yKVgxW27lkmPrCKGsA5HrkrP5OzGm/eSI9C4htpQ/4HUewLX4AtiRUKVK4ZPA2RS6bsh1pPVBvkueOqX7uma6Gk7lnCedoall/759nAUPacilQ47L8+m4GHDhlhYIEdMJQ9VtoNYaGYjr3b7qGnFqRy8/7Kx3PziSVCNeDO7r8kw74X/9Z8HEwBpKLSnfmrNVTVnUr8MdH1K6ubyezVMCKs3FhQW4pHINm58TNAoaXY22cCAEzVGEfrz8scxVoE4H+f0K88J6QsFFyW7HAoyYJHwYw1svJlNmMUcrCIra85aKqlssHE2wMkcHceYkXaiUH5T5hF499at5q2ygGFj2x+6mIfU/WihRzJBBKIJcvO+9WdEDnUBtNm3rY4nirYAATS3ghHHWKEgkzOwvW3QGw8ACzjshs27WplP7Novisj+KjU22SnEEwTxQ6oVszVQL/4Eyv6V7ZDhmIWRg5UnoE/TV//LEttwxBoE/RrwvwbV2EGzm8GlQNpHd8pdkDAb9GIAYOk/9wZmiBzWyqVwK8KS4kFAsJSEkiCYtcKjljh4nSSFMuQlSOVmByfzgoTWr0GdWTquhrSvsYZhlZilsztDjwsS4Dyz3NbWoYJXa6dvhwRN+rHHSbiIIAO0u2qpQaQnbW3+Ilfa1RThkPkOd1t3a/2a4uEQbPrLBqJBArV8etkdjKa6zgkwAHTMrDjaFGwdx4WUTLlejYq0FW1byFZPFjm42QkQAkB5D6TH5e+GtejhGbDPBndZVQqBlvMuoiLFOlK2mi8WyU8qOSxEO5s2f9Qs2ngTXqU6oQ+0E1l13ghG10SLWCcdaPWBaUJ7KNPzksdxyRyitqD+yIBjogBdbkKIwDUB8eZCPwmE5x5RbLE2joWmG/D+DGEcnoH1jpe8RIk+hglpGOtUDeU2ET3+nF1ZEzpnV5562ZYPnZfK1jF4nrwat79QUJorFrRSUURucAi/rtphRrC88LWU9KtXXbVbEyHoxPw73YCadYomsglHrdauej342g4c9xzzSE3VSAF02SygorYbW/4oiseyzlidZvbkRbAOnp33OJoRfUdjX0VAlSGQtkROJ5VOwTbCQ4TbhdCMeWdISRjv5AsneaRXT/kTwJrJF9guMhIR5vd1hdt814rE/GwDHTR3FEaUTM8ZI+HsHkvHFUs9tUQCoBGBBaMF8W6lE8y7Lm/OBbiGZhicqMLsVMHArJ200HBXDxNLQQNeAz1CSu9VBhENwdxbLttPWMW13ZrQJM2b/yTXyDY0XnUDx4tQCyoO5Je/KpO2j71UVWRZpMxKVDvFYvUiQr3+PHuFHv2pFyooD2BE517IPyzQOLRw8aoieEmi3MrMvDk+BHc7bEFjRFXBSV1LKgNp1eEt1wHKj6XdUnP7CUzlMTGgqWSJaMuYfnKC9JpW0VG3idQ4+dMR4zC/wVVrDhLMY5JUK/AIVvt7bz0ZdAu+RHNSEInNuSGmz5u5nUDuteoiB/n2f9DRzJaDKOWZnsooMob7MH2LBtowSaaf4igyRh1jFn2nksks+yIQZ2sIQ8bYMuIdoF2JzFvDAT+Cga3Sivg3pE7UkFKUFbCu5xEopEX7TP4EYb8ClgML3RwFUfYQYg3qrPs2m4Q20R239SA748HWnqRYvwZxZLGn+XykSPv96BXwqwOK/BYlH5iiWUhc/dpbrK+ILzZ5jdVQp03xMf5ejiUuum4nResMZqjVmjTbmy2X7YLpJTW0b7wVwUulDC46hRvDruEdBtRQJsQHmrizpqPe2B2QV8kpfSwoj0s+D8eDE9Qbuim2x79mthtxdwYrfzbHxK2KE1jTjgxjE8M4+NdxtjGr1gesr6DglZ97ySoecorUUgeXE0BeMV2Rik7ViDraW70g8i5BGBNK4LARUpU3W4/kBgTzyqhs4edgK9MooqH5UdT/IsfVLj4aQmVad0EFGWwM/cYjCsKxHa6HAamAzY2XdeheajufZorEzJo4CIOQptLMzpB4i9GAxAly38L1pyUkfohHM3aPT9lU+s1IYnFa7nrW1QUDACfCgQ1RjZsE2E1GqUGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "Pull from the record: fare type (refundable or nonrefundable); itinerary (domestic or international); event type (voluntary cancel, carrier cancel, or schedule change); hours since booking; days between booking and departure; whether the traveler claims a medical or bereavement reason; if the carrier acted, whether the traveler accepted an alternative; departure and arrival time changes in minutes. Report facts only, no eligibility judgment.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePC9hjPShq8DtuUFmmz",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 450,
+      "output_tokens": 876,
+      "output_tokens_details": {
+        "thinking_tokens": 733
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

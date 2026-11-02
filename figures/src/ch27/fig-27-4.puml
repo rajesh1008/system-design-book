@@ -1,0 +1,16 @@
+@startuml
+' Figure 27.4  Handoffs with state (sequence)
+' Reading order: top to bottom. The lead offers the case with its state;
+' the receiver accepts by taking the stick in its own name; when the
+' acknowledgment is lost the lead reads the stick instead of guessing.
+' From topology.handoff.
+!include plantuml-theme.puml
+participant "Lead" as L <<model>>
+participant "Receiver" as R <<model>>
+participant "Stick" as K <<evidence>>
+L -> R : Offer with state
+R -> K : Take, own name
+R -[$FAIL]> L : Ack lost
+L -> K : Who holds it?
+K --> L : Receiver
+@enduml

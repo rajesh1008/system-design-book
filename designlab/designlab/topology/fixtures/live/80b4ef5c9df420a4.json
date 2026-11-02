@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\nPull these facts from the record, verbatim: fare type (refundable or nonrefundable); itinerary (domestic or international); event type (cancellation or schedule change); schedule movement in minutes for departure and for arrival; whether the traveler accepted the alternative; hours since booking; days before departure when booked; and any medical or bereavement claim. Report missing items as missing. Do not decide eligibility.\n\nRecord:\ntask E27-05\nfare: nonrefundable\nitinerary: domestic\nevent: schedule-change\nschedule moved by: 200 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "80b4ef5c9df420a4",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "Fare type: nonrefundable\nItinerary: domestic\nEvent type: schedule change\nSchedule movement, departure: missing\nSchedule movement, arrival: missing\nSchedule movement (stated): 200 minutes\nTraveler accepted the alternative: no\nHours since booking: 400\nDays before departure when booked: 30\nMedical or bereavement claim: missing",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeP7H75ptjHc1Wxyijst",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 285,
+      "output_tokens": 126,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-07\nfare: nonrefundable\nitinerary: international\nevent: schedule-change\nschedule moved by: 240 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "97e6aa63b41ed9d2",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Facts worker brief:** Pull these from the record exactly as stated: event type (schedule change or cancellation); itinerary type (domestic or international); minutes departure and arrival each moved; whether the traveler accepted the alternative; fare type; any medical or bereavement claim; hours since booking; days booked before departure. Flag anything missing rather than inferring it.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeP9nhsDemibJxwr7c68",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 472,
+      "output_tokens": 490,
+      "output_tokens_details": {
+        "thinking_tokens": 369
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

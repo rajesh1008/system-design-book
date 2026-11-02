@@ -1,0 +1,20 @@
+@startuml
+' Figure 29.6  The deleted test
+' Reading order: top to bottom. The agent's first proposal on FR-207
+' deletes the failing test; CI passes on five tests; the gate holds
+' on the count, the deletion, and the owner. From sandbox.demo --part gate.
+!include plantuml-theme.puml
+participant "Coding agent" as A <<model>>
+participant "CI sandbox" as C <<ops>>
+participant "Gate" as G <<policy>>
+participant "Test owner" as O <<org>>
+A -> C : Branch without test
+C --> A : Pass, 5 tests
+A -> G : "CI is green"
+G -> G : 6 tests became 5
+G -[$FAIL]> A : Hold
+G -> O : Needs approval
+A -> C : Fix the cause
+C --> G : Pass, 6 tests
+O -> G : Approve head
+@enduml

@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Reviewer 2 of 3, round two. The three first-round answers were:\nReviewer 1: {\"eligible\": \"no\", \"rule\": \"R4\"}\nReviewer 2: {\"eligible\": \"no\", \"rule\": \"R4\"}\nReviewer 3: {\"eligible\": \"no\", \"rule\": \"R4\"}\nConsider them, then give your own final answer.\n\nRefund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-02\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nAnswer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "cbcd1629c29aab01",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS3QcKEAgTGAI4AUIIdGhpbmtpbmcSDICIhlglgbn3cfOMABoM7daNU4I7hA6/tlJiIjBagH0Q7i58Mx0tJVPPhx1c4N2Pa5x0jB8OURm+jQSce74cTraAVxTg2PDPqLkWqN4q+gbnyEeuzwXPPWWv0G4BLwanzD0JfYk2mUQq3I5l/Rg8y/h6QtPer/KnC5XoAEXj8d45WRaMH0hySAiKd9mwmX7VmTrZXwmtEm1TsUEVzU6rRVVr8QnJui15mGFTNapVMzoYoS4RKQZ6t/1EMJie0XY+GIFXGjJvyA3+nziBe8FG1BrAK3hLDXEzDc0rMgd+yJk4XDu5Nty+Af+U+QCPGLgoRcRhpi9s9CZmYDyf666NebKjUbHl9Up/iPdK4smRj4vHS8oO5XKm03kkFlW2O+09V9Y8pZT2jXJQ+3CDYtnhGDP2oegRVBtdostjixilEOQJ9VbO9ncQkvFsOO3fIrlC0ZFikNZPjxlG1mvMY743shKVMn0T8OAE1zUoYzIwRGBh7M3xg/uygytRSz8UnZRcKWO9PSjrTzgFU1JZc+DgDqbkUIs9ZOvcLqencTQKHVGGDpyqsR27H7MdRORfb1s/8FMm/qIH73NurZkjC5T6+nEgVWmU5YevospvDuTvm2Vz7QvrZAEdagk6Rk4NVnrmULnOXsI5Bf+pZJ+rtOiK3/7JxmrIrArPCE+Myi45PeJCs+a/mFoASwG8WfKsO7tQNhi6xfxggZd6yWzDhFFI8lsBXn5r3YVBRmBA+iT9Z6Akt2yE5A4Y/QNMHsjm32Ai/nJt2Z6eW6FjLLXjII1qbMui+WX+dgNHZ/S/gTKpZxnsmva4gMIWZLXmcPJZNnrQh4+wFqa1GR8yZltjgt7YVPtKFBQq2tCm+DODg1BlunaozlJ7wH6n5gLEZL3rEcBYmAoU9FYbJ7oTM6eoLAxLn4cqd/KySih2pMuGaDzXd6O4mVzdsHQfhlD/v9xsm3PDcsYPQbpRaF+vXiF82PSb4TF3gj5NqNsVxq5K6Eyvlt3xeFR08cYSpq+GMPnbmC0b273XzL5UmMiaj43D+hSToCkpPNQJEtHfmMNFisln+mDY1oHY6gsIy0EEUqcTbkbvMv2LynvL9ddGbkVeOK7Hf8QLbKoA9+3Wn/nhkCH4DtxtK9deyW/KRzlN7Kek1igfCwtVbiQk/XHTYYoG1u0SBn0yiPtSu5FBlen/xMmR61pl2QzW7ovPYtuXeO3/UeJnX4K/b3TSyolsmjyvZF7/Ch7VIj+C+/1gSxQG/GN7zU4Rk3jMFfjz0Od58h5BwwLqkhE3yuX9+2BoVBgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"eligible\": \"no\", \"rule\": \"R4\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeP4WeLbWu4tfkYthmaK",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 570,
+      "output_tokens": 179,
+      "output_tokens_details": {
+        "thinking_tokens": 159
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

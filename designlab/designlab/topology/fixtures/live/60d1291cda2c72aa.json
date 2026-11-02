@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\nPull from the record: fare type (refundable or nonrefundable); itinerary (domestic or international); event type (voluntary cancel, carrier cancel, or schedule change); hours since booking; days between booking and departure; whether the traveler claims a medical or bereavement reason; if the carrier acted, whether the traveler accepted an alternative; departure and arrival time changes in minutes. Report facts only, no eligibility judgment.\n\nRecord:\ntask E27-09\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 20\nbooking was made this many days before departure: 10\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "60d1291cda2c72aa",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "Fare type: nonrefundable\nItinerary: domestic\nEvent type: voluntary cancellation\nHours since booking: 20\nDays between booking and departure: 10\nMedical or bereavement reason claimed: not stated in record\nCarrier action: none (traveler-initiated)\nAlternative accepted: not applicable\nDeparture time change: not applicable (no schedule change)\nArrival time change: not applicable (no schedule change)",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePCRM51n7Nz3F1iV3G7",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 271,
+      "output_tokens": 145,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

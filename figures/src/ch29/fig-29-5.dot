@@ -1,0 +1,20 @@
+// Figure 29.5  A coding agent in the delivery pipeline
+// Reading order: top to bottom. The agent proposes a branch; CI runs
+// in the sandbox; the gate checks tests, owners, and approval; only
+// the merge service merges. From sandbox.gate and sandbox.repo.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  ticket [label="Ticket\nagent-ok", class="org"];
+  agent [label="Coding agent\nproposes", class="model"];
+  ci [label="CI in\nsandbox", class="ops code"];
+  gate [label="Review gate\ntests, owners,\napproval", class="policy gate"];
+  owner [label="Code owner", class="org human"];
+  merge [label="Merge service", class="verified"];
+  ticket -> agent [class="data"];
+  agent -> ci [class="data", label=" branch"];
+  ci -> gate [class="data"];
+  owner -> gate [class="control", label=" head sha"];
+  gate -> merge [class="emphasis"];
+  { rank=same; gate; owner; }
+}

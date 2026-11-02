@@ -1,0 +1,18 @@
+@startuml
+' Figure 28.4  Persisted state across runs (state diagram)
+' Reading order: top to bottom from Active. Each state is a row in
+' the run store under watch:<id>, saved after every step, so the next
+' run starts where the last one stopped. From loops.state and
+' loops.fare_watch.
+!include plantuml-theme.puml
+hide empty description
+state "Handed off" as HandedOff
+[*] --> Active
+Active --> Judged : Below floor
+Judged --> Active : Saved
+Judged --> Vouchered : Comparable
+Vouchered --> Active : Lowered
+Judged --> HandedOff : Over cap
+Active --> Paused : Stall
+Paused --> Active : Resume
+@enduml

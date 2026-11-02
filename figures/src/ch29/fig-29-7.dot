@@ -1,0 +1,20 @@
+// Figure 29.7  Computer use, when nothing else exists
+// Reading order: top to bottom. Prefer an API, then a tool, then a
+// read-only browser reader with its own egress list; submits are
+// refused. From sandbox.browser.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  q [label="Need data from\na supplier", class="org"];
+  api [label="API\n0.4 s", class="verified"];
+  tool [label="Reviewed tool", class="ops"];
+  rd [label="Browser reader\nread-only", class="model"];
+  eg [label="Egress list\nportal hosts", class="policy gate"];
+  no [label="Submit or\nunlisted host", class="fail"];
+  q -> api [class="emphasis", label=" first"];
+  q -> tool [class="data", label=" next"];
+  q -> rd [class="data", label=" last"];
+  rd -> eg [class="control"];
+  eg -> no [class="fail", label=" refused"];
+  { rank=same; api; tool; rd; }
+}

@@ -1,0 +1,21 @@
+// Figure 29.2  The layers of a sandbox per run
+// Reading order: top to bottom, outside in. Each layer answers one
+// question about the run; the proxy writes refusals to the trail.
+// From isolation.sandbox and sandbox.profiles.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.25;
+  run [label="Code run\nfresh directory", class="ops code"];
+  fs [label="Filesystem\nown directory only", class="policy gate"];
+  net [label="Network\nproxy, listed hosts", class="policy gate"];
+  sec [label="Secrets\nnone injected", class="policy gate"];
+  lim [label="Limits\ncpu, memory, wall", class="policy gate"];
+  gone [label="Discarded\nafter the run", class="verified"];
+  trail [label="Trail\nrefusals", class="knowledge store note"];
+  run -> fs [class="control"];
+  fs -> net [class="control"];
+  net -> sec [class="control"];
+  sec -> lim [class="control"];
+  lim -> gone [class="emphasis"];
+  net -> trail [class="trail"];
+}

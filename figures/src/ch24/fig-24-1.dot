@@ -1,0 +1,21 @@
+// Figure 24.1  Freshness as a contract
+// Reading order: top to bottom. Each source the agent reads carries a
+// contract with a maximum age, an owner, and an action when stale.
+// The freshness check compares the age at read with the contract; a
+// fresh read goes to the packet, a stale one is fetched again or sent
+// to the desk. From knowops.freshness.
+digraph fresh {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.35;
+  bk [label="Booking\n15 min", class="knowledge store"];
+  nt [label="Notices\n15 min in event", class="knowledge store"];
+  mm [label="Memory\nTTL by type", class="knowledge store"];
+  chk [label="Age check", class="policy gate"];
+  pkt [label="Packet", class="verified"];
+  st [label="Refetch\nor desk", class="fail"];
+  bk -> chk [class="data"];
+  nt -> chk [class="data"];
+  mm -> chk [class="data"];
+  chk -> pkt [class="emphasis", label=" fresh"];
+  chk -> st [class="fail", label=" stale"];
+}

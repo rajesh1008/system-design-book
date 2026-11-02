@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n**Brief for facts worker (task E27-11):** Pull these from the record, verbatim where possible: the traveler's stated reason for cancelling (quote it exactly); fare type (refundable or nonrefundable); itinerary type (domestic or international); event type (voluntary-cancel); hours since booking (400); days between booking and departure (30). Flag any medical or bereavement claim. Do not decide eligibility.\n\nRecord:\ntask E27-11\nfare: refundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\ntraveler says: cancelling for a medical reason\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "36c3a90ef44490c6",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS4wYKEAgTGAI4AUIIdGhpbmtpbmcSDPCPqzUnFaz6xCFKHBoMUYUmTsdcUNK8DeiCIjC5d2ez6uu5JKiICl/YOOIKC2aKsxX3Bqy1WROWjb3lMW+ofVPRVpIr0fDcZkVqDKUqgAZULdF9cYr7JtiLn+u3XLYAOrJvl9zaX7s7rn5NZlbhy1e6CKK+7iKUlFCSUG8iGVYIKRmErbvuHfbBI0xcauUxoHWT3DrGB7f6ET2zceJRQLtQZZeBb2t53s66PGgi9Ug3XvhY2ckL4bd5he1J9eAidH8vXvY/yOUYZ+htC97fDtmSh+jmNMZ9eTTmS5vXMoJ6dh7SS5c8pAzuE9mr97nSqfkz3Z6l/Zglw1uGCCUmwppQxwmj3oKJRZxr7ppy0xK6Xz1oGRBFbnSNsF1XDZrblwxj0pWR4YwL29TC18wwcdV6Q+TSyRj44DBdx4DCpAlAB+5Azwj1gE51CxLg55xabJI9soW54WtNxCYSHYQipjRQK+hKyH8T7TXxKNthuGVv5VNo7KNVIhg8Edqxl5MTbfIcfK5NMCGzpfiGBGuqYVEKMI0GtNH6JT4Ai6+tt9ufJx4H31EKm5Jw7n3/cUYvHnl0zxVz+21FdJyYrA1oIJtG4kCs1+siIaO21KRKZOQebZqc3rYbK+f2kEuDEAw+n8Ux7zCD8B1Yc3I3WOOtqNJn3V4YMsnbC/8MwnQbO8BDWgElQY1xtw7/K2quuwFrjgEyOwQZE6G4y3vjwn2ZFmgTIG+V+uEqoXudJqlkVwXU4PA3DNApXEKfKEFQhEXUN0OzG7gpm+3z7KpjXvwNGB6z9qCk0fXDZNQnr/ys2ArTsjE0iRkRMAfJyAvceXvmIASZ0i1kCvt+BkEYRWmt4Ee1HgvrDt0xB0pUQ42ubIMbrpaNyKgfrkMCogmMqiizkyTHSUZfyKMh+PuKf7jYWNNMhYwqhWnn9rFvMLFDAWn1syqSQ1kNdvTns9O/43Es0ohNrMHjkOkINO4tWvRTv4TiTbR52/5v4oco+u8MINK/4j8r28jidOLJfqWnW73J7dA5VvOSIBWJQZaUsrcGTNPTjhcft2XmC8sKYCzS+9mrt5J8+rnSOwFh1F2TvOE2jRs/sQXcA07ED7Reu+sL1IYU0jhoGdeeimzYfVqB+JQYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Facts for task E27-11**\n\n- **Stated reason for cancelling (verbatim):** \"cancelling for a medical reason\"\n- **Fare type:** refundable\n- **Itinerary type:** domestic\n- **Event type:** voluntary-cancel\n- **Hours since booking:** 400\n- **Days between booking and departure:** 30\n- **Flag:** Medical claim made by the traveler. No supporting documentation is in the record.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePEz6cgbEypTkhNdFqv",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 279,
+      "output_tokens": 246,
+      "output_tokens_details": {
+        "thinking_tokens": 99
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

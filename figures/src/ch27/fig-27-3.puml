@@ -1,0 +1,23 @@
+@startuml
+' Figure 27.3  Parallel research with merge (sequence)
+' Reading order: top to bottom. The lead splits a desk question into
+' two read-only questions that run at once; each worker returns an
+' answer with citations; the lead merges, and the verifier checks each
+' citation against the source. A failed citation goes to a person.
+!include plantuml-theme.puml
+participant "Lead" as L <<model>>
+participant "Rules" as R <<model>>
+participant "Waiver" as W <<model>>
+participant "Verifier" as V <<verified>>
+par
+L -> R : Brief
+R --> L : Cited answer
+else
+L -> W : Brief
+W --> L : Cited answer
+end
+L -> L : Merge
+L -> V : Merged answer
+V --> L : Citations hold
+V -[$FAIL]> L : Fails: to desk
+@enduml

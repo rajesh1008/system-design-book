@@ -16,9 +16,11 @@ from .policy import READ_POLICY, can_read, authorize, grounds_problems
 from .forget import forget, naive_forget, restore
 from .audit import audit_legacy
 from .render import to_items
+from .supersede import RECORD_SUBJECTS, by_record
 
 __all__ = ["Draft", "MemoryRecord", "Source", "SCOPES", "KINDS",
            "MemoryStore", "SessionToken", "WriteRefused", "StaleHead",
            "OlderThanHead", "READ_POLICY", "can_read", "authorize",
            "grounds_problems", "forget",
-           "naive_forget", "restore", "audit_legacy", "to_items"]
+           "naive_forget", "restore", "audit_legacy", "to_items",
+           "RECORD_SUBJECTS", "by_record"]

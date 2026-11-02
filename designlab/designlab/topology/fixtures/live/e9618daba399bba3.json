@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\nPull from the record: fare type (refundable or nonrefundable); itinerary (domestic or international); event type; hours since booking; days between booking and departure; whether the traveler claims a medical or bereavement reason; if the carrier canceled or changed the schedule, the minutes departure or arrival moved and whether the traveler accepted an alternative. Report values as recorded. Do not decide eligibility.\n\nRecord:\ntask E27-16\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 30\nbooking was made this many days before departure: 40\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "e9618daba399bba3",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQStwYKEAgTGAI4AUIIdGhpbmtpbmcSDJWp4PWYF82KCK2dGBoMAzVAHIx/RWOt8LcYIjACJS/dKKWtuUwV9SvB29AqcomOigZhNSiSC+8Yr1Hg6LJiW4Zn1k13dStZFnQ3irwq1AWVXt9m+F2nbHOyZn2YW8rGcQJb6X2FAPov3hnVkEEdzuR2t/PYRr1pGEfRP/jxui4aoTMaAbwZ3cBuG6iSAMlnYMHqyehRKaGPpPCvkd866rHNiFhxudwYVTXoUrIqVyovH05lfOtklJt8vEJ3cWl3QNvplZdtowJXX6slBQ99VO5DzpbuFDoYGmv2kHqFIQ6Ln/ErVbGWrYJyFxQo7fmJjoWJyD6UnMhe90bI279u7c8s8IJ6P8u7YCvDZn1Hx70YIU7MEm3zUZoc615CBioX+G+ilq2YkJeJky3kagpOYa+gndWlWeR1ScS2Osvqk1lMa736dOcan5oi5TFM/aqY1CeBXVfL6enGkJ//EbTye732WAQzssJw2o49CxtxnF2x9ViCfvm97hpcfoi5Vo9SUoR2S8sM4Th3huKRJGxm+mp2XbUhN189fuU2A4qnNo6Xd9YRNGI38kx/ohFXMFjcK8SYKINKMN0GlQ9+cTKAY9J2yEFAiyOqr4qR1RC5619VrKlYRhiUdbaGEW0YSy6RR1P/J6PFbUn2C8ly8P8hd5B1RLihWbB+ICbMo/GAxHAY9QKYge+zRfFChBjS9Cx176egmQEroCIbkwzCICk91zFfDWMo0D7sxOlgheoC8hHiu4+0qXFOq+vVseLsEKFNAdbBqY9cegnaMUUar8feqJvr+xc7Eor3ZmTogGNNc/r6xqhZtaBNCnIH78JucFXKnCFezKgnjt28zyi+4zDlLhTpj3SD/jWCrziYHS/VikZBQTE0CMNYFDEm+df8TzTG0hQTkGuWUY4d9Eh8QnwpMBhKXB4EUXSgmpTRPFnubasz53MaVKBEkwu+0cL0e9x1INXLqsYttt3dKZoPJh68AgJRbZ89nYaN9X4wToRJFc0j+gtmzH6H3V1vDnGKCzoPIhMIRAy+O//UPfyeWeXGwwI1Otm2K5UKytsJ7BNvhyqt+DSnGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "- Fare type: nonrefundable\n- Itinerary: domestic\n- Event type: voluntary-cancel\n- Hours since booking: 30\n- Days between booking and departure: 40\n- Medical or bereavement claim: not recorded\n- Carrier cancellation or schedule change: not recorded\n- Minutes departure or arrival moved: not recorded\n- Alternative accepted: not recorded",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePL3thokHvZP7ygJiWn",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 260,
+      "output_tokens": 214,
+      "output_tokens_details": {
+        "thinking_tokens": 81
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

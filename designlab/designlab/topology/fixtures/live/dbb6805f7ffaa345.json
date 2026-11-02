@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-23\nfare: nonrefundable\nitinerary: international\nevent: schedule-change\nschedule moved by: 300 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nThe rules worker answered: {\"eligible\": \"no\", \"rule\": \"R3\"}\nCheck it against the record and give the final answer. Answer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "dbb6805f7ffaa345",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSjwgKEAgTGAI4AUIIdGhpbmtpbmcSDIwUN4FLU/qvdgVuMRoM4Ay0XyATzXKXUH0pIjDJ+6e/3VBUOKRzSyRKypfZQKxlLuaiSvcK1xd1CfkOeOv1p3h9yUUfsovfIZ0n1vgqrAfKs8iMPfLvYJt2f1ejXdml6F5mnD258eumMM0W8FlZ+VsIAx12aAXF06GCaqBAm85/G752VOq2l/6s6POgVVLW4UDGKAexQJjpAUl/y6qT+nXVwKRQA4X88ZweAbTeQjyILswuUa08cXAVXhIjMw4J9a5lCt/Eujqf5UsCg4/bi57Zx0RFspJ24uzPTd35P55gLRlc0cjDKqiJ8P6I03VEB9J+dzqZVYz6coq41t4bDtQ8AHhDBVbSQpzYrm278W4w/n+mwrdkJZt6e53you06Wn4KdvMo//0CN7mMscgHWn0MXGeDFhwIbYwFMnKSwYeetfAfBazFmupaKYvHUqEAj6BNP0YyEve1e+R69w7H0Q6rB/yzOj+r9qOkjowoArqSgsCD1Tn3NejjxbkoYdcoxpRbkiRA5PKwmeerdFCN/YJHopeS5goLTxXu9kjfxfHZiMFLtU4vnnLqVxD6/OCAKr525f5BbZjT7EdHbJXm3Tn9eJlf55fFoOkM7KuYNq4MOdi1FpFlGgofW1OdGr7WcthHmpoyD7JdtG4/E/utt+dnG6/+GtZMa0Xwjf1C0PzShm/JE1KqjImWeVGS3yntm5axId5Ro6S/aW7NBaIAAAOfmpX15UkXst8MPlXT5YYLXR9RypIYbUw9Q/VUsqPLKjJQh+MvVZbTFptY9VQYlya+UHpXgTJaWzIDMymFINkChAUTBJKuw22APn92yN5VPmAegq1iSrMGdo6T/of55nd19hwgaQ+zmeIyMngx2IfkKRFbRRVqKguZxtXaWw63cznsppWzgmV8RKCme++Z5JpCVgWTcBEqSe+kwDBHlV3y+CAYnJn9rzv1XhfEGNeqZeFT8Aer97xUPsxKBjncQtWdMO0c2FODHPwj944xMQ9ghi8mL9Tx21KrhLnnKw3GNDPRddVLoM6lk+5sUAa2S1gRPFyZlGFs28U2PYAHhWZv2QVVnUCVEjkCWOdc2PoCBa+J+iw5t2srWypT0Pln/HZj0ZCD+CEn/AKhKI4UFOLbv5u3Yf+ifmuBaAaQX/lzEc8ch3HVWAckkZSVyIEtAUWK7ZAOfPf6caLjjgXpXkImC/kkHxTIseq6h8sR/j2CQDuwAz/2FKpdsthQCzJw7cLMizba/vy+wsGA4wE/pOvgE7kkKmbtYu/ydYurWPZmzFfu2srnh8OrEMCgYswwYmfMDWKSwvGsyE8v9NuM7zkXnADJ7Vng2yaqsvP43rgZWS4r1HwIEn4RjTAAGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"eligible\": \"no\", \"rule\": \"R3\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePUtgZtFJHZ53c3kt9j",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 512,
+      "output_tokens": 196,
+      "output_tokens_details": {
+        "thinking_tokens": 176
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

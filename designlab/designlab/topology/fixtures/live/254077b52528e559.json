@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n**Brief for facts worker:** Extract from the record: (1) whether the traveler claims a medical or bereavement reason; (2) fare type (refundable or nonrefundable); (3) itinerary type (domestic or international); (4) event type (carrier cancel, schedule change, or traveler cancel); (5) whether the traveler accepted the alternative; (6) hours since booking; (7) days between booking and departure. Report each as stated, with no interpretation.\n\nRecord:\ntask E27-15\nfare: nonrefundable\nitinerary: domestic\nevent: carrier-cancel\ntraveler accepted the alternative: no\nhours since booking: 10\nbooking was made this many days before departure: 3\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "254077b52528e559",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "1. Medical or bereavement reason claimed: Not stated in the record.\n2. Fare type: Nonrefundable\n3. Itinerary type: Domestic\n4. Event type: Carrier cancel\n5. Traveler accepted the alternative: No\n6. Hours since booking: 10\n7. Days between booking and departure: 3",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePK5UvMabU1EiWmFwrQ",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 292,
+      "output_tokens": 111,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

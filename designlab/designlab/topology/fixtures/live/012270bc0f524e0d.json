@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n**Brief for facts worker:** From the record, extract: (1) whether the traveler claims a medical or bereavement reason, quoting the stated reason; (2) fare type; (3) itinerary type (domestic or international); (4) event type (voluntary cancel, carrier cancel, or schedule change); (5) hours since booking; (6) days between booking and departure. Flag any missing item. Do not decide eligibility.\n\nRecord:\ntask E27-12\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\ntraveler says: cancelling for a bereavement reason\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "012270bc0f524e0d",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "(1) Claimed reason: Bereavement. Traveler's stated words: \"cancelling for a bereavement reason.\" No medical reason claimed.\n(2) Fare type: Nonrefundable.\n(3) Itinerary type: Domestic.\n(4) Event type: Voluntary cancel.\n(5) Hours since booking: 400.\n(6) Days between booking and departure: 30.\n\nMissing items: None.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePFtmRZMSeUFzHRe16F",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 284,
+      "output_tokens": 138,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

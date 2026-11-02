@@ -29,10 +29,14 @@ import math
 from dataclasses import dataclass, field
 
 from common.rand import seeded
+from harness.manifest import load as load_manifest
 
 from .tasks import TYPES, Case, golden_set
 
-CALL_CAP = 24          # Chapter 18: model calls per task, all runs
+# Chapter 18's per-task call budget, as Chapter 25's harness declares it
+# (servicing-1.0.0, [budgets] model_calls). Every agent in a task is
+# charged to this one counter.
+CALL_CAP = int(load_manifest("servicing-1.0.0")["budgets"]["model_calls"])
 REPEATS = 3
 SECONDS_PER_CALL = 2.2
 OUT_PER_CALL = 250     # output tokens per call

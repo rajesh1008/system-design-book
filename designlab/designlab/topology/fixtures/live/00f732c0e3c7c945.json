@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\nExtract from the record, verbatim: (1) any medical or bereavement reason claimed; (2) event type (carrier-cancel, schedule change, or traveler cancel); (3) whether the traveler accepted the carrier's alternative; (4) fare type; (5) itinerary type (domestic or international).\n\nRecord:\ntask E27-19\nfare: nonrefundable\nitinerary: international\nevent: carrier-cancel\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "00f732c0e3c7c945",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS5ggKEAgTGAI4AUIIdGhpbmtpbmcSDNCnC7W3KXBMLQYCiBoMmdGU7+t3/sIx+IJ6IjBTLpH4zc6toMExYUQ+Qlq8IDq4cdjzjPKhD1Ce0iX2LfDsc2Nd+/DVLPAbGYWJwJ0qgwhdcrJiRO4gyy2L0Du4Zq+XTUnoz1mJOjeJg+4Ml/eS/Ytk4+MjJHHzilwtb2XUlfUoPaWCCBurl0RMlHIDbpWvQAPr79UQny4lSTM3pBxuSwGmyYZQfXnjt9qg6cduNk4MbmvX8S9gBQd2KYkf6eErzRGvyWF43mtgDqc67+rXgw3fpA9wWa2dXQqQNQiFNlMMWy5KNis+dpvorg8Fc7SC+yQFDLXcnSJhT874ksAhm9Mmj8nWvH6II80QhwrmG0PlqvAvZ4T3Zv/SV+ccAekY6UeAXsVUYfGuyJRFJ8wjjCzMQBiTmzFMknX6gO7oNZ0Gw/MXEKtJW7WvRAbpK7kurSCVanfGhPb8YpL48PuKcRY7zSy5i/8e5hVZC+w5xguGqNiR2cbEaEfRPOi4txD1cdcc7iXgZzAiVgd9PMzDpt0dDomGmWDLaW4zFnJkNG6zWqAIuBgv2Hi/ZM/brNyCy0GDHDGY14WPNg36GE5UesIPWbDxh8WSyY96biP42T3UnDTz7FZLz9yHFwyyyiAaGaE675SZYJeGQkZcJv/Hzs70hKrgMKeqOLABtnypMMK/SMv5zzeeII8XV8Xco57AaFE2imt+qpFexyW6H6P60CdsYX4G5fH4HbOI1rOVSZlc6JtAGvd8EyR4AYT1NP9fc3P8CbvcIeVxwaYQ9J4/idz8pZBM7mQiiYbw2EBVUD8Ja24KwrIQ8nHitXWSVK8HCteOvY4CTMEVuN1P2+Hw97sPcQosEWdWtfO5nrbnMYGOnSGYLmTokAU7ZZ0goRUTGdgt4dBmZlr2FkTisVHLN7L9V1UuSCnewHZkBGwS70zzk2j52sD9Fg6ECH0TRprNF/yhymxjaTBNE9tyQzCKdcr/CGG6tcBOecMRXTXqYJB/h2B6O/iPy4Y95gcTuZuPmAIXjrCHEbazjXncjmIZxoo69e78+PMjLSwCekyKltgRb7qn80jJC7XmmthwsrzhYo8bBti8BQSg2kq5qsPpp6rXwzPES2DLbAPqr04Cd2OwFB+LZ3trBXad8yZ2C7/mD7UPq6s+by1h5Aa7vNQCPYT1bPWszE1VvsnpmRfrHWFyaeTxNBrxCR+ukf8oGI0PcU/o7yJa8megb0f0VmlHYaj1fsvnwg7NohqIuVqF29dBXSSGOHVH+O+5f3XnKgad+ZIq4bj4Kefhk1I8RRpVeJTl/liL/1CBPZHYqjgBpGWywZuTcZVNUzhDN5wQLpS2PFsfENiXNQQU5vKUoZTV7YaKh9/6+/pQV23TmhVyies2x4OUCkk4h73oBuOiDWZ5GYbCx5enzapAE6+If7mTQVOGSlGAhmAkOu+K88Y3EEIqNhiu58/1Swaw+B5tgHGvucqkGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "1. Medical or bereavement reason: None stated in record.\n2. Event type: carrier-cancel\n3. Traveler accepted carrier's alternative: no\n4. Fare type: nonrefundable\n5. Itinerary type: international",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePPmaJBNumaRkrge99h",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 239,
+      "output_tokens": 260,
+      "output_tokens_details": {
+        "thinking_tokens": 181
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

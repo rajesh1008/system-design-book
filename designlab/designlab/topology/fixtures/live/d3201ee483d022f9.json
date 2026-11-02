@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-18\nfare: nonrefundable\nitinerary: domestic\nevent: schedule-change\nschedule moved by: 179 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "d3201ee483d022f9",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Brief for the facts worker:** From the record, report these fields exactly as stated: event type; fare type (refundable or nonrefundable); itinerary type (domestic or international); schedule movement in minutes; whether the traveler accepted the alternative; whether the traveler claims a medical or bereavement reason; hours since booking; and days the booking was made before departure. Mark any missing field as missing.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePNHwc8fCRVdUNKVCPa",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 474,
+      "output_tokens": 638,
+      "output_tokens_details": {
+        "thinking_tokens": 508
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

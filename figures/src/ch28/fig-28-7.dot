@@ -1,0 +1,23 @@
+// Figure 28.7  The human on the loop
+// Reading order: top to bottom. Signals from the loop split two
+// ways: a page when a person must act before morning, the morning
+// queue for the rest. The owner holds three kill-switch tiers and
+// reviews the loop card each Monday. From loops.demo --part human.
+digraph human {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  loop [label="Fare watch\nsignals", class="model"];
+  page [label="Page\nunsafe if it waits", class="fail"];
+  queue [label="Morning queue\nstalls, hand-offs", class="knowledge store"];
+  owner [label="Owner\nBen Carter", class="org human"];
+  desk [label="Agent desk", class="org human"];
+  kill [label="Kill switch\nwatch, effects, loop", class="policy gate"];
+  review [label="Monday review\nloop card", class="evidence note"];
+  loop -> page [class="emphasis"];
+  loop -> queue [class="async"];
+  page -> owner [class="emphasis"];
+  queue -> desk [class="data"];
+  owner -> kill [class="control"];
+  owner -> review [class="trail"];
+  { rank=same; page; queue; }
+}

@@ -14,7 +14,8 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "method", "planes", "effects", "spine", "durable", "capacity",
             "isolation", "failure", "models", "serving", "portfolio",
             "toolargs", "adapt", "cost", "knowledge", "retrieval", "memory",
-            "gateway", "harness"]
+            "gateway", "harness", "knowops", "context", "topology",
+            "sandbox"]
 
 [tool.setuptools.package-data]
 common = ["models.toml", "fixtures/*.json"]
@@ -31,3 +32,7 @@ portfolio = ["policy.toml", "contracts/*.toml", "fixtures/calls/*.json",
 adapt = ["fixtures/*.json"]
 knowledge = ["layer.toml", "contracts/*.toml", "fixtures/*.json"]
 harness = ["releases.toml", "manifests/*.toml", "fixtures/live/*.json"]
+knowops = ["fixtures/live/*.json"]
+context = ["fixtures/live/*.json"]
+topology = ["fixtures/live/*.json"]
+sandbox = ["fixtures/fare_rules/*", "fixtures/fare_rules/tests/*", "fixtures/fare_rules/.ci/*", "fixtures/live/*.json"]

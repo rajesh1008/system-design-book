@@ -1,0 +1,20 @@
+// Figure 28.2  Triggers: schedule, event, threshold
+// Reading order: top to bottom. Three kinds of wake reach one run
+// key, (watch, hour, filing digest); the first wake with a key starts
+// a run, a second wake with the same key is dropped. From
+// loops.trigger.
+digraph triggers {
+#include "book.gv"
+  rankdir=TB; nodesep=0.15; ranksep=0.4;
+  sched [label="Schedule\ntimer", class="ops"];
+  event [label="Event\nfiling", class="ops"];
+  thresh [label="Threshold\nbelow floor", class="ops"];
+  key [label="Run key\nwatch, hour,\nfiling", class="policy gate"];
+  run [label="One run", class="verified"];
+  dup [label="Same key\ndropped", class="fail"];
+  sched -> key [class="emphasis"];
+  event -> key [class="data"];
+  thresh -> key [class="data"];
+  key -> run [class="emphasis", label=" first"];
+  key -> dup [class="fail", label=" again"];
+}

@@ -76,7 +76,7 @@ class Tally:
 
 
 def _ask(cl: ModelClient, prompt: str, tally: Tally,
-         max_tokens: int = 300):
+         max_tokens: int = 1200):
     c = cl.complete(prompt, system=SYSTEM, max_tokens=max_tokens)
     tally.add_call(c)
     return c
@@ -95,9 +95,10 @@ def majority(answers: list[Answer]) -> Answer:
     return next(a for a in answers if a.eligible == best)
 
 
-def run(cl: ModelClient) -> dict[str, Tally]:
+def run(cl: ModelClient, tasks: list[Task] | None = None
+        ) -> dict[str, Tally]:
     ts = {d: Tally(d) for d in DESIGNS}
-    for t in TASKS:
+    for t in (TASKS if tasks is None else tasks):
         # single, and the verifier built on the same answer
         c = _ask(cl, card_prompt(t), ts["single"])
         first = parse(c.text)
@@ -119,11 +120,12 @@ def run(cl: ModelClient) -> dict[str, Tally]:
         brief = _ask(cl, f"{RULES}\nRecord:\n{t.record()}\n\nYou lead two "
                      "workers. Write a brief for the facts worker: the "
                      "facts it must pull from the record so a rules "
-                     "worker can decide. At most 60 words.", ow, 200)
+                     "worker can decide. At most 60 words.", ow)
         facts = _ask(cl, f"Brief from the lead:\n{brief.text.strip()}\n\n"
                      f"Record:\n{t.record()}\n\nState only the facts the "
-                     "brief asks for. At most 80 words.", ow, 200)
-        rules = _ask(cl, f"{RULES}\nFacts from the facts worker:\n"
+                     "brief asks for. At most 80 words.", ow)
+        rules = _ask(cl, f"Case {t.task_id}.\n{RULES}\nFacts from the "
+                     f"facts worker:\n"
                      f"{facts.text.strip()}\n\n{QUESTION}", ow)
         merged = _ask(cl, f"{RULES}\nRecord:\n{t.record()}\n\nThe rules "
                       f"worker answered: {rules.text.strip()}\nCheck it "

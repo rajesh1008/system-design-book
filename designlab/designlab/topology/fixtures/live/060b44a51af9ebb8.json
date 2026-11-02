@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-24\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 200\nbooking was made this many days before departure: 60\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "060b44a51af9ebb8",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS9goKEAgTGAI4AUIIdGhpbmtpbmcSDEP8HTji0rH2qmJ6IhoML+edDrxRj6FuLUZGIjDaau7Nhtt08FaG+JGymjGNJLds6Fabxx/xT+Ab/c6U7c9T76z3Dbu89SKarq8Nxm4qkwqzQV7lbDTqJqLBJUvWTaScyl2d1MqMn0svLter3JZ6vgroiaM2hxEsMb6dbPHW9f8P7UOp70HMU5QDgDMbc9u8/WAdAmXmTjOqe3nTeKcaAeyOago9vhnUzyqy+7qBa2Y47Kt5R7DQmtYaQI3Gg1g8EmGqzRbQNFCPuw3DZm4d1UriW0iUwGwGVT2cHgVvb0RKfY0yF9p1z9hUySuAG3um66v+DlrK4Pz5P7vniNB773DkMuUjpNAV9LoZvYj+W9fYngyhJzLOLdXKovU+W0uDX9+YTNc2vjCUB8m481OoGTtUhDsovhgPLf5JdwLplsLVFlpTjfNm1FusNhe1a84PGgbdTSmG07H9kZ69JpjwIn8DLXcYPNSfPN2PWHmxLhtZGRMjOUzT/jVOTxxGUsUZxEkayG3u24Zws1n16d4DnJDT4kObunOCXKfWvENP12yiEdHgvMzWt5PPJ/JP8Ims1AmRRzT5zXziLN9mQx6KT3mk9gZX/I5pgxYB2Wq5ldTNevmDFfBiRibpqxpwS1lu7lf012KHm9uRsmO+8ym73KiXPZFDwLMfzi1i7BqaI3idvJpD9FmJWG5jesZh1fZbV/EHMhHw1CHspiNtXc28vZxttEB3QYqRlVk4jFgf+b59Ye9OoH41RhSlsCH795PxpgdQ/+KSvCnHnPxRP6g+jHC+gCoKvl5UEP4hVUzq/gcv+eYs6lNd8wCz9RPWfiwvkezpRUGUPXOeIMPoESpSds+gmXVKHTa/iC1UXa/w/6xjjzdUv8kWU/3uhpMiEkHrnc4XiAMsuYqoscOkh3KMBbISAxb4GEbPBsZlbqUim4MfvNah2Q2gpDCI7SqZ4f6f/OL43yyJIvGOdAj9tnve6ZiLboNqfLqDmbPYE8qtQtlHxM72ju47RUxriYcB2kBLE7W58PEl8g9GXdiFt+4NsOWmjOLoufQBnEKj1jeAgJ2TsEwHa2DoZcmR7YKM6jC31mbrZYmUTI5OYKLlmrKHKo4CbOsl0eTV1IsQMoorHkaoHOfifhivmcdoqcgOS519pTO0s4RezJ0IXLxh6+Tbgzb6EN1bm9V3bZ+YFs4DJHvD7ZzhYitPcluc5lKcR9iGYy4490gN1/P/BYXN1eQVfgt9ZlFa23tsx22wbymHXNmilc86SGvSRTGpM3cPvSbHpmMZXlmrR+NuS0KCOwfEAdFjCVfgeYBW6yHCp3DrK6U7kBN9V9k51N7hMiJj2NXRR2LIIo8xz3q41fV59mTLih/OdM9GCb4lGBOJCjHg7839dQJVm2AE5Toizv6jiv19mC3uD5FVcC1L8T7ktlB/uhc2EOdAlsseELyEbUy8Dy+IaaBXvUK6VGCX15QiSWzo4aocamkJJEZb2tnrwQcF5WE2clsAuRnHc4NinHKfJzTAazz5oOE2DpFS89ir6AwnQ0xDX8ArJps2a4WJUQ/7h0EPLUw6TfpSK6y+AT2vH7a6ZpUOKNsFhtjRpWLweiWz6BHmxZ9hiINTf1LEC/jIoUB2p5YcEjPEQCSzMDtLkZGr1hnmpSXU4l7LB5eGSPpjguhg9PNq9+N4V793FZkZytnGjpgj5PiG98uWD/WwLSj2PZlQIOEtypfrTxK1iEn7uCpL0LJjNiM3h+YY8xx33PBEpFbJNWhkWUI3o30krszFIz/qb8IRcmAKIookS4u8G8vSoY9/wXXbwKyxrxOpxSUAOui89/yacOdaJ33TU1jW5yQYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "Pull these from the record, quoting exact values: fare type (refundable or nonrefundable); itinerary (domestic or international); event type; whether the traveler claims a medical or bereavement reason; hours since booking; days between booking and departure; and whether the carrier changed or canceled the flight, with any schedule-change minutes. Report any missing item as missing.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePVrY7s64EDVRJcC6r1",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 450,
+      "output_tokens": 383,
+      "output_tokens_details": {
+        "thinking_tokens": 266
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

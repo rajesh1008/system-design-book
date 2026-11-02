@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-20\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 24\nbooking was made this many days before departure: 7\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "c2b75d4d4ad1a6ca",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Brief for facts worker:** From the record, pull these values exactly as stated, without interpreting them:\n1. Fare type (refundable or nonrefundable)\n2. Event type (voluntary cancel, carrier cancel, or schedule change)\n3. Whether the traveler claims a medical or bereavement reason\n4. Itinerary type (domestic or international)\n5. Hours since booking\n6. Days between booking and departure\n7. If a schedule change: departure and arrival shifts in minutes, and whether the traveler accepted an alternative",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgePQcimuSKMdEdpr4RwS",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 450,
+      "output_tokens": 573,
+      "output_tokens_details": {
+        "thinking_tokens": 395
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}
