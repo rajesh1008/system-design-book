@@ -4,7 +4,7 @@ Reading order: left to right by release, v1 (December 1, 2025) to v9
 (May 27, 2026). Bars are the file's size in tokens; the line is lint
 findings (stale, contradictory, or without an owner). Both climb for six
 months, jump at v8, and fall at v9 after the cleanup. The dotted line is
-the 1,200-token cap set on May 12.
+the 1,200-token cap set on May 4.
 """
 import figlib as fl
 

@@ -2,9 +2,10 @@
 
 `success_at` is the lab's stand-in for the model: a curve that falls
 slowly and then faster past a knee. The harness does what Hannah's
-team did on Thursday, May 7: fix a set of pilot tasks, pad each with
-real history from other runs (never with filler), vary only the
-length, and fit two straight lines to find where the slope changes.
+team did in the first week of May: fix a set of pilot tasks, pad
+each with real history from other runs (never with filler), vary
+only the length, and fit two straight lines to find where the slope
+changes.
 """
 from __future__ import annotations
 

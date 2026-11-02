@@ -49,7 +49,7 @@ CONTRACTS = {c.name: c for c in (
         Field("passenger", r"[A-Z][A-Z' -]{1,40}/[A-Z][A-Z' -]{1,40}",
               0.90, 0.60, "pnr"),
         Field("locator", LOCATOR, 0.95, 0.60, "pnr"),
-        Field("flight", r"[A-Z0-9]{2}\d{1,4}", 0.90, 0.60, "pnr"),
+        Field("flight", r"X[A-Z]{2}\d{1,4}", 0.90, 0.60, "pnr"),
         Field("date", DATE, 0.90, 0.60, "pnr"),
         Field("origin", r"[A-Z]{3}", 0.90, 0.60),
         Field("destination", r"[A-Z]{3}", 0.90, 0.60),
@@ -75,8 +75,14 @@ CONTRACTS = {c.name: c for c in (
     Contract("voice-note", "v1", "voice", (
         Field("locator", LOCATOR, 0.95, 0.60, "pnr"),
         Field("request", r"refund|rebook|cancel|other", 0.80, 0.50),
-        Field("date", DATE, 0.95, 0.60),
+        Field("date", DATE, 0.95, 0.60, "pnr"),
         Field("amount", MONEY, 0.95, 0.60),
+    ), owner="Owen Fletcher"),
+    Contract("web-notice", "v1", "document", (
+        Field("airport", r"[A-Z]{3}", 0.95, 0.70),
+        Field("event_date", DATE, 0.95, 0.70),
+        Field("change_through", DATE, 0.95, 0.70),
+        Field("fee_waived", r"yes|no", 0.90, 0.70),
     ), owner="Owen Fletcher"),
 )}
 
