@@ -9,6 +9,7 @@
     python3 -m inputs.demo --part readback [--off]
     python3 -m inputs.demo --part web [--page FILE]
     python3 -m inputs.demo --part edge
+    python3 -m inputs.demo --part slot
     python3 -m inputs.demo --part card
 """
 from __future__ import annotations
@@ -185,11 +186,30 @@ def part_card(a) -> None:
          f"{rb['values']:,}")
 
 
+def part_slot(a) -> None:
+    """The envelope in Chapter 21's task slot, and two adapter refusals."""
+    from .edge import to_context_item
+    raw = opening()[0]
+    env = admit(raw)
+    item = to_context_item(env)
+    chars = sum(len(l.text) for l in raw.layers)
+    emit(f"input {env.provenance.input_id}: {chars} chars in the file")
+    emit(f"  context item: slot {item.slot}, key {item.key}, "
+         f"{item.tokens} tokens")
+    for path, raw in (("fax", letter()), ("notices", letter())):
+        try:
+            adapter(path)(raw)
+        except KeyError:
+            emit(f"  adapter {path!r}: no such intake path")
+        except ValueError as e:
+            emit(f"  {raw.input_id} via {path}: refused ({e})")
+
+
 PARTS = {"opening": part_opening, "letter": part_letter,
          "boarding": part_boarding, "vision": part_vision,
          "thresholds": part_thresholds, "voice": part_voice,
          "readback": part_readback, "web": part_web, "edge": part_edge,
-         "card": part_card}
+         "slot": part_slot, "card": part_card}
 
 
 def main(argv=None) -> int:
