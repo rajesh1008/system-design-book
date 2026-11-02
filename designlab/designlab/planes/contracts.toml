@@ -1,0 +1,58 @@
+# The six boundary contracts between the four planes (Chapter 6).
+# Each names what crosses, what the receiver guarantees, what happens on a
+# violation, and the test that enforces it. A contract without a test is
+# a wish, and check_contracts reports it.
+
+[C1]
+name = "context"
+from = "knowledge"
+to = "action"
+carries = "facts with source and as_of"
+guarantees = "stale facts are flagged; unknown records raise"
+on_violation = "escalate to a person"
+test = "test_c1_context_flags_stale_and_refuses_unknown"
+
+[C2]
+name = "proposal"
+from = "action"
+to = "control"
+carries = "typed proposal: task, itinerary, amount, reason"
+guarantees = "one decision: permit, escalate, or deny"
+on_violation = "deny and write the decision"
+test = "test_c2_every_proposal_gets_one_decision"
+
+[C3]
+name = "permission"
+from = "control"
+to = "gateway"
+carries = "permission id, grantor, policy version, cap, key"
+guarantees = "redeemed only for the proposal and key it was issued for"
+on_violation = "refuse before any effect"
+test = "test_c3_gateway_refuses_foreign_or_altered_permission"
+
+[C4]
+name = "effect record"
+from = "action"
+to = "trail"
+carries = "permission, key, system reference"
+guarantees = "one line per effect, chained"
+on_violation = "trail check fails"
+test = "test_c4_every_effect_has_a_trail_line"
+
+[C5]
+name = "decision record"
+from = "control"
+to = "trail"
+carries = "verdict, reason, level, grantor, hand-off"
+guarantees = "refusals and escalations are written too"
+on_violation = "trail check fails"
+test = "test_c5_every_decision_is_written"
+
+[C6]
+name = "verification"
+from = "trail"
+to = "everyone"
+carries = "verifier, system, matches, ok"
+guarantees = "done only when a non-actor finds one matching effect"
+on_violation = "customer sees in progress; case goes to the desk"
+test = "test_c6_done_only_when_verified_by_non_actor"

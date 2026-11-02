@@ -1,0 +1,27 @@
+// Figure 6.2  The control plane outside the loop
+// Reading order: top to bottom. The agent process holds the model and
+// the loop and nothing that can grant. Every grant comes from the
+// control plane beside it; the gateway redeems it before any effect.
+digraph outside {
+#include "book.gv"
+  rankdir=TB; nodesep=0.4; ranksep=0.45;
+  subgraph cluster_p { label="Agent process"; class="plane-model";
+    m [label="Model", class="model"];
+    l [label="Loop", class="model"];
+    m -> l [class="data"];
+  }
+  subgraph cluster_c { label="Control plane, separate process"; class="plane-policy";
+    pe [label="Policy\nengine", class="policy gate"];
+    ap [label="Approver\ndesk", class="org human"];
+    bud [label="Identity and\nbudgets", class="policy"];
+  }
+  gw [label="Gateway", class="ops gate"];
+  sys [label="Payment\nprocessor", class="ops external"];
+  l -> pe [label=" proposal", class="control"];
+  ap -> pe [label=" approval", class="async"];
+  bud -> pe [class="data", arrowhead=none];
+  pe -> gw [label=" permission", class="emphasis"];
+  l -> gw [label=" record", class="control"];
+  gw -> pe [label=" redeem", class="policy", constraint=false];
+  gw -> sys [class="control"];
+}

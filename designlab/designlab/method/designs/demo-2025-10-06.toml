@@ -1,0 +1,23 @@
+# The October 6, 2025 demo (Chapter 1), written down after the fact as
+# a design. It is everything the demo left behind: one sentence and a
+# whiteboard photo. Used by the Chapter 5 lab and Try It Yourself.
+
+[design]
+id = "rebooking-demo"
+version = "demo"
+as_of = "2025-10-06"
+people = ["Sarah Whitfield"]
+
+[scope]
+summary = "An agent rebooks a passenger in one call"
+
+[diagram]
+nodes = [
+  { id = "customer", kind = "external", plane = "action", label = "customer" },
+  { id = "agent", kind = "model", plane = "action", label = "agent" },
+  { id = "airline", kind = "external", plane = "action", label = "airline" },
+]
+edges = [
+  { from = "customer", to = "agent", kind = "control", label = "asks" },
+  { from = "agent", to = "airline", kind = "effect", label = "rebooks" },
+]

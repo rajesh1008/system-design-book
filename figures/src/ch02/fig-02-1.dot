@@ -1,0 +1,33 @@
+// Figure 2.1  The chapter signature: six states, five gaps, one trail
+// Reading order: top to bottom down the six states on the left; gap
+// labels sit on the edges; each state writes one line of the trail on
+// the right, and the trail lines link to each other in order.
+digraph signature {
+#include "book.gv"
+  rankdir=TB; nodesep=0.7; ranksep=0.3;
+  s1 [label="Output", class="model"];
+  s2 [label="Proposal", class="model"];
+  s3 [label="Permission", class="policy gate"];
+  s4 [label="Execution", class="ops"];
+  s5 [label="Verified outcome", class="verified gate"];
+  s6 [label="Business result", class="org"];
+  subgraph cluster_trail { label="Trail"; class="plane-evidence";
+    t1 [label="Line 1", class="evidence store"];
+    t2 [label="Line 2", class="evidence store"];
+    t3 [label="Line 3", class="evidence store"];
+    t4 [label="Line 4", class="evidence store"];
+    t5 [label="Line 5", class="evidence store"];
+    t6 [label="Line 6", class="evidence store"];
+    t1 -> t2 -> t3 -> t4 -> t5 -> t6 [class="data", arrowhead=none];
+  }
+  s1 -> s2 [label=" G1", class="control"];
+  s2 -> s3 [label=" G2", class="emphasis"];
+  s3 -> s4 [label=" G3", class="control"];
+  s4 -> s5 [label=" G4", class="control"];
+  s5 -> s6 [label=" G5", class="control"];
+  { rank=same; s1; t1; } { rank=same; s2; t2; } { rank=same; s3; t3; }
+  { rank=same; s4; t4; } { rank=same; s5; t5; } { rank=same; s6; t6; }
+  s1 -> t1 [class="trail"]; s2 -> t2 [class="trail"];
+  s3 -> t3 [class="trail"]; s4 -> t4 [class="trail"];
+  s5 -> t5 [class="trail"]; s6 -> t6 [class="trail"];
+}

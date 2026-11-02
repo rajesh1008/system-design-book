@@ -1,0 +1,30 @@
+// Figure 3.1  The map: seven categories on one page
+// Reading order: top to bottom. One request travels from the framework's
+// loop, through protocols and a gateway, to a tool; the policy engine
+// answers the gateway; traces flow to evaluation. Plane map: each plane once.
+digraph map {
+#include "book.gv"
+  rankdir=TB;
+  subgraph cluster_runtime { label="Hosted runtime"; class="plane-model"; labeljust="l";
+    framework [label="Framework\nor SDK", class="model"];
+  }
+  inference [label="Inference\nengine", class="model"];
+  subgraph cluster_ops { label="Protocols and gateways"; class="plane-ops"; labeljust="r";
+    protocol [label="Protocol\nMCP, A2A, AP2", class="ops"];
+    gateway  [label="Gateway\nand registry", class="ops gate"];
+    { rank=same; protocol; gateway; }
+  }
+  policy [label="Policy\nengine", class="policy gate"];
+  tool   [label="Tool or\nother agent", class="ops external"];
+  subgraph cluster_ev { label="Evaluation and observability"; class="plane-evidence"; labelloc="b";
+    traces [label="Traces\nand scores", class="evidence store"];
+  }
+  framework -> inference [label=" tokens", class="data"];
+  framework -> protocol [label=" call", class="control"];
+  protocol -> gateway [class="control"];
+  gateway -> policy [label=" allow?", class="emphasis"];
+  gateway -> tool [class="control"];
+  { rank=same; policy; tool; }
+  framework -> traces [class="trail"];
+  gateway -> traces [class="trail"];
+}

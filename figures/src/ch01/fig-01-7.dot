@@ -1,0 +1,17 @@
+// Figure 1.7  Book map: eight Parts and the gaps each closes
+// Reading order: top to bottom, Part I to Part VIII. Each box names a
+// Part and the gaps it works on; Part VIII puts all five together.
+digraph map {
+#include "book.gv"
+  rankdir=TB; ranksep="0.16";
+  p1 [label="I  Systems that act: names all", class="org"];
+  p2 [label="II  Distributed foundations: G3 G4", class="ops"];
+  p3 [label="III  Models: G1 G5", class="model"];
+  p4 [label="IV  Knowledge: G1 G2", class="model"];
+  p5 [label="V  Runtime and loops: G3 G4", class="ops"];
+  p6 [label="VI  Control and assurance: G2 G4", class="policy"];
+  p7 [label="VII  Operations and cost: G4 G5", class="ops"];
+  p8 [label="VIII  Worked architectures: all", class="org store"];
+  p1 -> p2 -> p3 -> p4 -> p5 -> p6 -> p7 [class="data"];
+  p7 -> p8 [class="emphasis"];
+}

@@ -1,0 +1,34 @@
+// Figure 1.6  The four planes previewed
+// Reading order: top to bottom. Knowledge informs the loop and control
+// decides (top row), the action plane acts (middle), and the trail
+// records and checks (bottom). Chapter 6 builds these.
+digraph planes {
+#include "book.gv"
+  rankdir=TB; ranksep="0.45";
+  subgraph cluster_kno { label="Knowledge plane"; class="plane-knowledge";
+    ret [label="Retrieval", class="knowledge"];
+  }
+  subgraph cluster_ctl { label="Control plane"; class="plane-policy";
+    pol [label="Policy engine", class="policy gate"];
+  }
+  subgraph cluster_act { label="Action plane"; class="plane-ops";
+    loop [label="Agent loop", class="ops"];
+    exe  [label="Executor", class="ops"];
+    tool [label="Suppliers", class="ops external"];
+    { rank=same; loop; exe; tool; }
+  }
+  subgraph cluster_trl { label="Trail plane"; class="plane-evidence";
+    trl [label="Trail", class="evidence store"];
+    rec [label="Reconciler", class="evidence gate"];
+    { rank=same; trl; rec; }
+  }
+  { rank=same; ret; pol; }
+  ret -> loop [label=" context", class="data"];
+  loop -> pol [label=" proposal", class="control"];
+  pol -> exe [label=" permission", class="policy"];
+  loop -> exe [style=invis];
+  exe -> tool [class="control"];
+  exe -> trl [class="trail"];
+  tool -> rec [label=" effect", class="trail"];
+  rec -> trl [class="trail"];
+}

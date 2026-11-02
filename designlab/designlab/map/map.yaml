@@ -1,0 +1,617 @@
+# Lakeshore Travel Group: the map of the agent field.
+# Every claim carries the source it came from and the date the source
+# makes it true (a release date, or the access date of a living page).
+# Gap codes: closes (outside the loop, a record you can read),
+# partial (a hook inside the loop, or a record you must finish),
+# claims (said on a page, no mechanism found), none.
+# Lock-in: 1 (walk away in a week) to 5 (rebuild to leave).
+
+map: lakeshore-agent-map
+as_of: 2026-11-02
+owner: Daniel Price
+reviewers: [Owen Fletcher, Librarian pass]
+stale_after_days: 92
+
+categories:
+  - id: framework
+    name: Frameworks and SDKs
+  - id: runtime
+    name: Hosted runtimes
+  - id: protocol
+    name: Protocols
+  - id: gateway
+    name: Gateways and registries
+  - id: policy
+    name: Policy engines
+  - id: inference
+    name: Inference engines
+  - id: evaluation
+    name: Evaluation and observability
+
+options:
+  # ---------------------------------------------------- frameworks
+  - id: langgraph
+    name: LangGraph
+    category: framework
+    vendor: LangChain
+    status: ga
+    version: "1.2.19"
+    lock_in: 2
+    cost: open source (MIT)
+    gaps: {G1: partial, G2: partial, G3: partial, G4: none, G5: none}
+    where: checkpointer store you run
+    hides: side-effect idempotency is yours; interrupts live in the graph
+    claims:
+      - text: release 1.2.19
+        gap: none
+        source: https://github.com/langchain-ai/langgraph/releases
+        as_of: 2026-10-30
+      - text: durable execution with human-in-the-loop interrupts
+        gap: G3
+        source: https://www.langchain.com/langsmith/deployment
+        as_of: 2026-11-02
+  - id: openai-agents-sdk
+    name: OpenAI Agents SDK
+    category: framework
+    vendor: OpenAI
+    status: pre-1.0
+    version: "0.24.0"
+    lock_in: 2
+    cost: open source (MIT)
+    gaps: {G1: partial, G2: partial, G3: partial, G4: none, G5: none}
+    where: your process; traces to the vendor by default
+    hides: guardrails run in the agent process; 0.Y versioning may break
+    claims:
+      - text: release 0.24.0, still on 0.Y.Z versioning
+        gap: none
+        source: https://openai.github.io/openai-agents-python/release/
+        as_of: 2026-10-15
+      - text: retry decision flags replay that may repeat provider work
+        gap: G3
+        source: https://openai.github.io/openai-agents-python/release/
+        as_of: 2026-11-02
+      - text: input, output and tool guardrails
+        gap: G2
+        source: https://openai.github.io/openai-agents-python/release/
+        as_of: 2026-11-02
+  - id: claude-agent-sdk
+    name: Claude Agent SDK
+    category: framework
+    vendor: Anthropic
+    status: pre-1.0
+    version: "0.2.176"
+    lock_in: 3
+    cost: open source; Claude tokens
+    gaps: {G1: partial, G2: partial, G3: none, G4: none, G5: none}
+    where: hooks and settings files in your process
+    hides: permission checks run in the same process as the loop
+    claims:
+      - text: release 0.2.176 (Python)
+        gap: none
+        source: https://github.com/anthropics/claude-agent-sdk-python/releases
+        as_of: 2026-10-31
+      - text: hooks, then deny, ask and allow rules, then canUseTool
+        gap: G2
+        source: https://code.claude.com/docs/en/agent-sdk/overview
+        as_of: 2026-11-02
+  - id: ms-agent-framework
+    name: Microsoft Agent Framework
+    category: framework
+    vendor: Microsoft
+    status: ga
+    version: python-1.24.0
+    lock_in: 2
+    cost: open source (MIT)
+    gaps: {G1: partial, G2: partial, G3: partial, G4: none, G5: none}
+    where: workflow checkpoint store you configure
+    hides: middleware approval runs in the agent process
+    claims:
+      - text: 1.0 GA for .NET and Python
+        gap: none
+        source: https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/
+        as_of: 2026-04-03
+      - text: graph workflows with checkpointing and approvals
+        gap: G3
+        source: https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/
+        as_of: 2026-04-03
+      - text: release python-1.24.0
+        gap: none
+        source: https://github.com/microsoft/agent-framework/releases
+        as_of: 2026-10-30
+  - id: google-adk
+    name: Google ADK
+    category: framework
+    vendor: Google
+    status: ga
+    version: "2.13.0"
+    lock_in: 2
+    cost: open source (Apache-2.0)
+    gaps: {G1: partial, G2: partial, G3: none, G4: none, G5: none}
+    where: callbacks in your process
+    hides: durable state depends on the runtime you deploy to
+    claims:
+      - text: ADK 2.0 graph workflows GA for Python
+        gap: none
+        source: https://adk.dev/2.0/
+        as_of: 2026-05-19
+      - text: release 2.13.0 (Python)
+        gap: none
+        source: https://github.com/google/adk-python/releases
+        as_of: 2026-10-23
+  - id: crewai
+    name: CrewAI
+    category: framework
+    vendor: CrewAI
+    status: ga
+    version: "1.15.34"
+    lock_in: 2
+    cost: open source (MIT)
+    gaps: {G1: partial, G2: partial, G3: none, G4: none, G5: none}
+    where: hooks in your process
+    hides: the blocking hook runs in the crew's own process
+    claims:
+      - text: release 1.15.34
+        gap: none
+        source: https://docs.crewai.com/edge/en/changelog
+        as_of: 2026-11-01
+      - text: pre-tool-call hooks can block a call
+        gap: G2
+        source: https://docs.crewai.com/en/learn/tool-hooks
+        as_of: 2026-11-02
+  - id: strands
+    name: Strands Agents
+    category: framework
+    vendor: AWS
+    status: ga
+    version: "1.x"
+    lock_in: 2
+    cost: open source (Apache-2.0)
+    gaps: {G1: partial, G2: partial, G3: none, G4: none, G5: none}
+    where: hooks in your process
+    hides: repository moved; current version not re-read
+    claims:
+      - text: 1.0 with Swarm, Graph and A2A support
+        gap: none
+        source: https://aws.amazon.com/blogs/opensource/introducing-strands-agents-1-0-production-ready-multi-agent-orchestration-made-simple/
+        as_of: 2025-07-15
+  # ---------------------------------------------------- runtimes
+  - id: agentcore
+    name: Amazon Bedrock AgentCore
+    category: runtime
+    vendor: AWS
+    status: ga
+    version: service
+    lock_in: 4
+    cost: consumption per service
+    gaps: {G1: partial, G2: closes, G3: none, G4: partial, G5: none}
+    where: Cedar policy at AgentCore Gateway; OTel traces
+    hides: effect idempotency and outcome checks are yours
+    claims:
+      - text: Policy GA, Cedar evaluated at Gateway outside agent code
+        gap: G2
+        source: https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/
+        as_of: 2026-03-03
+      - text: Runtime, Memory, Gateway, Identity, Evaluations, Registry
+        gap: G4
+        source: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+        as_of: 2026-11-02
+  - id: foundry-agent-service
+    name: Microsoft Foundry Agent Service
+    category: runtime
+    vendor: Microsoft
+    status: ga
+    version: service
+    lock_in: 4
+    cost: consumption per service
+    gaps: {G1: partial, G2: partial, G3: partial, G4: none, G5: none}
+    where: Entra agent identity; workflow checkpoints
+    hides: tool policy is identity scope, not a per-action decision
+    claims:
+      - text: hosted agents run Agent Framework, LangGraph and others
+        gap: G3
+        source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+        as_of: 2026-11-02
+      - text: toolboxes behind a managed MCP endpoint; Entra agent ID
+        gap: G2
+        source: https://learn.microsoft.com/en-us/azure/foundry/agents/overview
+        as_of: 2026-11-02
+  - id: gemini-agent-runtime
+    name: Gemini Enterprise Agent Runtime
+    category: runtime
+    vendor: Google
+    status: ga
+    version: service
+    lock_in: 4
+    cost: consumption per service
+    gaps: {G1: partial, G2: closes, G3: none, G4: partial, G5: none}
+    where: Agent Gateway policies; online evaluation
+    hides: renamed from Vertex AI Agent Engine; API still ReasoningEngine
+    claims:
+      - text: Vertex AI Agent Engine renamed Agent Runtime
+        gap: none
+        source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
+        as_of: 2026-04-22
+      - text: Agent Gateway enforces IAM and governance policies
+        gap: G2
+        source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/govern/gateways/agent-gateway-overview
+        as_of: 2026-11-02
+      - text: offline, online and simulated agent evaluation
+        gap: G4
+        source: https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/runtime
+        as_of: 2026-11-02
+  - id: claude-managed-agents
+    name: Claude Managed Agents
+    category: runtime
+    vendor: Anthropic
+    status: beta
+    version: managed-agents-2026-04-01
+    lock_in: 4
+    cost: tokens plus $0.08 per session-hour
+    gaps: {G1: partial, G2: partial, G3: none, G4: none, G5: none}
+    where: hosted session event log
+    hides: beta header; not eligible for ZDR or HIPAA BAA
+    claims:
+      - text: public beta, beta header managed-agents-2026-04-01
+        gap: none
+        source: https://platform.claude.com/docs/en/managed-agents/overview
+        as_of: 2026-11-02
+      - text: agent, environment, session and events as resources
+        gap: G2
+        source: https://platform.claude.com/docs/en/managed-agents/overview
+        as_of: 2026-11-02
+  - id: langsmith-deployment
+    name: LangSmith Deployment
+    category: runtime
+    vendor: LangChain
+    status: ga
+    version: service
+    lock_in: 3
+    cost: per deployment and usage
+    gaps: {G1: partial, G2: partial, G3: partial, G4: partial, G5: none}
+    where: durable runtime threads; LangSmith traces
+    hides: approvals are graph interrupts, not a separate policy engine
+    claims:
+      - text: renamed from LangGraph Platform; framework-agnostic
+        gap: none
+        source: https://www.langchain.com/langsmith/deployment
+        as_of: 2026-11-02
+      - text: human-in-the-loop approvals on a durable runtime
+        gap: G3
+        source: https://www.langchain.com/langsmith/deployment
+        as_of: 2026-11-02
+  # ---------------------------------------------------- protocols
+  - id: mcp
+    name: Model Context Protocol
+    category: protocol
+    vendor: AAIF (Linux Foundation)
+    status: ga
+    version: "2026-07-28"
+    lock_in: 1
+    cost: open specification
+    gaps: {G1: partial, G2: partial, G3: none, G4: none, G5: none}
+    where: server logs and the gateway in front of it
+    hides: authorization says who may call, not whether this call is allowed
+    claims:
+      - text: stateless revision; server/discover; Mcp-Method header
+        gap: G1
+        source: https://modelcontextprotocol.io/specification/2026-07-28
+        as_of: 2026-07-28
+      - text: hosted by the Agentic AI Foundation
+        gap: none
+        source: https://aaif.io/projects
+        as_of: 2026-11-02
+  - id: a2a
+    name: Agent2Agent (A2A)
+    category: protocol
+    vendor: AAIF (Linux Foundation)
+    status: ga
+    version: "1.0.0"
+    lock_in: 1
+    cost: open specification
+    gaps: {G1: partial, G2: partial, G3: none, G4: none, G5: none}
+    where: task records at each agent
+    hides: a completed task is the remote agent's word for it
+    claims:
+      - text: v1.0.0 with JSON-RPC, gRPC and HTTP+JSON bindings
+        gap: G1
+        source: https://a2a-protocol.org/v1.0.0/specification/
+        as_of: 2026-03-12
+      - text: signed Agent Cards
+        gap: G2
+        source: https://a2a-protocol.org/v1.0.0/specification/
+        as_of: 2026-03-12
+  - id: ap2
+    name: Agent Payments Protocol (AP2)
+    category: protocol
+    vendor: Google and partners
+    status: preview
+    version: "0.2"
+    lock_in: 1
+    cost: open specification
+    gaps: {G1: none, G2: closes, G3: none, G4: none, G5: partial}
+    where: signed mandates held by the parties
+    hides: version 0.2; the shape may change
+    claims:
+      - text: mandates signed on a non-agentic trusted surface
+        gap: G2
+        source: https://ap2-protocol.org/ap2/specification/
+        as_of: 2026-11-02
+      - text: mandates serve as dispute evidence
+        gap: G5
+        source: https://ap2-protocol.org/ap2/specification/
+        as_of: 2026-11-02
+  - id: acp
+    name: Agentic Commerce Protocol (ACP)
+    category: protocol
+    vendor: OpenAI and Stripe
+    status: beta
+    version: "2026-04-17"
+    lock_in: 2
+    cost: open specification
+    gaps: {G1: partial, G2: partial, G3: closes, G4: none, G5: none}
+    where: merchant order records
+    hides: beta; checkout flows tied to the agent surfaces that adopt it
+    claims:
+      - text: delegate payment requires an Idempotency-Key header
+        gap: G3
+        source: https://github.com/agentic-commerce-protocol/agentic-commerce-protocol
+        as_of: 2026-11-02
+  - id: x402
+    name: x402
+    category: protocol
+    vendor: x402 Foundation (Linux Foundation)
+    status: ga
+    version: v2
+    lock_in: 2
+    cost: open specification
+    gaps: {G1: none, G2: none, G3: partial, G4: partial, G5: none}
+    where: settlement response header and the ledger
+    hides: payment is not permission; who allowed the spend is elsewhere
+    claims:
+      - text: contributed by Coinbase to a Linux Foundation project
+        gap: none
+        source: https://www.linuxfoundation.org/press/linux-foundation-is-launching-the-x402-foundation-and-welcoming-the-contribution-of-the-x402-protocol
+        as_of: 2026-04-02
+  # ---------------------------------------------------- gateways
+  - id: agentgateway
+    name: agentgateway
+    category: gateway
+    vendor: AAIF (Linux Foundation)
+    status: ga
+    version: v1.7.0
+    lock_in: 1
+    cost: open source (Apache-2.0)
+    gaps: {G1: none, G2: closes, G3: none, G4: partial, G5: none}
+    where: gateway access log and traces
+    hides: sees the call, not the business effect
+    claims:
+      - text: release v1.7.0, an AAIF project
+        gap: none
+        source: https://github.com/agentgateway/agentgateway/releases
+        as_of: 2026-10-27
+  - id: agent-router
+    name: Agent Router
+    category: gateway
+    vendor: AAIF (Linux Foundation)
+    status: ga
+    version: v1.2.0
+    lock_in: 1
+    cost: open source (Apache-2.0)
+    gaps: {G1: none, G2: partial, G3: none, G4: partial, G5: none}
+    where: Envoy access logs
+    hides: formerly Envoy AI Gateway; model traffic first, tools second
+    claims:
+      - text: release v1.2.0; renamed from Envoy AI Gateway
+        gap: none
+        source: https://github.com/theagentrouter/agent-router/releases
+        as_of: 2026-10-07
+  - id: kong-ai-gateway
+    name: Kong AI Gateway
+    category: gateway
+    vendor: Kong
+    status: ga
+    version: "2.1"
+    lock_in: 3
+    cost: commercial license
+    gaps: {G1: none, G2: closes, G3: none, G4: partial, G5: none}
+    where: gateway logs; ACL decisions
+    hides: an ACL on scopes is not a per-amount decision
+    claims:
+      - text: MCP 2026-07-28 from 2.1; scope ACLs; header checks
+        gap: G2
+        source: https://developer.konghq.com/ai-gateway/mcp-version-support/
+        as_of: 2026-11-02
+  - id: mcp-registry
+    name: MCP Registry
+    category: gateway
+    vendor: AAIF (Linux Foundation)
+    status: preview
+    version: v1.8.7
+    lock_in: 1
+    cost: open source; public service
+    gaps: {G1: none, G2: partial, G3: none, G4: none, G5: none}
+    where: registry entries
+    hides: preview; a listing is not an attestation
+    claims:
+      - text: preview, API frozen at v0.1, GA to follow
+        gap: G2
+        source: https://github.com/modelcontextprotocol/registry
+        as_of: 2026-11-02
+  # ---------------------------------------------------- policy engines
+  - id: cedar
+    name: Cedar
+    category: policy
+    vendor: Cedar project
+    status: ga
+    version: v4.14.0
+    lock_in: 1
+    cost: open source (Apache-2.0)
+    gaps: {G1: none, G2: closes, G3: none, G4: none, G5: none}
+    where: the decision log you write
+    hides: decides; does not record unless you write the decision down
+    claims:
+      - text: release v4.14.0
+        gap: none
+        source: https://github.com/cedar-policy/cedar/releases
+        as_of: 2026-10-17
+      - text: the policy language AgentCore Policy evaluates
+        gap: G2
+        source: https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/
+        as_of: 2026-03-03
+  - id: opa
+    name: Open Policy Agent
+    category: policy
+    vendor: CNCF
+    status: ga
+    version: v1.22.0
+    lock_in: 1
+    cost: open source (Apache-2.0)
+    gaps: {G1: none, G2: closes, G3: none, G4: none, G5: none}
+    where: OPA decision logs
+    hides: Rego is general purpose; agent context is yours to model
+    claims:
+      - text: release v1.22.0
+        gap: none
+        source: https://github.com/open-policy-agent/opa/releases
+        as_of: 2026-10-29
+  # ---------------------------------------------------- inference
+  - id: vllm
+    name: vLLM
+    category: inference
+    vendor: vLLM project
+    status: pre-1.0
+    version: v0.32.0
+    lock_in: 1
+    cost: open source; your GPUs
+    gaps: {G1: partial, G2: none, G3: none, G4: none, G5: none}
+    where: none
+    hides: serves tokens; knows nothing of the action
+    claims:
+      - text: release v0.32.0
+        gap: none
+        source: https://github.com/vllm-project/vllm/releases
+        as_of: 2026-10-18
+  - id: sglang
+    name: SGLang
+    category: inference
+    vendor: SGLang project
+    status: pre-1.0
+    version: v0.5.22
+    lock_in: 1
+    cost: open source; your GPUs
+    gaps: {G1: partial, G2: none, G3: none, G4: none, G5: none}
+    where: none
+    hides: serves tokens; knows nothing of the action
+    claims:
+      - text: release v0.5.22
+        gap: none
+        source: https://github.com/sgl-project/sglang/releases
+        as_of: 2026-10-19
+  - id: dynamo
+    name: NVIDIA Dynamo
+    category: inference
+    vendor: NVIDIA
+    status: ga
+    version: v1.6.1
+    lock_in: 2
+    cost: open source; your GPUs
+    gaps: {G1: none, G2: none, G3: none, G4: none, G5: none}
+    where: none
+    hides: a cluster layer over engines; the action is invisible to it
+    claims:
+      - text: 1.0 GA with disaggregated serving and KV-aware routing
+        gap: none
+        source: https://docs.nvidia.com/dynamo/reference/releases/v1-0-0
+        as_of: 2026-03-12
+      - text: release v1.6.1
+        gap: none
+        source: https://github.com/ai-dynamo/dynamo/releases
+        as_of: 2026-10-27
+  - id: llm-d
+    name: llm-d
+    category: inference
+    vendor: CNCF Sandbox
+    status: ga
+    version: v1.0.0
+    lock_in: 1
+    cost: open source; your Kubernetes and GPUs
+    gaps: {G1: none, G2: none, G3: none, G4: none, G5: none}
+    where: none
+    hides: a Kubernetes layer over vLLM and SGLang
+    claims:
+      - text: v1.0, CNCF Sandbox project
+        gap: none
+        source: https://llm-d.ai/blog/llm-d-v1.0-state-of-the-art-inference-ready-for-day-2
+        as_of: 2026-10-20
+  # ---------------------------------------------------- evaluation
+  - id: otel-genai
+    name: OpenTelemetry GenAI conventions
+    category: evaluation
+    vendor: OpenTelemetry (CNCF)
+    status: development
+    version: semconv v1.44.0 refs
+    lock_in: 1
+    cost: open specification
+    gaps: {G1: none, G2: none, G3: none, G4: partial, G5: none}
+    where: your trace store
+    hides: agent spans at Development status; field names may change
+    claims:
+      - text: invoke_agent and execute_tool spans, Development status
+        gap: G4
+        source: https://github.com/open-telemetry/semantic-conventions-genai
+        as_of: 2026-11-02
+  - id: langsmith
+    name: LangSmith
+    category: evaluation
+    vendor: LangChain
+    status: ga
+    version: service
+    lock_in: 3
+    cost: per seat and trace volume
+    gaps: {G1: none, G2: none, G3: none, G4: partial, G5: none}
+    where: vendor trace store
+    hides: scores the trajectory; the system of record is not read
+    claims:
+      - text: tracing and evaluation paired with LangSmith Deployment
+        gap: G4
+        source: https://www.langchain.com/langsmith/deployment
+        as_of: 2026-11-02
+  - id: langfuse
+    name: Langfuse
+    category: evaluation
+    vendor: Langfuse
+    status: ga
+    version: v4.72.0
+    lock_in: 1
+    cost: open source core; cloud tiers
+    gaps: {G1: none, G2: none, G3: none, G4: partial, G5: none}
+    where: self-hosted or cloud trace store
+    hides: scores the trajectory; the system of record is not read
+    claims:
+      - text: release v4.72.0
+        gap: none
+        source: https://github.com/langfuse/langfuse/releases
+        as_of: 2026-10-29
+  - id: phoenix
+    name: Arize Phoenix
+    category: evaluation
+    vendor: Arize
+    status: ga
+    version: v21.0.0
+    lock_in: 1
+    cost: self-hostable; Arize cloud
+    gaps: {G1: none, G2: none, G3: none, G4: partial, G5: none}
+    where: self-hosted trace store
+    hides: scores the trajectory; the system of record is not read
+    claims:
+      - text: release v21.0.0
+        gap: none
+        source: https://github.com/Arize-ai/phoenix/releases
+        as_of: 2026-10-30
+
+struck:
+  - id: openai-agent-builder
+    name: OpenAI Agent Builder
+    reason: deprecated 2026-06-03; shuts down 2026-11-30
+    source: https://developers.openai.com/api/docs/deprecations
+    as_of: 2026-11-02

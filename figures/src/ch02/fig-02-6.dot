@@ -1,0 +1,15 @@
+// Figure 2.6  Gap 1: output to proposal
+// Reading order: top to bottom. The record that closes the gap sits on
+// the main path; the failure when it is missing branches below.
+digraph gap1 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.45; ranksep=0.35;
+  a [label="Output", class="model"];
+  r [label="Typed proposal", class="evidence store"];
+  b [label="Proposal", class="model"];
+  x [label="Prose acted on", class="fail"];
+  a -> r [class="control"];
+  r -> b [class="emphasis"];
+  a -> x [label=" No record", class="fail"];
+  { rank=same; r; x; }
+}

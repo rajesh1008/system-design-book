@@ -1,0 +1,265 @@
+# Lakeshore itinerary change agent, design v0 (Daniel Price).
+# As linted on November 13, 2025: three findings. Illustrative
+# figures: the inputs are stated assumptions with named sources, not measurements.
+
+[design]
+id = "lakeshore-change-agent"
+version = "v0"
+as_of = "2025-11-13"
+author = "Daniel Price"
+title = "Itinerary change agent: rebooking and refunds"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter"]
+
+[scope]
+summary = "Rebooks, cancels and refunds itinerary changes for customers"
+effects = ["rebook", "cancel", "refund", "credit"]
+autonomy = "rebook within fare alone; refund, cancel, credit with a person"
+out_of_scope = "name changes, group bookings, corporate accounts"
+owner = "Daniel Price"
+
+[requirements]
+A1 = { answer = "rebook, cancel, refund to card, travel credit", source = "doc:scope-card" }
+A2 = { answer = "rebook and cancel within 24 hours; a refund only by a second refund", source = "doc:fare-rules" }
+A3 = { answer = "one refund up to $1,500 in the pilot", source = "doc:refunds-v3" }
+A4 = { answer = "airline systems, the card processor, the travel-credit ledger", source = "doc:integration-list" }
+A5 = { answer = "the card processor accepts a key; two airline systems do not", source = "doc:integration-list" }
+A6 = { answer = "search, fare lookup, itinerary read, policy read", source = "doc:tool-list" }
+C1 = { answer = "the policy engine, outside the loop; records in the permission store", source = "doc:refunds-v3" }
+C2 = { answer = "rebook alone; refund, cancel, credit with a person; name change never", source = "doc:scope-card" }
+C3 = { answer = "one hour; no answer means no refund, never yes by timeout", source = "doc:approval-desk" }
+C4 = { answer = "12 steps, $2 of model spend, 10 minutes, or the desk", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter's kill switch, under ninety seconds", source = "doc:runbook" }
+C6 = { answer = "card network refund rules, consumer refund law, data protection", source = "doc:obligations" }
+K1 = { answer = "itinerary, fare rules, refund policy, customer history", source = "doc:context-plan" }
+K2 = { answer = "fares 15 minutes, seat inventory 2 minutes, policy on version", source = "doc:context-plan" }
+K3 = { answer = "customer messages, airline notices, partner emails", source = "doc:threat-list" }
+K4 = { answer = "nothing in the pilot; customer history is read, not written", source = "doc:context-plan" }
+T1 = { answer = "who asked, who permitted, what ran, what settled, for auditors", source = "doc:obligations" }
+T2 = { answer = "the card processor's settlement file for money; airline records for seats", source = "doc:integration-list" }
+T3 = { answer = "the settlement reconciler, which never calls the processor", source = "doc:verifier-note" }
+T4 = { answer = "seven years for money evidence; risk and audit roles read it", source = "doc:obligations" }
+O1 = { answer = "cost per verified change, owned by Marcus Bell", source = "doc:baseline-2025-10-14" }
+O2 = { answer = "about 5,750 changes a day; a storm moves a week into six hours", source = "doc:ops-queue-reports-2024" }
+O3 = { answer = "$38 a change now; under $10 within a year", source = "doc:baseline-2025-10-14" }
+O4 = { answer = "a wrong refund costs its amount plus a dispute; an hour down costs a queue", source = "doc:ops-queue-reports-2024" }
+
+[[estimate]]
+name = "changes_per_year"
+value = 2100000
+low = 1900000
+high = 2300000
+unit = "changes a year"
+assumption = "the program year matches the baseline year"
+source = "doc:baseline-2025-10-14 (Chapter 4)"
+
+[[estimate]]
+name = "storm_days"
+value = 7
+low = 3
+high = 10
+unit = "average days"
+assumption = "a hub closure moves a week of changes into one window"
+source = "doc:ops-queue-reports-2024 (Marcus Bell)"
+
+[[estimate]]
+name = "window_hours"
+value = 6
+low = 4
+high = 12
+unit = "hours"
+assumption = "the closure window lasts about six hours"
+source = "doc:ops-queue-reports-2024 (Marcus Bell)"
+
+[[estimate]]
+name = "calls_per_change"
+value = 6
+low = 4
+high = 12
+unit = "model calls"
+assumption = "the loop takes about six model calls per change"
+source = "doc:pilot-traces-week-1 (Ben Carter)"
+
+[[estimate]]
+name = "tools_per_change"
+value = 4
+low = 3
+high = 6
+unit = "tool calls"
+assumption = "about four tool reads and writes per change"
+source = "doc:pilot-traces-week-1 (Ben Carter)"
+
+[[estimate]]
+name = "refund_share"
+value = 0.30
+low = 0.2
+high = 0.45
+unit = "of changes"
+assumption = "three changes in ten move money"
+source = "doc:change-type-mix (Chapter 4)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 30
+low = 20
+high = 40
+unit = "per person-hour"
+assumption = "a reviewer clears one approval every two minutes"
+source = "doc:pilot-approval-desk (Marcus Bell)"
+
+[[estimate]]
+name = "avg_per_day"
+formula = "changes_per_year / 365"
+unit = "changes a day"
+
+[[estimate]]
+name = "storm_per_hour"
+formula = "avg_per_day * storm_days / window_hours"
+unit = "changes an hour"
+
+[[estimate]]
+name = "storm_per_s"
+formula = "storm_per_hour / 3600"
+unit = "changes a second"
+
+[[estimate]]
+name = "peak_requests_per_s"
+value = 2000
+unit = "requests a second"
+
+[[estimate]]
+name = "approvals_per_hour"
+formula = "storm_per_hour * refund_share"
+unit = "approvals an hour"
+
+[[estimate]]
+name = "reviewers_needed"
+formula = "approvals_per_hour / reviews_per_hour"
+unit = "reviewers"
+
+[diagram]
+nodes = [
+  { id = "customer", kind = "external", plane = "action", label = "customer" },
+  { id = "loop", kind = "loop", plane = "action", label = "agent harness" },
+  { id = "model", kind = "model", plane = "action", label = "model" },
+  { id = "itins", kind = "store", plane = "knowledge", label = "itineraries, fare rules" },
+  { id = "policy", kind = "gate", plane = "control", label = "policy engine" },
+  { id = "desk", kind = "person", plane = "control", label = "approval desk" },
+  { id = "permits", kind = "store", plane = "trail", label = "permission records" },
+  { id = "executor", kind = "tool", plane = "action", label = "refund executor" },
+  { id = "psp", kind = "external", plane = "action", label = "card processor" },
+  { id = "settle", kind = "external", plane = "trail", label = "settlement file" },
+  { id = "verifier", kind = "verifier", plane = "trail", label = "settlement reconciler" },
+  { id = "trail", kind = "store", plane = "trail", label = "trail" },
+]
+edges = [
+  { from = "customer", to = "loop", kind = "control", label = "change request" },
+  { from = "itins", to = "loop", kind = "data", label = "itinerary, rules" },
+  { from = "loop", to = "model", kind = "data", label = "context" },
+  { from = "model", to = "loop", kind = "data", label = "output" },
+  { from = "loop", to = "policy", kind = "control", label = "typed proposal" },
+  { from = "policy", to = "desk", kind = "async", label = "needs a person" },
+  { from = "desk", to = "policy", kind = "control", label = "decision" },
+  { from = "policy", to = "permits", kind = "trail", label = "permission record" },
+  { from = "policy", to = "executor", kind = "control", label = "permission" },
+  { from = "executor", to = "psp", kind = "effect", label = "refund" },
+  { from = "executor", to = "trail", kind = "trail", label = "execution" },
+  { from = "psp", to = "settle", kind = "data", label = "settled lines" },
+  { from = "settle", to = "verifier", kind = "data", label = "settlement" },
+  { from = "verifier", to = "trail", kind = "trail", label = "verified outcome" },
+]
+
+[[decisions]]
+id = "durable-execution"
+question = "Where does a change run so a restart loses nothing?"
+criteria = ["keeps a pending permission across a restart",
+            "one key on every retry", "ready for the pilot",
+            "lock-in", "team can operate it"]
+chosen = "framework loop"
+owner = "Daniel Price"
+options = [
+  { name = "framework loop", scores = [0, 0, 2, 1, 2], why_not = "" },
+]
+
+[[deep_dives]]
+id = "approval-queue"
+component = "approval desk"
+owner = ""
+contract = "every refund proposal gets a decision within an hour, or none"
+numbers = ["est:approvals_per_hour", "est:reviewers_needed"]
+test = "replay a storm hour at 2,014 approvals into a test desk"
+failure_modes = [
+  { mode = "storm backlog", detect = "oldest item age, every 5 minutes", contain = "refuse new refunds past the cap; rebook only", recover = "reserve desk; drain oldest first" },
+  { mode = "approval by habit", detect = "a reviewer approves over 99% in a shift", contain = "second review on a 5% sample", recover = "change what the approval card shows" },
+  { mode = "proposal changed after approval", detect = "hash at approval differs at execution", contain = "executor refuses on mismatch", recover = "send back to the desk" },
+  { mode = "approver above their limit", detect = "role checked against amount", contain = "policy engine refuses", recover = "route to a senior reviewer" },
+]
+
+[[deep_dives]]
+id = "permission-step"
+component = "policy engine"
+owner = "Owen Fletcher"
+contract = "no refund runs without a permission record made outside the loop"
+numbers = ["est:peak_requests_per_s"]
+test = "kill the policy engine mid-storm replay; count refunds that ran"
+failure_modes = [
+  { mode = "engine down", detect = "health check every 10 seconds", contain = "fail closed: no permission, no refund", recover = "restart; replay held proposals" },
+  { mode = "stale policy version", detect = "version on record differs from deployed", contain = "refuse on mismatch", recover = "redeploy; re-decide held items" },
+  { mode = "one permission, two effects", detect = "a permission id seen twice at the executor", contain = "executor refuses the second", recover = "open an incident; reconcile" },
+]
+
+[[records]]
+id = "R-001"
+title = "Run pilot changes in the framework loop"
+context = "the pilot starts November 3 on 2% of changes"
+options = ["framework loop"]
+decision = "we chose the framework loop"
+consequences = "retries and restarts behave as the framework decides"
+reverse_if = "a restart loses a pending permission, or the pilot passes 5%"
+evidence = ["dec:durable-execution", "est:peak_requests_per_s"]
+owner = "Daniel Price"
+status = "accepted"
+
+[[records]]
+id = "R-002"
+title = "Permission is granted by the policy engine"
+context = "the model must never grant its own permission"
+options = ["policy engine", "model self-check"]
+decision = "the policy engine grants every refund permission"
+consequences = "one more hop on every money-moving step"
+reverse_if = "the engine adds over 300 ms at p95 or blocks over 2% of good refunds"
+evidence = ["node:policy", "req:C1", "dive:permission-step"]
+owner = "Owen Fletcher"
+status = "accepted"
+
+[[records]]
+id = "R-003"
+title = "Verify refunds against the settlement file"
+context = "the agent's success message is not proof of a refund"
+options = ["settlement file", "processor status call"]
+decision = "the settlement reconciler verifies every refund"
+consequences = "verification lags the refund by up to a day"
+reverse_if = "the file arrives over 36 hours late on more than 1% of days"
+evidence = ["node:verifier", "req:T2"]
+owner = "Rachel Morgan"
+status = "accepted"
+
+[[records]]
+id = "R-004"
+title = "Every pilot refund goes to a person"
+context = "no approval history yet; storm volume not yet tested"
+options = ["every refund to a person", "auto-approve under a limit"]
+decision = "every pilot refund goes to the approval desk"
+consequences = "a storm needs about 67 reviewers at this share"
+reverse_if = "any approval waits over an hour, or the pilot passes 5%"
+evidence = ["est:reviewers_needed", "dive:approval-queue"]
+owner = "Marcus Bell"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness turns output into a typed proposal or refuses it", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "the policy engine grants permission outside the loop", owner = "Owen Fletcher", evidence = ["node:policy", "rec:R-002"] }
+G3 = { answer = "the framework's default retry policy; keys reviewed after month one", owner = "Ben Carter", evidence = ["dec:durable-execution"] }
+G4 = { answer = "the reconciler reads the settlement file; it never acts", owner = "Rachel Morgan", evidence = ["node:verifier", "rec:R-003"] }
+G5 = { answer = "cost per verified change, read weekly", owner = "Marcus Bell", evidence = ["req:O1"] }

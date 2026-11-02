@@ -1,0 +1,22 @@
+// Figure 6.10  The bypass path the test found
+// Reading order: top to bottom. The left path runs through the gateway
+// and leaves a permission and a trail line. The emphasized right path
+// is the fast refund tool that reaches the processor with neither.
+digraph bypass {
+#include "book.gv"
+  rankdir=TB; nodesep=0.6; ranksep=0.55;
+  loop [label="Agent loop", class="model"];
+  gw [label="Gateway", class="ops gate"];
+  fast [label="refund_fast", class="fail code"];
+  pr [label="Payment\nprocessor", class="ops external"];
+  tr [label="Trail", class="evidence store"];
+  n [label="26 refunds\n$3,295.48\nno permission", class="fail note"];
+  loop -> gw [label=" record", class="control"];
+  loop -> fast [label=" up to $200", class="fail"];
+  gw -> pr [class="control"];
+  gw -> tr [class="trail"];
+  fast -> pr [class="emphasis"];
+  fast -> n [arrowhead=none, style=dotted];
+  { rank=same; gw; fast; }
+  { rank=same; pr; n; }
+}

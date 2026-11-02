@@ -16,11 +16,16 @@ class Timeout(Exception):
 
 
 @dataclass
-class CardNetwork:
-    """A stand-in for the card network: it applies credits and can be slow.
+class PaymentProcessor:
+    """A stand-in for the payment processor's refund API.
 
-    `slow_calls` lists call numbers (1-based) whose credit is applied but whose
-    response arrives after the caller's timeout, as happened on the Thursday.
+    It applies credits, can be slow, and (like real processor APIs) can
+    honor an idempotency key by returning the stored result to a retry.
+    `slow_calls` lists call numbers (1-based) whose credit is applied but
+    whose response arrives after the caller's timeout, as on the Thursday.
+    `settled` reads the processor's settlement file, which the actor does
+    not write. The card network sets dispute rules; it holds neither the
+    merchant account, nor the keys, nor this file.
     """
     slow_calls: set[int] = field(default_factory=set)
     lost_calls: set[int] = field(default_factory=set)   # never reach the network
@@ -48,6 +53,10 @@ class CardNetwork:
         return [c for c in self.credits if c["itinerary"] == itinerary]
 
 
+# Older name, kept so Stage 0 code and notes still run.
+CardNetwork = PaymentProcessor
+
+
 @dataclass
 class Trail:
     """Append-only, hash-linked lines. Editing one breaks every later hash."""
@@ -60,8 +69,8 @@ class Trail:
         return line
 
 
-def settlement_verifier(network: CardNetwork, record: ChainRecord) -> dict:
-    """Verify against the settlement file, not against the executor's report."""
+def settlement_verifier(network: PaymentProcessor, record: ChainRecord) -> dict:
+    """Verify against the processor's settlement file, not the executor's report."""
     credits = network.settled(record.proposal.itinerary)
     ok = len(credits) == 1 and credits[0]["amount_usd"] == record.proposal.amount_usd
     return {"verified_by": "settlement-reconciler", "credits_found": len(credits), "ok": ok}
@@ -69,10 +78,10 @@ def settlement_verifier(network: CardNetwork, record: ChainRecord) -> dict:
 
 @dataclass
 class ChainLoop:
-    network: CardNetwork
+    network: PaymentProcessor
     trail: Trail
     max_attempts: int = 3
-    verifier: Callable[[CardNetwork, ChainRecord], dict] = settlement_verifier
+    verifier: Callable[[PaymentProcessor, ChainRecord], dict] = settlement_verifier
 
     def execute(self, record: ChainRecord) -> ChainRecord:
         missing = record.missing_before_effect(ACTOR)
@@ -99,7 +108,7 @@ class ChainLoop:
         return record
 
 
-def naive_refund(network: CardNetwork, itinerary: str, amount_usd: float,
+def naive_refund(network: PaymentProcessor, itinerary: str, amount_usd: float,
                  max_attempts: int = 3) -> list[str]:
     """The pilot as it ran: retry on timeout, no key, no permission record."""
     notes = []

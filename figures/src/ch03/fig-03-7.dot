@@ -1,0 +1,23 @@
+// Figure 3.7  Evaluation and observability tooling against the trail
+// Reading order: top to bottom. Left: what the agent reports, scored
+// by evaluation tools. Right: what the world says, read by a verifier
+// that did not act. Only the right side closes G4.
+digraph evals {
+#include "book.gv"
+  rankdir=TB;
+  agent [label="Agent loop", class="model"];
+  spans [label="GenAI spans\ninvoke_agent", class="evidence"];
+  store [label="Trace store", class="evidence store"];
+  scorer [label="Evaluator\nscores trajectory", class="evidence"];
+  tool [label="Reservation\nsystem", class="ops external"];
+  verifier [label="Verifier", class="verified gate"];
+  chain [label="Verified\noutcome", class="verified store"];
+  agent -> spans [label=" emits", class="trail"];
+  spans -> store [class="trail"];
+  store -> scorer [class="data"];
+  agent -> tool [label=" acts", class="control"];
+  tool -> verifier [label=" read-only", class="emphasis"];
+  verifier -> chain [class="trail"];
+  { rank=same; spans; tool; }
+  { rank=same; scorer; chain; }
+}

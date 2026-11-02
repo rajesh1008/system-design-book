@@ -1,0 +1,18 @@
+// Figure 1.3  The six states as a strip with the five gaps marked
+// Reading order: top to bottom. Each arrow is a gap, labeled with the
+// question that must be answered before the next state exists.
+digraph strip {
+#include "book.gv"
+  rankdir=TB; ranksep="0.28";
+  o [label="Output", class="model"];
+  p [label="Proposal", class="model"];
+  q [label="Permission", class="policy gate"];
+  e [label="Execution", class="evidence"];
+  v [label="Verified outcome", class="verified"];
+  b [label="Business result", class="verified store"];
+  o -> p [label="  G1  an action?", class="data"];
+  p -> q [label="  G2  who allowed it?", class="policy"];
+  q -> e [label="  G3  exactly once?", class="control"];
+  e -> v [label="  G4  who checked?", class="trail"];
+  v -> b [label="  G5  did it help?", class="verified"];
+}

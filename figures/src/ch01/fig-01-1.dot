@@ -1,0 +1,31 @@
+// Figure 1.1  The demo and the system: one call versus six states
+// Reading order: left column is the October 6 demo, top to bottom; right
+// column is the same rebooking as a system, top to bottom. The thick
+// arrow is the one step the demo skipped: permission.
+digraph demo_system {
+#include "book.gv"
+  rankdir=TB;
+  subgraph cluster_demo { label="The demo"; class="plane-model";
+    d_ask  [label="Customer asks", class="human"];
+    d_mod  [label="Model", class="model"];
+    d_tool [label="Rebook tool", class="ops external"];
+    d_ok   [label="Status 200", class="ops note"];
+    d_ask -> d_mod [class="control"];
+    d_mod -> d_tool [label=" tool call", class="control"];
+    d_tool -> d_ok [class="data"];
+  }
+  subgraph cluster_sys { label="The system"; class="plane-evidence";
+    s1 [label="1 Output", class="model"];
+    s2 [label="2 Proposal", class="model"];
+    s3 [label="3 Permission", class="policy gate"];
+    s4 [label="4 Execution", class="ops"];
+    s5 [label="5 Verified outcome", class="evidence"];
+    s6 [label="6 Business result", class="evidence store"];
+    s1 -> s2 [class="data"];
+    s2 -> s3 [class="emphasis"];
+    s3 -> s4 [class="policy"];
+    s4 -> s5 [class="trail"];
+    s5 -> s6 [class="trail"];
+  }
+  d_ask -> s1 [style=invis];
+}

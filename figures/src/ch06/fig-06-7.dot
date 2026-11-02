@@ -1,0 +1,22 @@
+// Figure 6.7  Where humans enter: four places
+// Reading order: left column is people, right column is the plane each one
+// enters. Solid edges act on a single case now; dashed edges act later
+// or on many cases at once.
+digraph humans {
+#include "book.gv"
+  rankdir=LR; nodesep=0.35; ranksep=1.1;
+  ap [label="Approver", class="org human"];
+  dk [label="Agent\ndesk", class="org human"];
+  po [label="Policy\nowner", class="org human"];
+  au [label="Auditor", class="org human"];
+  ctl [label="Control\nplane", class="policy gate"];
+  act [label="Action\nplane", class="ops"];
+  tr [label="Trail", class="evidence store"];
+  ap -> ctl [label=" approve one", class="control"];
+  po -> ctl [label=" sign the table", class="async"];
+  dk -> act [label=" take over", class="control"];
+  au -> tr [label=" sample later", class="async"];
+  { rank=same; ap; dk; po; au; }
+  { rank=same; act; ctl; tr; }
+  act -> ctl -> tr [style=invis];
+}

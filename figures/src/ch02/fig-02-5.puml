@@ -1,0 +1,16 @@
+@startuml
+' Figure 2.5  Permission lifecycle
+' Reading order: left to right from requested to spent or ended.
+!include plantuml-theme.puml
+hide empty description
+[*] --> Requested
+Requested --> Granted : Policy allows
+Requested --> Denied : Policy refuses
+Granted --> Spent : One execution
+Granted --> Expired : Time runs out
+Granted --> Revoked : Risk revokes
+Spent --> [*]
+Denied --> [*]
+Expired --> [*]
+Revoked --> [*]
+@enduml

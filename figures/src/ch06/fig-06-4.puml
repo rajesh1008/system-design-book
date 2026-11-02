@@ -1,0 +1,20 @@
+@startuml
+' Figure 6.4  The synchronous refund path
+' Reading order: top to bottom. The customer waits while the approver
+' desk answers; if nobody answers in 120 seconds the case leaves the
+' synchronous path with a promised time.
+!include plantuml-theme.puml
+participant "Agent\nloop" as L <<ops>>
+participant "Policy\nengine" as P <<policy>>
+actor "Approver" as A <<org>>
+participant "Gateway" as G <<ops>>
+L -> P : Refund
+P -> A : Approve?
+alt within 120 s
+  A -[$POLICY]> P : Yes
+  P -[#1A1A1A]> G : Permission
+  G -> L : Effect record
+else no answer
+  P -[$TRAIL]-> L : Queued, 60 min
+end
+@enduml

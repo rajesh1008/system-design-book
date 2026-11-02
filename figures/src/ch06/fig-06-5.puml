@@ -1,0 +1,17 @@
+@startuml
+' Figure 6.5  The asynchronous rebooking path
+' Reading order: top to bottom. The agent acts inside its limit and
+' tells the customer; a refusal within 24 hours goes to a queue that
+' a person works later.
+!include plantuml-theme.puml
+participant "Agent\nloop" as L <<ops>>
+participant "Policy\nengine" as P <<policy>>
+participant "Gateway" as G <<ops>>
+actor "Agent\ndesk" as D <<org>>
+L -> P : Rebook
+P -[#1A1A1A]> G : Permission
+G -> L : Effect record
+L -> L : Notify
+...24 hours to refuse...
+L -[$TRAIL]-> D : Refusal queued
+@enduml

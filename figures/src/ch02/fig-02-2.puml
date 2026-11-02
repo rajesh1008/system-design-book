@@ -1,0 +1,19 @@
+@startuml
+' Figure 2.2  Thursday, December 4, 2025: one proposal, two credits
+' Reading order: top to bottom, times in Central Time. The first credit
+' lands after the framework has given up; the retry carries no key.
+!include plantuml-theme.puml
+participant "Framework" as F <<model>>
+participant "Tool\nserver" as T <<ops>>
+participant "Processor" as P <<ops>>
+database "Settlement\nfile" as S <<evidence>>
+[-> F : One refund
+F -> T : 14:32:07 Call
+T -> P : Refund
+P -> S : 14:32:14 Credit
+F -[$FAIL]-> F : 14:32:15\nTimeout
+F -> T : 14:32:16 Retry
+T -> P : Refund
+P -[$FAIL]-> S : 14:32:17 Credit
+T --> F : Status 200
+@enduml

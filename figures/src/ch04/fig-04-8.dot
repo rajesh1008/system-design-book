@@ -1,0 +1,22 @@
+// Figure 4.8  Who owns which number
+// Reading order: owners on the left, numbers on the right, all feeding
+// the scoreboard that Daniel Price keeps. One owner per number.
+digraph owners {
+#include "book.gv"
+  rankdir=LR; nodesep=0.25; ranksep=0.5;
+  s [label="Sarah", class="org"];
+  m [label="Marcus", class="org"];
+  r [label="Rachel", class="org"];
+  o [label="Owen", class="org"];
+  b [label="Ben", class="org"];
+  c [label="Cost per change", class="evidence store"];
+  v [label="Changes, mix", class="evidence store"];
+  e [label="Refund error", class="evidence store"];
+  p [label="Permission records", class="evidence store"];
+  i [label="Incidents", class="evidence store"];
+  d [label="Scoreboard\n(Daniel)", class="ops"];
+  s -> c; m -> v; r -> e; o -> p; b -> i;
+  c -> d [class="control"]; v -> d [class="control"];
+  e -> d [class="control"]; p -> d [class="control"];
+  i -> d [class="control"];
+}

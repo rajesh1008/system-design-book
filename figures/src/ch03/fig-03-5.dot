@@ -1,0 +1,21 @@
+// Figure 3.5  Where gateways, registries and policy engines sit
+// Reading order: top to bottom. The registry says what exists; the
+// gateway sees every call; the policy engine decides; the decision log
+// is written outside the loop.
+digraph gateways {
+#include "book.gv"
+  rankdir=TB;
+  agent [label="Agent loop", class="model"];
+  subgraph cluster_ctl { label="Outside the loop"; class="plane-policy"; labelloc="b";
+    gateway  [label="Gateway", class="ops gate"];
+    policy   [label="Policy engine\nCedar or OPA", class="policy gate"];
+    registry [label="Registry", class="ops store"];
+  }
+  server [label="MCP server\nor agent", class="ops external"];
+  log [label="Decision\nlog", class="evidence store"];
+  agent -> gateway [label="call", class="control"];
+  registry -> gateway [label="known\nservers", class="data"];
+  gateway -> policy [label="request", class="emphasis"];
+  policy -> log [class="trail"];
+  gateway -> server [label="allowed", class="control"];
+}

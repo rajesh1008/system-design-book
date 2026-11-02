@@ -1,0 +1,38 @@
+@startuml
+' Figure 2.4  The record each state leaves
+' Reading order: top row left to right, then bottom row right to left;
+' each record points at the one before it.
+!include plantuml-theme.puml
+class "Output" as O <<model>> {
+  model
+  text_sha
+}
+class "Proposal" as P <<model>> {
+  action
+  itinerary
+  amount
+}
+class "Permission" as G <<policy>> {
+  granted_by
+  policy_version
+  bound_to
+  idempotency_key
+}
+class "Execution" as E <<ops>> {
+  attempts
+  reported
+}
+class "VerifiedOutcome" as V <<verified>> {
+  verified_by
+  source
+}
+class "BusinessResult" as B <<evidence>> {
+  counts_as
+  cost
+}
+P -left-> O : prev
+G -left-> P : bound_to
+E -up-> G : key
+V -right-> E : prev
+B -right-> V : prev
+@enduml

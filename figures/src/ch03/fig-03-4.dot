@@ -1,0 +1,22 @@
+// Figure 3.4  Protocols: tool, agent-to-agent, payments, with dates
+// Reading order: top to bottom. One agent, three kinds of counterparty;
+// each edge carries the protocol and the version the map dates it by.
+digraph protocols {
+#include "book.gv"
+  rankdir=TB;
+  agent [label="Lakeshore\nagent", class="model"];
+  subgraph cluster_tool { label="Tool"; class="plane-ops"; labelloc="b";
+    server [label="MCP server", class="ops external"];
+  }
+  subgraph cluster_agent { label="Agent to agent"; class="plane-ops"; labelloc="b";
+    remote [label="Partner\nagent", class="ops external"];
+  }
+  subgraph cluster_pay { label="Payments"; class="plane-policy"; labelloc="b";
+    mandate  [label="Signed\nmandate", class="policy gate"];
+    merchant [label="Merchant\nor payee", class="org external"];
+  }
+  agent -> server [label="MCP\n2026-07-28 ", class="control"];
+  agent -> remote [label=" A2A 1.0.0\n Mar 2026", class="control"];
+  agent -> mandate [label=" AP2 0.2", class="emphasis"];
+  mandate -> merchant [label="ACP beta\nx402", class="control"];
+}

@@ -1,0 +1,15 @@
+// Figure 2.10  Gap 5: verified outcome to business result
+// Reading order: top to bottom. The record that closes the gap sits on
+// the main path; the failure when it is missing branches below.
+digraph gap5 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.45; ranksep=0.35;
+  a [label="Verified outcome", class="verified gate"];
+  r [label="Outcome count", class="evidence store"];
+  b [label="Business result", class="org"];
+  x [label="Busy metric", class="fail"];
+  a -> r [class="control"];
+  r -> b [class="emphasis"];
+  a -> x [label=" No record", class="fail"];
+  { rank=same; r; x; }
+}
