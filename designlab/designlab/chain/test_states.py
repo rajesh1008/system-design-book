@@ -64,6 +64,18 @@ class TestStates(unittest.TestCase):
         lines = main(gaps=True)
         self.assertEqual([ln for ln in lines if len(ln) > 70], [])
 
+    def test_lab_flights_leave_after_the_rebooking_moment(self):
+        import inspect
+        from datetime import datetime
+        from chain.states import FLIGHTS, run_rebooking
+        now = inspect.signature(run_rebooking).parameters["now"].default
+        moment = datetime.fromisoformat(now)
+        for fid, f in FLIGHTS.items():
+            with self.subTest(flight=fid):
+                departs = datetime.fromisoformat(
+                    f["departs"].replace("Z", "+00:00"))
+                self.assertGreater(departs, moment)
+
 
 if __name__ == "__main__":
     unittest.main()

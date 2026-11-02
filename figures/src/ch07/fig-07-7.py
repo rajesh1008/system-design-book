@@ -8,17 +8,17 @@ import figlib as fl
 
 blocks = [
     ("Hotel", "confirmation number", "folio at checkout",
-     "cancel, under fee rules"),
+     "cancel, fee rules"),
     ("Airline", "ticket number", "ticketing record",
-     "void same day, then refund"),
+     "void, then refund"),
     ("Card network", "authorization", "settlement file",
-     "a new refund transaction"),
+     "new refund"),
 ]
-labels = ("A yes means", "Final in", "Undo by")
+labels = ("Yes means", "Final in", "Undo")
 toks = ("ops", "evidence", "policy")
-fig, ax = fl.figure(4.5, 4.4)
+fig, ax = fl.figure(4.5, 3.9)
 ax.set_xlim(0, 10)
-ax.set_ylim(0, 13)
+ax.set_ylim(1.6, 13)
 ax.axis("off")
 y = 12.4
 for name, *vals in blocks:

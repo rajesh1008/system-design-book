@@ -1,6 +1,6 @@
 // Figure 7.1  An effect is not a call
-// Reading order: left box without a key, right box with the effect
-// ledger. In each box the calls are on the left and the hotel's own
+// Reading order: top box with the effect ledger, bottom box without
+// a key. In each box the calls are on the left and the hotel's own
 // record is on the right. Two calls make two effects unless something
 // can tell that the second call is the first one again.
 digraph effect_not_call {

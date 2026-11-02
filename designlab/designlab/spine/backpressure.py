@@ -139,3 +139,16 @@ def admit(wanted: int, s: Signals) -> tuple[int, str]:
     if s.spend >= s.budget:
         n, why = 0, "hourly budget spent"
     return n, why
+
+
+def cap_for(reviewers: int, review_s: int, target_age_s: int) -> int:
+    """The pending cap a desk can honor: absorb rate times the oldest
+    age you are willing to show a reviewer. Derive it; do not guess."""
+    return int(absorb_rate(reviewers, review_s) * target_age_s)
+
+
+def sampled_peak(res: DeskResult, every_min: int = 5) -> int:
+    """Peak oldest age as a dashboard sampling every few minutes sees
+    it, in seconds."""
+    return max((a for m, _, _, a in res.timeline if m % every_min == 0),
+               default=0)

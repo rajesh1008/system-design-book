@@ -29,13 +29,16 @@ WRITERS = {
     "business_result": "scoreboard",
 }
 
+# Scheduled departures in UTC, the morning after the lab's rebooking
+# moment (15:02:11 Chicago time on December 18, 2025): XMW779 at 8:00 a.m.
+# Chicago time, XMW781 two hours later, as chain/live.py tells the model.
 FLIGHTS = {
     "FLT-000001": {"number": "XMW779", "origin": "ORD", "destination": "BOS",
-                   "departs": "2025-12-13T00:00:00Z", "fare_usd": 412.60},
+                   "departs": "2025-12-19T14:00:00Z", "fare_usd": 412.60},
     "FLT-009001": {"number": "XMW781", "origin": "ORD", "destination": "BOS",
-                   "departs": "2025-12-12T15:05:00Z", "fare_usd": 431.10},
+                   "departs": "2025-12-19T16:00:00Z", "fare_usd": 431.10},
     "FLT-009002": {"number": "XMW902", "origin": "ORD", "destination": "LGA",
-                   "departs": "2025-12-12T14:10:00Z", "fare_usd": 288.00},
+                   "departs": "2025-12-19T15:10:00Z", "fare_usd": 288.00},
 }
 
 POLICY = {"policy_id": "changes-v1", "max_fare_difference_usd": 1500.00,
