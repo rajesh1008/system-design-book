@@ -24,7 +24,7 @@ from .clocks import (decode_step_s, in_flight, kv_bytes_per_token,
 from .disagg import best_split, colocated
 from .layout import LAYOUTS, lint
 from .paged import fit
-from .tco import break_even_calls, fleet, gpus_for
+from .tco import break_even_calls, fleet, utilization
 from .trace import Seg, day
 
 PARTS = ("clocks", "batching", "paged", "layout", "bakeoff", "salt",
@@ -63,18 +63,18 @@ def part_clocks() -> None:
 
 
 def part_batching(seed: int, batch: int) -> None:
-    reqs = bt.workload(seed, per_s=0.9)
-    emit(f"batching: {len(reqs)} calls at 0.9/s on one GPU, seed {seed}")
-    emit(f"  {'policy':<22}{'tok/s':>7}{'TTFT p95':>10}"
+    reqs = bt.workload(seed)
+    emit(f"batching: {len(reqs)} calls at 5/s on one GPU, seed {seed}")
+    emit(f"  {'policy':<24}{'tok/s':>6}{'TTFT p95':>10}"
          f"{'ITL p95':>9}{'end p95':>9}")
     rows = (("static", 64, None), ("continuous", batch, None),
             ("continuous+chunk512", batch, 512))
     for name, b, ch in rows:
         pol = name.split("+")[0]
-        s = bt.run(pol, reqs, max_batch=b, chunk=ch)
-        emit(f"  {name + ' b' + str(b):<22}{s['tok_s']:>7,.0f}"
+        s = bt.run(pol, bt.workload(seed), max_batch=b, chunk=ch)
+        emit(f"  {name + ' b' + str(b):<24}{s['tok_s']:>6,.0f}"
              f"{s['ttft_p95']:>9.1f}s{s['itl_p95']:>8.3f}s"
-             f"{s['e2e_p95']:>8.0f}s")
+             f"{s['e2e_p95']:>8.1f}s")
 
 
 def call_lengths(seed: int) -> list[int]:
@@ -178,25 +178,22 @@ def part_speculative(accept: float) -> None:
 
 def part_disagg() -> None:
     emit("prefill and decode: one pool or two (toy model)")
-    emit(f"  {'workload':<22}{'pool':<10}{'TTFT':>7}{'ITL p95':>9}"
-         f"{'batch':>7}")
+    emit(f"  {'workload':<21}{'pool':<7}{'TTFT':>6}{'ITL':>7}"
+         f"{'p95':>6}{'call':>7}{'batch':>6}")
     uncached = round(PROMPT * 0.22)
     for name, rate, p, o, g in (
             ("Lakeshore surge", PEAK, uncached, OUTPUT, 3),
             ("Lakeshore x10", PEAK * 10, uncached, OUTPUT, 12),
             ("voice, long prompt", 6.0, 12000, 250, 12)):
-        c = colocated(rate, p, o, g)
-        emit(f"  {name:<22}{'one/' + str(g):<10}{c.ttft_s:>6.2f}s"
-             f"{c.itl_p95_s * 1000:>7.0f}ms{c.decode_batch:>7.1f}")
-        try:
-            gp, s = best_split(rate, p, o, g)
-        except ValueError:
-            emit(f"  {'  in ' + str(p) + ', out ' + str(o):<22}"
-                 f"{'no split':<10}")
-            continue
-        emit(f"  {'  in ' + f'{p:,}' + ', out ' + str(o):<22}"
-             f"{str(gp) + '+' + str(g - gp):<10}{s.ttft_s:>6.2f}s"
-             f"{s.itl_p95_s * 1000:>7.0f}ms{s.decode_batch:>7.1f}")
+        gp, s = best_split(rate, p, o, g)
+        for label, pool in (("one/" + str(g), colocated(rate, p, o, g)),
+                            (f"{gp}+{g - gp}", s)):
+            call = pool.ttft_s + (o - 1) * pool.itl_mean_s
+            emit(f"  {name:<21}{label:<7}{pool.ttft_s:>5.2f}s"
+                 f"{pool.itl_mean_s * 1000:>5.0f}ms"
+                 f"{pool.itl_p95_s * 1000:>4.0f}ms{call:>6.2f}s"
+                 f"{pool.decode_batch:>6.1f}")
+            name = f"  in {p:,}, out {o}"
 
 
 def part_tco(seed: int, gpu_hour: float) -> None:
@@ -209,18 +206,22 @@ def part_tco(seed: int, gpu_hour: float) -> None:
          f"  ${month * per_call['contract']:>8,.0f}")
     emit(f"  API small model, 78% hit"
          f"         ${month * per_call['small']:>8,.0f}")
-    need = gpus_for(PEAK, round(PROMPT * 0.22), OUTPUT)
-    for label, g in (("floor", 2), ("surge", max(2, need))):
-        f = fleet(g, gpu_hour)
-        emit(f"  self-host {label}, {g} GPUs"
-             f"         ${f.monthly:>8,.0f}  (GPUs ${f.gpu_usd:,.0f})")
-    f = fleet(2, gpu_hour)
-    be = break_even_calls(f, per_call["contract"])
-    emit(f"  floor = frontier bill at {be:,.0f} calls a month")
-    emit(f"    that is {be / CALLS:,.0f} tasks; against the small"
-         f" model: {break_even_calls(f, per_call['small']) / CALLS:,.0f}")
-    emit(f"  GPU-hour ${gpu_hour:.2f}; staff half of $16,000;"
-         f" illustrative")
+    small = fleet(2, gpu_hour)
+    big = fleet(16, gpu_hour, sre_share=1.0)
+    emit(f"  self-host 8B-class, 2 GPUs"
+         f"       ${small.monthly:>8,.0f}  (GPUs ${small.gpu_usd:,.0f})")
+    u = utilization(month, 2, round(PROMPT * 0.22), OUTPUT)
+    emit(f"    busy {u:.1%} of its hours at April volume")
+    emit(f"  self-host frontier-class, 16"
+         f"     ${big.monthly:>8,.0f}  (GPUs ${big.gpu_usd:,.0f})")
+    for label, f in (("2 GPUs", small), ("16 GPUs", big)):
+        be = break_even_calls(f, per_call["contract"]) / CALLS
+        emit(f"  {label} match the frontier bill at"
+             f" {be:>9,.0f} tasks/month")
+    be = break_even_calls(small, per_call["small"]) / CALLS
+    emit(f"  2 GPUs match the small-model bill at {be:>9,.0f}")
+    emit(f"  GPU-hour ${gpu_hour:.2f}; staff $16,000 a month,"
+         f" half for 2 GPUs")
 
 
 def part_card() -> None:

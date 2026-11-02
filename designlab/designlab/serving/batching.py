@@ -26,9 +26,11 @@ class Req:
     pre: int = 0            # prompt tokens not yet prefilled
 
 
-def workload(seed: int = 14, n: int = 500, per_s: float = 0.8,
-             prompt: int = 1750, out_mu: float = 7.32,
-             out_sigma: float = 0.35) -> list[Req]:
+def workload(seed: int = 14, n: int = 500, per_s: float = 5.0,
+             prompt: int = 1368, out_mu: float = 5.03,
+             out_sigma: float = 0.5) -> list[Req]:
+    """Lakeshore-shaped calls: the 1,368 prompt tokens a call that the
+    prefix cache does not hold (22% of 6,217) and about 173 out."""
     r = seeded(seed, "serving", "batching")
     t, out = 0.0, []
     for _ in range(n):

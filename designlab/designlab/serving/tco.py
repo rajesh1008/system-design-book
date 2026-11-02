@@ -11,6 +11,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
+from .clocks import decode_step_s
 from .disagg import colocated
 
 HOURS_PER_MONTH = 730
@@ -51,3 +52,13 @@ def fleet(gpus: int, gpu_hour_usd: float = 3.20,
 
 def break_even_calls(f: Fleet, api_usd_per_call: float) -> float:
     return f.monthly / api_usd_per_call if api_usd_per_call else math.inf
+
+
+def utilization(calls_month: float, gpus: int, prompt: int, output: int,
+                batch: int = 16, prefill_tok_s: float = 11800,
+                base_ms: float = 17.5, per_seq_ms: float = 0.34) -> float:
+    """Share of the fleet's hours spent working: prefill of the uncached
+    prompt plus decode at a typical batch, over all GPU-hours held."""
+    decode_tok_s = batch / decode_step_s(batch, base_ms, per_seq_ms)
+    busy = calls_month * (prompt / prefill_tok_s + output / decode_tok_s)
+    return busy / (gpus * HOURS_PER_MONTH * 3600)
