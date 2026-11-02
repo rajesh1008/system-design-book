@@ -24,7 +24,7 @@ class CardNetwork:
     """
     slow_calls: set[int] = field(default_factory=set)
     lost_calls: set[int] = field(default_factory=set)   # never reach the network
-    honour_keys: bool = True
+    honor_keys: bool = True
     credits: list[dict] = field(default_factory=list)
     _by_key: dict[str, dict] = field(default_factory=dict)
     _calls: int = 0
@@ -33,7 +33,7 @@ class CardNetwork:
         self._calls += 1
         if self._calls in self.lost_calls:
             raise Timeout(f"no response after 8.0 s (call {self._calls})")
-        if self.honour_keys and key is not None and key in self._by_key:
+        if self.honor_keys and key is not None and key in self._by_key:
             return dict(self._by_key[key], replayed=True)
         credit = {"credit_id": f"CR-{len(self.credits) + 1:05d}",
                   "itinerary": itinerary, "amount_usd": amount_usd}

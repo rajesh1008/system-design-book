@@ -13,7 +13,7 @@ ITINERARY, AMOUNT = "LTG-4471902", 412.60
 
 
 def proposal(itinerary: str = ITINERARY, amount: float = AMOUNT) -> Proposal:
-    return Proposal("refund", itinerary, amount, "flight cancelled by carrier")
+    return Proposal("refund", itinerary, amount, "flight canceled by carrier")
 
 
 def permission(pid: str = "PRM-20931") -> Permission:

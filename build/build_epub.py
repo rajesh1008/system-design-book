@@ -118,7 +118,7 @@ def write_metadata(m, workdir):
     meta = {
         "title": [{"type": "main", "text": m["title"]}, {"type": "subtitle", "text": m["subtitle"]}],
         "creator": [{"role": "author", "text": m["author"]}],
-        "lang": m.get("language", "en-GB"),
+        "lang": m.get("language", "en-US"),
         "rights": m.get("rights", f"Copyright © {year} {m['author']}. All rights reserved."),
         "date": m.get("date", datetime.date.today().isoformat()),
         "identifier": [{"scheme": "UUID", "text": m["identifier"]}] if m.get("identifier") else None,

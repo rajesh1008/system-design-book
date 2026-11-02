@@ -84,28 +84,28 @@ The `.qa` attributes stay in the source for the interview bank and are not rende
       ![The evidence chain for one rebooking](fig-02-3){#fig-02-3}
 
   The build resolves the PNG, prepends "Figure 2.3." to the caption and takes the alt text from `alt.md`.
-  Captions use sentence case, have no full stop and are not drawn in the figure.
+  Captions use sentence case, have no period and are not drawn in the figure.
 - Add `fig-02-3: One sentence.` to `03-figures/alt.md`. The build fails if it is missing.
-- Re-render and read `03-figures/out/render-report.md`. A fail must be fixed. A greyscale "review"
+- Re-render and read `03-figures/out/render-report.md`. A fail must be fixed. A grayscale "review"
   means you open `03-figures/out/_greyscale/fig-NN-M.png` and confirm that shape, border or label
-  carries the distinction as well as colour.
+  carries the distinction as well as color.
 
-## Tables, code, maths, cross-references
+## Tables, code, math, cross-references
 
 - Tables are pipe tables with a caption line after them: `: Caption in sentence case {#tbl-NN-M}`.
   The build prepends "Table N.M.". Keep to five columns at most; they wrap on a 6-inch screen.
 - Code uses fenced blocks with a language (` ```python `). Lines wrap; keep them under about 70 characters.
-- Maths uses `$...$` or `$$...$$`, output as MathML. Simple relations can stay as plain text.
+- Math uses `$...$` or `$$...$$`, output as MathML. Simple relations can stay as plain text.
 - Cross-references: `@fig-NN-M`, `@tbl-NN-M`, `@chNN` and `@app-X` become links with the correct label.
 
 ## House rules the build does not check
 
-British spelling (en-GB). No em dashes, exclamation marks or emoji. Use sentence case everywhere
+American spelling (en-US). No em dashes, exclamation marks or emoji. Use sentence case everywhere
 except the titles of Chapters, Parts and appendices. Lakeshore and every named person are fictional.
 
 ## Metadata
 
-`book.yaml` holds the title, subtitle, author (Rajesh Ranjan Mahapatra), language en-GB, the series
+`book.yaml` holds the title, subtitle, author (Rajesh Ranjan Mahapatra), language en-US, the series
 "AI at Work (Practitioner Playbooks)" with `series_index` 3, the identifier and the cover. The cover
 `05-build/cover.jpg` (1600x2560) is a typographic placeholder made by `make_cover.py`; replace it with
 the final artwork at the same size. Do not run `sync_public.sh` as part of a build; it pushes to a

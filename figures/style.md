@@ -4,7 +4,7 @@ One palette, one typeface, one stroke system for every figure in the book, whate
 The single source of truth is `03-figures/palette.json`. After editing it, run
 `python3 05-build/gen_theme.py`. That script regenerates `book.mplstyle`, `graphviz/book.gv`,
 `graphviz/book.gvpr`, `plantuml-theme.puml`, `mermaid/config.json` and `mermaid/classes.mmd`.
-Never hand-edit colours in those generated files or in a figure source; use the tokens below.
+Never hand-edit colors in those generated files or in a figure source; use the tokens below.
 
 ## 1. Palette and roles
 
@@ -18,29 +18,29 @@ from the series hexes so that strokes and labels clear 4.5:1 on white (3:1 for t
 | `ops` | Teal | #0F766E | #D5ECE9 | #0F9D8A | Lakeshore itineraries, queues, tools, services, operations |
 | `policy` | Amber | #B7791F (text #8A5A12) | #FBEBC8 | #E0A100 | Permission, policy, approval tiers, budgets, stop conditions |
 | `evidence` | Slate blue | #4F6D9A | #E1E7F0 | #4F6D9A | The chain record, the trail, evidence, traces |
-| `org` | Grey | #6B7280 | #FFFFFF | none | People, the organisation, customers, auditors, regulators |
+| `org` | Gray | #6B7280 | #FFFFFF | none | People, the organization, customers, auditors, regulators |
 | `knowledge` | Plum (accent) | #7B4B94 | #ECE1F2 | #7B4B94 | Knowledge plane: retrieval, semantic layer, context, memory |
 | `verified` | Green (accent) | #2F7A3E | #DCEEDD | #3A9D5D | Verified outcome, a passed gate, a check by something that did not act |
 | `fail` | Coral red (accent) | #C0392B | #F8DDD9 | #D64545 | Failure, denial, attack, incident, the duplicate effect |
 
-Neutrals: ink #1A1A1A (all text and the emphasis arrow), grey dark #4B5563 (default borders and
-arrows), grey light #D9DCE1 (rules, gridlines), white background.
+Neutrals: ink #1A1A1A (all text and the emphasis arrow), gray dark #4B5563 (default borders and
+arrows), gray light #D9DCE1 (rules, gridlines), white background.
 
 Rules:
-- At most four colour tokens plus neutrals in a figure. The exception is a plane map (HLD or overview), which may show each plane once in its own colour.
-- A colour always means the same thing across the book. Do not use navy for "important" or coral for "highlight".
-- Colour is never the only carrier of meaning. Every colour distinction is repeated by a label, a
+- At most four color tokens plus neutrals in a figure. The exception is a plane map (HLD or overview), which may show each plane once in its own color.
+- A color always means the same thing across the book. Do not use navy for "important" or coral for "highlight".
+- Color is never the only carrier of meaning. Every color distinction is repeated by a label, a
   shape (cylinder for stores, double border for gates), a border style (dashed for external,
-  dotted for the trail), a line style or a direct label. The greyscale check enforces a review.
+  dotted for the trail), a line style or a direct label. The grayscale check enforces a review.
 
-## 2. Encodings beyond colour
+## 2. Encodings beyond color
 
 | Meaning | Encoding |
 |---|---|
 | Data store, ledger, record | Cylinder (`store`) |
 | Gate, check, approval point | Double border (`gate`) |
 | Outside our control (vendor, airline, partner) | Dashed border (`external`) |
-| Person or group | Grey border, white fill (`human`) |
+| Person or group | Gray border, white fill (`human`) |
 | Annotation | No border, italic (`note`) |
 | Code or identifier label | JetBrains Mono (`code`) |
 | Data flow | 0.75 pt solid |
@@ -48,7 +48,7 @@ Rules:
 | The one path to notice | 2.5 pt ink (`emphasis`), at most one per figure |
 | Asynchronous | Dashed (`async`) |
 | Trail or evidence write | Dotted slate blue (`trail`) |
-| Failure path | Coral, solid, labelled (`fail`) |
+| Failure path | Coral, solid, labeled (`fail`) |
 
 ## 3. Typography
 
@@ -67,8 +67,8 @@ Rules:
 
 ## 5. Reject list
 
-A figure is redrawn if it has: colour as the only distinction;
-text under 9 pt at print; more than one emphasis path; more than four colour tokens outside a plane map; a legend where direct labels would fit;
+A figure is redrawn if it has: color as the only distinction;
+text under 9 pt at print; more than one emphasis path; more than four color tokens outside a plane map; a legend where direct labels would fit;
 a wider-than-3:2 shape; a drawn caption; title case labels; pills, shadows or gradients;
 generated (non-source) artwork.
 
@@ -92,7 +92,7 @@ Graphviz (`.dot`), for HLD, infra, deployment and component maps:
       a -> l [class="trail"];
     }
 
-Node tokens are the colour tokens plus modifiers `store gate external note code human`. Edge tokens are
+Node tokens are the color tokens plus modifiers `store gate external note code human`. Edge tokens are
 `data control emphasis async trail fail verified policy`. Cluster tokens are `plane-<colour>`.
 
 PlantUML (`.puml`), for sequence, class, component, state, activity and deployment diagrams:
@@ -104,7 +104,7 @@ PlantUML (`.puml`), for sequence, class, component, state, activity and deployme
     @enduml
 
 Stereotypes are `<<model>> <<ops>> <<policy>> <<evidence>> <<org>> <<knowledge>> <<verified>> <<fail>>`.
-Arrow colours are `$FAIL $POLICY $TRAIL $VERIFIED $EMPH`, and the raw colours are `$C_<TOKEN>`.
+Arrow colors are `$FAIL $POLICY $TRAIL $VERIFIED $EMPH`, and the raw colors are `$C_<TOKEN>`.
 Stereotype labels are hidden.
 
 Mermaid (`.mmd`), a fallback for quick state and flow diagrams; prefer PlantUML for the book:
@@ -113,7 +113,7 @@ Mermaid (`.mmd`), a fallback for quick state and flow diagrams; prefer PlantUML 
     stateDiagram-v2
       Permitted:::policy
 
-`%% @classes` pulls in the generated classDefs (the colour tokens plus `gate external`).
+`%% @classes` pulls in the generated classDefs (the color tokens plus `gate external`).
 
 Matplotlib (`.py`), for charts:
 
@@ -124,11 +124,11 @@ Matplotlib (`.py`), for charts:
     fl.save(fig)
 
 Use direct labels rather than legends. Every series also differs by marker, line style or hatch.
-Use `fl.LABEL[token]` for coloured text.
+Use `fl.LABEL[token]` for colored text.
 
 Hand-written SVG (`.svg`) is accepted for one-off schematics. Use palette hexes and Source Sans 3 only.
 
 ## 8. Alt text
 
 One sentence per figure in `03-figures/alt.md`, formatted `fig-NN-M: sentence.` The sentence says what the figure
-shows and the one thing to notice, not the colours.
+shows and the one thing to notice, not the colors.
