@@ -42,7 +42,7 @@ def itineraries(seed: int, n: int = 3_900) -> list[dict]:
     rows = []
     for i in range(n):
         r = rng.random()
-        if r < 0.0980:
+        if r < 0.0995:
             opt, diff = None, 0.0               # nothing within 24 h
         else:
             opt = rng.choice((2, 3, 5, 8, 14, 20))
