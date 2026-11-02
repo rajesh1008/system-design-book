@@ -124,7 +124,8 @@ def part_layer(extra: bool) -> L.Layer:
         emit("    " + line)
     if extra:
         from .translate import CONTRACT
-        enum = set(CONTRACT.output["metric"]["enum"])
+        enum = set(next(f for f in CONTRACT.fields
+                        if f.name == "metric").values)
         emit(f"  added {EXTRA['name']}: layer has it; contract enum "
              f"{'has' if EXTRA['name'] in enum else 'does not have'} it")
         g = S.Guard(lay)
@@ -169,7 +170,8 @@ def part_guard(guard: S.Guard, no_row_limit: bool) -> int:
     for lim in ((1000, 0) if no_row_limit else (1000,)):
         g = S.Guard(guard.layer, row_limit=lim, estimator=guard.estimator)
         q = L.MetricQuery("changes_count", date(2025, 1, 1),
-                          date(2025, 12, 31), ("desk", "carrier"), "day")
+                          date(2025, 12, 31), ("desk", "carrier"), "day",
+                          limit=100_000)
         d = g.ask(q, ent)
         e = d.estimate
         emit(f"    limit {lim or 'none'}: est ${e.usd:.4f} "
@@ -260,8 +262,10 @@ def part_live(guard: S.Guard) -> None:
     for r in rows:
         t, d = r["translation"], r["layer_decision"]
         if t.status == "clarify" or r["layer"] == "not_in_layer":
-            emit(f"  {r['id']} {t.status if t.status != 'ok' else 'ok'}"
-                 + (f", guard: {d.detail}" if d else ""))
+            emit(f"  {r['id']} model {t.status}")
+            if d:
+                for chunk in _wrap(f"guard: {d.detail}", 62):
+                    emit("      " + chunk)
             if t.assumption:
                 for chunk in _wrap(f"model: {t.assumption}", 62):
                     emit("      " + chunk)
@@ -290,7 +294,32 @@ def part_replay(rep: R.Replay) -> None:
     if near:
         lo = min(d.estimate.usd for d in near)
         hi = max(d.estimate.usd for d in near)
-        emit(f"  cost refusals: estimates ${lo:.2f} to ${hi:.2f}")
+        rng = (f"every estimate ${lo:.2f}" if f"{lo:.2f}" == f"{hi:.2f}"
+               else f"estimates ${lo:.2f} to ${hi:.2f}")
+        by = {}
+        for _, _, q, d in rep.rows:
+            if d.reason == "cost":
+                by[q.metric] = by.get(q.metric, 0) + 1
+        emit(f"  cost refusals: {rng}")
+        emit("    " + ", ".join(
+            f"{m} {n}" for m, n in sorted(by.items(), key=lambda x: -x[1])))
+    ans = [d for *_, d in rep.rows if d.status == "answered"]
+    spent = [d.estimate.actual_usd for d in ans]
+    emit(f"  answered spend ${sum(spent):,.2f}; largest "
+         f"${max(spent):.2f}; truncated {sum(d.truncated for d in ans)}")
+    emit(f"  answers with small groups suppressed: "
+         f"{sum(1 for d in ans if d.suppressed)}")
+    ent = Counter(d.detail.split(" needs")[0].replace("dimension ", "")
+                  for *_, d in rep.rows if d.reason == "entitlement")
+    emit("  entitlement refusals by metric or dimension:")
+    line = "   "
+    for k, v in ent.most_common():
+        part = f" {k} {v},"
+        if len(line) + len(part) > 68:
+            emit(line.rstrip(","))
+            line = "   "
+        line += part
+    emit(line.rstrip(","))
     emit(f"  audit (Owen's review): {len(rep.audit_findings)} answered "
          f"queries outside entitlement")
     for f in rep.audit_findings[:3]:
@@ -344,8 +373,8 @@ def main(argv=None) -> int:
              lambda r: part_card(lay, r))(rep)
         emit("")
     if a.inject:
-        emit(f"injected: estimator returns nothing; {bad} queries refused "
-             "as unestimated, none ran")
+        emit("injected: the estimator returns nothing")
+        emit(f"  {bad} queries refused as unestimated; none ran")
         return 1
     return 0
 

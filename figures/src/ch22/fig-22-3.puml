@@ -1,0 +1,29 @@
+@startuml
+' Figure 22.3  The memory record (class diagram)
+' Reading order: the record in the middle, its source above, its scope
+' rule below, its earlier version to the side. Fields from
+' memory.record.MemoryRecord.
+!include plantuml-theme.puml
+class Source <<evidence>> {
+  +event_id: str
+  +kind: str
+  +quote: str
+}
+class MemoryRecord <<knowledge>> {
+  +tenant: from token
+  +subject, value
+  +scope, trip
+  +confidence
+  +observed_at, expires_at
+  +version, supersedes
+  +derived_from
+  +status
+}
+class ScopeRule <<policy>> {
+  +standing: confirmed only
+  +trip: needs itinerary
+}
+MemoryRecord -up-> Source : cites
+MemoryRecord .down.> ScopeRule : checked by
+MemoryRecord -right-> MemoryRecord : supersedes
+@enduml

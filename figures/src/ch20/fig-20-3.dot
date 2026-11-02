@@ -1,0 +1,23 @@
+// Figure 20.3  The itinerary graph around the Okafors
+// Reading order: top to bottom. Ngozi booked LTG-5208841; Tunde's
+// LTG-5208842 is employer-paid, so his company's arranger may change
+// it. Both itineraries share flight FLT-904417, which connects the two
+// travelers in the graph but grants nothing.
+digraph okafor {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  arr [label="Corporate\narranger", class="human"];
+  acct [label="Employer\naccount", class="org"];
+  ngozi [label="Ngozi Okafor", class="human"];
+  tunde [label="Tunde Okafor", class="human"];
+  i1 [label="LTG-5208841", class="ops code"];
+  i2 [label="LTG-5208842", class="ops code"];
+  flt [label="FLT-904417", class="ops code"];
+  {rank=same; ngozi; acct;}
+  arr -> acct [class="control", label="arranger of"];
+  acct -> tunde [class="data", label="member", dir=back];
+  ngozi -> i1 [class="emphasis", label="booked"];
+  tunde -> i2 [class="data", label="booked"];
+  i1 -> flt [class="data", label="segment"];
+  i2 -> flt [class="data", label="segment"];
+}

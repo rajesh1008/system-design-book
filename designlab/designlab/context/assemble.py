@@ -103,7 +103,10 @@ def assemble(parts: dict[str, list[Item]], budget: Budget | None = None,
         by_slot[slot] = sum(i.tokens for i in kept)
     total = sum(by_slot.values())
     if total > budget.per_step:
-        alarms.append(f"budget {total:,} > {budget.per_step:,}")
+        top = max((s for s in by_slot if s not in STABLE),
+                  key=lambda s: by_slot[s])
+        alarms.append(f"budget {total:,} > {budget.per_step:,} "
+                      f"({top} {by_slot[top]:,})")
     if not alarms_on:
         alarms = []
     segs = to_segs(items)

@@ -1,0 +1,26 @@
+// Figure 20.1  The knowledge plane at Lakeshore
+// Reading order: top to bottom. A question and the caller's grant go to
+// the agent loop, which asks for a metric in the semantic layer; the
+// query guard estimates, limits, and checks the grant before a
+// read-only run against the warehouse. The itinerary graph answers
+// connection questions; authority comes from the grant, not the graph.
+digraph plane {
+#include "book.gv"
+  rankdir=TB; nodesep=0.4; ranksep=0.3;
+  user [label="Caller", class="human"];
+  loop [label="Agent loop", class="model"];
+  kg [label="Itinerary\ngraph", class="knowledge store"];
+  layer [label="Semantic layer\n41 metrics", class="knowledge"];
+  guard [label="Query guard", class="policy gate"];
+  wh [label="Warehouse\n(read-only)", class="ops store"];
+  trail [label="Trail", class="evidence store"];
+  {rank=same; loop; kg;}
+  {rank=same; wh; trail;}
+  user -> loop [class="control", label="question\n+ grant"];
+  loop -> kg [class="data", label="who is\nconnected"];
+  loop -> layer [class="control", label="metric"];
+  layer -> guard [class="emphasis", label="compiled SQL"];
+  guard -> wh [class="control", label="run"];
+  guard -> trail [class="trail"];
+  wh -> loop [class="data", label="rows", constraint=false];
+}

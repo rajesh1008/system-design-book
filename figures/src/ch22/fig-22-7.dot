@@ -1,0 +1,22 @@
+// Figure 22.7  Deletion that propagates
+// Reading order: top to bottom. An erasure request starts from the
+// customer's records, follows derived_from links into summaries and a
+// companion's note, writes a tombstone for each, and replays the
+// tombstones before a restored backup serves reads. From memory.forget.
+digraph forget {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  req [label="Erasure request", class="policy"];
+  own [label="Her records\n4", class="knowledge"];
+  der [label="Derived records\n2, one on a companion", class="knowledge"];
+  tomb [label="Tombstones\n6", class="knowledge store"];
+  bak [label="Restored backup", class="knowledge store"];
+  gate [label="Replay tombstones\nbefore reads", class="policy gate"];
+  req -> own [class="control"];
+  own -> der [class="emphasis", label=" derived_from"];
+  own -> tomb [class="data"];
+  der -> tomb [class="data"];
+  bak -> gate [class="data"];
+  tomb -> gate [class="control"];
+  { rank=same; tomb; bak; }
+}

@@ -1,0 +1,25 @@
+// Figure 15.4  The cascade with a verifier
+// Reading order: top to bottom. The router sends the change-intent step
+// to the small model; the verifier checks the reply against the booking
+// record. A kept answer goes to the policy check; an escalated step goes
+// to the frontier model, whose answer is final. Every step writes its
+// route and any reason to the trail.
+digraph cascade {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  router [label="Router", class="policy gate"];
+  small [label="Small model", class="model"];
+  verifier [label="Verifier", class="policy gate"];
+  record [label="Booking record", class="evidence store"];
+  frontier [label="Frontier model\nanswer is final", class="model external"];
+  policy [label="Policy check", class="policy"];
+  trail [label="Trail\nroute, escalation, reason", class="ops store"];
+  router -> small [class="data", label="change intent"];
+  small -> verifier [class="data"];
+  record -> verifier [class="data", label="facts"];
+  verifier -> policy [class="emphasis", label="kept, 89%"];
+  verifier -> frontier [class="fail", label="escalated, 11%"];
+  frontier -> policy [class="data"];
+  policy -> trail [class="trail"];
+  { rank=same; small; record; }
+}

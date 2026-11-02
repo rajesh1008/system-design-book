@@ -1,0 +1,26 @@
+// Figure 15.1  One model against a portfolio
+// Reading order: left cluster first. With one model, every step calls
+// the frontier model. With a portfolio, the router in the control plane
+// reads the Decision Table and sends each step to the model that passed
+// its gate. Lakeshore, May 2026 (illustrative).
+digraph one_vs_portfolio {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.35;
+  subgraph cluster_one { label="One model"; class="plane-ops";
+    s1 [label="Ten steps", class="ops"];
+    f1 [label="Frontier model\nevery step", class="model external"];
+    s1 -> f1 [class="data"];
+  }
+  subgraph cluster_port { label="Portfolio"; class="plane-policy";
+    s2 [label="Ten steps", class="ops"];
+    r [label="Router\ncontrol plane", class="policy gate"];
+    t [label="Decision Table", class="evidence store"];
+    sm [label="Small models\n63% of steps", class="model"];
+    md [label="Mid model\n9%", class="model"];
+    fr [label="Frontier model\n28%", class="model external"];
+    s2 -> r [class="data"];
+    t -> r [class="emphasis"];
+    r -> sm [class="data"]; r -> md [class="data"]; r -> fr [class="data"];
+  }
+  f1 -> s2 [style=invis];
+}

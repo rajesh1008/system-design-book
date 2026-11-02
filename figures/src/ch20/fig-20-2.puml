@@ -1,0 +1,31 @@
+@startuml
+' Figure 20.2  What a metric in the layer carries
+' Reading order: top to bottom. A metric names one table, one
+' aggregate, a time column, its dimensions, an owner, a longest
+' window, and the roles that may read it. Dimensions are shared; a
+' dimension can carry its own role, as customer_id does.
+!include plantuml-theme.puml
+hide circle
+class "refunds_count" as M <<knowledge>> {
+  table: refunds
+  kind: count
+  owner: Marcus Bell
+  window: 400 days
+  roles: ops, finance, risk
+}
+class "Dimension" as D <<knowledge>> {
+  carrier, desk
+  change_type, ...
+}
+class "Restricted dimension" as R <<policy>> {
+  customer_id: risk
+  approver_id: hr
+}
+class "Layer v1.0" as L <<knowledge>> {
+  41 metrics
+  k = 3
+}
+L *-- M : one of 41
+M "*" --> "0..3" D : group by
+M "*" --> "0..3" R : if granted
+@enduml

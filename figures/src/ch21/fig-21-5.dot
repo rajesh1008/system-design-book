@@ -1,0 +1,24 @@
+// Figure 21.5  Isolation through sub-agents and files
+// Reading order: top to bottom. The lead agent hands a narrow question
+// to the fare-rule research sub-agent, which has read-only tools. The
+// sub-agent reads the long material in its own context (6.2 million
+// tokens across the lab) and returns a 300-token digest; the full
+// output goes to the artifact store, and the lead reads a slice back
+// only when it needs one. The guard keeps refund.issue off its list.
+digraph iso {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.35;
+  lead [label="Lead agent", class="model"];
+  sub [label="Research\nsub-agent", class="model"];
+  guard [label="Guard:\nno refund.issue", class="policy"];
+  src [label="Fare rules,\nsearch results", class="knowledge"];
+  store [label="Artifact store", class="data"];
+  {rank=same; lead; guard;}
+  {rank=same; src; store;}
+  lead -> sub [label="question", class="control"];
+  guard -> sub [class="policy"];
+  sub -> src [label="reads", class="data"];
+  sub -> store [label="output", class="data"];
+  sub -> lead [label="digest", class="verified"];
+  store -> lead [label="slice", class="data", style="dashed"];
+}

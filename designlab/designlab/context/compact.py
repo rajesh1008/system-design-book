@@ -52,6 +52,7 @@ class Result:
     success: bool = False
     reused: int = 0                # prefix tokens repeated step to step
     sent: int = 0                  # tokens sent across the run
+    last: Assembled | None = None  # the final step, as assembled
 
     @property
     def peak(self) -> int:
@@ -74,7 +75,8 @@ def _summary_tokens(src: int, structured: bool) -> int:
 
 def replay(run: Run, policy: str, budget: Budget | None = None,
            seed: int = 21, trail: TrailWriter | None = None,
-           alarms_on: bool = True, order=None) -> Result:
+           alarms_on: bool = True, order=None,
+           release: str = "v7") -> Result:
     budget = budget or Budget()
     if policy not in POLICIES:
         raise ValueError(policy)
@@ -94,7 +96,7 @@ def replay(run: Run, policy: str, budget: Budget | None = None,
              "examples": [], "task": run.task, "memory": run.memory,
              "history": hist, "retrieved": step.retrieved,
              "clock": [clock_item(f"{run.run_id}:{step.n}")]}
-        for it in stable_items():
+        for it in stable_items(release=release):
             p[it.slot].append(it)
         if policy == "pinned" and store:
             p["pinned"] = [Item("pinned", f.key, PIN_TOKENS,
@@ -113,6 +115,7 @@ def replay(run: Run, policy: str, budget: Budget | None = None,
         blocks.append(_Block(step.n, list(step.history), list(step.facts)))
         store.extend(step.facts)
         a = assemble(parts(step), budget, alarms_on=False, **kw)
+        a0 = a.tokens
         if policy == "truncate" and a.tokens > budget.per_step:
             while a.tokens > budget.per_step and len(blocks) > 1:
                 blocks.pop(0)
@@ -147,6 +150,13 @@ def replay(run: Run, policy: str, budget: Budget | None = None,
                                           tok)], facts)
                 blocks = blocks[-KEEP_STEPS:]
             res.compactions += 1
+            if trail is not None and alarms_on:
+                after = assemble(parts(step), budget, alarms_on=False,
+                                 **kw).tokens
+                trail.append({"event": "context.compacted",
+                              "run": run.run_id, "step": step.n,
+                              "policy": policy, "before": a0,
+                              "after": after})
         a = assemble(parts(step), budget, trail=trail if alarms_on
                      else None, run=run.run_id, step=step.n,
                      alarms_on=alarms_on, **kw)
@@ -155,6 +165,7 @@ def replay(run: Run, policy: str, budget: Budget | None = None,
         res.sent += a.tokens
         res.reused += reuse(prev, a)
         prev = a
+        res.last = a
         missing = [k for k in step.needs if k not in visible()]
         for k in missing:
             kind = next(f.kind for f in store if f.key == k)

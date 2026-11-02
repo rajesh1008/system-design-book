@@ -1,0 +1,19 @@
+// Figure 22.9  One-off against standing preference
+// Reading order: top to bottom, two paths from one turn. The pilot
+// stored the aisle request with no scope and read it on every later
+// trip. The governed store scopes it to the Tokyo trip, so later trips
+// read nothing until the customer confirms a standing preference.
+// From memory.demo --part pilot.
+digraph oneoff {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.35;
+  turn [label="\"An aisle on the\nTokyo flight\"", class="knowledge"];
+  pilot [label="Pilot note\nno scope", class="fail"];
+  gov [label="Trip memory\nTokyo only", class="knowledge"];
+  bad [label="Aisle on\n3 of 3 trips", class="fail"];
+  good [label="Later trips\nask", class="knowledge"];
+  turn -> pilot [class="fail"];
+  turn -> gov [class="emphasis"];
+  pilot -> bad [class="fail"];
+  gov -> good [class="data"];
+}

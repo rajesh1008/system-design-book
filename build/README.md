@@ -10,7 +10,7 @@ The figure style is in `03-figures/style.md`.
 | `make theme` | Regenerate every theme file from `03-figures/palette.json` |
 | `make figures` | Render changed figures (`python3 05-build/render_figures.py [chNN ...] [--force] [--only fig-NN-M]`) |
 | `make sample` | Build `05-build/out/sample.epub` (and `.azw3`) from `sample.yaml` |
-| `make book` | Build `05-build/out/book.epub` from `book.yaml`, fonts embedded |
+| `make book` | Build `05-build/out/book.epub` from `book.yaml` (no embedded fonts: the series design uses the reader's fonts) |
 | `make azw3` | The same plus a Calibre AZW3 proof copy |
 | `make wordcount` | Per-chapter body and interview words, with a running total, into `05-build/out/wordcount.md` |
 
@@ -19,6 +19,23 @@ the book and runs pandoc and EPUBCheck. It exits 1 on any filter error, any EPUB
 or, with `--strict`, any missing manuscript file. The EPUBCheck report goes to
 `05-build/out/epubcheck-<stem>.txt` and the figure report to `03-figures/out/render-report.md`.
 `wordcount.py [--sample] [--write] [--floor N]` counts words.
+
+## Series styling
+
+The book uses the series house style of the FDE Handbook (same series): navy, teal and amber with light
+tints, a teal chapter-opener block with a large numeral, cream Part pages, tinted boxes with a coloured
+label strip and a round icon, a navy-tinted interview question line, label bars on code ("Python",
+"Shell", ... or "Output" for ```text blocks) and zebra tables. Dark text on light tints throughout, so
+it reads on e-ink greyscale. The pieces:
+
+- `kindle.css`: every colour and rule (palette in its header comment). `strong` keeps the body font and size.
+- `highlight.theme`: syntax colours (keywords plum, strings rust, comments green italic).
+- `book.lua`: box label strips and icons, `div.q` question lines, code label bars, the Scoreboard box,
+  decision-record boxes (`> **DR-...**`, `> Decision. ...`, `::: note` "Decision record ..."), pull quotes
+  (a one-sentence block quote). Add `{.nolabel}` to a code fence to drop its label bar. Hooks with no use
+  yet: `::: key-takeaways`, `::: epigraph`, `::: warning`.
+- `build_epub.py`: chapter, appendix and Part headings as label / numeral / title spans (the nav still reads
+  "Chapter N. Title"); runs `make_icons.py`, which draws the icons into `out/_icons/` (needs cairosvg).
 
 ## File layout
 

@@ -1,0 +1,18 @@
+// Figure 22.8  Memory as evidence, never authority
+// Reading order: top to bottom. A proposal arrives with its grounds.
+// Grounds that cite a memory, or a fact sourced from one, send it to
+// a person who checks the record; grounds from records go to the
+// control plane, which may permit. From memory.policy.authorize.
+digraph authority {
+#include "book.gv"
+  rankdir=TB; nodesep=0.5; ranksep=0.35;
+  prop [label="Proposal\nand grounds", class="knowledge"];
+  chk [label="Grounds check", class="policy gate"];
+  desk [label="Desk checks\nthe record", class="fail human"];
+  ctl [label="Control plane", class="policy"];
+  prm [label="Permission\nrecord", class="policy"];
+  prop -> chk [class="data"];
+  chk -> desk [class="fail", label=" cites memory"];
+  chk -> ctl [class="emphasis", label=" records only"];
+  ctl -> prm [class="control"];
+}

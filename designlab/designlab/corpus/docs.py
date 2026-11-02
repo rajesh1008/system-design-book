@@ -26,7 +26,7 @@ from functools import lru_cache
 
 from common.rand import DEFAULT_SEED, seeded
 
-INDEXED_AT = "2026-05-04T14:14:02-05:00"   # the re-crawl before the call
+INDEXED_AT = "2026-05-04T14:14:02-05:00"   # May 4 re-crawl, replayed
 
 CARRIERS = (
     ("XPA", "Prairie Airways"), ("XHA", "Harbor Air"),

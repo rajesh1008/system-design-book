@@ -1,0 +1,22 @@
+// Figure 22.1  Memory as governed state
+// Reading order: top to bottom. A turn proposes a memory; the write
+// gate checks provenance, scope, and confidence against the session
+// token; the store keeps versions and tombstones; the read policy
+// decides what each role sees; memories reach the context packet as
+// evidence only. Every step writes the trail. From memory.store.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.4; ranksep=0.3;
+  turn [label="Turn", class="knowledge"];
+  gate [label="Write gate\nsource, scope", class="policy gate"];
+  store [label="Memory store\nversions", class="knowledge store"];
+  read [label="Read policy\ntenant, role", class="policy gate"];
+  pkt [label="Context\nevidence only", class="knowledge"];
+  trail [label="Trail", class="knowledge store note"];
+  turn -> gate [class="data"];
+  gate -> store [class="emphasis", label=" accepted"];
+  store -> read -> pkt [class="data"];
+  gate -> trail [class="trail", label=" refusals"];
+  read -> trail [class="trail"];
+  { rank=same; store; trail; }
+}

@@ -1,0 +1,20 @@
+// Figure 21.2  Assembly order: stable to volatile
+// Reading order: top to bottom. The assembler lays slots out in the
+// order they change: per release, per task, per step. The prefix cache
+// reuses everything up to the first changed token, so the stable block
+// comes first and the clock last. A retrieved passage placed first
+// breaks reuse for every token behind it (83.3% reuse against 35.9% in
+// the lab).
+digraph order {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  rel [label="Per release\ntools, instructions,\npolicy, examples", class="model"];
+  task [label="Per task\ntask, memory, history", class="knowledge"];
+  step [label="Per step\nretrieved, pinned, clock", class="knowledge"];
+  hit [label="Cache\nreuses this", class="note"];
+  miss [label="Changes\nevery call", class="note"];
+  {rank=same; rel; hit;} {rank=same; step; miss;}
+  rel -> task -> step [class="data"];
+  hit -> rel [class="verified"];
+  miss -> step [class="fail"];
+}

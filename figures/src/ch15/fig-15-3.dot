@@ -1,0 +1,29 @@
+// Figure 15.3  The router at the control plane
+// Reading order: top to bottom. A step from the plan reaches the router,
+// which reads the Decision Table, the floors, and the budget cap, then
+// calls the contract client; the client calls the gateway, which carries
+// the call to the routed model. Every call writes its route to the trail.
+digraph router_cp {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  step [label="Plan step\nchange intent", class="ops"];
+  subgraph cluster_cp { label="Control plane"; class="plane-policy";
+    router [label="Router", class="policy gate"];
+    table [label="Decision Table", class="evidence store"];
+    floors [label="Risk floors", class="policy"];
+    cap [label="Budget cap", class="policy"];
+    client [label="Contract client", class="policy gate"];
+  }
+  gw [label="Gateway\ncarries, does not choose", class="ops"];
+  model [label="Routed model", class="model external"];
+  trail [label="Trail\nroute, model, budget,\nescalation, reason", class="ops store"];
+  step -> router [class="data"];
+  table -> router [class="emphasis"];
+  floors -> router [class="data"];
+  cap -> router [class="data"];
+  router -> client [class="data", label="route"];
+  client -> gw [class="data"];
+  gw -> model [class="data"];
+  router -> trail [class="trail"];
+  { rank=same; table; floors; cap; }
+}

@@ -127,8 +127,10 @@ def problems(layer: Layer, q: MetricQuery) -> list[str]:
     for d, v in q.filters:
         known = VALUES.get(d)
         if known is not None and v not in known:
-            near = [k for k in known if v in k or k in v]
-            hint = f"; did you mean {near[0]!r}?" if near else ""
+            near = list(dict.fromkeys(
+                k for k in known if v in k or k in v))
+            hint = ("; did you mean " + " or ".join(map(repr, near)) + "?"
+                    if near else "")
             out.append(f"{d} has no value {v!r}{hint}")
     if q.grain not in GRAINS:
         out.append(f"unknown grain {q.grain!r}")

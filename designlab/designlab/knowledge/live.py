@@ -23,9 +23,10 @@ from . import translate as T
 from .questions import CALLERS, QUESTIONS
 
 
-def run(replay: bool | None = None) -> tuple[list[str], list[dict]]:
+def run(replay: bool | None = None, cache_dir=None
+        ) -> tuple[list[str], list[dict]]:
     meter = SpendMeter(cap_usd=0.50)
-    c = T.client(meter, replay)
+    c = T.client(meter, replay, cache_dir)
     guard = S.Guard()
     raw_guard = S.Guard(raw_allowed=True)
     lines, rows = [], []

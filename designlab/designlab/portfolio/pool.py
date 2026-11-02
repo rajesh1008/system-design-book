@@ -4,8 +4,9 @@ Every request is looked up by its body hash, first in Chapter 13's
 change-intent fixtures (the frontier answers that chapter recorded),
 then in this chapter's pool. Offline, a miss is an error, as in
 Chapter 13. Live, a miss is sent once, timed, redacted, and written to
-the pool, and only those calls count against the live spend cap, so a request the gate already paid for is never paid for
-again by the router check.
+the pool, and only those calls count against the live spend cap, so
+a request the gate already paid for is never paid for again by the
+router check.
 """
 from __future__ import annotations
 

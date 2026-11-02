@@ -1,116 +1,205 @@
 /* kindle.css: "System Design for Agentic AI" (AI at Work: Practitioner Playbooks)
-   Rules for Kindle (KF8 / Enhanced Typesetting) and e-ink:
-   - Never set body font-family or font-size in px; the reader chooses. Use em and %.
-   - Colour is decorative only: every box is also told apart by its label, border style and indent.
-   - No floats, no position, no fixed heights; Kindle ignores or breaks them.
-   - Boxes are <div>, never <aside> (Kindle turns aside into a pop-up footnote).            */
+   Series house style, matched to the FDE Handbook (same series): navy #1F3A5F, teal #0F7C80,
+   amber #D99A1E, slate #5A6F9C, coral #E05A47, green #3A8F4B, plum #7B4B83, with light tints (about
+   10-14%) for box bodies and stronger tints (about 22-28%) for label strips.
+   Rules for Kindle (KF8 / Enhanced Typesetting / KFX) and e-ink:
+   - Never set body font-family or font-size; the reader chooses. em and % only. No embedded fonts:
+     text is the reader's serif, headings and labels "sans-serif", code "monospace" (as in the FDE book).
+   - Always dark text on a light tint (body text >= 7:1, labels >= 4.5:1), never light text on a fill,
+     so a greyscale screen, or a reader that drops background colours, still shows every word.
+   - Coloured borders carry the structure when backgrounds are dropped; every box also has its label.
+   - No flex, grid, float or position; no fixed heights. Boxes are <div>, never <aside>.
+   Structure comes from book.lua (box labels, icons, question lines, code labels, scoreboard and
+   decision-record boxes, pull quotes) and build_epub.py (chapter and part opener spans).          */
 
-body { margin: 0; padding: 0; text-align: left; line-height: 1.35; widows: 2; orphans: 2;
+/* ---------- body and type */
+body { margin: 0; padding: 0; text-align: left; line-height: 1.45; widows: 2; orphans: 2;
        font-kerning: normal; hyphens: auto; -webkit-hyphens: auto; }
-
-/* ---------- headings: Part = h1, Chapter = h2, sections = h3/h4 */
-h1, h2, h3, h4, h5 { font-family: sans-serif; text-align: left; line-height: 1.2;
-       page-break-after: avoid; break-after: avoid; hyphens: none; -webkit-hyphens: none; }
-h1 { font-size: 1.7em; margin: 3em 0 1em 0; page-break-before: always; color: #1F2A44; }
-/* chapter opener band: a navy rule above, a teal rule below; reads as two bars in greyscale */
-h2 { font-size: 1.45em; margin: 1.5em 0 0.9em 0; page-break-before: always; color: #1F2A44;
-     border-top: 0.45em solid #1F2A44; border-bottom: 2px solid #0F766E; padding: 0.5em 0 0.35em 0; }
-h1 { border-bottom: 3px double #1F2A44; padding-bottom: 0.3em; }
-h3 { color: #1F2A44; }
-h3 { font-size: 1.2em; margin: 1.6em 0 0.5em 0; }
-h4 { font-size: 1.05em; margin: 1.3em 0 0.4em 0; }
-h5 { font-size: 1em; font-style: italic; margin: 1.1em 0 0.3em 0; }
-section.level1 > p:first-of-type { font-style: italic; }   /* Part opener blurb */
-
-p { margin: 0; text-indent: 1.2em; }
-h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, div + p, figure + p, table + p, pre + p, ul + p, ol + p,
-blockquote + p, .sourceCode + p, p.no-indent { text-indent: 0; }
-p + p { margin-top: 0.25em; }
-ul, ol { margin: 0.6em 0 0.6em 1.4em; padding: 0; }
-li { margin: 0.15em 0; }
-li p { text-indent: 0; }
-blockquote { margin: 0.8em 1.2em; font-style: italic; }
-blockquote p { text-indent: 0; }
-a { color: inherit; text-decoration: underline; }
+p { margin: 0 0 0.6em 0; text-indent: 0; }
 strong, b { font-weight: bold; font-family: inherit; font-size: inherit; }
-hr { border: 0; border-top: 1px solid #6B7280; margin: 1.5em 20%; }
+em { font-style: italic; }
+a { color: #0B5E61; text-decoration: underline; }
+sup { font-size: 0.7em; line-height: 0; }
+ul, ol { margin: 0 0 0.7em 0; padding-left: 1.5em; }
+li { margin-bottom: 0.25em; }
+li p { margin-bottom: 0.3em; }
+hr { border: 0; border-top: 2px solid #D99A1E; margin: 1.5em 20%; }
 
-/* ---------- title and copyright pages */
-section#title_page, section.titlepage { text-align: center; }
-h1.title { page-break-before: auto; font-size: 2em; margin-top: 25%; text-align: center; color: #1F2A44; }
-p.subtitle { font-size: 1.2em; text-align: center; text-indent: 0; margin-top: 0.6em; }
-p.author { font-size: 1.1em; text-align: center; text-indent: 0; margin-top: 3em; }
-p.publisher, p.date, p.rights { text-align: center; text-indent: 0; font-size: 0.9em; }
-.copyright p { text-indent: 0; font-size: 0.85em; margin-top: 0.6em; }
+/* ---------- headings: Part = h1, Chapter = h2 (opener), sections h3, h4, h5 */
+h1, h2, h3, h4, h5, h6 { font-family: sans-serif; text-align: left; line-height: 1.25;
+       page-break-after: avoid; break-after: avoid; hyphens: none; -webkit-hyphens: none; }
+h1 { font-size: 1.7em; color: #1F3A5F; margin: 0.3em 0 0.6em 0; }
+h3 { font-size: 1.35em; color: #1F3A5F; margin: 1.6em 0 0.6em 0; padding: 0.15em 0 0.25em 0.5em;
+     border-left: 0.32em solid #0F7C80; border-bottom: 2px solid #D99A1E; }
+h4 { font-size: 1.14em; color: #0B5E61; margin: 1.3em 0 0.45em 0; padding-left: 0.45em;
+     border-left: 0.22em solid #D99A1E; }
+h5 { font-size: 1em; color: #643A6B; margin: 1em 0 0.35em 0; }
+h6 { font-size: 1em; color: #643A6B; font-style: italic; margin: 1em 0 0.35em 0; }
+h3 img.icon, h4 img.icon { height: 1.3em; width: auto; vertical-align: middle; margin: 0 0.45em 0 0; }
+
+/* ---------- chapter opener: teal band, tinted block, label, big numeral, title, amber foot rule */
+h2 { font-size: 1.35em; color: #1F3A5F; margin: 0 0 1.8em 0; padding: 0.7em 1em 0.9em 1em;
+     page-break-before: always; break-before: page; page-break-inside: avoid;
+     background-color: #D9EDED; border-top: 1.1em solid #0F7C80; border-bottom: 0.35em solid #D99A1E; }
+h2.chapter { font-size: 1em; }
+h2 .op-label { display: block; font-weight: bold; text-transform: uppercase; letter-spacing: 0.25em;
+               color: #0B5E61; font-size: 0.85em; margin: 0.3em 0 0 0; }
+h2 .op-num { display: block; font-weight: bold; font-size: 4.8em; color: #0F7C80; line-height: 1;
+             margin: 0 0 0.05em 0; }
+h2 .op-sep { display: none; }
+h2 .op-title { display: block; font-size: 1.85em; color: #1F3A5F; line-height: 1.2; margin: 0.1em 0 0.2em 0;
+               padding-bottom: 0.35em; border-bottom: 2px solid #0F7C80; }
+
+/* ---------- part pages: cream block, navy band, centred label and amber numeral */
+section.part { margin: 12% 0 0 0; padding: 1.4em 1em 1.6em 1em; background-color: #FBF3E0;
+     border-top: 0.9em solid #1F3A5F; border-bottom: 0.35em solid #D99A1E; page-break-before: always; break-before: page; }
+h1.part { text-align: center; margin: 0 0 0.6em 0; padding: 0; font-size: 1em; page-break-inside: avoid; }
+h1 .op-label { display: block; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3em;
+               color: #7A5200; font-size: 0.95em; margin: 0; }
+h1 .op-num { display: block; font-weight: bold; font-size: 4.4em; color: #B37A0C; line-height: 1.05;
+             margin: 0.05em 0 0.1em 0; }
+h1 .op-sep { display: none; }
+h1 .op-title { display: block; font-size: 1.75em; color: #1F3A5F; line-height: 1.2; margin: 0.2em 0 0.2em 0; }
+section.part > p { text-align: left; }
+section.part > ul, section.part > ol { font-family: sans-serif; font-size: 0.9em; margin: 1em 0.5em 0 0.5em;
+     padding: 0.6em 0.8em 0.6em 2em; background-color: #FFFFFF; border-left: 0.3em solid #0F7C80; }
+
+/* ---------- title page, copyright, contents */
+section.titlepage, section#title_page { text-align: center; margin: 14% 0 0 0; padding: 1.6em 1em 1.8em 1em;
+     background-color: #E3F1F1; border-top: 1em solid #1F3A5F; border-bottom: 0.4em solid #D99A1E; }
+section.titlepage h1 { font-size: 2.2em; color: #1F3A5F; margin: 0.2em 0 0.3em 0; text-align: center;
+     border: 0; padding: 0; background-color: transparent; page-break-before: auto; }
+section.titlepage h1.subtitle, section.titlepage p.subtitle { font-family: serif; font-weight: normal; font-style: italic;
+     font-size: 1.1em; color: #0B5E61; margin: 0 0 1.6em 0; }
+section.titlepage p.author { font-variant: small-caps; letter-spacing: 0.08em; font-size: 1.2em; font-weight: bold;
+     text-align: center; margin: 0 0 0.6em 0; padding: 0.3em 0; border-top: 2px solid #D99A1E; }
+section.titlepage p.date, section.titlepage p.publisher { font-family: sans-serif; font-size: 0.8em; color: #3F5280;
+     letter-spacing: 0.12em; text-align: center; margin-top: 1.6em; }
+section.titlepage div.rights, section.titlepage p.rights { font-size: 0.8em; text-align: center; margin-top: 2em; }
+.copyright { font-size: 0.8em; margin-top: 30%; padding-top: 0.6em; border-top: 2px solid #0F7C80; }
 .copyright h1, .copyright h2 { font-size: 1.1em; margin-top: 2em; }
+nav h1, nav h2 { color: #1F3A5F; border: 0; border-bottom: 2px solid #D99A1E; padding: 0 0 0.2em 0;
+     background-color: transparent; font-size: 1.5em; margin: 0.3em 0 0.6em 0; }
+nav ol { list-style-type: none; padding-left: 0.8em; }
+nav li a { color: #1F3A5F; text-decoration: none; }
+nav#toc ol, nav#landmarks ol { list-style-type: none; }
 
-/* ---------- feature boxes (fenced divs; label inserted by book.lua) */
-div.box { margin: 1.2em 0; padding: 0.6em 0.8em 0.7em 0.8em; border: 1px solid #4B5563;
-          border-left-width: 4px; page-break-inside: auto; }
-div.box p { text-indent: 0; margin-top: 0.4em; }
-div.box p:first-child { margin-top: 0; }
-div.box ul, div.box ol { margin-left: 1.2em; }
-.box-label { font-family: sans-serif; font-size: 0.85em; letter-spacing: 0.02em; }
-.box-title { font-family: sans-serif; }
-/* Per-type colours (master prompt): field teal, decision green, research slate blue,
-   disagree plum, sidebar amber, warning coral red, try navy.
-   E-ink fallback: each type also differs by border pattern and its fixed label.        */
-div.from-the-field   { border-color: #0F766E; border-left-style: solid;  background-color: #EEF7F6; }
-div.decision-maker   { border-color: #2F7A3E; border-left-style: double; border-left-width: 6px; background-color: #EFF7F0; }
-div.recent-research  { border-color: #4F6D9A; border-style: solid; border-top-width: 2px; background-color: #F0F3F8; }
-div.experts-disagree { border-color: #7B4B94; border-style: dashed; border-left-style: solid; background-color: #F6F0F9; }
-div.sidebar          { border-color: #B7791F; border-style: solid; border-left-width: 1px; border-top-width: 4px; background-color: #FDF6E7; }
-div.warning          { border-color: #C0392B; border-style: solid; border-width: 2px; border-left-width: 6px; background-color: #FCEFED; }
-div.try-it-yourself  { border-color: #1F2A44; border-style: dotted; border-left-style: solid; background-color: #F1F2F5; }
-div.from-the-field .box-label   { color: #0F766E; }
-div.decision-maker .box-label   { color: #2F7A3E; }
-div.recent-research .box-label  { color: #4F6D9A; }
-div.experts-disagree .box-label { color: #7B4B94; }
-div.sidebar .box-label          { color: #8A5A12; }
-div.warning .box-label          { color: #C0392B; }
-div.try-it-yourself .box-label  { color: #1F2A44; }
+/* ---------- feature boxes: tinted body, coloured label strip with icon, coloured margin marker */
+div.box { margin: 1.3em 0; padding: 0 0 0.5em 0; background-color: #EDF0F7;
+          border-left: 0.42em solid #5A6F9C; border-bottom: 1px solid #5A6F9C; page-break-inside: auto; }
+div.box > p, div.box > ul, div.box > ol, div.box > pre, div.box > table, div.box > figure,
+div.box > blockquote, div.box > h3, div.box > h4, div.box > h5, div.box > div { margin-left: 0.85em; margin-right: 0.85em; }
+div.box > div.boxlabel { margin: 0 0 0.65em 0; padding: 0.4em 0.85em; font-family: sans-serif; font-weight: bold;
+     font-size: 0.86em; line-height: 1.35; letter-spacing: 0.1em; text-transform: uppercase; color: #34466E;
+     background-color: #D3DAEA; border-bottom: 2px solid #5A6F9C; page-break-after: avoid; break-after: avoid; }
+div.boxlabel img.icon, div.codelabel img.icon { height: 1.3em; width: auto; vertical-align: middle; margin: 0 0.45em 0 0; }
+div.boxlabel .boxtitle { text-transform: none; letter-spacing: 0; font-size: 1.1em; }
+div.boxlabel .boxsep { letter-spacing: 0; }
+div.box > p:last-child, div.box > ul:last-child, div.box > ol:last-child { margin-bottom: 0.2em; }
+div.box table, div.box pre { background-color: #FFFFFF; }
+
+/* per type: body tint, strip tint, label text, marker colour */
+div.from-the-field   { background-color: #E7F3F3; border-color: #0F7C80; }
+div.from-the-field > div.boxlabel   { background-color: #C6E2E2; color: #0A4F52; border-bottom-color: #0F7C80; }
+div.decision-maker, div.key-takeaways { background-color: #EAF4EC; border-color: #3A8F4B; }
+div.decision-maker > div.boxlabel, div.key-takeaways > div.boxlabel { background-color: #CBE5D0; color: #22592D; border-bottom-color: #3A8F4B; }
+div.recent-research, div.note { background-color: #EDF0F7; border-color: #5A6F9C; }
+div.recent-research > div.boxlabel, div.note > div.boxlabel { background-color: #D3DAEA; color: #34466E; border-bottom-color: #5A6F9C; }
+div.experts-disagree { background-color: #F4ECF5; border-color: #7B4B83; }
+div.experts-disagree > div.boxlabel { background-color: #E2D0E5; color: #56305C; border-bottom-color: #7B4B83; }
+div.sidebar          { background-color: #FCF5E3; border-color: #D99A1E; }
+div.sidebar > div.boxlabel          { background-color: #F3DFAE; color: #664400; border-bottom-color: #D99A1E; }
+div.warning          { background-color: #FCECE9; border-color: #E05A47; }
+div.warning > div.boxlabel          { background-color: #F6CBC3; color: #8A2A1D; border-bottom-color: #E05A47; }
+div.try-it-yourself  { background-color: #EAEFF6; border-color: #1F3A5F; }
+div.try-it-yourself > div.boxlabel  { background-color: #C9D5E6; color: #1A3352; border-bottom-color: #1F3A5F; }
+div.scoreboard       { background-color: #F1F6F4; border-color: #0E6E6A; border-top: 0.2em solid #0E6E6A; }
+div.scoreboard > div.boxlabel       { background-color: #C2DEDB; color: #0A4A47; border-bottom-color: #0E6E6A; }
+/* decision records: the decision box hues, with a full frame so they read as a record card */
+div.decision-record  { background-color: #EAF4EC; border: 1px solid #3A8F4B; border-left: 0.42em solid #3A8F4B; }
+div.decision-record > div.boxlabel  { background-color: #CBE5D0; color: #22592D; border-bottom-color: #3A8F4B; }
+div.decision-record > p:first-child { margin-top: 0.6em; }
+/* a box with no strip (a decision record that names itself) still starts with breathing room */
+div.box > p:first-child { margin-top: 0.6em; }
 
 /* ---------- Interview Questions and Answers */
-section.interview > h3, h3.interview { border-top: 2px solid #1F2A44; padding-top: 0.4em; }
-div.qa { margin: 1.1em 0; padding: 0 0 0.6em 0; border-bottom: 1px solid #D9DCE1; }
-div.qa p { text-indent: 0; margin-top: 0.4em; }
-div.weak { margin: 0.6em 0 0.6em 0.8em; padding: 0.3em 0.6em; border-left: 3px dashed #C0392B; background-color: #FCEFED; }
-div.strong { margin: 0.6em 0 0.6em 0.8em; padding: 0.3em 0.6em; border-left: 3px solid #2F7A3E; }
-.weak-label, .strong-label { font-family: sans-serif; font-size: 0.85em; }
-.weak-label { color: #C0392B; }
-.strong-label { color: #2F7A3E; }
+h3.interview { color: #1F3A5F; border-left-color: #1F3A5F; border-bottom-color: #1F3A5F; }
+div.qa { margin: 0 0 1em 0; }
+div.qa > div.q { font-family: sans-serif; font-weight: bold; color: #1A3352; line-height: 1.35;
+     margin: 1.6em 0 0.6em 0; padding: 0.45em 0.7em; background-color: #E3EAF3;
+     border-left: 0.42em solid #1F3A5F; border-top: 1px solid #9FB3CC; page-break-after: avoid; break-after: avoid; }
+div.q .qnum { color: #0B5E61; margin-right: 0.2em; }
+div.q strong { color: #1A3352; }
+div.weak { font-style: italic; color: #5E241A; margin: 0 0 0.6em 0; padding: 0.4em 0.7em 0.1em 0.7em;
+     background-color: #FCECE9; border-left: 0.3em solid #E05A47; }
+div.weak strong { color: #5E241A; }
+div.weak p { margin-bottom: 0.4em; }
+div.strong { margin: 0 0 0.6em 0; padding: 0.4em 0.7em 0.1em 0.7em; background-color: #EAF4EC; border-left: 0.3em solid #3A8F4B; }
+.weak-label, .strong-label { font-family: sans-serif; font-size: 0.86em; font-style: normal; letter-spacing: 0.06em; text-transform: uppercase; }
+.weak-label { color: #8A2A1D; }
+.strong-label { color: #22592D; }
 
-/* ---------- figures (number and caption live in the text) */
+/* ---------- figures */
 figure { margin: 1.2em 0; padding: 0; text-align: center; page-break-inside: avoid; }
-figure img, p img { max-width: 100%; height: auto; }
-figcaption { font-family: sans-serif; font-size: 0.85em; text-align: left; margin-top: 0.5em; line-height: 1.3; }
-figcaption p { text-indent: 0; }
-.fig-num, .tbl-num { font-weight: bold; }
+figure img { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+p img { max-width: 100%; height: auto; }
+figcaption { font-size: 0.86em; line-height: 1.35; margin-top: 0.4em; padding: 0.3em 0 0 0.5em; text-align: left;
+     border-left: 0.22em solid #0F7C80; }
+figcaption p { margin: 0; }
+.fig-num, .tbl-num { font-family: sans-serif; font-weight: bold; color: #0B5E61; }
+.fig-num strong, .tbl-num strong { color: #0B5E61; }
 
-/* ---------- tables (always text) */
-table { border-collapse: collapse; margin: 1em 0; width: 100%; font-size: 0.85em; page-break-inside: auto; }
-caption { font-family: sans-serif; text-align: left; caption-side: top; margin-bottom: 0.4em; font-size: 1em; }
-th, td { border: 1px solid #6B7280; padding: 0.25em 0.4em; vertical-align: top; text-align: left; }
-th { font-family: sans-serif; font-weight: bold; color: #FFFFFF; background-color: #1F2A44; }
-tbody tr:nth-child(even) td { background-color: #EEF2F7; }   /* zebra rows; the grid still separates rows on e-ink */
-td p, th p { text-indent: 0; }
+/* ---------- tables: navy rules, tinted header row, zebra rows (pandoc sets tr.odd / tr.even) */
+table { border-collapse: collapse; margin: 1em 0; width: 100%; font-size: 0.86em; page-break-inside: auto;
+        border-top: 0.2em solid #1F3A5F; border-bottom: 0.2em solid #1F3A5F; }
+th, td { padding: 0.3em 0.5em; border: 0; border-bottom: 1px solid #C8D2DE; vertical-align: top; text-align: left; }
+thead th, thead td, th { font-family: sans-serif; font-weight: bold; color: #1F3A5F; background-color: #CDD9E8;
+     border-bottom: 2px solid #1F3A5F; }
+tbody tr.even td { background-color: #EEF3F8; }
+tr { page-break-inside: avoid; }
+td p, th p { margin: 0; }
+caption { caption-side: top; text-align: left; font-size: 1.16em; margin-bottom: 0.4em; padding-left: 0.4em;
+          border-left: 0.22em solid #0F7C80; }
+caption p { margin: 0; }
 
-/* ---------- code: wrap, never scroll off the e-ink page */
+/* ---------- code: label bar (language or Output), light panel, syntax colours; wrap, never scroll */
 pre, code { font-family: monospace; }
-code { font-size: 0.9em; hyphens: none; -webkit-hyphens: none; }
-pre { font-size: 0.82em; line-height: 1.3; margin: 0.9em 0; padding: 0.5em 0.6em;
-      border: 1px solid #D9DCE1; border-left: 3px solid #1F2A44; background-color: #F5F7FA;
-      white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; page-break-inside: auto; }
-pre code { font-size: 1em; white-space: pre-wrap; }
+code { hyphens: none; -webkit-hyphens: none; }
+p code, li code, td code, th code, dd code { color: #6B2F72; background-color: #F3EBF4; padding: 0 0.15em; }
+div.codelabel { font-family: sans-serif; font-size: 0.74em; line-height: 1.3; color: #1F3A5F; margin: 1em 0 0 0;
+     padding: 0.3em 0.6em; background-color: #CDD9E8; border-left: 0.42em solid #1F3A5F;
+     font-weight: bold; text-transform: uppercase; letter-spacing: 0.08em; page-break-after: avoid; break-after: avoid; }
+div.codelabel.outlabel { color: #6B4700; background-color: #F4E3BC; border-left-color: #D99A1E; margin-top: 0.5em; }
 div.sourceCode { margin: 0.9em 0; }
-/* Syntax colours come from 05-build/highlight.theme (palette hues, all >= 4.5:1 on the code tint).
-   Keywords are also bold and comments italic, so the code still reads on e-ink. */
+pre { white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; font-size: 0.76em; line-height: 1.35;
+      margin: 0.9em 0; padding: 0.55em 0.7em; color: #1F2D3D; background-color: #F2F5F9;
+      border-left: 0.42em solid #1F3A5F; border-bottom: 1px solid #CDD9E8; page-break-inside: auto; }
+pre code { font-size: 1em; white-space: pre-wrap; color: inherit; background-color: transparent; padding: 0; }
+div.sourceCode > pre { margin: 0; }
+div.codelabel + pre, div.codelabel + div.sourceCode { margin-top: 0; }
+pre.output { background-color: #FFFAEE; border-left: 0.42em solid #D99A1E; border-bottom: 1px dashed #D99A1E; }
+div.box pre.output { background-color: #FFFAEE; }
+/* Token colours come from 05-build/highlight.theme (keywords plum bold, strings rust, comments green
+   italic, definitions navy bold, numbers and built-ins teal-dark, decorators ochre): every token keeps
+   >= 4.5:1 on the code panel, and bold keywords and italic comments still read on e-ink. */
+
+/* ---------- quotations and pull quotes */
+blockquote { margin: 0.9em 0.4em; padding: 0.6em 0.8em; background-color: #F4F5F7; border-left: 0.3em solid #8C959F; }
+blockquote p:last-child { margin-bottom: 0; }
+div.pullquote > blockquote { margin: 1.4em 1.2em; padding: 0.7em 0.4em; background-color: #FFFFFF; border-left: none;
+     border-top: 0.2em solid #D99A1E; border-bottom: 0.2em solid #D99A1E; font-family: sans-serif; font-size: 1.12em;
+     line-height: 1.35; color: #1F3A5F; text-align: center; page-break-inside: avoid; }
+div.pullquote > blockquote p { margin: 0; }
+div.pullquote strong { color: #0B5E61; }
+div.epigraph { margin: 0 1.5em 1.6em 1.5em; padding: 0.4em 0 0.4em 0.8em; font-style: italic; color: #0B5E61;
+     border-left: 0.22em solid #D99A1E; }
+div.epigraph p:last-child { text-align: right; font-style: normal; font-family: sans-serif; font-size: 0.86em; color: #1F3A5F; }
 
 /* ---------- maths (MathML) */
 math { font-size: 1em; }
 span.math.display, div.math { display: block; text-align: center; margin: 0.6em 0; }
 
 /* ---------- notes */
-section.footnotes { font-size: 0.85em; }
-a.footnote-ref { vertical-align: super; font-size: 0.75em; text-decoration: none; }
-nav#toc ol, nav#landmarks ol { list-style-type: none; }
+section.footnotes { font-size: 0.82em; border-top: 2px solid #0F7C80; margin-top: 1.8em; padding-top: 0.5em; }
+section.footnotes hr { display: none; }
+a.footnote-ref { vertical-align: super; font-size: 0.75em; line-height: 0; text-decoration: none; }

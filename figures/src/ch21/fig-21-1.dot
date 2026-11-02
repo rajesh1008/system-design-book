@@ -1,0 +1,27 @@
+// Figure 21.1  Context as a budget with slots
+// Reading order: top to bottom. The window is a limit; the step budget
+// of 48,000 tokens sits below the measured knee of 60,000. Inside it,
+// each slot has a cap: the stable block, task, memory, retrieved
+// passages, pinned facts, and the clock. History has no cap of its own;
+// compaction at 33,600 keeps it from taking the rest, and any breach
+// raises an alarm.
+digraph budget {
+#include "book.gv"
+  rankdir=TB; nodesep=0.2; ranksep=0.22;
+  win [label="Window 200,000", class="note"];
+  bud [label="Budget 48,000", class="ops"];
+  st [label="Stable\n2,920", class="model"];
+  tk [label="Task\n4,000", class="knowledge"];
+  me [label="Memory\n1,000", class="knowledge"];
+  hi [label="History\ncompact\nat 33,600", class="knowledge"];
+  re [label="Retrieved\n2,000", class="knowledge"];
+  pi [label="Pinned\n600", class="policy"];
+  al [label="Alarm", class="ops"];
+  {rank=same; st; tk; me;} {rank=same; hi; re; pi;}
+  win -> bud [class="control"];
+  bud -> tk [class="control"];
+  st -> tk -> me [class="data"];
+  tk -> re [style="invis"];
+  hi -> re -> pi [class="data"];
+  re -> al [class="fail"];
+}

@@ -1,0 +1,17 @@
+@startuml
+' Figure 22.4  Writing a memory with provenance
+' Reading order: top to bottom. The loop proposes a draft with its
+' source event; the store takes the tenant from the token, checks the
+' draft, compares the head, then writes the record and the trail line.
+' A draft with no source is refused. From memory.store.write.
+!include plantuml-theme.puml
+participant "Loop" as L <<knowledge>>
+participant "Store" as S <<knowledge>>
+participant "Trail" as T <<evidence>>
+L -> S : Draft with source
+S -> S : Tenant, checks, head
+S -> T : Written
+S --> L : Record
+L -> S : Draft, no source
+S -[$FAIL]> T : Refused
+@enduml

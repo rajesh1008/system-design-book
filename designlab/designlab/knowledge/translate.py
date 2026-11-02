@@ -35,12 +35,17 @@ def offline() -> bool:
         not os.environ.get("ANTHROPIC_API_KEY", "").strip()
 
 
-def client(meter: SpendMeter, replay: bool | None = None) -> ModelClient:
+def client(meter: SpendMeter, replay: bool | None = None,
+           cache_dir: Path | None = None) -> ModelClient:
+    """Replay from the fixtures, or call the model and record into
+    `cache_dir` (the fixtures by default; a scratch directory for a
+    fresh live run that must not overwrite them)."""
     replay = offline() if replay is None else replay
     if replay:
         return ModelClient(CONTRACT.role, meter=meter,
                            transport=FixtureTransport(FIXTURES))
-    return ModelClient(CONTRACT.role, meter=meter, cache_dir=FIXTURES)
+    return ModelClient(CONTRACT.role, meter=meter,
+                       cache_dir=cache_dir or FIXTURES)
 
 
 @dataclass

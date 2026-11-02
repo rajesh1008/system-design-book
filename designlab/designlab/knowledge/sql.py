@@ -228,6 +228,16 @@ class Guard:
         self.estimator = estimator
         self.raw_allowed = raw_allowed
 
+    def close(self) -> None:
+        for c in (self.db, self.scratch):
+            c.close()
+
+    def __del__(self):
+        try:
+            self.close()
+        except Exception:
+            pass
+
     # -- the layer path ------------------------------------------------
     def ask(self, q: L.MetricQuery, ent: E.Entitlement) -> Decision:
         p = L.problems(self.layer, q)                       # 1 restrict

@@ -2,7 +2,7 @@
 // Reading order: top to bottom. One query goes to a lexical index and a
 // dense index at once. Pages not in effect on the as-of date are removed
 // before ranking. Reciprocal rank fusion merges the two lists, and a
-// reranker reads the top fifty with the query and orders them. The top
+// reranker reads the top thirty with the query and orders them. The top
 // k leave with the reason each one ranked where it did.
 digraph hybrid {
 #include "book.gv"
@@ -19,6 +19,6 @@ digraph hybrid {
   lex -> flt [class="data"];
   den -> flt [class="data"];
   flt -> rrf [class="emphasis", label=" 50 each"];
-  rrf -> rr [class="emphasis", label=" top 50"];
+  rrf -> rr [class="emphasis", label=" top 30"];
   rr -> top [class="emphasis"];
 }

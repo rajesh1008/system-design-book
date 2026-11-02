@@ -1,0 +1,20 @@
+@startuml
+' Figure 22.6  The supersession chain
+' Reading order: left to right. A record is written as head; a newer
+' observation on the same subject and scope supersedes it, and the old
+' version stays readable to the desk. A write against a stale head, or
+' an older observation, is refused. Deletion ends any version. From
+' memory.store.
+!include plantuml-theme.puml
+hide empty description
+state Head <<knowledge>>
+state Superseded <<knowledge>>
+state Refused <<knowledge>>
+state Deleted <<verified>>
+[*] --> Head : Written
+Head --> Superseded : Newer observation
+Head --> Refused : Stale head or older
+Head --> Deleted : Erasure, tombstone
+Superseded --> Deleted : Erasure, tombstone
+Deleted --> [*]
+@enduml

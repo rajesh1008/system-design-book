@@ -12,7 +12,8 @@
              --output PATH, -o PATH  write the EPUB here (relative to the current directory,
                      or absolute; may be outside the repository)
              --azw3  also convert with Calibre ebook-convert
-             --embed-fonts  embed Source Sans 3 and JetBrains Mono (adds about 1 MB; KDP charges delivery per MB)
+             --embed-fonts  accepted but ignored: the series design (as in the FDE Handbook) uses the
+                     reader's fonts; set BOOK_EMBED_FONTS=1 to embed Source Sans 3 and JetBrains Mono
              --strict  fail on any missing manuscript file (the full-book release build)
              --no-figures  skip the render_figures.py step
 
@@ -74,6 +75,18 @@ def text_inlines(s):
     return out
 
 
+def span(cls, inlines):
+    return {"t": "Span", "c": [["", [cls], []], inlines]}
+
+
+def opener_inlines(label, num, title, sep="."):
+    """'Chapter', '2', 'Title' -> spans the CSS stacks into the series opener block (label, big
+    numeral, title). The plain text still reads 'Chapter 2. Title' in the nav, the NCX and any
+    reader that ignores the CSS; the separator span is hidden in the opener."""
+    return [span("op-label", text_inlines(label)), {"t": "Space"}, span("op-num", text_inlines(num)),
+            span("op-sep", text_inlines(sep)), {"t": "Space"}, span("op-title", text_inlines(title))]
+
+
 def header(level, ident, inlines, classes=(), kv=()):
     return {"t": "Header", "c": [level, [ident, list(classes), [list(p) for p in kv]], inlines]}
 
@@ -90,7 +103,7 @@ class Assembler:
         self.ids.add(i)
         return i
 
-    def add_file(self, path, shift=0, prefix=None, first_h1=None):
+    def add_file(self, path, shift=0, prefix=None, first_h1=None, extra_classes=()):
         """first_h1: (level, id, inlines) replaces the file's first H1 (chapter or appendix title)."""
         doc = to_json(path)
         if self.meta is None: self.meta = doc["meta"]
@@ -100,6 +113,7 @@ class Assembler:
                 lvl, (ident, classes, kv), inl = b["c"]
                 if lvl == 1 and first_h1 and not replaced:
                     lvl, ident, inl = first_h1; replaced = True
+                    classes = list(classes) + [c for c in extra_classes if c not in classes]
                     b["c"] = [lvl, [self.uid(ident), classes, kv], inl]
                     self.blocks.append(b)
                     continue
@@ -112,7 +126,7 @@ class Assembler:
         if first_h1 and not replaced:
             self.problems.append(f"{path}: no '# Title' line; the manifest title was used")
             lvl, ident, inl = first_h1
-            self.blocks.insert(len(self.blocks) - len(doc["blocks"]), header(lvl, self.uid(ident), inl))
+            self.blocks.insert(len(self.blocks) - len(doc["blocks"]), header(lvl, self.uid(ident), inl, classes=extra_classes))
 
 
 def load_manifest(p):
@@ -162,10 +176,10 @@ def assemble(m, strict):
         chapters = [c for c in part.get("chapters", []) if (root / c.get("file", f"02-manuscript/ch{int(c['number']):02d}.md")).exists() or strict]
         if not chapters and not part.get("always", False):
             continue
-        title = text_inlines(f"Part {ROMAN[pn] if pn < len(ROMAN) else pn}: {part['title']}") if pn > 0 else text_inlines(part["title"])
+        title = opener_inlines("Part", ROMAN[pn] if pn < len(ROMAN) else str(pn), part["title"], ":") if pn > 0 else text_inlines(part["title"])
         pf = part.get("file")
         if pf and (root / pf).exists():
-            A.add_file(root / pf, shift=0, prefix=pid, first_h1=(1, pid, title))
+            A.add_file(root / pf, shift=0, prefix=pid, first_h1=(1, pid, title), extra_classes=["part"])
         else:
             A.blocks.append(header(1, A.uid(pid), title, classes=["part"]))
         for ch in part.get("chapters", []):
@@ -174,8 +188,8 @@ def assemble(m, strict):
             p = need(rel)
             if not p: continue
             cid = f"ch{n:02d}"
-            label = f"Chapter {n}. {ch['title']}" if n > 0 else ch["title"]
-            A.add_file(p, shift=1, prefix=cid, first_h1=(2, cid, text_inlines(label)))
+            label = opener_inlines("Chapter", str(n), ch["title"]) if n > 0 else text_inlines(ch["title"])
+            A.add_file(p, shift=1, prefix=cid, first_h1=(2, cid, label), extra_classes=["chapter"])
     apps = [a for a in m.get("appendices", []) if (root / a.get("file", f"02-manuscript/appendices/app-{a['letter']}.md")).exists() or strict]
     if apps:
         A.blocks.append(header(1, A.uid("appendices"), text_inlines("Appendices"), classes=["part"]))
@@ -184,7 +198,8 @@ def assemble(m, strict):
             p = need(rel)
             if not p: continue
             aid = f"app-{a['letter']}"
-            A.add_file(p, shift=1, prefix=aid, first_h1=(2, aid, text_inlines(f"Appendix {a['letter']}. {a['title']}")))
+            A.add_file(p, shift=1, prefix=aid, first_h1=(2, aid, opener_inlines("Appendix", a["letter"], a["title"])),
+                       extra_classes=["chapter", "appendix"])
     for rel in m.get("back", []):
         p = need(rel)
         if p: A.add_file(p, shift=0, prefix="back")
@@ -281,6 +296,8 @@ def main():
         r = subprocess.run([sys.executable, str(BUILD / "render_figures.py")] + (chs or []), cwd=ROOT)
         if r.returncode != 0: sys.exit("figure rendering failed; see 03-figures/out/render-report.md")
 
+    # box and code-label icons (05-build/out/_icons/*.png), drawn by make_icons.py
+    subprocess.run([sys.executable, str(BUILD / "make_icons.py")], cwd=ROOT)
     write_metadata(m, work)
     A = assemble(m, "--strict" in flags)
     probe = json.loads(sh(["pandoc", "-f", "markdown", "-t", "json"], input="x").stdout)
@@ -300,6 +317,11 @@ def main():
     if cover.exists(): cmd += ["--epub-cover-image", str(cover)]
     else: print("warn  no cover at", cover)
     if "--embed-fonts" in flags:
+        # The series design (the FDE Handbook) embeds no fonts: the reader's own serif for text,
+        # generic sans-serif and monospace stacks for headings and code. The flag is accepted and
+        # ignored so `make book` keeps working; set BOOK_EMBED_FONTS=1 to embed anyway.
+        print("note  --embed-fonts ignored: the series design uses the reader's fonts (BOOK_EMBED_FONTS=1 overrides)")
+    if "--embed-fonts" in flags and os.environ.get("BOOK_EMBED_FONTS") == "1":
         for f in ["SourceSans3-Regular.otf", "SourceSans3-Bold.otf", "SourceSans3-It.otf", "JetBrainsMonoNL-Regular.ttf"]:
             fp = ROOT / "03-figures/fonts" / f
             if fp.exists(): cmd += ["--epub-embed-font", str(fp)]

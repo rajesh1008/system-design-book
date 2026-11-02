@@ -11,6 +11,8 @@ from dataclasses import dataclass, field
 
 from serving.trace import EXAMPLES, POLICY, SYSTEM, TIMESTAMP_TOKENS, TOOLS
 
+assert SYSTEM == ("instructions-v7", 1_100)   # the same file as Chapter 14
+
 # Stable to volatile. A slot later in this list changes more often.
 ORDER = ("tools", "instructions", "policy", "examples",   # per release
          "task", "memory", "history",                      # per task
@@ -23,9 +25,14 @@ WINDOW = 200_000         # the pinned model's window [VERIFY in prose]
 
 # Caps in tokens. History has none of its own: it gets what is left,
 # and compaction keeps it from taking the rest.
-CAPS = {"tools": 1_500, "instructions": 2_000, "policy": 1_200,
+# The instruction cap is the v7 file (1,100) plus room for one release;
+# the retrieved cap is three passages of the usual size.
+CAPS = {"tools": 1_500, "instructions": 1_200, "policy": 1_200,
         "examples": 800, "task": 4_000, "memory": 1_000,
-        "retrieved": 8_000, "pinned": 600, "clock": 32}
+        "retrieved": 2_000, "pinned": 600, "clock": 32}
+INSTRUCTIONS = {"v7": ("instructions-v7", 1_100),     # Chapter 14
+                "v8": ("instructions-v8", 1_460),
+                "v9": ("instructions-v9", 1_180)}
 
 
 @dataclass(frozen=True)
@@ -48,10 +55,13 @@ class Budget:
         return int(self.per_step * self.compact_at)
 
 
-def stable_items(kind: str = "rebook") -> list[Item]:
-    """The release-stable part of every call (Chapter 14 sizes)."""
+def stable_items(kind: str = "rebook", release: str = "v7") -> list[Item]:
+    """The release-stable part of every call. Tools, policy, and examples
+    are the Chapter 14 sizes; the instruction file is the named release
+    (v7 is the Chapter 14 file)."""
+    key, size = INSTRUCTIONS[release]
     return [Item("tools", TOOLS[0], TOOLS[1]),
-            Item("instructions", SYSTEM[0], SYSTEM[1]),
+            Item("instructions", key, size),
             Item("policy", POLICY[kind][0], POLICY[kind][1]),
             Item("examples", EXAMPLES[0], EXAMPLES[1])]
 

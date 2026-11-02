@@ -10,7 +10,7 @@ digraph contract {
   ask [label="Question, as-of\ndate, scope", class="ops"];
   ret [label="Retrieval\ncomponent", class="knowledge"];
   out [label="Passages with\nprovenance", class="knowledge"];
-  pr  [label="In effect at as-of;\nunder 1 s; recall\non golden set", class="ops gate"];
+  pr  [label="In effect at as-of;\np95 250 ms; recall\non golden set", class="ops gate"];
   c1  [label="C1 context\ncontract", class="ops"];
   ask -> ret [class="data"];
   ret -> out [class="emphasis"];
