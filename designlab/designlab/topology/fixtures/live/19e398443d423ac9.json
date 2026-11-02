@@ -1,0 +1,51 @@
+{
+  "request": {
+    "max_tokens": 200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n\n\nRecord:\ntask E27-02\nfare: nonrefundable\nitinerary: domestic\nevent: voluntary-cancel\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "19e398443d423ac9",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSoAkKEAgTGAI4AUIIdGhpbmtpbmcSDGlI+xvxFIDpD+jbAhoM7gULrrwCoIMcRMkuIjBStQ1SD9/NqN5sghHqxRiZKbhfjhZX7hbj347tp2S2lB8GCweQVnshRXAvE+hZsC8qvQheK021rhD/5lzFAH1fk3pUoqVpIMxd7cjyVR4/ID3QHWItRWtECv2TQ3/gOYKDNmcP3j2FLqEHC75gin0CvUyQJ1phOh03TIJC15GOERA5l0BBEJFBOCifQb+G6mk2aA5e/4xVazDSX23Pac0wq0Fq4ZpqBd1Q+sekRUWD+h9a3EEStKUWcPLyHdral3Dk7/vCCCrbd0x+o8y/wI0dtz4kmTcZ1FOaQAej//F3pQbAOBwYVKiT+D7+niabev73ycjvTv9cLuflDyLIlK5cX1ce+BVoAOEfa+5FE2jv2wyz6Y48SNvnDE+9tjyZd7m6tBx82HPJcFDBpcGilfWN3X17mJjbBC2Lczf7YaLxrf59EXFBkWVrEIbQ7KUn1M99nCEYIiMkLMCU7lqvEHBAKY3PEa4rM4aU1t+8RHCtXGm3vaMhpfAo3EA973hcZxYFiU+Qi7df7QFSRLPJ42oHfU3+0HOtlAsh1SGwu4tdUpkYm4oPQMTnr9VydEUKQIKvnlAcwvMskKk5Zoab/Xhysa3QnWJWS9hIOeudk7XTXRNHtYqSka6hVSxav5xr+gex8nFjeGiZ84QDhng+7L6y+7fFhJaHggWsKFYP9j5FHB5A4BrGejbRFjc+GHtIp6qMnVvzjbJdbePo/r0XeGHeRlqG3UwRwKE+mbyVDmhELfZ3n/BDYOLq0JPLj/6Z2YSPxQuDtdd1FErRMJpJQYETD4RAmHZA+WULNhNNX/XBoKQhnF1XoruUCM0MaoKdbngz8rT+NUVsE7Dsljj0EpSSonESqY9NkLhECwrm7wQXRx3SWVgh9suQKHIWOdaJRPIP4m5IyNjbTKcggKWDyeTCPyA4A0yeER2zNOIJaiQZyid90rPDkvI5vXbxKrKaQwnchqouA+kJ7eV+eFPwMZSBBv4oX/aRX6KWKAZ5rO6eUNEJYAYuDr1YKgIhOBwpxZ6ZOe0eOMv5NnCWwxLomheImyOOAbTufV70nodniFOQLqJH4FIT/5Vk46OYia6Dly6a9YJGSh0Z3cUHRdNy6KwO+zK3xt91Wmfi8td1wF3vBbCfWAsS0b5QzawtoBNFUCVp344/IPTsDAictatCTX5SHaeTyVAgSbA8TtI+NrLduLLZKlyyh4TUktEN2gaNSg0iVY5L/A7oLUuCoVyja58WOgeqyTKkHIoLgU3R9fF7BGN82TVpRWn/8zWFKDwHcY7KKpSIoMaZj1crIl1Au9KSgopJO+YcvoHPEfkhQeCW4dfQRUA75qUVSjoueo/m3IKCgUDwcqmsMEau3T7r0DHZ5jLpCipti3S6NVi6jj4PTFcWbipAAOhIvVugdOCozIaomcNPPQSEqm0fi68FidMY6XrGJG+utdEAQV3bB/rjDzKLyN6lbN5qLnK6iF6B8ia6EnqaEiUzfCMdZNBR4FTG02F3nxIZQlrZZOCz9/SSRxgB",
+        "thinking": "",
+        "type": "thinking"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeNVGTPzH1ZcvcPJDuva",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 129,
+      "output_tokens": 200,
+      "output_tokens_details": {
+        "thinking_tokens": 200
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 300,
+    "messages": [
+      {
+        "content": "Reviewer 2 of 3.\n\nRefund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-06\nfare: nonrefundable\nitinerary: domestic\nevent: schedule-change\nschedule moved by: 95 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nAnswer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "4004543f13dfd30d",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS5gcKEAgTGAI4AUIIdGhpbmtpbmcSDBErz9cAp1rbPR8gahoMUbFsmQXrKuyIP0bwIjBpf1UJFHXjHtBX0Y91cjVdaZeKlyWx2EaK/b9eOs8dGZzasqyieC2knaY3aGznGEkqgwf/xWkLtHvxBYYeNZGOI1UZl33xDRcNNLjY7jwuymC+dr8GWHwjb88LHRWcM9Qz9HTKCQ6OIGV0z8iO9hh0EThTN3oWOfz9Lr1I/0iToKvTVxsueFotWOaBrWdX3vC3IG3fJKMY98+mA/DLfNHwmdASym/TjXHEYMw94yHuvTuOI0QHGClC3f+ERPQW3srvItpB+EDxK5nSA+01oP/JqZ1O9VRt5GuO01VC705bevHSpU9sZtUb3NHk7/2WKcRlZgnnu3zNEQ5ZeVmiWKQWW/FpJOzF2EOCL6vH3ZPa+D0ks3+rKNuOhyxMwvPr8VtA+M+CsMDyTTiW6FCb/bSH8dqgEoa0WwU1dzNaHeHJC8S1ZY+raUzS9sJlRNV4QsCQslx2ssYlFH2XuNrf42KYHBbkaVCDU8rg4PwglpdiXZVh9sqU9kC6On8flUUVJrhKGhQe8OUmDeaG3W/eOhQS1zfwc0M83WV/m978CftAIc9b2c8ZGOd5xmTj1PGXT+u4UrsrK6LlYrLxzkAIRH3qNrmKemygV5za6OrvVNfNweJ9w6NebNl4y8AUq7LDC19AXTOLTavw5rmay9oQzFv0QRazeW+MusFGm0b005xqBe9jP5tjekEq7askg2MynT51Gr7E34oG+1IOIsnwfJu049v0ZAES4WtW/81TUZSwPfYEMn2SWuRfDxBrHBwIBBFV4XVCI/ZLEQZmQeLLlyqeUP1pOTY41FTDnHNsWMTev0/KVr//hOqyrLBROS+oGBrhlX87jBLd9R7N+HGuonuvXkNY5I8tssf7cCmOQrm0XQc/Fb+M6M5UebVIECoyWY34eyAzAiH/njXa4zoIWwRES3p46j9i9TFWZagRoG/vAOY1Rlttg/dQTydilzHDPL2310VFjnBOeZKaUz5vbjPXfoz7eWuSwp7Xr7xJlImWHAOBPTxS2WECLsGM4rpTviUbofUWH8p3LUzcX4xEJF5nmzCsFuxD9oHbiZslP726U/lvUboaWzHngUXptefzbtr1G2s7m3B4u+OGcLt2OVgduTKCSs6MPqALfKOhOaShLmHD9Lv2i4Mo+Skj6T3YivrasZGnpfeJYAMpxOLmVQVJDq7Q2JXax8XEHspzxl4oSGyAYJs43HocvvXjoh9S5LZ8iKrGrMpVPKdLipuSQx+f1TiavTaZm0LNld+fIrr9AKnvLib2/xgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"eligible\": \"no\", \"rule\": \"R3\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeNaCn2Twwt9gp4qQAq1",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 487,
+      "output_tokens": 180,
+      "output_tokens_details": {
+        "thinking_tokens": 160
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

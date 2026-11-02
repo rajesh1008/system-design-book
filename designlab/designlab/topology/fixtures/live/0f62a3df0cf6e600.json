@@ -1,0 +1,51 @@
+{
+  "request": {
+    "max_tokens": 300,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nFacts from the facts worker:\n\n\nAnswer with JSON only, no other text: {\"eligible\": \"yes\" or \"no\" or \"desk\", \"rule\": \"R1\" to \"R5\"}",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "0f62a3df0cf6e600",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS7QoKEAgTGAI4AUIIdGhpbmtpbmcSDPxgWfibX2oBW1WdZBoMQzN8nsxef09l1OlLIjBdwGE7uqt5NGU8wcvxp1rZmI+rrv+XeHoD2CJ1yVZrqqER+XZ32yFOYasxgS1Qp+0qigpKHSE8UE6ZBp2VYKweJ9/vlR4070gBwDK7r2Dd7MMk2Pkx7sotix/oFEywZ1/5GdS33qKyZYDY3iA9F+7LjulfVujl0bIUDULZSoMD/qGNccGa5L04o+rVFkwL2c63ibzmGVnvlLke6d23WUoRk8lB5vs7bJrnn3A6rnKkKBA7gRePDUhwQDzctdn388cpEnnYyNztwRyJeOBekjQ0Q6MHITeJbw0GMolufW/YXQxwW8XsVZhWyoE8pfjm+zZVA+elELGBOlc6nLNJPfViCferkasVfFSlRWFGSxQOm98n4AMTx3I2+U5yf6aqBhS7/RN4r/zMXAgO+TcHbZ6nQG0eq/YPTP5BseK99abUADno1oG6mdP2/oiwSmwnHI7GGzZjespfolTMYrJrcIms4rb/Ic7W2NgLwt/PD2zi3fNuraoL32xCiT9VyH6/Wat9ZT16HUjGPNQQ+PW4k8SYWUlHzVcElO8ObxbZT1eydb0vW/4djo1dEoYPb5Mt9yi1yrZPt9PdfCg+HqloTwMCnK0PJAPbK1ToLlzBRsx00H1RHv4f/sSM+EoED7Hj618tjn6e5AF2OLhS5WtB9zPFtfhKmJhQucdfKpZevwG2KhoGe7lR688u+UFmWzKQsiSMyCN982G12NSESrjfB/AzswBj6mgEU690FRlARnhBye7xG2U0GwkOp6magLKNQFYrrj4sgLVN3WC2+FEKBexUi7Bha6F359bafPoYKN7W2/WITwQmEOk0diM4BBLHq5LK3IkDoVsxzOzXAlq1j066Vjdu6NUKqIBn+GMFqvmzxFklUJf/UlUA0AMdeboyCH9RchB4sSRvMVgF2u4AfVOPdASJi8Hq7L4n7IeakXCJGtJbd89LI/RZYFOCftwI8oQ6bVxU3X+0xFehqsrRS2RL4Q/VhWdS24bPwXmeHRLJLBqDpZIOy14gwWJF1wGv/nehroTa6Un0CFMxlZvxmPynbaYMcqiBazOj6rM1pP7rsFeORXF4FIdpwMgiqDuW/J1S6WXS58sv3JcQZdITFr8JPNhfCEOxB6WjmkTEliHMtP2Qmrq5mW9NGgt9gi2ZzYzs7PPB9NbprbtO9FCVh+iS3eqFsx9xX0+AlIMwsG5PIvAhUXl1IjiZO4eeLmVLmpAk6F0hvd1oBbx4Ly53Ri+tGaZQLuj+Rw/gKgYz8jHZY218XfWVEY/5SPsUd2aZ5EtIh7FKKYyoPEaTwBAdV5Cio1hn790SURCCZxKWsZgnRpBSjvGOOHs/ZpqPLYy+jOvs+0N+Uv4/AWIMcL9LhL54HGdHJv+T7Ql80GLW4WQvfrRtv3uPWpd3E5jonFVVhy4zhaAwR2k8sViGmVKUNwm38FiFSYqfV2P3pqqb6BF/uf4vnk4gQOGplUtQOA0UGXw+HTiLX51zOQe1I9lM/TYkr+ikRFjZWaAHDyfa4c3wswHQKYb9KlWLTyM+3/L/9bcMepybw+mOlpNcWM0dYrcbNUCO1iySmEwCg3W35l7xF5OHF+8Zjc22OOIoKVQY8MeifHFbfUT91ufdGHjIUmivF0Ot2wsrxmR839yObkrYDvCQhHvn/msBZwXao7a86QtELH1J9ZMkYJbAU6+KkQqRBBkfipfXTKfacjjjiu1vaxyF6u2pHhGSQWP4wtjiLPETf0nPHid1n+KZtgOkzS4q7jKC+MKPJPI6o7KHCB7L/Txh/F7luYm9uUyOi9wYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeNZnhB84opmHtDNbbMF",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 398,
+      "output_tokens": 300,
+      "output_tokens_details": {
+        "thinking_tokens": 300
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

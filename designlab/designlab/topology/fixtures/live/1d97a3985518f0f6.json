@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-04\nfare: nonrefundable\nitinerary: domestic\nevent: carrier-cancel\ntraveler accepted the alternative: yes\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "1d97a3985518f0f6",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSwggKEAgTGAI4AUIIdGhpbmtpbmcSDP64C2aKxyG210u+cBoMGQENCi6DzijRSRS7IjD56GUeZSyzTPwGvCUEM5SSSPpmp7Bcn/wUF74BrKOZquGQqhXs0wnKqdJJfvMGfN4q3wd6TAXoGj4DMC+S8KKWQUjqEfI40QXESM6pLdSFbyIwsgHTy/2rEuQ42s3kYVh/iwdTojm0+FZLvbDlRzekDYVbb9lyMy6mHdJd0IlO3ylpZ6DMphEOI8yK5EBz0BmORqmiVM3vrehjq/leqapqcUdd+i18l64wSwLPmMyrszzbWQdIEGYjIr5qAYWcRiTGKFOQrX1zWGN+86qfGr1a5fDczJogD+oOxNM843o+CmutUhtF97uOcVF1Gy/xsxnYPp6rsUOg9fdzgH6pXA+Urp6AGrkzWB1Tbardeq1JqBCo1UkoKCDcYrCMvJ0MZL4xoCSj0/y9rNT0V50Igj4bUwXuM8T04a8L5YfVqCsNdMn4asy0pz7y6+lRK7dmJlT4BfvIhJetWJqtFf35DPqRvuD2k1eoBulmJCnZQ/ZkI7ya25ziLDQQpy9Jer52wzkvi8abQrnUT2lCWjDtSZYoNa34gbhDPdx0wwu1HrkOIDnLwGZDv1Ku+20vRRUGtKzdf77ZGWg4hIx/T4kYv6gW2Tc5Fom4GvHCdv4A6BUOI81otsC5GV0cbu32hiUwMu/rzFj8ZLelfSP9NpMPJ0JYFH4YQLfR4L4PWqBu5mIFfM5S1ErKQ7dj3/vUWbE9vEHO72mY94LZihuAE1uYddQ6ZvGL8v8SUH8kHutuErMlE0vNugNDYIfQUIrfNFfqLk9NbFRJhmscfGZfb1T6OM3mvSJBM0oilSJN7lcZeIVDTge/m9CkefpLAEIYFCz2gtZGyP4jUuL2VXv6Z1N+BLw6FKdAsuK8Z5XjS8/Z2/olTLw4ue4wudmwojKVOzmetcVeOGZ5YdEHZ67/QrDhx6/BHsBi2BdI+SUWJVuAF3TsUTLuh0837mKQQ53amhN4v6CfO6ngyHF4HxKK9xUK3j2I1HT8yrKzthJn6X0nUbjdsaRziGzFWN9uQvi1GdrFpn3Q4GtjzI9SH7wvznfYXsnToh8/lGgECZcUbuOqwCoinBcR5DSQWBUPm9b99cxzOsEDmPpWCJk6MfPBaQFd0xPG5xoRT8O2R6wokCeoikhpgotl0qS+j9ITkAytzAO/EqZxSL0K++yvFvI3t32WVrh7ZCY4kRVBSAsDbTc0i/0cXxO/42UQzFO//DyfviEhSorvGYoZAXr2m6HEunYXTcn5aQgzMPXuAh63Q+XgF98bBlyKPJolQSZLfOWV1q7Y8DJZ1ynknPaPbU+ZlDG2OCG1+KPDXVTOHhijLIpx025G5ucnAfF7owRBpfkNU6Gt0Qn265SWZ801v/ppa+p1zbLbT9t82uF1inn5pkkYNkLN7ToGGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Facts worker brief (task E27-04):** Extract these from the record, quoting values exactly:\n1. Does",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeNXRZdv97Bj2SHBL6Lx",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 463,
+      "output_tokens": 200,
+      "output_tokens_details": {
+        "thinking_tokens": 163
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

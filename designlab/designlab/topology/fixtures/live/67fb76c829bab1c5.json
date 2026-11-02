@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-06\nfare: nonrefundable\nitinerary: domestic\nevent: schedule-change\nschedule moved by: 95 minutes\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "67fb76c829bab1c5",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSsQcKEAgTGAI4AUIIdGhpbmtpbmcSDNURyoUIBBmACKfoEBoMUVpj7f6YyLdsxWQ+IjDzm6J1DNL3bv6XyWHT5K6phaYCMweS/AmsjZgcjMNcFdd7PUUq+JuBAvwHPGR0Xl4qzgb/ad1Vrf66QdV9xbL7bOMEiIaB61usXStY2eKIXz1pgZW/A0DT/qUXO/L5I1fyEJOjfsVGmESARE5fo6Z7OguYFIx5+KR21l/hUmBljqZ/5Nyn2W30pB+ml1lDSb8icbzhq1Hbo0DXcqQ4lyp/2CEw7+1q1nFe7G7jAETPKtKR7/y8N5MVBzlJDRLzDEqHietcmlbLfzKVCs4p9BXWQC40eNlF7CO/coII4sMdCDHEsDRs4pYO4COgkmpQL+/beEdckavKA7CNoRUH+lGeOiJLi9fvAXBjAK7BbRJi5I4WhQGoToOJrhUGkuv36y4SplPvvJaKg7SXWzzOlAvIICFLIo0/mGGIKwT2vowwIglqCEztU0SWnbfegDo8tgrR81pBYwa36bCPg+o/yZ4h62fB4fKu4UsFtg6aEJtOzjuuQZNep3Ec4Ad9xwa/M86Q0xj8kMosKY8P7RtSJRD9rO3fzaK0kUdpx4VszGQhJ1eMSGYmskj7WiHirYzUhZIDUykNEzwokxY17bDj5kgmT9tVlhYnuGmST+IduBcyJDatXemBHWuhgXpG9YKCCkyp1n+IuXuoDyE66xsyMFZ7nhzQ5TIGyd6aZ/nNZGiFhr3f2bL/paG+MahMv0nHZW3G+KsX+6MVgZ4LF26bg5GMB7w2uGOzBP6Q6qWEvrdvQf3/3ufzUsLaNfK+GJ3O9QPo0UcmUxs6ewe76RVn/vt4JRYP2DNfm1KQPDKp3IBGKep9Zc71euT0loE8Fg3kSo5xm6jUn+n1fHQbO/ERU2Nk3/IITjYaFx+NYXGQYR4bsqZcJR4qXCxHIELU6nr8auRUcGvV1xEKoJrhWkPpUPkI+yo7fyMRH7N2jDS6cW7HoTbAqmLiHW7E1xOEU71G7qbi/eyBMv0UZR857jXnMb93JRItlDPSA1eHdfNX6OobfZK6KG/XQMnRetiNX99G1pLt1JZeCshNPaZlYqsyIysEUmLc3AOPi3smILmAepKD4dF65ttQ7nezeMQNAUwQr1wJT4n3wIXXJeM+PIqGPgpwCXlJhiP/A5hwY+bGl6QKlbIMnZgVW7PHg6G+QqPRpvv4AFRDMCCl6lz72nB63bMHR5pWZGUcTILGn8S34iHFWLQYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**Brief for facts worker:** From the record, pull: (1) whether the traveler claims a medical or bereavement reason; (2) fare type (refundable or nonrefundable); (3) itinerary type (domestic or international); (4) event type; (5) minutes the sched",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeNZZdcgDtoZwxiKTZRP",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 474,
+      "output_tokens": 200,
+      "output_tokens_details": {
+        "thinking_tokens": 112
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

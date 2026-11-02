@@ -1,0 +1,51 @@
+{
+  "request": {
+    "max_tokens": 200,
+    "messages": [
+      {
+        "content": "Brief from the lead:\n**\n\nRecord:\ntask E27-03\nfare: nonrefundable\nitinerary: domestic\nevent: carrier-cancel\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nState only the facts the brief asks for. At most 80 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "cb7b70ad6279884c",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS0QkKEAgTGAI4AUIIdGhpbmtpbmcSDCJbL17YBgJQLxPsMhoMKUVM08yE5P94p+5jIjB3r+1624TNkGsXKC1Hzq2jnPbZeIicKKSPPdYnDAGna7OMz2bUK94LB/J3B4vNGmAq7gjhmGiX/wxmLG9gM7JhHSSzQI5EH290RI1AdEb59aNBccnEwsJ29r6y5l05xo6MvM0/9YajLVPU1ZGotMnV5Y2Lw5t2Fu75H5604pyy3Ns29uYEonAyIvSxgarhxM8P+TIAgPb7yQtt9W8MGI1qC6vqrmNmPCdwinU5PD+DP7vPtcCIprmqKgwgYJxGzJFRd49bp9eTD+UJWE1N9rA5vR1gbvPAY6oS7YKI/sfpYfUBzRkXVVG6X7clHczoJvBQqr4x37QgO3ge0xYhY37mwEyKK9ZbHHIgVSESAzSvLfHMGIMPAAREtUbAovU0wdMacfhznYVkgSLS71WU48enKIl1+cYFveCVwv7MmDF0BUfT00sYdzdKZU4NcngfM+1Mpf6MYI25oSefZnGnBp28l2NIavnkyRYHANan2jiwYWZ4arD/cqfHyrnFUH4nJ0SlTUjprW2VTWxBf9dYaqqAD/n8XeTNco32kTQnJa9iZKH+0ao51l3Jz5IK3dGCs54qLdMUK8R+NZqwqmI+GiXHFxZSVdPXa2S1bUNhogd4Iccklvn0rB5SjJm/ESaSOElKFTaWVlhNfii54WhLsCWWGbfbmNneWEQR1nJzZUMo5qFRmItU8Hsa1mMAES2aaguVHreYR2x2v8DDqk6G7eB5qyz9QrORNbrtLKsGWK0qABISOX6jSQBHpzG+j956jWomC+J6SpqwTMldBZCWNz/HcWfbArnVQyei/Ge2v3VpF9BZwx8+cEN9t4qarbmTMYmroAceUhLZD3KKGbFh2HbLzIOkvRXbm+euEgKEMRMtO8QXhtJD1AaCcxCupI30qhdTMk3v2eBnjOFtwOruTu85IbK/erZRhakztswO/2XTzhGc1Zn/Z47HdoFkVch5F3kU1cdwrvaB7rLbhLwBR5AnRMqiBD6ukutlgqcKRfy70yjZWU5dyHqgVcIc/6b7jrlM95m5Ar1GdnydWzwtVVi/S++0a7R9cXsVs+0yZpzU1xza72ohH5SzzVEcH4EKDKws1s2gp1TVdbTmMSVlEkn/hGHWZaB68DCfr5+pQm/CWrS52eooIEoPZi+ZnufLkEEWmMI16fpWWsKqUOINAu7UB6iiuEU9KUSP+Bg/v/xPnI9pokkfdFaEMUGbXfqPt8GQOImluInAIGkdLfFsBvtnJ/zVgoqzS7mHtJI1tDjVoLoLtp7ueJ4IAQA8NfGVUj5X+ZvNRA5nyuUM2gtniY5zadudA/a6UsXrF7IREYmoV+hQSPgqrSYUgV+rJ0QzjWcsRhL4lYkL0oXR/l12m1uPtGxBmSB8UEZbRfd29F5Mn0b4gnKvrrNM4JzPEIOktgeNe38Xv8osngLegF5MkIJ3KmFlmTI9GKxbRXlfSgsx77Q7X6l1cVY4eBHMWoa0sz13iTXcjw6FB171nF1Ni8OkIyoso4mEIjMrzsZLlq249d034/9nR9QSubkGy5jSg2KvxVS2pJQemQW8eq0RiDqSK0IpAxQVzKaB1HRRpg7eWCkYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeNWWNaR7ayoTCtg5tdB",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 143,
+      "output_tokens": 200,
+      "output_tokens_details": {
+        "thinking_tokens": 200
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

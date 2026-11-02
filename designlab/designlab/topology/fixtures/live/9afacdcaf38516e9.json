@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 200,
+    "messages": [
+      {
+        "content": "Refund eligibility rule card (illustrative).\nApply the first rule that matches, in this order.\nR5  The traveler claims a medical or bereavement reason: answer desk.\n    Waivers are decided by the refund approver desk.\nR2  The carrier canceled the flight and the traveler did not accept\n    the alternative offered: refund, yes. If the traveler accepted\n    it: no.\nR3  The carrier changed the schedule. The change is significant if\n    departure or arrival moved by 180 minutes or more on a domestic\n    itinerary, or by 360 minutes or more on an international one.\n    Significant and the traveler did not accept: yes. Otherwise: no.\nR1  The traveler cancels a refundable fare: yes.\nR4  The traveler cancels a nonrefundable fare: no (a credit), except\n    within 24 hours of booking when the booking was made 7 or more\n    days before departure: yes.\n\nRecord:\ntask E27-03\nfare: nonrefundable\nitinerary: domestic\nevent: carrier-cancel\ntraveler accepted the alternative: no\nhours since booking: 400\nbooking was made this many days before departure: 30\n\nYou lead two workers. Write a brief for the facts worker: the facts it must pull from the record so a rules worker can decide. At most 60 words.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You decide refund eligibility for a travel company's servicing agent, using only the rule card given."
+  },
+  "request_hash": "9afacdcaf38516e9",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSlQkKEAgTGAI4AUIIdGhpbmtpbmcSDM31zh5Z4LeRmuMLUBoMa9PbZBGx2MaYyr61IjDQHzejjItxMu1ZAbf9VZrbvL9wsLDrludskHitptd7/Xe6XpLDP4z/1zBn9vq8nFMqsggekjCDTsUB/KllvCZJU3QGoBFp/CghoQxApDrzrd9BNvhhWg+e0I96H8dxspGoDgud/ne2cBhZon1g7obXUomnr0MAoKtlDG+DBvTpRfANLz/Cx0bSwzzRshrE5Nrcb4FsvEBmyZSZQ2c28LSVqievPzEjnXiAPfi8dPMfvX+zGQxdlqCIhNlQa4+wkenGPySw1j3M8VuT+fW4wSbY3UeRuRMjWHESaJ0fmKXB4jtNun3HEE17de5FEFOPiEVdPULRyyozTAdoQpYy92PnsVGeXzw0puDcWR54dnnJ/h3BcAxOYlxAh/Cv5Zwb7Ab5SraRxUcEj3P1XGH1JuKkMQ8bsw/hhbxC3VMjZRhTXvxfI5T+vglVt2WEbKCSBBW605GtUirHUgE2rD8xEEKcPN3y6KBBJrj/ZT8Omy5RoE6x9BdSYTLRj/YAeWmibTIqcDeG3Yes9h06S63DS0+KURA2ABAPEXXH2KnPSuNy9hLxRCYAP18gDWe1as9stV4TgHAzvuBsEl/erbLYI0778OKWz9nh9vK5KXCuGmDvB4rYpRDWbT3WjYt87d8k1uhQpEHxv1m8re4x0t2yP0PE/wLTGuYktCvcg+LPgor77Gacf/jnnhSSgw2TTbI0nM7uxbIH1XP+efT+ZzWm6srMKXuVgY2fmJixM1c2mO5wJgVAaCKA+c4jRnpn5+SqLIneB9BYd6MA3ixuF5SaMQ5JD78Q7W1xEPNYO8/gKn5g8LsSvpc4RAozjDxCFBN0KqlrPKO9BOfPdyTEplgmN3BRsgd3hwZzEDup8jPvzPxZRSXPVvMUJy1ErO7+XssBIDxdxXI7u/marQjWuesyAzt8UY6eQ7z7xnYNVCKKFdnXlm39W93Jt/r19/W87hPjywN0UcCFt970rQMSyEdnndP/Ia6sWdkiouuxRzrJB4JSE8pzn9wuQUjq3GuT6KJo2xTST4Bwb8nODDxz3pW1QDXLcmJosxdjnP7ss4IezRNGXZcxN59MippuWHkCSiP4QRL9BUF1Edwn1cNx5LPDsqvSj1B8eE/cgtmnXGtUGAEPdfL15FANvHjrOrfjDtcT8ppskw63JrtZNB6+HSHldmDkIrNIQUOlJbWFMJCRXbwxE7XddH3vBePTVqczv3HYG7BwqTgtV2rC3OqNNGsScd4hwjhaCSJIFZ9haTVPi+h+rS2C+xQkb9d7GbuF4tuYsnH3d37aPQidUg2NR+zlE2EUHF85j5a+Pz201igWZnyNLBkkYJ5sLmDuiYV8V6SzmMwCbe2OL3yTKgPFmTZzS2xuG9IwQMcgaE31LnqlBtPVQNYPM9pQ366ysRzTgybU66Z6IvnPDhfpRHKWiWi2cADSiPDnI6X/OxPEXMCgqAP5B/nJHzUfqVfe4OK76+XHfwwQ9hubyyWhPE+8KSmAj1zhKGg3U3gYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "**",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeNWQ25zAAgKuyeXjU3i",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 462,
+      "output_tokens": 200,
+      "output_tokens_details": {
+        "thinking_tokens": 198
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

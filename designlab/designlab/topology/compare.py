@@ -51,18 +51,19 @@ QUALITY = {"voluntary-rebook": 0.965, "involuntary-rebook": 0.96,
            "upgrade": 0.97, "ancillary-refund": 0.975,
            "car-rental-change": 0.97, "name-correction": 0.975}
 SYSTEM_TOKENS = 3_000
-CONTEXT_GROWTH = 650    # tokens added to the context by each call
+CONTEXT_GROWTH = 500    # tokens added to the context by each call
 LEG_CALLS = 5            # extra calls per extra leg, searching types
 LEG_PENALTY = 0.02       # accuracy lost per extra leg in one context
 
 # Orchestrator-worker.
 LEAD_CALLS = 4           # plan, merge, check, effect
-WORKER_SYSTEM = 3_000
+LEAD_EXTRA = 3_000       # the lead's own orchestration instructions
+WORKER_SYSTEM = 5_400
 BRIEF_TOKENS = 1_200
 SUMMARY_TOKENS = 450
 WORKER_CALLS = {"search": 3, "rules": 3, "refund": 3, "hotel": 3,
                 "notify": 2}
-BRIEF_LOSS = 0.015       # a brief drops a fact the worker needed
+BRIEF_LOSS = 0.022       # a brief drops a fact the worker needed
 LEAD_CATCH = 0.40        # the lead's check notices the missing fact
 MERGE_ERROR = 0.012
 WORKER_LEG_PENALTY = 0.004
@@ -114,7 +115,7 @@ def orchestrated(case: Case, rng) -> Run:
     worker_overhead = sum((WORKER_SYSTEM + BRIEF_TOKENS) * c
                           for c in w_calls)
     summaries = 2 * SUMMARY_TOKENS * len(ws)
-    lead_ctx = SYSTEM_TOKENS + 1_500
+    lead_ctx = SYSTEM_TOKENS + LEAD_EXTRA + 1_500
     lead = sum(lead_ctx + SUMMARY_TOKENS * len(ws) * (i >= 1)
                for i in range(LEAD_CALLS)) + OUT_PER_CALL * LEAD_CALLS
     work = sum(_context_tokens(c, 0) for c in w_calls)
@@ -169,8 +170,22 @@ class TypeResult:
         return "tie-single" if s <= o else "tie-orchestrator"
 
 
+@dataclass
+class Bucket:
+    n: int = 0
+    single_ok: int = 0
+    ow_ok: int = 0
+    single_tokens: int = 0
+    ow_tokens: int = 0
+
+
+BUCKETS: dict[str, Bucket] = {}
+
+
 def compare(seed: int = 27, cases: list[Case] | None = None,
             call_cap: int | None = None) -> dict[str, TypeResult]:
+    """Per type results. Leg buckets ("1-2 legs", "3+ legs") are left
+    in BUCKETS for the routing arithmetic in `routed`."""
     global CALL_CAP
     saved = CALL_CAP
     if call_cap is not None:
@@ -178,7 +193,10 @@ def compare(seed: int = 27, cases: list[Case] | None = None,
     try:
         cases = cases if cases is not None else golden_set(seed)
         out: dict[str, TypeResult] = {}
+        BUCKETS.clear()
         for c in cases:
+            b = BUCKETS.setdefault("3+ legs" if c.legs >= 3
+                                   else "1-2 legs", Bucket())
             r = out.setdefault(c.kind, TypeResult(c.kind))
             for rep in range(REPEATS):
                 s = single(c, seeded(seed, "single", c.case_id, str(rep)))
@@ -199,6 +217,11 @@ def compare(seed: int = 27, cases: list[Case] | None = None,
                     r.many_leg_gain += gain
                 else:
                     r.few_leg_gain += gain
+                b.n += 1
+                b.single_ok += s.ok
+                b.ow_ok += o.ok
+                b.single_tokens += s.tokens
+                b.ow_tokens += o.tokens
                 r.single_secs.append(s.seconds)
                 r.ow_secs.append(o.seconds)
         return out
@@ -230,3 +253,19 @@ def totals(res: dict[str, TypeResult]) -> dict:
             "ties": sum(w.startswith("tie") for w in wins),
             "ow_wins": sum(w in ("orchestrator", "tie-orchestrator")
                            for w in wins)}
+
+
+def routed() -> dict:
+    """Route by legs: three or more to orchestrator-worker, the rest to
+    one agent. Uses the buckets of the last `compare` call."""
+    few, many = BUCKETS["1-2 legs"], BUCKETS["3+ legs"]
+    n = few.n + many.n
+    single_tok = few.single_tokens + many.single_tokens
+    return {"runs": n,
+            "many_leg_runs": many.n,
+            "all_single_ok": (few.single_ok + many.single_ok) / n,
+            "all_ow_ok": (few.ow_ok + many.ow_ok) / n,
+            "routed_ok": (few.single_ok + many.ow_ok) / n,
+            "routed_token_ratio": (few.single_tokens + many.ow_tokens)
+            / single_tok,
+            "few": few, "many": many}
