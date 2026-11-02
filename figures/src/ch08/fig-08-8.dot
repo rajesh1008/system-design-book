@@ -1,0 +1,18 @@
+// Figure 8.8  Fan-out from one airline cancellation
+// Reading order: left to right. One event becomes 3,900 commands,
+// keyed by itinerary, that land in three queues; status refreshes go
+// to their own queue and are coalesced.
+digraph fanout {
+#include "book.gv"
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  ev [label="One cancellation\nevent", class="fail"];
+  fan [label="Fan-out\n3,900 commands", class="ops"];
+  qw [label="Work\n3,396", class="ops store"];
+  qa [label="Approvals\n400", class="ops store"];
+  qr [label="Refusals\n104", class="ops store"];
+  rf [label="Refreshes\n23,400 to 3,900", class="ops store"];
+  ev -> fan [class="fail"];
+  fan -> qw; fan -> qa [class="emphasis"]; fan -> qr;
+  ev -> rf [style=dashed, label=" coalesce"];
+  { rank=same; qw; qa; qr; rf; }
+}

@@ -11,6 +11,7 @@ and the customer has already been told a person will decide.
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 
 from common.rand import seeded
@@ -144,7 +145,7 @@ def admit(wanted: int, s: Signals) -> tuple[int, str]:
 def cap_for(reviewers: int, review_s: int, target_age_s: int) -> int:
     """The pending cap a desk can honor: absorb rate times the oldest
     age you are willing to show a reviewer. Derive it; do not guess."""
-    return int(absorb_rate(reviewers, review_s) * target_age_s)
+    return math.ceil(absorb_rate(reviewers, review_s) * target_age_s)
 
 
 def sampled_peak(res: DeskResult, every_min: int = 5) -> int:

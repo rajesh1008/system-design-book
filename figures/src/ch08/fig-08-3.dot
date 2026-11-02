@@ -1,0 +1,21 @@
+// Figure 8.3  Ordering per itinerary
+// Reading order: top to bottom. Two changes for one itinerary arrive
+// out of order; the partition keeps one consumer per itinerary; the
+// sequence check applies the newer change and rejects the older one.
+digraph order {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.35;
+  e42 [label="seq 42\n09:40", class="ops"];
+  e41 [label="seq 41\n07:05", class="ops"];
+  part [label="Partition\nby itinerary", class="ops"];
+  chk [label="Newer than\nlast applied?", class="ops gate"];
+  ok [label="Apply\nseq 42", class="verified"];
+  stale [label="Reject\nseq 41 stale", class="fail"];
+  e42 -> part [label=" first"];
+  e41 -> part [label=" second"];
+  part -> chk;
+  chk -> ok [label=" yes", class="verified"];
+  chk -> stale [label=" no", class="fail"];
+  { rank=same; e42; e41; }
+  { rank=same; ok; stale; }
+}

@@ -1,0 +1,21 @@
+// Figure 8.5  Backpressure signals from tools, people, and budgets
+// Reading order: top to bottom. Three signals each lower what the
+// intake gate admits; work not admitted is held, never dropped.
+digraph signals {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.45;
+  desk [label="Approval desk\npending vs cap", class="org human"];
+  sup [label="Supplier\nthrottling", class="ops external"];
+  bud [label="Hourly\nbudget", class="policy"];
+  gate [label="Intake gate", class="policy gate"];
+  held [label="Held,\noldest first", class="ops store"];
+  adm [label="Admitted\nto queues", class="ops"];
+  desk -> gate [class="control"];
+  sup -> gate [class="control"];
+  bud -> gate [class="policy"];
+  gate -> adm [class="emphasis"];
+  gate -> held [label=" not now"];
+  held -> gate [label=" retry", constraint=false, style=dashed];
+  { rank=same; desk; sup; bud; }
+  { rank=same; held; adm; }
+}

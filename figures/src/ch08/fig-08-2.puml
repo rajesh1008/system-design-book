@@ -1,0 +1,17 @@
+@startuml
+' Figure 8.2  Events and commands for one itinerary
+' Reading order: top to bottom. The airline's fact enters the log; the
+' planner turns it into a command with one owner; the gateway's
+' result is a new fact that the trail records.
+!include plantuml-theme.puml
+participant "Log" as E <<ops>>
+participant "Planner" as P <<ops>>
+participant "Gateway" as G <<ops>>
+participant "Trail" as T <<evidence>>
+E -> P : event: canceled
+P -> G : command: rebook
+G -> E : event: rebooked
+G -[$TRAIL]-> T : effect
+E -> P : event: rebooked
+P -> P : command: notify
+@enduml

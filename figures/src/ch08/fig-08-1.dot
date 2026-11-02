@@ -1,0 +1,32 @@
+// Figure 8.1  The asynchronous spine
+// Reading order: top to bottom. Airline events enter the log; the
+// fan-out turns each event into commands keyed by itinerary; three
+// queues feed their consumers; only the gateway touches suppliers;
+// every consumer writes the trail, and failures land in dead letters.
+digraph spine {
+#include "book.gv"
+  rankdir=TB; { rank=same; feed; log; } nodesep=0.35; ranksep=0.4;
+  feed [label="Airline\nschedule feed", class="ops external"];
+  log [label="Event log\nby itinerary", class="ops store"];
+  gate [label="Fan-out and\nintake gate", class="policy gate"];
+  qw [label="Work\nqueue", class="ops store"];
+  qa [label="Approvals\nqueue", class="policy store"];
+  qr [label="Refusals\nqueue", class="ops store"];
+  wk [label="Agent\nworkers", class="ops"];
+  desk [label="Approval\ndesk", class="policy human"];
+  ad [label="Agent\ndesk", class="ops human"];
+  gw [label="Gateway", class="ops gate"];
+  tr [label="Trail", class="evidence store"];
+  dl [label="Dead\nletters", class="evidence store"];
+  feed -> log [class="async"];
+  log -> gate [class="async"];
+  gate -> qw; gate -> qa [class="emphasis"]; gate -> qr;
+  qw -> wk; qa -> desk; qr -> ad;
+  wk -> gw; desk -> gw [label=" permission", class="policy"];
+  ad -> gw;
+  gw -> tr [class="trail"];
+  wk -> dl [class="trail", style=dashed];
+  { rank=same; qw; qa; qr; }
+  { rank=same; wk; desk; ad; }
+  { rank=same; tr; dl; }
+}

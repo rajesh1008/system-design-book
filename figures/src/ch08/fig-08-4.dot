@@ -1,0 +1,16 @@
+// Figure 8.4  Three queues and their consumers
+// Reading order: top to bottom. The policy engine routes each
+// command; each queue has one kind of consumer and one promise.
+digraph queues {
+#include "book.gv"
+  rankdir=TB; nodesep=0.2; ranksep=0.4;
+  pol [label="Policy engine", class="policy gate"];
+  qw [label="Work", class="ops store"];
+  qa [label="Approvals", class="policy store"];
+  qr [label="Refusals", class="ops store"];
+  wk [label="Agent\nworkers", class="ops"];
+  desk [label="Approval\ndesk,\ncap 50", class="org human"];
+  ad [label="Agent\ndesk,\n30 min", class="org human"];
+  pol -> qw; pol -> qa [class="emphasis"]; pol -> qr;
+  qw -> wk; qa -> desk; qr -> ad;
+}

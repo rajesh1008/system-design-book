@@ -15,6 +15,7 @@ class Inbox:
     def __init__(self, consumer: str, db: sqlite3.Connection | None = None
                  ) -> None:
         self.consumer = consumer
+        self._own = db is None
         self.db = db or sqlite3.connect(":memory:")
         self.db.executescript("""
             CREATE TABLE IF NOT EXISTS inbox (
@@ -52,6 +53,15 @@ class Inbox:
                 return "stale"
         except sqlite3.IntegrityError:
             return "duplicate"
+
+    def close(self) -> None:
+        if self._own:
+            self.db.close()
+            self._own = False
+
+    def __del__(self) -> None:
+        if getattr(self, "_own", False):
+            self.db.close()
 
     def seq(self, key: str) -> int | None:
         row = self.db.execute("SELECT seq FROM itinerary WHERE key = ?",

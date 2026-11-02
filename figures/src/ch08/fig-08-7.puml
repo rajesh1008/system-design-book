@@ -1,0 +1,21 @@
+@startuml
+' Figure 8.7  Dead-letter flow
+' Reading order: top to bottom. A transient failure is retried up to
+' a limit; a poison message is quarantined with its owner, only its
+' itinerary is parked, and replay after a fix runs in order.
+!include plantuml-theme.puml
+start
+:Receive;
+if (Applies?) then (yes)
+  :Inbox records it;
+  stop
+endif
+if (Transient?) then (yes)
+  :Retry, up to 5;
+  stop
+endif
+:Quarantine with owner;
+:Park the itinerary;
+:Fix, then replay;
+stop
+@enduml
