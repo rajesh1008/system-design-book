@@ -40,7 +40,7 @@ def show(recs) -> list[str]:
 
 def to_trail(recs) -> list[str]:
     trail = TrailWriter(clock=FixedClock(
-        start="2025-12-18T15:02:11+00:00", step_seconds=1))
+        start="2025-12-18T15:02:11-06:00", step_seconds=1))
     for r in recs:
         trail.append({"state": r.state, "writer": r.writer,
                       "ref": r.ref, "prev": r.prev})

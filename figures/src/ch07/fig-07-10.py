@@ -12,7 +12,7 @@ bars = [("Retry with same key", 248, "verified"),
         ("Lookup: never landed", 69, "knowledge"),
         ("Escalated to a person", 67, "fail"),
         ("Message not resent", 52, "org")]
-fig, ax = fl.figure(4.5, 2.8)
+fig, ax = fl.figure(4.5, 3.5)
 ys = list(range(len(bars)))[::-1]
 for y, (label, n, tok) in zip(ys, bars):
     ax.barh(y, n, color=fl.FILL[tok], edgecolor=fl.C[tok],

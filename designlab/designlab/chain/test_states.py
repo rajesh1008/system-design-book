@@ -51,7 +51,7 @@ class TestStates(unittest.TestCase):
 
     def test_permission_bound_to_proposal_hash(self):
         prop, _ = to_proposal(CANNED, "LTG-4471902", ["FLT-000001"])
-        perm, _ = grant(prop, digest(prop), "2025-12-18T15:02:11Z")
+        perm, _ = grant(prop, digest(prop), "2025-12-18T15:02:11-06:00")
         self.assertEqual(perm["bound_to"], digest(prop))
         self.assertTrue(perm["idempotency_key"].startswith("idem-"))
 

@@ -218,7 +218,7 @@ def business_result(verified: dict, contact: dict, cost_usd: float) -> dict:
 
 
 def run_rebooking(output_text: str, res: Optional[Reservations] = None,
-                  now: str = "2025-12-18T15:02:11Z",
+                  now: str = "2025-12-18T15:02:11-06:00",
                   forge: Optional[str] = None) -> tuple:
     """Run one rebooking through all six states.
 
