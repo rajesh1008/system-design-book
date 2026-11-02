@@ -1,0 +1,39 @@
+// Figure 5.5  The same design drawn badly and well
+// Reading order: left panel (the demo, three nodes) then right panel
+// (design v0.1), each top to bottom. The demo's effect has no gate.
+digraph badwell {
+#include "book.gv"
+  rankdir=TB;
+  subgraph cluster_demo { label="Demo, October 6, 2025"; class="plane-fail";
+    d_customer [label="Customer", class="ops external"];
+    d_agent [label="Agent", class="model"];
+    d_airline [label="Airline", class="ops external"];
+    d_customer -> d_agent [label="asks", class="control"];
+    d_agent -> d_airline [label="rebooks\nno gate", class="fail"];
+  }
+  subgraph cluster_v01 { label="Design v0.1"; class="plane-verified";
+    customer [label="Customer", class="ops external"];
+    itins [label="Itineraries,\nfare rules", class="knowledge store"];
+    loop [label="Agent harness", class="model"];
+    model [label="Model", class="model"];
+    policy [label="Policy engine", class="policy gate"];
+    desk [label="Approval desk", class="org human"];
+    executor [label="Refund executor", class="ops"];
+    psp [label="Card processor", class="ops external"];
+    settle [label="Settlement file", class="ops external"];
+    verifier [label="Settlement\nreconciler", class="verified"];
+    trail [label="Trail", class="evidence store"];
+    customer -> loop [label="request", class="control"];
+    itins -> loop [class="data"];
+    loop -> model [class="data"];
+    loop -> policy [label="proposal", class="emphasis"];
+    policy -> desk [label="needs a person", class="async"];
+    policy -> executor [label="permission", class="control"];
+    policy -> trail [class="trail"];
+    executor -> psp [label="refund", class="control"];
+    executor -> trail [class="trail"];
+    psp -> settle [class="data"];
+    settle -> verifier [class="data"];
+    verifier -> trail [label="verified", class="trail"];
+  }
+}

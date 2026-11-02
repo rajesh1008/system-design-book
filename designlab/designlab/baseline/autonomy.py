@@ -1,9 +1,12 @@
 """The honest automation rate, and the test that guards its definition.
 
-Automated means executed and verified with no person in the loop. A
+Automated means finished and verified with no person in the loop, where
+verified means a record the bot does not write agrees. For an agent that
+acts, the record is the system the change landed in. For the 2024
+answer-only pilot, it is the contact log: no contact from the customer,
+on any channel, in the seven days after the bot closed the session. A
 contact handed to a person is never automated. An abandoned contact is
-never automated. A change the bot said it made, but that the booking
-system does not show, is not automated either.
+never automated. An answer the customer came back about is not either.
 """
 from __future__ import annotations
 
@@ -31,7 +34,7 @@ class Definition:
         return self.count_opt_outs and not s["bot_engaged"]
 
 
-HONEST = Definition("executed and verified, no person")
+HONEST = Definition("verified, no person")
 VENDOR = Definition("vendor dashboard", count_handoffs=True,
                     count_unverified=True)
 
@@ -51,7 +54,7 @@ def metric_test(sessions: list[dict], d: Definition) -> dict[str, int]:
         elif s["abandoned"]:
             broken["counts an abandoned contact"] += 1
         elif not s["verified"]:
-            broken["counts an unverified change"] += 1
+            broken["counts an unverified resolution"] += 1
     return dict(broken)
 
 

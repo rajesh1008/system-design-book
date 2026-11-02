@@ -7,7 +7,7 @@ from corpus.ops import OPS_TABLES, generate_ops, ops_digest
 
 # Changing corpus/ops.py changes this digest; the chapter quotes it.
 PINNED_OPS_DIGEST = (
-    "03a7600046255618c9d359c3ec732cb59e64b46a88191365112ca81f0dbadd21")
+    "4d42beaa56093f108a8ae2b878acd897f2127f833be077e5321bb9e7f523bb30")
 
 T = generate_ops(2026)
 

@@ -47,7 +47,7 @@ class TestChainCheck(unittest.TestCase):
 
     def test_edit_after_the_fact_breaks_link(self):
         recs, _ = run_rebooking(CANNED)
-        recs[2].body["max_fare_difference_usd"] = 900.0
+        recs[2].body["max_fare_difference_usd"] = 9000.0
         self.assertIn("execution: link broken", check_chain(recs))
 
     def test_missing_state(self):

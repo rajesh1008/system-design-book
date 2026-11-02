@@ -64,7 +64,7 @@ def main(gaps: bool = False, text: str = CANNED) -> list[str]:
         out.append(f"Forged: {forge}")
         out += [f"  {p}" for p in check_chain(bad)]
     tampered, _ = run_rebooking(text, Reservations(slow_calls={1}))
-    tampered[2].body["max_fare_difference_usd"] = 900.0
+    tampered[2].body["max_fare_difference_usd"] = 9000.0
     out.append("Edited after the fact: permission limit")
     out += [f"  {p}" for p in check_chain(tampered)]
     if gaps:

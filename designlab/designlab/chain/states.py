@@ -38,7 +38,7 @@ FLIGHTS = {
                    "departs": "2025-12-12T14:10:00Z", "fare_usd": 288.00},
 }
 
-POLICY = {"policy_id": "rebooking-v1", "max_fare_difference_usd": 150.00,
+POLICY = {"policy_id": "changes-v1", "max_fare_difference_usd": 1500.00,
           "same_route": True, "valid_minutes": 15}
 
 

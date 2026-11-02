@@ -89,8 +89,8 @@ API_ERROR_WEIGHT = {"email-only": 2.0, "async-batch": 1.2, "sync": 0.7,
 
 # The chatbot pilot: outcomes as exact shares of sessions.
 PILOT_OUTCOMES = {
-    "bot-executed-verified": 0.09,
-    "bot-said-done-unverified": 0.06,
+    "bot-answered-verified": 0.09,
+    "bot-answered-came-back": 0.06,
     "bot-handed-to-person": 0.39,
     "abandoned-in-bot": 0.21,
     "opted-out-to-person": 0.25,
@@ -101,22 +101,22 @@ PILOT_INCIDENTS = [
     {"incident_id": "PIL-1", "date": "2024-07-23",
      "what": "bot promised fee waivers the fare rules did not grant",
      "customers": 37, "cost_usd": 9_250, "found_after_days": 6,
-     "found_by": "supervisor reading transcripts",
+     "found_by": "agents' calls, then transcripts",
      "chain_gap": "G1 output acted as a promise"},
     {"incident_id": "PIL-2", "date": "2024-08-08",
-     "what": "bot confirmed rebookings the carrier never ticketed",
+     "what": "bot said carrier rebookings were done; none checked",
      "customers": 64, "cost_usd": 21_700, "found_after_days": 2,
      "found_by": "airport desk calls",
-     "chain_gap": "G4 execution never verified"},
+     "chain_gap": "G4 outcome stated, never verified"},
     {"incident_id": "PIL-3", "date": "2024-08-30",
      "what": "hand-off loop sent customers back to the bot",
      "customers": 1_900, "cost_usd": 14_300, "found_after_days": 0,
      "found_by": "queue alarm, wait over 2 hours",
      "chain_gap": "metric counted hand-offs as automated"},
     {"incident_id": "PIL-4", "date": "2024-09-17",
-     "what": "bot issued refunds through a shared service account",
+     "what": "bot showed bookings it had no grant to read",
      "customers": 11, "cost_usd": 6_480, "found_after_days": 9,
-     "found_by": "settlement reconciliation",
+     "found_by": "a customer's call to an agent",
      "chain_gap": "G2 no permission record"},
 ]
 
@@ -314,24 +314,19 @@ class OpsBuilder:
                 "session_id": f"PS-{i + 1:05d}", "day": d.isoformat(),
                 "outcome": o,
                 "bot_engaged": o != "opted-out-to-person",
-                "bot_said_resolved": o in ("bot-executed-verified",
-                                           "bot-said-done-unverified"),
+                "bot_said_resolved": o in ("bot-answered-verified",
+                                           "bot-answered-came-back"),
                 "routed_by_bot": o == "bot-handed-to-person",
                 "reached_person": person,
                 "abandoned": o == "abandoned-in-bot",
-                "change_in_booking_system": o == "bot-executed-verified",
-                "reopened_7d": False,
+                "contact_within_7d": o == "bot-answered-came-back",
                 "source": "vendor session export"})
-        # Said done but not verified: either no change in the booking
-        # system, or a change the customer came back about within 7 days.
+        # Verified means a record the bot does not write agrees: the
+        # contact log shows no contact from the customer, on any
+        # channel, in the seven days after the bot closed the session.
         for row in rows:
-            if row["outcome"] == "bot-said-done-unverified":
-                if r.random() < 0.4:
-                    row["change_in_booking_system"] = True
-                    row["reopened_7d"] = True
-        for row in rows:
-            row["verified"] = (row["change_in_booking_system"]
-                               and not row["reopened_7d"]
+            row["verified"] = (row["bot_said_resolved"]
+                               and not row["contact_within_7d"]
                                and not row["reached_person"])
         self.t["ops_pilot_sessions"] = rows
         self.t["ops_pilot_incidents"] = [dict(x) for x in PILOT_INCIDENTS]

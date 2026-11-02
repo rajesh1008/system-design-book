@@ -99,7 +99,7 @@ class TestAutonomy(unittest.TestCase):
     def test_vendor_definition_fails(self):
         broken = metric_test(self.S, VENDOR)
         self.assertIn("counts a contact a person handled", broken)
-        self.assertIn("counts an unverified change", broken)
+        self.assertIn("counts an unverified resolution", broken)
 
     def test_abandons_fail_too(self):
         d = Definition("abandons", count_abandons=True)

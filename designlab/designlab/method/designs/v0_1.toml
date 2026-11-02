@@ -105,8 +105,8 @@ value = 30
 low = 20
 high = 40
 unit = "per person-hour"
-assumption = "a reviewer clears one approval every two minutes"
-source = "doc:pilot-approval-desk (Marcus Bell)"
+assumption = "a supervisor clears one above-limit approval every two minutes"
+source = "doc:supervisor-approvals-2025 (Marcus Bell)"
 
 [[estimate]]
 name = "avg_per_day"
@@ -249,12 +249,12 @@ status = "accepted"
 
 [[records]]
 id = "R-004"
-title = "Every pilot refund goes to a person"
+title = "Every refund goes to a person in phase one"
 context = "no approval history yet; storm volume not yet tested"
 options = ["every refund to a person", "auto-approve under a limit"]
-decision = "every pilot refund goes to the approval desk"
+decision = "in the first phase after the pilot, every refund goes to the approval desk"
 consequences = "a storm needs about 67 reviewers at this share"
-reverse_if = "any approval waits over an hour, or the pilot passes 5%"
+reverse_if = "any approval waits over an hour, or the agent passes 5% of changes"
 evidence = ["est:reviewers_needed", "dive:approval-queue"]
 owner = "Marcus Bell"
 status = "accepted"

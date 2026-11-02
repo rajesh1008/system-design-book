@@ -1,0 +1,28 @@
+// Figure 5.1  The eight artifacts and how they connect
+// Reading order: top to bottom. The Scope Card bounds everything; the
+// questions feed the estimate and the diagram; the diagram raises the
+// decisions; the checklist reads all of them.
+digraph artifacts {
+#include "book.gv"
+  rankdir=TB;
+  scope [label="Scope Card\nowner, effects, autonomy", class="org"];
+  questions [label="Question Bank\nanswers with sources", class="ops"];
+  estimate [label="Estimate Sheet\nassumption per input", class="ops"];
+  diagram [label="Diagram\nin the grammar", class="ops"];
+  table [label="Decision Table\noptions and criteria", class="ops"];
+  dive [label="Deep Dive\nthe riskiest step", class="ops"];
+  record [label="Decision Record\nwhat reverses it", class="evidence store"];
+  checklist [label="Checklist\nfive gaps, seven method items", class="verified gate"];
+  scope -> questions [class="control"];
+  questions -> estimate [class="data"];
+  questions -> diagram [class="data"];
+  estimate -> dive [class="data"];
+  diagram -> table [label="choices", class="control"];
+  table -> dive [label="riskiest", class="control"];
+  table -> record [class="control"];
+  dive -> record [class="data"];
+  record -> checklist [class="emphasis"];
+  estimate -> checklist [class="trail"];
+  diagram -> checklist [class="trail"];
+  { rank=same; estimate; diagram; }
+}

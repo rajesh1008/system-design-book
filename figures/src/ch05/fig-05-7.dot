@@ -1,0 +1,25 @@
+// Figure 5.7  The deep-dive template
+// Reading order: top to bottom, the six steps of DEEP_DIVE_STEPS; step
+// four fans out into detect, contain, recover for each failure mode.
+digraph dive {
+#include "book.gv"
+  rankdir=TB;
+  s1 [label="1  Pick the step whose\nfailure costs most", class="ops"];
+  s2 [label="2  Contract: inputs,\noutputs, invariant", class="ops"];
+  s3 [label="3  At least three\nways it fails", class="fail"];
+  detect [label="Detect", class="evidence"];
+  contain [label="Contain", class="policy gate"];
+  recover [label="Recover", class="verified"];
+  s5 [label="5  Numbers from the\nEstimate Sheet", class="ops"];
+  s6 [label="6  Owner and the test\nthat proves it", class="org human"];
+  s1 -> s2 [class="control"];
+  s2 -> s3 [class="control"];
+  s3 -> detect [label="4  for each", class="emphasis"];
+  s3 -> contain [class="control"];
+  s3 -> recover [class="control"];
+  detect -> s5 [class="data"];
+  contain -> s5 [class="data"];
+  recover -> s5 [class="data"];
+  s5 -> s6 [class="control"];
+  { rank=same; detect; contain; recover; }
+}

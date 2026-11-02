@@ -8,8 +8,8 @@ import figlib as fl
 
 rows = [("Abandons counted too", 75, "fail"),
         ("Vendor dashboard", 54, "fail"),
-        ("Bot said done", 15, "fail"),
-        ("Executed and verified", 9, "verified")]
+        ("Bot said resolved", 15, "fail"),
+        ("Verified, no person", 9, "verified")]
 fig, ax = fl.figure(4.0, 3.4)
 y = list(range(len(rows)))[::-1]
 for j, (yi, (name, v, tok)) in enumerate(zip(y, rows)):

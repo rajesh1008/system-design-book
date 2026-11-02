@@ -1,0 +1,12 @@
+@startuml
+' Figure 5.8  The decision record lifecycle
+' Reading order: top to bottom from proposed to reaffirmed or superseded.
+!include plantuml-theme.puml
+hide empty description
+[*] --> Proposed
+Proposed --> Accepted : Review signs
+Accepted --> Reopened : Reversal condition met
+Reopened --> Accepted : Reaffirmed, new evidence
+Reopened --> Superseded : New record replaces it
+Superseded --> [*]
+@enduml

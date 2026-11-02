@@ -1,22 +1,21 @@
 @startuml
 ' Figure 4.6  The chatbot pilot's four incidents on a timeline
 ' Reading order: top to bottom, July to September 2024. Each incident is
-' a message the bot sent and the place it was finally caught.
+' a failing message from the answer-only bot, then the call that found it.
 !include plantuml-theme.puml
 participant "Chatbot" as B <<model>>
-participant "Booking\nsystem" as K <<ops>>
+participant "Ticket\nrecord" as K <<evidence>>
 participant "Person\nqueue" as Q <<ops>>
-database "Settlement\nfile" as S <<evidence>>
 == Jul 23 ==
 B -[$FAIL]-> B : Waiver promised
 Q -> Q : Day 6
 == Aug 8 ==
-B -[$FAIL]-> K : Not ticketed
+B -[$FAIL]-> K : Rebooking unchecked
 Q -> Q : Day 2
 == Aug 30 ==
 B -[$FAIL]-> Q : Hand-off loop
 Q -> Q : Same day
 == Sep 17 ==
-B -[$FAIL]-> S : Shared account
-S -> S : Day 9
+B -[$FAIL]-> B : Wrong booking shown
+Q -> Q : Day 9
 @enduml
