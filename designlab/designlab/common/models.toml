@@ -1,0 +1,43 @@
+# Pinned model IDs for designlab (Batch 0, November 2, 2026).
+#
+# Changed only through the release gate (Chapter 39). Every ID below was
+# listed by the provider's models endpoint and answered a live call that
+# echoed the same ID back on the date in `verified`. Prices are US dollars
+# per million tokens from the provider's public pricing page on that date.
+#
+# Roles, not names, are what the code asks for: models.pin("small").
+
+provider = "anthropic"
+api_version = "2023-06-01"
+verified = "2026-11-02"
+
+[roles.small]
+id = "claude-haiku-5-5"
+display = "Claude Haiku 5.5"
+input_usd_per_mtok = 0.10
+output_usd_per_mtok = 0.50
+cache_read_usd_per_mtok = 0.01
+note = "prices for prompts up to 100,000 tokens"
+
+[roles.mid]
+id = "claude-sonnet-5-5"
+display = "Claude Sonnet 5.5"
+input_usd_per_mtok = 2.00
+output_usd_per_mtok = 10.00
+cache_read_usd_per_mtok = 0.10
+
+[roles.frontier]
+id = "claude-opus-5-5"
+display = "Claude Opus 5.5"
+input_usd_per_mtok = 4.00
+output_usd_per_mtok = 20.00
+cache_read_usd_per_mtok = 0.20
+
+# A dated snapshot ID, kept for the Chapter 13 contrast between an
+# undated ID and one that names its release.
+[roles.dated]
+id = "claude-haiku-4-5-20251001"
+display = "Claude Haiku 4.5"
+input_usd_per_mtok = 1.00
+output_usd_per_mtok = 5.00
+cache_read_usd_per_mtok = 0.10
