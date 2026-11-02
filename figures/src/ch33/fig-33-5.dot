@@ -1,0 +1,27 @@
+// Figure 33.5  Exfiltration paths
+// Reading order: left to right. Five ways private data leaves a
+// session, each with the control that closes it. From threats.attacks
+// (exfiltration class, 10 attacks, 0 effects).
+digraph hld {
+#include "book.gv"
+  rankdir=LR; nodesep=0.25; ranksep=0.4;
+  s [label="Session", class="model"];
+  code [label="Code posts\nto a host", class="fail"];
+  url [label="Data in\na URL", class="fail"];
+  img [label="Image or link\nin a reply", class="fail"];
+  tool [label="Tool argument\nfree text, log", class="fail"];
+  msg [label="Notify with\ncustom template", class="fail"];
+  eg [label="Egress allow-list\nnames, HTTPS", class="policy gate"];
+  rf [label="Reply filter\nown pages only", class="policy gate"];
+  gw [label="Gateway schema\nand registry", class="policy gate"];
+  s -> code [class="emphasis"];
+  s -> url [class="emphasis"];
+  s -> img [class="emphasis"];
+  s -> tool [class="emphasis"];
+  s -> msg [class="emphasis"];
+  code -> eg [class="control"];
+  url -> eg [class="control"];
+  img -> rf [class="control"];
+  tool -> gw [class="control"];
+  msg -> gw [class="control"];
+}

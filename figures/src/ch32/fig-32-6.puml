@@ -1,0 +1,19 @@
+@startuml
+' Figure 32.6  The secret broker
+' Reading order: top to bottom. The context assembler refuses any
+' held key or run token before the model sees it; the broker fills
+' a system-of-record key only after the run token covers this tool
+' and this itinerary, and drops it from the result.
+!include plantuml-theme.puml
+participant "Context\nassembler" as A <<ops>>
+participant "Gateway" as G <<policy>>
+participant "Broker" as B <<policy>>
+participant "System\nof record" as S <<ops>>
+A -[$FAIL]> A : Key in note:\nrefused
+A -> G : Tool call
+G -> B : Run claims
+B -> S : Key filled
+S --> B : Result
+B --> G : Key dropped
+B -[$FAIL]> G : Other trip:\nrefused
+@enduml

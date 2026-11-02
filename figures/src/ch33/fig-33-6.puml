@@ -1,0 +1,17 @@
+@startuml
+' Figure 33.6  The confused deputy
+' Reading order: top to bottom. The customer asks the agent to refund a
+' ticket on another booking; the agent holds the authority but the
+' session binding checks the object against the session and refuses,
+' recording both identities. From threats.controls.bound (X03).
+!include plantuml-theme.puml
+participant "Customer" as C <<org>>
+participant "Agent" as A <<model>>
+participant "Binding" as B <<policy>>
+C -> A : Refund other booking
+A -> B : refund_ticket
+B -> B : Not this session
+B -> B : Trail both IDs
+B -[$FAIL]> A : Refused
+A --> C : This booking only
+@enduml

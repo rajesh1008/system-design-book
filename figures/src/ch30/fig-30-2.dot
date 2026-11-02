@@ -1,0 +1,22 @@
+// Figure 30.2  Skills and instruction files as portable capability
+// Reading order: top to bottom. Skills and the instruction file live
+// in Lakeshore's repository; the manifest pins their versions; the
+// harness loads them on whichever runtime runs it. The drift check
+// compares every tool a skill names with the manifest's tools.
+// From runtimes.skills.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.28;
+  repo [label="Lakeshore repo\nskills, instructions", class="knowledge store"];
+  man [label="Manifest\npins versions", class="ops"];
+  drift [label="Drift check\ntools named", class="policy gate"];
+  h [label="Harness", class="model"];
+  a [label="Runtime A", class="ops external"];
+  b [label="Runtime B", class="ops external"];
+  repo -> man [class="data"];
+  repo -> drift [class="control"];
+  man -> drift [class="control"];
+  man -> h [class="data"];
+  h -> a [class="emphasis"];
+  h -> b [class="emphasis"];
+}

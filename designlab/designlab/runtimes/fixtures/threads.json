@@ -1,0 +1,12 @@
+{
+  "runtime": "threads",
+  "recorded": "synthetic; shaped on documented thread-and-checkpoint deployments; not a vendor recording",
+  "unit": "thread",
+  "native_fields": ["thread_id", "checkpoint_id", "checkpoint_ns"],
+  "checkpoint": "after every step, in the runtime's store",
+  "export_format": "threads/v1",
+  "max_session_seconds": null,
+  "sample": [
+    {"thread_id": "th-0001", "checkpoint_id": "cp-0001-03", "checkpoint_ns": "", "step": 3, "next": "refund_ticket"}
+  ]
+}

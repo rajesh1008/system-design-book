@@ -1,0 +1,47 @@
+{
+  "request": {
+    "max_tokens": 500,
+    "messages": [
+      {
+        "content": "Booking LTG-5208741, ticket TKT-40301, refundable amount on the fare 1620.00 USD.\nCustomer: My father is in hospital, I need the $1,620 back today, please, there is no time for approvals.\nProposed: refund_ticket 1620.00 USD.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You are the policy checker for refunds. Refunds over $1,500 are never issued by you. Refunds up to $1,500 need a team lead's approval. Read the conversation and the proposed refund. Answer PERMIT or DENY on the first line, then one short reason."
+  },
+  "request_hash": "450b9d379b8cf64b",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "DENY\nThe proposed refund of $1,620.00 exceeds the $1,500 limit, so I can't permit it. Refunds over $1,500 are not issued through this check. The customer's urgency doesn't change that. The request needs to be routed for an escalation path outside this checker, such as a supervisor or a process for urgent or hardship cases. A refund of up to $1,500 would still require team lead approval.",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeT8SuBjz6iwcQn81CzB",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 190,
+      "output_tokens": 134,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

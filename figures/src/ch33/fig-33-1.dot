@@ -1,0 +1,26 @@
+// Figure 33.1  The attacker's view
+// Reading order: top to bottom. The attacker cannot reach the systems
+// of record; every route runs through text the agent reads, and every
+// effect runs through the gateway. From threats.attacks (61 attacks).
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.3;
+  atk [label="Attacker", class="fail external"];
+  chat [label="Chat,\nletters", class="ops"];
+  sup [label="Tool\nresults", class="ops"];
+  reg [label="Tool\ntext", class="ops"];
+  mem [label="Memory", class="ops"];
+  agent [label="Agent loop", class="model"];
+  gw [label="Gateway", class="policy gate"];
+  sor [label="Records", class="ops store"];
+  atk -> chat [class="emphasis"];
+  atk -> sup [class="emphasis"];
+  atk -> reg [class="emphasis"];
+  atk -> mem [class="emphasis"];
+  chat -> agent [class="data"];
+  sup -> agent [class="data"];
+  reg -> agent [class="data"];
+  mem -> agent [class="data"];
+  agent -> gw [class="data"];
+  gw -> sor [class="control"];
+}

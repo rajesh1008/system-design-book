@@ -28,6 +28,7 @@ the key is read from the environment only.
 | `toolargs/` | 16 | The tool-argument validation layer: shape checks, world checks and the layered repair budget |
 | `adapt/` | 17 | The adaptation decision tree, distillation with a time split, preference pairs and verifiable rewards; teacher labels replay from `adapt/fixtures/` |
 | `cost/` | 18 | Cost per verified outcome, the five levers, the caches, the budget enforcer and the driver forecast |
+| `identity/` | 32 | Per-run identity: run tokens minted at grant (delegation, not impersonation), the secret broker, data classes, the identity test and the trail check |
 
 ## Install
 
@@ -70,6 +71,7 @@ From this directory:
     bash ch16/run.sh               # Chapter 16: tool-argument validation
     bash ch17/run.sh               # Chapter 17: adaptation and distillation
     bash ch18/run.sh               # Chapter 18: cost and budget enforcement
+    bash ch32/run.sh               # Chapter 32: identity, secrets, data classes
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

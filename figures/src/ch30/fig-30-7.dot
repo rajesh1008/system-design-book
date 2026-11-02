@@ -1,0 +1,20 @@
+// Figure 30.7  Build, buy or rent: the decision
+// Reading order: top to bottom, one question per part of the system.
+// A part that holds a record Lakeshore must produce is owned; a part
+// a second provider can replace with no manifest change is rented;
+// the rest is bought only with a tested exit.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.26;
+  part [label="A part of\nthe system", class="ops"];
+  q1 [label="Holds a record\nwe must produce?", class="org gate"];
+  q2 [label="Replaceable, 0\nmanifest changes?", class="org gate"];
+  own [label="Own it", class="verified"];
+  rent [label="Rent it", class="ops"];
+  buy [label="Buy with a\ntested exit", class="org"];
+  part -> q1 [class="control"];
+  q1 -> own [class="emphasis", label=" yes"];
+  q1 -> q2 [class="control", label=" no"];
+  q2 -> rent [class="data", label=" yes"];
+  q2 -> buy [class="data", label=" no"];
+}

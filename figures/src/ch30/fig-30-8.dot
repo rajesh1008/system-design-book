@@ -1,0 +1,18 @@
+// Figure 30.8  The harness on two adapters
+// Reading order: top to bottom. One manifest, one hash, one harness;
+// either adapter runs it; the gateway, the run store, and the trail
+// stay Lakeshore's whichever adapter runs. From runtimes.portability.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  man [label="Manifest\n6b225e5fa425", class="ops"];
+  h [label="Harness\nLangGraph loop", class="model"];
+  t [label="Adapter:\nthreads", class="ops external"];
+  s [label="Adapter:\nsessions", class="ops external"];
+  own [label="Gateway, run store,\ntrail: Lakeshore's", class="verified store"];
+  man -> h [class="data"];
+  h -> t [class="emphasis"];
+  h -> s [class="emphasis"];
+  t -> own [class="control"];
+  s -> own [class="control"];
+}

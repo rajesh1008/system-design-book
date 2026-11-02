@@ -1,0 +1,29 @@
+@startuml
+' Figure 32.8  Identity in the trail
+' Reading order: the trail line in the middle. It carries the three
+' identities from the run token, the permission it spent, and a
+' signature over them and the argument digest, so neither a person
+' nor a key can be swapped after the fact.
+!include plantuml-theme.puml
+hide circle
+class "Run token" as T <<policy>> {
+  sub: C-118204
+  act: servicing-1.0.0
+  run: run-20260622T...
+  itinerary: LTG-5208877
+  exp: 15 minutes
+}
+class "Trail line" as L <<evidence>> {
+  tool, verdict
+  user, agent, run
+  perm, args_digest
+  sig, prev
+}
+class "Permission" as P <<policy>> {
+  perm-0622-001
+  one tool, one digest
+  single use
+}
+T --> L : identities
+P --> L : spent by
+@enduml

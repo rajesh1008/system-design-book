@@ -1,0 +1,22 @@
+// Figure 31.2  The policy engine at the gateway
+// Reading order: left to right. Every call the agent makes reaches the
+// gateway; the gateway asks the engine, which reads the signed bundle,
+// the session history, approval cards, and budgets, and writes one
+// decision line. Only then does the call reach a server. From policy.gate.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  agent [label="Agent", class="model"];
+  gw [label="Gateway", class="ops"];
+  eng [label="Policy engine", class="policy gate"];
+  bun [label="Signed bundle", class="policy store"];
+  st [label="History, cards,\nbudgets", class="store"];
+  srv [label="Tool servers", class="ops external"];
+  log [label="Decision log", class="evidence"];
+  agent -> gw [class="data"];
+  gw -> eng [class="emphasis"];
+  bun -> eng [class="control"];
+  st -> eng [class="data"];
+  eng -> log [class="trail"];
+  gw -> srv [class="data", label=" permitted"];
+}

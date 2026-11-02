@@ -1,0 +1,19 @@
+@startuml
+' Figure 32.3  On-behalf-of delegation
+' Reading order: top to bottom. The harness exchanges the customer's
+' session for a run token naming the customer, the agent and the run;
+' the gateway checks it on each call and the broker inside it fills
+' the system-of-record key. The run never holds a key.
+!include plantuml-theme.puml
+participant "Harness" as H <<model>>
+participant "Control\nplane" as CP <<policy>>
+participant "Gateway\nand broker" as G <<policy>>
+participant "Payments" as P <<ops>>
+H -> CP : Session and\nagent
+CP --> H : Run token
+H -> G : Call, token,\npermission
+G -> G : Token checks
+G -> P : Key filled
+P --> G : Accepted
+G --> H : Result,\nno key
+@enduml

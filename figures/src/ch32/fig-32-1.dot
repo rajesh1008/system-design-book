@@ -1,0 +1,20 @@
+// Figure 32.1  User, agent and run
+// Reading order: top to bottom. The customer's session and the agent
+// configuration meet at the control plane, which mints one run token
+// naming both and the run; the gateway checks it and every trail line
+// records all three. From identity.delegate and identity.gate.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.32;
+  user [label="Customer\nsigned-in session", class="human"];
+  agent [label="Agent configuration\nservicing-1.0.0", class="model"];
+  cp [label="Control plane\nmints run token", class="policy gate"];
+  run [label="Run\none case, 15 min", class="ops"];
+  gw [label="Gateway\nverifies token", class="policy gate"];
+  trail [label="Trail\nuser, agent, run", class="evidence store"];
+  user -> cp [class="data", label=" subject"];
+  agent -> cp [class="data", label=" actor"];
+  cp -> run [class="control"];
+  run -> gw [class="control", label=" token"];
+  gw -> trail [class="trail"];
+}

@@ -1,0 +1,21 @@
+// Figure 31.6  Budgets as policy
+// Reading order: top to bottom. A voucher reserves against three
+// scopes before it gets a permission; the first scope that cannot hold
+// it routes the case. From policy.budgets.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.28;
+  v [label="Voucher proposed", class="model"];
+  t [label="Traveler day\n$200", class="policy"];
+  l [label="Loop share\n$2,000 of the day", class="policy"];
+  d [label="Fleet day\n$5,000", class="policy"];
+  p [label="Permission\nreserved", class="verified"];
+  r [label="Route to desk", class="org human"];
+  v -> t [class="data"];
+  t -> l [class="data", label=" fits"];
+  l -> d [class="data", label=" fits"];
+  d -> p [class="emphasis", label=" fits"];
+  t -> r [class="control"];
+  l -> r [class="control"];
+  d -> r [class="control"];
+}

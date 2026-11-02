@@ -1,0 +1,20 @@
+// Figure 33.9  Memory poisoning
+// Reading order: top to bottom. An injected promise tries to persist
+// into memory and act in a later session; the write gate and the rule
+// that memory is not authority stop it. From threats.attacks (M01-M08).
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  inj [label="Injected promise\nsession 1", class="fail"];
+  wg [label="Memory write gate", class="policy gate"];
+  mem [label="Memory store", class="knowledge store"];
+  next [label="Agent\nsession 2", class="model"];
+  pol [label="Policy: memory\nis not authority", class="policy gate"];
+  no [label="Refused", class="fail"];
+  {rank=same; inj; wg;}
+  inj -> wg [class="emphasis"];
+  wg -> mem [class="data"];
+  mem -> next [class="data"];
+  next -> pol [class="data"];
+  pol -> no [class="control"];
+}

@@ -1,0 +1,12 @@
+{
+  "runtime": "sessions",
+  "recorded": "synthetic; shaped on documented session-per-invocation runtimes; not a vendor recording",
+  "unit": "session",
+  "native_fields": ["session_id", "invocation_id", "event_id"],
+  "checkpoint": "an event log per session, in the runtime's store",
+  "export_format": "sessions/v1",
+  "max_session_seconds": 28800,
+  "sample": [
+    {"session_id": "ss-7f3a", "invocation_id": "iv-0001", "event_id": "ev-0004", "type": "tool_result", "tool": "fare_calc"}
+  ]
+}

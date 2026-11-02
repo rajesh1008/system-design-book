@@ -1,0 +1,21 @@
+// Figure 31.11  Permission on one page
+// Reading order: top to bottom. One gateway, one engine, one signed
+// bundle, three tiers, one kill flag, and one decision log that every
+// count on the card comes from. From policy.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.28;
+  agent [label="Agent proposes", class="model"];
+  kill [label="Kill flag\nthree tiers", class="policy"];
+  eng [label="Engine: tier, rules,\ncards, budgets", class="policy gate"];
+  bun [label="Signed bundle", class="policy store"];
+  srv [label="Tool servers", class="ops external"];
+  log [label="Decision log\none line per call", class="evidence"];
+  card [label="Permission card", class="verified"];
+  agent -> kill [class="data"];
+  kill -> eng [class="control"];
+  bun -> eng [class="control"];
+  eng -> srv [class="emphasis", label=" permission"];
+  eng -> log [class="trail"];
+  log -> card [class="data"];
+}

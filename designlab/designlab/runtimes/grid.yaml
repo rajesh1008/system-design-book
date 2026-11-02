@@ -1,0 +1,242 @@
+# The runtimes grid (Chapter 30): the June 2026 bake-off as data.
+# Five options from the map's shortlist (Chapter 3), 22 criteria in
+# five groups, one dated cell per option and criterion. Scores are
+# Lakeshore's judgments: 0 absent or unproven, 1 documented or done
+# with work, 2 tested on fixtures or owned and running. basis says
+# where the score came from: doc (a vendor page, read on as_of),
+# test (a fixture test in runtimes/), own (Lakeshore's component).
+# Lakeshore figures are illustrative.
+grid: lakeshore-runtimes
+as_of: 2026-06-19
+scored_by: [Daniel Price, Owen Fletcher]
+stale_after_days: 92
+sources:
+  lsd: https://www.langchain.com/langsmith/deployment
+  acr: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html
+  acr-ga: https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-agentcore-is-now-generally-available/
+  acr-policy: https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/
+  acr-mem: https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory.html
+  gar: https://docs.cloud.google.com/gemini-enterprise-agent-platform/build/runtime
+  gar-names: https://docs.cloud.google.com/gemini-enterprise-agent-platform/vertex-ai-name-changes
+  lg: https://www.langchain.com/langgraph
+  maf: https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/
+criteria:
+  - id: A1
+    plane: action
+    must: true
+    text: "runs the Harness Manifest unchanged"
+  - id: A2
+    plane: action
+    must: false
+    text: "one session or thread per case"
+  - id: A3
+    plane: action
+    must: false
+    text: "an isolated sandbox per session"
+  - id: A4
+    plane: action
+    must: true
+    text: "tools reached through Lakeshore's gateway"
+  - id: A5
+    plane: action
+    must: false
+    text: "resumes a killed run with no repeated effect"
+  - id: A6
+    plane: action
+    must: false
+    text: "operated for us: patching, drains, scale"
+  - id: C1
+    plane: control
+    must: true
+    text: "Lakeshore's policy engine decides each action"
+  - id: C2
+    plane: control
+    must: false
+    text: "an agent identity apart from the user's"
+  - id: C3
+    plane: control
+    must: false
+    text: "approval waits of an hour or more"
+  - id: C4
+    plane: control
+    must: true
+    text: "the outside budget enforcer can stop a run"
+  - id: C5
+    plane: control
+    must: false
+    text: "one action stops every run of a tool"
+  - id: C6
+    plane: control
+    must: false
+    text: "egress limited to listed hosts"
+  - id: K1
+    plane: knowledge
+    must: false
+    text: "managed memory can be turned off"
+  - id: K2
+    plane: knowledge
+    must: false
+    text: "the harness owns context and compaction"
+  - id: K3
+    plane: knowledge
+    must: false
+    text: "skills and instruction files from our repo"
+  - id: K4
+    plane: knowledge
+    must: false
+    text: "retention and residency we can set"
+  - id: T1
+    plane: trail
+    must: false
+    text: "traces export as OpenTelemetry"
+  - id: T2
+    plane: trail
+    must: true
+    text: "checkpoint of record in our run store"
+  - id: T3
+    plane: trail
+    must: true
+    text: "trail lines carry manifest hash and permit"
+  - id: T4
+    plane: trail
+    must: false
+    text: "session records exportable after exit"
+  - id: P1
+    plane: portability
+    must: false
+    text: "moves to a second adapter, 0 changes"
+  - id: P2
+    plane: portability
+    must: false
+    text: "dated deprecation notice of 90 days"
+options:
+  - id: langsmith-deployment
+    kind: runtime
+    how: "LangGraph harness hosted"
+    cells:
+      A1: {s: 2, basis: test, as_of: 2026-06-16, src: fx-A1}
+      A2: {s: 2, basis: doc, as_of: 2026-06-15, src: lsd}
+      A3: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+      A4: {s: 2, basis: test, as_of: 2026-06-16, src: fx-A4}
+      A5: {s: 2, basis: test, as_of: 2026-06-17, src: fx-A5}
+      A6: {s: 2, basis: doc, as_of: 2026-06-15, src: lsd}
+      C1: {s: 2, basis: test, as_of: 2026-06-17, src: fx-C1}
+      C2: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+      C3: {s: 2, basis: doc, as_of: 2026-06-15, src: lsd}
+      C4: {s: 2, basis: test, as_of: 2026-06-17, src: fx-C4}
+      C5: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+      C6: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+      K1: {s: 2, basis: doc, as_of: 2026-06-15, src: lsd}
+      K2: {s: 2, basis: test, as_of: 2026-06-18, src: fx-K2}
+      K3: {s: 2, basis: test, as_of: 2026-06-18, src: fx-K3}
+      K4: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+      T1: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+      T2: {s: 2, basis: test, as_of: 2026-06-17, src: fx-T2}
+      T3: {s: 2, basis: test, as_of: 2026-06-16, src: fx-T3}
+      T4: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+      P1: {s: 2, basis: test, as_of: 2026-06-18, src: fx-P1}
+      P2: {s: 1, basis: doc, as_of: 2026-06-15, src: lsd}
+  - id: agentcore
+    kind: runtime
+    how: "LangGraph harness hosted"
+    cells:
+      A1: {s: 2, basis: test, as_of: 2026-06-16, src: fx-A1}
+      A2: {s: 1, basis: doc, as_of: 2026-06-15, src: acr}
+      A3: {s: 2, basis: doc, as_of: 2026-06-15, src: acr-ga}
+      A4: {s: 2, basis: test, as_of: 2026-06-16, src: fx-A4}
+      A5: {s: 2, basis: test, as_of: 2026-06-17, src: fx-A5}
+      A6: {s: 2, basis: doc, as_of: 2026-06-15, src: acr}
+      C1: {s: 2, basis: test, as_of: 2026-06-17, src: fx-C1}
+      C2: {s: 2, basis: doc, as_of: 2026-06-15, src: acr}
+      C3: {s: 1, basis: doc, as_of: 2026-06-15, src: acr}
+      C4: {s: 2, basis: test, as_of: 2026-06-17, src: fx-C4}
+      C5: {s: 1, basis: doc, as_of: 2026-06-15, src: acr}
+      C6: {s: 2, basis: doc, as_of: 2026-06-15, src: acr}
+      K1: {s: 2, basis: doc, as_of: 2026-06-15, src: acr-mem}
+      K2: {s: 2, basis: test, as_of: 2026-06-18, src: fx-K2}
+      K3: {s: 2, basis: test, as_of: 2026-06-18, src: fx-K3}
+      K4: {s: 2, basis: doc, as_of: 2026-06-15, src: acr}
+      T1: {s: 2, basis: doc, as_of: 2026-06-15, src: acr}
+      T2: {s: 2, basis: test, as_of: 2026-06-17, src: fx-T2}
+      T3: {s: 2, basis: test, as_of: 2026-06-16, src: fx-T3}
+      T4: {s: 1, basis: doc, as_of: 2026-06-15, src: acr}
+      P1: {s: 2, basis: test, as_of: 2026-06-18, src: fx-P1}
+      P2: {s: 1, basis: doc, as_of: 2026-06-15, src: acr}
+  - id: gemini-agent-runtime
+    kind: runtime
+    how: "LangGraph harness hosted"
+    cells:
+      A1: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      A2: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      A3: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      A4: {s: 2, basis: test, as_of: 2026-06-16, src: fx-A4}
+      A5: {s: 2, basis: test, as_of: 2026-06-17, src: fx-A5}
+      A6: {s: 2, basis: doc, as_of: 2026-06-15, src: gar}
+      C1: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      C2: {s: 2, basis: doc, as_of: 2026-06-15, src: gar}
+      C3: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      C4: {s: 2, basis: test, as_of: 2026-06-17, src: fx-C4}
+      C5: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      C6: {s: 2, basis: doc, as_of: 2026-06-15, src: gar}
+      K1: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      K2: {s: 1, basis: test, as_of: 2026-06-18, src: fx-K2}
+      K3: {s: 2, basis: test, as_of: 2026-06-18, src: fx-K3}
+      K4: {s: 2, basis: doc, as_of: 2026-06-15, src: gar}
+      T1: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      T2: {s: 2, basis: test, as_of: 2026-06-17, src: fx-T2}
+      T3: {s: 2, basis: test, as_of: 2026-06-16, src: fx-T3}
+      T4: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      P1: {s: 1, basis: doc, as_of: 2026-06-15, src: gar}
+      P2: {s: 1, basis: doc, as_of: 2026-06-15, src: gar-names}
+  - id: langgraph
+    kind: framework
+    how: "run on Lakeshore's workers"
+    cells:
+      A1: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch25}
+      A2: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch09}
+      A3: {s: 1, basis: own, as_of: 2026-06-15, src: own-ch11}
+      A4: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch26}
+      A5: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch09}
+      A6: {s: 0, basis: own, as_of: 2026-06-15, src: own-ch09}
+      C1: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch26}
+      C2: {s: 1, basis: own, as_of: 2026-06-15, src: own-ch26}
+      C3: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch09}
+      C4: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch18}
+      C5: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch12}
+      C6: {s: 1, basis: own, as_of: 2026-06-15, src: own-ch29}
+      K1: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch22}
+      K2: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch21}
+      K3: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch21}
+      K4: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch22}
+      T1: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch25}
+      T2: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch09}
+      T3: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch25}
+      T4: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch09}
+      P1: {s: 1, basis: own, as_of: 2026-06-15, src: own-ch25}
+      P2: {s: 1, basis: doc, as_of: 2026-06-15, src: lg}
+  - id: ms-agent-framework
+    kind: framework
+    how: "run on Lakeshore's workers"
+    cells:
+      A1: {s: 1, basis: test, as_of: 2026-06-16, src: fx-A1}
+      A2: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch09}
+      A3: {s: 1, basis: own, as_of: 2026-06-15, src: own-ch11}
+      A4: {s: 2, basis: test, as_of: 2026-06-16, src: fx-A4}
+      A5: {s: 1, basis: test, as_of: 2026-06-17, src: fx-A5}
+      A6: {s: 0, basis: own, as_of: 2026-06-15, src: own-ch09}
+      C1: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch26}
+      C2: {s: 1, basis: own, as_of: 2026-06-15, src: own-ch26}
+      C3: {s: 2, basis: doc, as_of: 2026-06-15, src: maf}
+      C4: {s: 1, basis: test, as_of: 2026-06-17, src: fx-C4}
+      C5: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch12}
+      C6: {s: 1, basis: own, as_of: 2026-06-15, src: own-ch29}
+      K1: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch22}
+      K2: {s: 1, basis: test, as_of: 2026-06-18, src: fx-K2}
+      K3: {s: 2, basis: test, as_of: 2026-06-18, src: fx-K3}
+      K4: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch22}
+      T1: {s: 2, basis: doc, as_of: 2026-06-15, src: maf}
+      T2: {s: 2, basis: test, as_of: 2026-06-17, src: fx-T2}
+      T3: {s: 2, basis: test, as_of: 2026-06-16, src: fx-T3}
+      T4: {s: 2, basis: own, as_of: 2026-06-15, src: own-ch09}
+      P1: {s: 1, basis: test, as_of: 2026-06-18, src: fx-P1}
+      P2: {s: 2, basis: doc, as_of: 2026-06-15, src: maf}

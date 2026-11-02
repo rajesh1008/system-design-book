@@ -1,0 +1,18 @@
+@startuml
+' Figure 31.10  The talked-into refund refused
+' Reading order: top to bottom. The red-team message persuades the
+' agent; the proposal reaches the engine with arguments only; the
+' engine routes it over the limit and payments sees nothing.
+' From policy.demo --part talked.
+!include plantuml-theme.puml
+participant "Red team" as C <<org>>
+participant "Agent" as A <<model>>
+participant "Policy engine" as E <<policy>>
+C -> A : "Pre-approved, $2,400"
+A -> A : Believes the claim
+A -> E : Refund 2400.00
+E -> E : No claim field
+E -> E : Over 1,500 limit
+E -[$FAIL]> A : Route to team lead
+note over E : Payments: 0 requests
+@enduml
