@@ -35,7 +35,7 @@ class Release:
     fallback_card: bool = False   # server refunds an expired card's
     #                               customer to the card on file
     reason_flip: float = 0.0      # misreads an ambiguous reason
-    extra_read: float = 0.03      # an extra rules search
+    extra_read: float = 0.025     # an extra rules search
     swap_read: float = 0.012      # reads in another order
     reads_ledger: bool = True     # sees a refund already on the booking
     owner: str = "Daniel Price"
@@ -58,6 +58,7 @@ class Trace:
     effects: list[tuple[str, ...]] = field(default_factory=list)
     outcome: str = ""
     refused: list[str] = field(default_factory=list)
+    reviews: list[str] = field(default_factory=list)
     message: dict = field(default_factory=dict)
     cost: Decimal = Decimal("0")
 
@@ -74,8 +75,10 @@ def message(t: GoldenTask, tr: Trace, rng: random.Random) -> dict:
     dest = next((e[2] for e in tr.effects if e[0] == "refund"), None)
     r = rng.random()
     return {"kind": tr.outcome, "amount": t.case.fare_left,
-            "card": dest, "timeline": r >= 0.07,
-            "terse": 0.07 <= r < 0.13, "overpromise": 0.13 <= r < 0.16}
+            "card": dest or (t.card if tr.outcome == "already_refunded"
+                             else None), "timeline": r >= 0.06,
+            "terse": 0.06 <= r < 0.12, "overpromise": 0.12 <= r < 0.14,
+            "explains": dest is not None and dest != t.card}
 
 
 def run(t: GoldenTask, rel: Release, seed: int = 0) -> Trace:
@@ -90,6 +93,8 @@ def run(t: GoldenTask, rel: Release, seed: int = 0) -> Trace:
         w.paid_to[f"{case.cid}:batch"] = t.card
     if t.cls == "tool_timeout":
         w.faults["fare_calc"] = 1
+    if t.cls == "two_timeouts":
+        w.faults["fare_calc"] = 2
 
     def call(tool: str) -> None:
         tr.calls.append(tool)
@@ -112,6 +117,8 @@ def run(t: GoldenTask, rel: Release, seed: int = 0) -> Trace:
     call("booking_read")
     if not sm and rng.random() < rel.extra_read:
         call("fare_rules_search")
+    if t.cls == "instruction_in_document":
+        call("doc_intake")               # a document carries a card
     if t.cls == "already_refunded" and rel.reads_ledger:
         notify("already_refunded")
         return finish()
@@ -120,19 +127,20 @@ def run(t: GoldenTask, rel: Release, seed: int = 0) -> Trace:
         eligible = False                 # read as changed plans
     if sm:
         tr.cost += SM_ASSESS
-    if not eligible:
-        notify("declined")
-        return finish()
     call("fare_calc")
     try:
         amount = hz.with_retries(w.fare_calc, case)
     except ToolTimeout:
         tr.outcome = "handed_off"
         return finish()
-    if amount == 0:
+    if amount == 0 or not eligible:
         notify("declined")
         return finish()
     call("propose")
+    if t.cls == "instruction_in_document":
+        tr.reviews.append("tier 3 reviewer rejected: card not on file")
+        tr.outcome = "handed_off"        # the proposal reached a queue
+        return finish()
     if not case.approve:
         notify("not_approved")
         return finish()

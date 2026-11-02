@@ -28,8 +28,21 @@ the key is read from the environment only.
 | `toolargs/` | 16 | The tool-argument validation layer: shape checks, world checks and the layered repair budget |
 | `adapt/` | 17 | The adaptation decision tree, distillation with a time split, preference pairs and verifiable rewards; teacher labels replay from `adapt/fixtures/` |
 | `cost/` | 18 | Cost per verified outcome, the five levers, the caches, the budget enforcer and the driver forecast |
+| `retrieval/` | 19, 24 | Lexical and dense retrievers fused by reciprocal rank, effective-date filters, a reranker, provenance, the bounded research loop with its sufficiency verifier, and the grounding check |
+| `knowledge/` | 20 | The knowledge plane: a semantic layer of 41 metrics, the query guard (estimate, limits, entitlement, read-only run), and the itinerary graph |
+| `context/` | 21 | The context assembler with a per-step budget and slot caps, pinned compaction and its verifier, isolation through sub-agents, instruction drift, and the context card |
+| `memory/` | 22, 24 | The governed memory store: write gate, scope, provenance, supersession by compare-and-set, and deletion along `derived_from` links |
+| `inputs/` | 23 | Input contracts at the edge for documents, images, voice, and web content |
+| `knowops/` | 24 | Freshness contracts, the weekly fresh sample, memory expiry and supersession, and the destination verifier |
+| `harness/` | 25 | The Harness Manifest (`harness/manifests/*.toml`): resolved, hashed, and registered before deploy; the loop two ways; and the harness test suite |
+| `gateway/` | 26 | The tool registry and the gateway: description hashes, scope and argument checks, the policy hook, rate limits, code mode, and tool search |
+| `topology/` | 27 | One agent against orchestrator-worker on the golden set, routing by legs, the talking stick across workers, hierarchy, voting, and the topology card |
+| `loops/` | 28 | The unattended loop as data: the seven properties, the loops linter, the fare watch and waiver watch, the stall detector, and loop-day budgets |
+| `sandbox/` | 29 | The escape battery, the review gate for coding-agent proposals, and a read-only browser reader |
+| `runtimes/` | 30 | The runtimes comparison grid (`runtimes/grid.yaml`), two fixture adapters, the portability check, and skills with their drift check |
 | `policy/` | 31 | The policy engine outside the loop: risk tiers, approval cards bound to the argument digest, temporal and sequence rules, effect budgets, signed bundles with shadow, and the three kill-switch tiers with drills |
 | `identity/` | 32 | Per-run identity: run tokens minted at grant (delegation, not impersonation), the secret broker, data classes, the identity test and the trail check |
+| `threats/` | 33 | The injection and poisoning battery: 61 attacks in six classes against an obedient stand-in model, the four controls (session binding, reply filter, egress, memory gate), the gateway's quote check, the trifecta and Rule of Two from configuration, and a recorded small-model replay |
 
 ## Install
 
@@ -72,8 +85,21 @@ From this directory:
     bash ch16/run.sh               # Chapter 16: tool-argument validation
     bash ch17/run.sh               # Chapter 17: adaptation and distillation
     bash ch18/run.sh               # Chapter 18: cost and budget enforcement
+    bash ch19/run.sh               # Chapter 19: retrieval and the research loop
+    bash ch20/run.sh               # Chapter 20: the semantic layer and query guard
+    bash ch21/run.sh               # Chapter 21: context budgets and compaction
+    bash ch22/run.sh               # Chapter 22: the governed memory store
+    bash ch23/run.sh               # Chapter 23: input contracts at the edge
+    bash ch24/run.sh               # Chapter 24: the stale memory, injected and fixed
+    bash ch25/run.sh               # Chapter 25: the Harness Manifest
+    bash ch26/run.sh               # Chapter 26: the tool registry and gateway
+    bash ch27/run.sh               # Chapter 27: one agent against orchestrator-worker
+    bash ch28/run.sh               # Chapter 28: the fare watch as an unattended loop
+    bash ch29/run.sh               # Chapter 29: escape battery and review gate
+    bash ch30/run.sh               # Chapter 30: the runtimes grid and portability
     bash ch31/run.sh               # Chapter 31: policy, approvals, kill switch
     bash ch32/run.sh               # Chapter 32: identity, secrets, data classes
+    bash ch33/run.sh               # Chapter 33: the injection and poisoning battery
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

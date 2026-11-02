@@ -1,0 +1,22 @@
+// Figure 34.3  Trajectory matching
+// Reading order: top to bottom. Effects must match exactly, in
+// order; reads may differ within a tolerance (at most two extra,
+// each needed read before its effect). From evals.trajectory.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.28;
+  run [label="Tool calls\nof one run", class="model"];
+  q1 [label="Effect calls equal\nexpected, in order?", class="verified gate"];
+  q2 [label="Reads equal\nexpected?", class="verified gate"];
+  q3 [label="Two extra or fewer,\nneeded reads first?", class="verified gate"];
+  ex [label="Exact", class="verified"];
+  tol [label="Tolerated", class="verified"];
+  mis [label="Mismatch", class="fail"];
+  run -> q1 [class="control"];
+  q1 -> mis [class="fail", label=" no"];
+  q1 -> q2 [class="emphasis", label=" yes"];
+  q2 -> ex [class="data", label=" yes"];
+  q2 -> q3 [class="control", label=" no"];
+  q3 -> tol [class="data", label=" yes"];
+  q3 -> mis [class="fail", label=" no"];
+}

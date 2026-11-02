@@ -1,0 +1,22 @@
+// Figure 34.11  From traces to the next golden set
+// Reading order: top to bottom. Disagreeing traces are clustered,
+// labeled by a named owner, and held as candidates that carry their
+// source run; they enter the gate set only at a release cut. Pairs
+// go to Chapter 17's decision tree. From evals.harvest.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.26;
+  tr [label="Disagreeing traces", class="evidence store"];
+  cl [label="Cluster by class", class="evidence"];
+  lb [label="Label: Keisha Navarro", class="org human"];
+  cd [label="Candidates, 7\nsource run kept", class="evidence store"];
+  pr [label="Pairs to the\ndecision tree", class="org"];
+  cut [label="Release cut, July 6", class="verified gate"];
+  gs [label="gs-2026.07, 647", class="verified"];
+  tr -> cl [class="data"];
+  cl -> lb [class="data"];
+  lb -> cd [class="data"];
+  lb -> pr [class="async"];
+  cd -> cut [class="emphasis"];
+  cut -> gs [class="control"];
+}

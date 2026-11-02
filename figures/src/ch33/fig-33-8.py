@@ -15,8 +15,8 @@ classes = ("Direct", "Indirect", "Poisoning", "Memory", "Exfiltration",
            "Deputy")
 data = {"Entry": (0, 12, 7, 6, 0, 0),
         "Context": (2, 0, 0, 0, 0, 0),
-        "Refused": (4, 2, 3, 1, 10, 9),
-        "Proposal": (2, 2, 0, 1, 0, 0),
+        "Refused": (5, 2, 3, 1, 10, 9),
+        "Proposal": (1, 2, 0, 1, 0, 0),
         "Effect": (0, 0, 0, 0, 0, 0)}
 face = {"Entry": fl.C["verified"], "Context": fl.FILL["verified"],
         "Refused": fl.FILL["policy"], "Proposal": fl.FILL["fail"],

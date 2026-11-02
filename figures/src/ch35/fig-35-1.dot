@@ -1,0 +1,21 @@
+// Figure 35.1  What a trace contains
+// Reading order: top to bottom. One run is one trace: a root span for
+// the agent, a span per step, and inside each step the model call and
+// the tool call, policy decision or verification it led to. Content
+// sits in the evidence store by reference; an effect span carries the
+// hash of its gateway trail line. From trace.run and trace.spans.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  root [label="invoke_agent\noutcome, cost", class="model"];
+  step [label="step n", class="ops"];
+  chat [label="chat {model}\ntokens, cost", class="model"];
+  act [label="execute_tool, policy,\nor verify", class="policy gate"];
+  ev [label="Evidence store\ncontent", class="evidence store"];
+  trail [label="Trail line\nchain record", class="evidence store"];
+  root -> step [class="control"];
+  step -> chat [class="control"];
+  step -> act [class="control"];
+  chat -> ev [class="data", label=" ref"];
+  act -> trail [class="trail", label=" hash"];
+}

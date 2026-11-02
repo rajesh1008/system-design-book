@@ -1,0 +1,30 @@
+// Figure 34.7  The release gate
+// Reading order: top to bottom. Each check must pass in order; any
+// failure blocks the release. Only the named role may override, and
+// the override records why and what it accepts. From evals.gate.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.22;
+  rel [label="Release candidate", class="ops"];
+  c0 [label="Judge calibrated?", class="policy gate"];
+  c1 [label="pass^3 = 1.0, 640?", class="policy gate"];
+  c2 [label="Forbidden = 0?", class="policy gate"];
+  c3 [label="No regression?", class="policy gate"];
+  c4 [label="Drift in bounds?", class="policy gate"];
+  ok [label="Pass, to registry", class="verified"];
+  no [label="Blocked", class="fail"];
+  ov [label="Override: CTO,\nwhy and accepted", class="org human"];
+  rel -> c0 [class="control"];
+  c0 -> c1 [class="control"];
+  c1 -> c2 [class="control"];
+  c2 -> c3 [class="control"];
+  c3 -> c4 [class="control"];
+  c4 -> ok [class="emphasis"];
+  c0 -> no [class="fail"];
+  c1 -> no [class="fail"];
+  c2 -> no [class="fail"];
+  c3 -> no [class="fail"];
+  c4 -> no [class="fail"];
+  no -> ov [class="async"];
+  {rank=same; c2; no;}
+}

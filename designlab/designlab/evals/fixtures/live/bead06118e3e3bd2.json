@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 16,
+    "messages": [
+      {
+        "content": "Message:\nThank you for your patience. Your fare's rules do not allow a refund for this change.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You read one customer message from an airline refund agent. Question: did the refund go to the correct card? You see only the message, not the booking or the payment ledger. Reply with one word: YES, NO, or UNKNOWN."
+  },
+  "request_hash": "bead06118e3e3bd2",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "UNKNOWN",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeW2xJwDBV7McbMeJy3D",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 109,
+      "output_tokens": 9,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

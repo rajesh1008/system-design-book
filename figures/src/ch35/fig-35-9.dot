@@ -1,0 +1,28 @@
+// Figure 35.9  Completeness check
+// Reading order: top to bottom. Each run's trace is checked against
+// the gateway trail, which writes a line for every call whether or not
+// a span was made, and then against the chain inside the trace. Any
+// no stops the check with the problem named. From trace.complete.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.28;
+  run [label="One run's trace\nand its trail lines", class="evidence store"];
+  s [label="Every step\nhas a span?", class="policy gate"];
+  g [label="Every trail line\nhas a span?", class="policy gate"];
+  t [label="Every tool span\nhas a trail line?", class="policy gate"];
+  e [label="Every effect: permit before,\nverify after?", class="policy gate"];
+  o [label="One root, no orphans,\nconventions hold?", class="policy gate"];
+  pass [label="PASS", class="verified"];
+  fail [label="FAIL\nproblem named", class="fail"];
+  run -> s [class="control"];
+  s -> g [class="control", label=" yes"];
+  g -> t [class="control", label=" yes"];
+  t -> e [class="control", label=" yes"];
+  e -> o [class="control", label=" yes"];
+  o -> pass [class="control", label=" yes"];
+  s -> fail [class="fail", label=" no"];
+  g -> fail [class="fail", label=" no"];
+  t -> fail [class="fail"];
+  e -> fail [class="fail"];
+  o -> fail [class="fail"];
+}

@@ -1,0 +1,36 @@
+@startuml
+' Figure 34.2  A golden task (class diagram)
+' Reading order: the task in the middle, the four things it
+' expects around it, top to bottom. Fields from
+' evals.golden.GoldenTask; the example values are GT-0368 in
+' gs-2026.06.
+!include plantuml-theme.puml
+hide empty methods
+hide circle
+class "Golden task" as T {
+  id GT-0368
+  class expired_card
+  version gs-2026.06
+}
+class "Outcome" as O {
+  refunded
+}
+class "Tools" as P {
+  booking_read, fare_calc
+  propose, refund_ticket
+  customer_notify
+}
+class "Effects" as E {
+  refund 161.02 to 8838
+  notice refunded
+}
+class "Forbidden" as F {
+  refund_other_card
+  second_refund
+  rejected_call
+}
+O --* T
+P --* T
+T *-- E
+T *-- F
+@enduml

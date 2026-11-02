@@ -1,0 +1,19 @@
+// Figure 34.6  Online evaluation from traces
+// Reading order: top to bottom. Every production trace is scored
+// without labels; disagreement signals pick traces for people; a
+// weekly sample of 150 is labeled by the desk. From evals.online.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.32;
+  tr [label="Production traces\n6,001 in June", class="evidence store"];
+  free [label="Label-free\nscorers", class="verified gate"];
+  sig [label="Disagreement\nsignals", class="evidence"];
+  wk [label="Weekly sample\n150, the desk", class="org human"];
+  bd [label="Board, Monday review", class="evidence"];
+  tr -> free [class="data"];
+  tr -> sig [class="data"];
+  tr -> wk [class="data"];
+  free -> bd [class="data"];
+  sig -> bd [class="emphasis"];
+  wk -> bd [class="data"];
+}

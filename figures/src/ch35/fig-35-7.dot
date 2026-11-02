@@ -1,0 +1,26 @@
+// Figure 35.7  Replay from the trace
+// Reading order: top to bottom. The exported trace holds the spans and,
+// by reference, what each model call, tool, desk and verifier answered.
+// Replay hands those answers to the same harness code, which runs
+// again and calls nothing live, then diffs the new spans against
+// production. From trace.replay.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.32;
+  trace [label="Exported trace\nspans and evidence", class="evidence store"];
+  rec [label="Recorded answers\nmodel, tools, desk, verifier", class="evidence"];
+  code [label="Same harness code\nmanifest hash 6b225e5fa425", class="model"];
+  live [label="Live systems\nnever called", class="ops external"];
+  new [label="Replay spans", class="ops"];
+  diff [label="Diff against production", class="policy gate"];
+  same [label="Identical:\nthe run is explained", class="verified"];
+  div [label="First divergence:\nspan, field", class="fail"];
+  trace -> rec [class="data"];
+  rec -> code [class="data"];
+  code -> live [class="fail", label=" NoCalls raises"];
+  code -> new [class="control"];
+  new -> diff [class="control"];
+  trace -> diff [class="data"];
+  diff -> same [class="control"];
+  diff -> div [class="control"];
+}

@@ -36,7 +36,7 @@ from memory.store import MemoryStore, SessionToken, WriteRefused
 from toolargs.schema import validate
 
 from .controls import (Facts, Session, bound, code_urls, decide,
-                       reply_problems)
+                       quoted, reply_problems)
 
 HERE = Path(__file__).parent
 STAGES = ("entry", "context", "refused", "proposal", "effect")
@@ -156,7 +156,10 @@ class Lab:
                   and server in self.w.servers
                   and not validate(args, entry.schema))
         if effect:
-            ok, why = decide(tool, args, self.facts(args), grounds)
+            facts = self.facts(args)
+            if tool == "rebook_ticket" and not quoted(args, facts):
+                return "refused", "gateway: fare not the quote"
+            ok, why = decide(tool, args, facts, grounds)
             if not ok:
                 return "proposal", f"policy: {why}"
             self.n_perm += 1

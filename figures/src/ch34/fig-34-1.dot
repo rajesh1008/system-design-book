@@ -1,0 +1,26 @@
+// Figure 34.1  Outcomes, trajectories, effects
+// Reading order: top to bottom. A golden task runs through the
+// harness in the sandbox; the trace is scored on outcome and path,
+// the effects are read from the ledger, not from the agent's
+// message, and all three feed the gate. From evals.score.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.32;
+  task [label="Golden task", class="evidence"];
+  run [label="Harness run\nin the sandbox", class="ops"];
+  trace [label="Trace", class="evidence store"];
+  ledger [label="Ledger", class="ops store"];
+  out [label="Outcome\nsaid", class="verified gate"];
+  path [label="Trajectory\ntools, order", class="verified gate"];
+  eff [label="Effects\nexpected,\nforbidden", class="verified gate"];
+  g [label="Task passes\nonly if all three", class="verified"];
+  task -> run [class="control"];
+  run -> trace [class="data"];
+  run -> ledger [class="data"];
+  trace -> out [class="data"];
+  trace -> path [class="data"];
+  ledger -> eff [class="emphasis"];
+  out -> g [class="control"];
+  path -> g [class="control"];
+  eff -> g [class="control"];
+}

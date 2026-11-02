@@ -5,6 +5,9 @@
   that names any other itinerary is refused before the gateway, and the
   trail line records both identities, the agent and the customer it
   acts for.
+- `quoted`: the gateway's world check on a rebook. The fare difference
+  in the call must equal the offers service's quote for the new flight,
+  to the cent; a number the model wrote has no standing.
 - `decide`: the control plane's answer to an effect proposal, reduced
   to the rules the battery touches (refunds-v3, vouchers-v1, and
   memory is not authority). Chapter 31's engine replaces it.
@@ -84,13 +87,22 @@ def decide(tool: str, args: dict, facts: Facts,
         return True, "vouchers-v1"
     if tool == "rebook_ticket":
         q = (facts.quote or {}).get(args["new_flight_id"])
-        asked = float(args["fare_difference_usd"])
-        if q is None or abs(asked - q) > 0.005:
-            return False, "fare difference is code's"
+        if q is None:
+            return False, "no quote for the new flight"
         if q > REBOOK_CAP_USD:
             return False, "over rebook-v2 cap 250.00"
         return True, "rebook-v2"
     return True, "within policy"
+
+
+def quoted(args: dict, facts: Facts) -> bool:
+    """True when the call's fare difference is the offers quote."""
+    q = (facts.quote or {}).get(args.get("new_flight_id"))
+    try:
+        asked = float(args["fare_difference_usd"])
+    except (KeyError, TypeError, ValueError):
+        return False
+    return q is not None and abs(asked - q) <= 0.005
 
 
 IMG = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")

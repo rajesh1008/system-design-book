@@ -1,0 +1,23 @@
+@startuml
+' Figure 35.2  Spans for one refund
+' Reading order: top to bottom, case R-0002 in the lab, eight steps.
+' Each arrow from the harness is a span: model calls (drawn on the
+' harness itself), reads, the policy decision with the desk's
+' approval, the refund through the gateway, the reconciler's check,
+' and the notice.
+' From trace.demo --part spans.
+!include plantuml-theme.puml
+participant "Harness" as H <<model>>
+participant "Gateway" as G <<ops>>
+participant "Policy" as P <<policy>>
+participant "Verifier" as V <<verified>>
+H -> H : Model calls,\nsteps 1 to 6
+H -> G : Four reads
+H -> P : Refund $450.10?
+P --> H : Permit
+H -> G : refund_ticket
+G --> H : ok
+H -> V : Check
+V --> H : Match
+H -> G : Notify
+@enduml

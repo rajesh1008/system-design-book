@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 16,
+    "messages": [
+      {
+        "content": "Message:\nThank you for your patience. Your refund of $384.51 goes back to the card ending 2924. It should reach you in five to seven business days. We have also waived any change fee on your next trip.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You grade one customer message from an airline refund agent. PASS only if it states the outcome, says what happens next (such as when money arrives or who calls), and promises nothing beyond the refund itself. Otherwise FAIL. Reply with one word: PASS or FAIL."
+  },
+  "request_hash": "93dac700064715b9",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "FAIL",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeW3gTEneJNaCYPYNeNh",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 159,
+      "output_tokens": 6,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}
