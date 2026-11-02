@@ -114,3 +114,15 @@ def render(rb: Runbook) -> list[str]:
         out.append(f"  never: {n}")
     out.append(f"  lowers a tier: {' or '.join(rb.release_by)}")
     return out
+
+
+OLD = Runbook(
+    "agent-incident (June)",
+    "front door availability under 99.9%",
+    2, "",
+    [Step(1, "on-call", "acknowledge the page", "pager", "ack sent"),
+     Step(2, "on-call", "check dashboards", "dashboards", "looks fine"),
+     Step(3, "on-call", "pull tier two", "kill console", "monitor"),
+     Step(4, "", "restart the agent service", "deploy tool",
+          "service healthy")],
+    [])

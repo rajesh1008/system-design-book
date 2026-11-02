@@ -1,0 +1,47 @@
+{
+  "request": {
+    "max_tokens": 30,
+    "messages": [
+      {
+        "content": "Trial 3 of 3.\nMessage: Flight PK 1433 on July 9 now departs 06:20 and operates as PK 2433.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You code airline schedule-change messages for a travel agency. Codes: RETIME (a departure or arrival time changed), FLT_NUMBER_CHANGE (the flight now operates under another number), CANCEL, EQUIPMENT (aircraft type changed), REROUTE (routing or connection changed). A message can need more than one code. Reply with the codes only, comma separated, nothing else."
+  },
+  "request_hash": "1786b0129408c179",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "RETIME, FLT_NUMBER_CHANGE",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeWZwSE4MZXJ1kJNk2qj",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 184,
+      "output_tokens": 22,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

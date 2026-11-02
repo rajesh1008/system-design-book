@@ -12,8 +12,9 @@ digraph hld {
   bd [label="Board, Monday review", class="evidence"];
   tr -> free [class="data"];
   tr -> sig [class="data"];
-  tr -> wk [class="data"];
+  tr -> wk [class="data", constraint=false];
   free -> bd [class="data"];
   sig -> bd [class="emphasis"];
   wk -> bd [class="data"];
+  sig -> wk [style=invis];
 }

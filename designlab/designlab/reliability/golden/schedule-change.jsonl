@@ -1,0 +1,12 @@
+{"id": "SC-01", "message": "Flight PK 1214 on July 9 now departs 07:40.", "codes": ["RETIME"], "combined": false}
+{"id": "SC-02", "message": "Flight PK 1388 on July 9 now operates as PK 2388.", "codes": ["FLT_NUMBER_CHANGE"], "combined": false}
+{"id": "SC-03", "message": "Flight PK 1502 on July 9 is canceled.", "codes": ["CANCEL"], "combined": false}
+{"id": "SC-04", "message": "Flight PK 1630 on July 10 now departs 18:05; arrival 20:15.", "codes": ["RETIME"], "combined": false}
+{"id": "SC-05", "message": "Flight PK 1711 on July 10 now operates as PK 2711 with no other change.", "codes": ["FLT_NUMBER_CHANGE"], "combined": false}
+{"id": "SC-06", "message": "Flight PK 1845 on July 11 is canceled; no replacement offered.", "codes": ["CANCEL"], "combined": false}
+{"id": "SC-07", "message": "Flight PK 1120 on July 11 now departs 09:20, ten minutes later.", "codes": ["RETIME"], "combined": false}
+{"id": "SC-08", "message": "Flight PK 1977 on July 12 now operates as PK 2977.", "codes": ["FLT_NUMBER_CHANGE"], "combined": false}
+{"id": "SC-09", "message": "Flight PK 1433 on July 9 now departs 06:20 and operates as PK 2433.", "codes": ["FLT_NUMBER_CHANGE", "RETIME"], "combined": true}
+{"id": "SC-10", "message": "Flight PK 1560 on July 9 now operates as PK 2560 and departs 13:05.", "codes": ["FLT_NUMBER_CHANGE", "RETIME"], "combined": true}
+{"id": "SC-11", "message": "Flight PK 1299 on July 10 now departs 11:40 and operates as PK 2299; seats unchanged.", "codes": ["FLT_NUMBER_CHANGE", "RETIME"], "combined": true}
+{"id": "SC-12", "message": "Flight PK 1804 on July 10 now departs 16:20, operates as PK 2804, gate to follow.", "codes": ["FLT_NUMBER_CHANGE", "RETIME"], "combined": true}

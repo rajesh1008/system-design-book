@@ -24,8 +24,8 @@ for i, (n, tok, lab) in enumerate(cells):
 a.set_yticks([3, 2, 1, 0])
 a.set_yticklabels([c[2] for c in cells], fontsize=9)
 a.set_xlim(0, 330)
-a.set_xticks([0, 100, 200, 300])
-a.set_xlabel("Messages, of 300")
+a.set_xticks([0, 100, 200])
+a.set_title("Held-out messages, 300", fontsize=9.5, color=fl.INK)
 runs = (("Pin 05-12", 0.81, "verified"), ("Pin 06-30", 0.79, "verified"),
         ("Live, 30", 0.86, "verified"))
 for i, (lab, k, tok) in enumerate(runs):
@@ -37,5 +37,5 @@ b.text(2.45, 0.725, "Bar 0.75", ha="right", va="top", fontsize=9,
 b.set_xticks(range(3))
 b.set_xticklabels([r[0] for r in runs], fontsize=9)
 b.set_ylim(0.5, 0.95)
-b.set_ylabel("Kappa with people")
+b.set_title("Kappa with people", fontsize=9.5, color=fl.INK)
 fl.save(fig)

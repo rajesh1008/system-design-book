@@ -21,7 +21,7 @@ ax.plot(ks, hat, color=fl.C["fail"], ls=fl.LINESTYLES[1], lw=2.5,
 fl.label_line(ax, 8, 1.0, "pass@k", dy=-6)
 fl.label_line(ax, 8, 0.9516, "pass^k")
 ax.axhline(1.0, color=fl.GREY_LIGHT, lw=0.75)
-ax.annotate("Gate reads k = 3: 0.981", xy=(3, 0.981), xytext=(3.6, 0.962),
+ax.annotate("Gate reads k = 3: 0.981", xy=(3, 0.981), xytext=(1.0, 0.955),
             fontsize=9, color=fl.INK,
             arrowprops={"arrowstyle": "-", "color": fl.GREY_DARK, "lw": 0.75})
 ax.set_xlim(0.6, 9.6)

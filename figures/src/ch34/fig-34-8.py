@@ -36,9 +36,8 @@ for i, r in enumerate(rows):
     tok = "fail" if r[2] == "Blocked" else "verified"
     ax.add_patch(Rectangle((0.0, y + 0.06), 4.6, 0.88,
                            facecolor=fl.FILL[tok], edgecolor=fl.C[tok],
-                           lw=0.75, hatch="///" if tok == "fail" else ""))
+                           lw=1.5 if tok == "fail" else 0.75))
     for j, (x, v) in enumerate(zip(cols, r)):
         ax.text(x + 0.05, y + 0.5, v, va="center", fontsize=9,
-                color=fl.INK, fontweight="bold" if j == 2 else None,
-                backgroundcolor=fl.FILL[tok] if tok == "fail" else None)
+                color=fl.INK, fontweight="bold" if j == 2 else None)
 fl.save(fig)

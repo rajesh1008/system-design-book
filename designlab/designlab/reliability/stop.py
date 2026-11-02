@@ -64,11 +64,11 @@ def run_stop(name: str, decided: datetime, pulls: list[tuple],
         st.blocked[f"tier {tier}"] = why or "not blocked"
         if why:
             st.facts["no new commands"] = after
+            if tier == 3:
+                st.facts["token refused"] = after + timedelta(seconds=6)
+                st.facts["runs stopped"] = after + timedelta(seconds=11)
             settled = after + timedelta(seconds=inflight_s)
             st.facts["in-flight settled"] = settled
-            if tier == 3:
-                st.facts["runs stopped"] = after + timedelta(seconds=11)
-                st.facts["token refused"] = after + timedelta(seconds=6)
             st.facts["safe state"] = settled + timedelta(seconds=QUIET)
             break
     return st
@@ -111,6 +111,7 @@ def lines(st: Stop) -> list[str]:
     for k, v in st.facts.items():
         out.append(f"{k:<18} {hms(v)}")
     for k, v in st.blocked.items():
-        out.append(f"{k} blocks model and effect calls? {v}")
-    out.append(f"time to stop       {st.seconds:.0f} s")
+        out.append(f"{k}, calls to stop:  {v}")
+    out.append(f"time to stop       {st.seconds:.0f} s" if st.seconds
+               is not None else "time to stop       not stopped")
     return out
