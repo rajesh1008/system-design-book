@@ -3,7 +3,8 @@
 Each case gives the model one case packet, one customer message and one
 tool with strict tool use on. The proposed arguments go through the
 same intake as the demo. A rejected call goes back as a tool result
-with the structured reason, at most twice; the model may also decline.
+with the structured reason, at most twice; the model may also stop
+and say why, which sends the case to a person.
 Reads ANTHROPIC_API_KEY from the environment through common.client and
 never prints it. About 60 short calls; the meter caps spend at $0.05.
 
@@ -68,14 +69,17 @@ def run_case(client: ToolClient, case, intake: Intake,
         out["drift"] |= resp.get("model") != resp["_pinned"]
         block = tool_use(resp)
         if block is None:
-            out["status"] = "declined"
+            # The model stopped and said why: a person takes the case.
+            out["status"] = "stopped" if out["attempts"] else "declined"
             return out
         args = block["input"]
         shape = not schema.validate(args, tool["input_schema"])
         v = intake.check(case.session, case.tool, args)
         reason = v.errors[0].get("reason") if v.errors else None
         out["attempts"].append({"shape": shape, "ok": v.ok,
-                                "reason": reason})
+                                "reason": reason, "args": args,
+                                "errors": v.errors,
+                                "stop": resp.get("stop_reason")})
         if v.ok:
             out["status"] = "repaired" if repairs else "passed"
             return out
@@ -114,8 +118,12 @@ def summarize(results: list[dict]) -> list[str]:
                  f"{sum(a['shape'] for a in first)} of {len(first)}")
     lines.append(f"world-rejected first proposals "
                  f"{sum(not a['ok'] for a in first)} of {len(first)}")
-    for s in ("passed", "repaired", "handed_off", "declined"):
+    for s in ("passed", "repaired", "handed_off", "stopped"):
         lines.append(f"  {s:12} {sum(r['status'] == s for r in cases)}")
+    attempts = [a for r in cases for a in r["attempts"]]
+    bad = [a for a in attempts if not a["shape"]]
+    lines.append(f"proposals {len(attempts)}, malformed {len(bad)}, "
+                 f"stop reasons {sorted({a['stop'] for a in bad})}"[:70])
     lines.append(f"drift from pinned model: "
                  f"{sum(r['drift'] for r in cases)}")
     for r in cases:

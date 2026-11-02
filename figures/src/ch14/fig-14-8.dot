@@ -1,0 +1,21 @@
+// Figure 14.8  Disaggregated prefill and decode
+// Reading order: left to right. A router sends each call to a prefill
+// pool that reads the prompt, the key-value cache moves over the
+// network, and a decode pool generates the output. The co-located
+// alternative does both on each GPU. Values from serving.demo --part disagg.
+digraph disagg {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.4;
+  r [label="Router", class="model"];
+  p [label="Prefill pool\nreads prompts", class="model"];
+  d [label="Decode pool\nwrites tokens", class="ops"];
+  out [label="Agent loop", class="model"];
+  co [label="One pool\nboth phases", class="ops"];
+  r -> p [class="emphasis"];
+  p -> d [label=" KV cache\n over network", class="data"];
+  d -> out [class="data"];
+  r -> co [label=" or", class="async"];
+  co -> out [class="data"];
+  note [label="Pays for long prompts\nwith short outputs", class="note"];
+  { rank=same; p; co; }
+}

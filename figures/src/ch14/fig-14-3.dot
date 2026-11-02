@@ -1,0 +1,21 @@
+// Figure 14.3  Paged memory for the key-value cache
+// Reading order: left to right. Each call's tokens sit in fixed blocks
+// of 16 tokens; a block table maps them to any free physical block,
+// and calls that share a prompt prefix point at the same blocks.
+// Values from serving.demo --part paged (60 GiB budget).
+digraph paged {
+#include "book.gv"
+  rankdir=LR; nodesep=0.25; ranksep=0.5;
+  subgraph cluster_a { label="Call A"; a1 [label="Prefix\nblocks 0-179", class="ops"]; a2 [label="Its own\nblocks", class="ops"]; }
+  subgraph cluster_b { label="Call B"; b1 [label="Prefix\nblocks 0-179", class="ops"]; b2 [label="Its own\nblocks", class="ops"]; }
+  tab [label="Block table", class="model"];
+  shared [label="Shared prefix\nheld once", class="verified store"];
+  pa [label="A's blocks\nanywhere free", class="evidence store"];
+  pb [label="B's blocks\nanywhere free", class="evidence store"];
+  a1 -> tab [class="data"]; b1 -> tab [class="data"];
+  a2 -> tab [class="data"]; b2 -> tab [class="data"];
+  tab -> shared [class="emphasis"];
+  tab -> pa [class="data"]; tab -> pb [class="data"];
+  note [label="Contiguous: 30 calls\nPaged: 85\nWith shared prefix: 149", class="note"];
+  { rank=same; shared; note; }
+}

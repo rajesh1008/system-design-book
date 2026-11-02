@@ -1,0 +1,16 @@
+@startuml
+' Figure 14.6  Speculative decoding
+' Reading order: top to bottom. A small draft model guesses four
+' tokens; the large model checks all four in one pass, keeps the run it
+' agrees with, and supplies the next token itself, so output matches
+' what the large model alone would produce. From serving.speculative.
+!include plantuml-theme.puml
+participant "Draft\nmodel" as D <<ops>>
+participant "Target\nmodel" as T <<model>>
+D -> D : Guess 4 tokens, cheap steps
+D -> T : "rebook" "on" "UA" "1432"
+T -> T : One pass over all four
+T -[$FAIL]> D : Keep 3, reject "1432"
+T -> D : Its own token: "1438"
+note over D, T : 4 tokens for 1 large pass
+@enduml

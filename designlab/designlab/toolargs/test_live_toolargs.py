@@ -12,10 +12,14 @@ class TestLiveToolArgs(unittest.TestCase):
         cases = [r for r in results if "name" in r]
         meta = results[-1]
         self.assertEqual(len(cases), 20)
-        # Strict tool use: every proposal that came back is well formed.
+        # Strict tool use: every proposal is well formed unless the
+        # response was cut off at max_tokens, which the docs list as a
+        # case the guarantee does not cover. The intake catches it.
         for r in cases:
             for a in r["attempts"]:
-                self.assertTrue(a["shape"], r["name"])
+                if not a["shape"]:
+                    self.assertEqual(a["stop"], "max_tokens", r["name"])
+                    self.assertFalse(a["ok"])
         # The clean cases pass; nothing a trap proposed reached a tool
         # without passing the world checks (the intake is the only way).
         for r in cases:

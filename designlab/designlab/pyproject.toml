@@ -11,11 +11,12 @@ dependencies = []
 
 [tool.setuptools]
 packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
-            "method", "planes"]
+            "method", "planes", "effects", "spine", "isolation"]
 
 [tool.setuptools.package-data]
 common = ["models.toml", "fixtures/*.json"]
 bank = ["fixtures/*.md"]
+isolation = ["egress.toml"]
 map = ["map.yaml"]
 method = ["designs/*.toml"]
 planes = ["*.toml"]

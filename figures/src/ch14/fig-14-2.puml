@@ -1,0 +1,18 @@
+@startuml
+' Figure 14.2  Continuous batching
+' Reading order: top to bottom. The scheduler runs one decode step at a
+' time; a finished call leaves at the end of a step and a waiting call
+' joins at the next, with its prefill split into chunks so the running
+' calls keep their pace. Values from serving.demo --part batching.
+!include plantuml-theme.puml
+participant "Waiting\ncalls" as Q <<ops>>
+participant "Scheduler" as S <<model>>
+participant "GPU" as G <<model>>
+S -> G : Step n: 64 calls
+G --> S : Call 17 finishes
+S -> S : Free its blocks
+Q -> S : Call 65 is admitted
+S -> G : Step n+1: 63 + 512-token chunk
+S -> G : Step n+2: 64 + next chunk
+note over S, G : No call waits for the longest
+@enduml

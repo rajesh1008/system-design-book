@@ -1,0 +1,20 @@
+// Figure 14.4  Stable content first, dynamic content last
+// Reading order: top row as found, bottom row after the re-layout,
+// each left to right. A cache can reuse only an unbroken prefix, so
+// the first changing segment ends what any call can share.
+// Values from serving.demo --part layout.
+digraph prefix {
+#include "book.gv"
+  rankdir=TB; nodesep=0.6; ranksep=0.18;
+  subgraph cluster_pilot { label="Pilot: 9% hit";
+    p1 [label="Tools", class="verified"]; p2 [label="Clock", class="fail"];
+    p3 [label="Itinerary", class="fail"]; p4 [label="Instructions"];
+    p5 [label="Policy"]; p6 [label="History"];
+    p1 -> p2 -> p3 -> p4 -> p5 -> p6 [class="data"]; }
+  subgraph cluster_sf { label="Stable first: 78% hit";
+    s1 [label="Tools", class="verified"]; s2 [label="Instructions", class="verified"];
+    s3 [label="Policy", class="verified"]; s4 [label="Examples", class="verified"];
+    s5 [label="Itinerary", class="knowledge"]; s6 [label="History", class="knowledge"];
+    s1 -> s2 -> s3 -> s4 [class="emphasis"];
+    s4 -> s5 [label="cache\nmark", class="data"]; s5 -> s6 [class="data"]; }
+}
