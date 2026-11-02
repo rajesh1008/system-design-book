@@ -1,0 +1,21 @@
+// Figure 10.1  Capacity is tokens times steps times retries
+// Reading order: top to bottom. One change request becomes a loop of
+// steps; each step is a model call that may ask for a tool; retries
+// multiply the calls; the emphasized path ends in the tokens a task
+// costs. Values from python3 -m capacity.demo --part estimate (seed 10).
+digraph mult {
+#include "book.gv"
+  rankdir=TB; nodesep=0.5; ranksep=0.4;
+  req [label="One change request", class="org human"];
+  steps [label="Steps: 7.4 median,\n19 at p95", class="model"];
+  call [label="Model call:\n6,217 tokens in", class="model"];
+  tool [label="Tool call:\n0.67 a step", class="ops"];
+  retry [label="Retries: 1.05\nrequests a step", class="policy gate"];
+  task [label="54,658 tokens\na task", class="evidence store"];
+  req -> steps [class="emphasis"];
+  steps -> call [label=" each step", class="emphasis"];
+  call -> tool [class="control"];
+  call -> retry [class="emphasis"];
+  retry -> task [class="emphasis"];
+  { rank=same; call; tool; }
+}

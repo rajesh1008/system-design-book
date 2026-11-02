@@ -1,0 +1,21 @@
+@startuml
+' Figure 9.3  Journal and replay
+' Reading order: top to bottom; the run writes intent and result per
+' step; replay reads results and calls nothing.
+!include plantuml-theme.puml
+participant "Engine" as E <<ops>>
+participant "Model" as M <<model>>
+database "Journal" as J <<evidence>>
+participant "Airline" as W <<ops>>
+== Run ==
+E -> J : begin step 4
+E -> M : choose
+M --> E : LK 2210
+E -> J : done step 4
+E -> W : rebook LK 2210
+W --> E : ticket
+E -> J : done step 9
+== Replay ==
+J --> E : recorded outputs
+note right of E : no calls
+@enduml

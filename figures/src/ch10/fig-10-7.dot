@@ -1,0 +1,19 @@
+// Figure 10.7  Little's law sizes the sessions
+// Reading order: top to bottom. Arrivals at the planned
+// Monday rate stay for the mean residence; their product is the mean
+// number open; the emphasized path adds room for chance and gives the
+// size to buy. Values from python3 -m capacity.demo --part surge.
+digraph little {
+#include "book.gv"
+  rankdir=TB; nodesep=0.5; ranksep=0.4;
+  lam [label="Arrivals\n0.448 a second", class="org human"];
+  sys [label="Sessions open\n779 s each", class="ops"];
+  L [label="L = 349\non average", class="ops"];
+  room [label="Chance:\n1 in 10,000", class="policy gate"];
+  buy [label="Buy 420", class="verified"];
+  { rank=same; room; buy; }
+  lam -> sys [class="data"];
+  sys -> L [label=" L = λW", class="data"];
+  L -> room [class="emphasis"];
+  room -> buy [class="emphasis"];
+}

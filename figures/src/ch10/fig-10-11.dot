@@ -1,0 +1,28 @@
+// Figure 10.11  The Capacity Model's inputs and outputs
+// Reading order: top to bottom. Three inputs (volumes from Chapter 4,
+// the storm from Chapter 5) feed three functions; each
+// function gives one answer. The emphasized path is the traces, which
+// every function reads and which keep the model honest.
+digraph model {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.5;
+  tr [label="90 days\nof traces", class="evidence store"];
+  vol [label="Volumes\nand storm", class="org"];
+  caps [label="Design\ncaps", class="policy"];
+  est [label="estimate", class="model code"];
+  bud [label="budget", class="model code"];
+  sur [label="surge", class="model code"];
+  o1 [label="Tokens\nand calls", class="ops"];
+  o2 [label="Task p95\nby plane", class="ops"];
+  o3 [label="Sessions\nand limits", class="ops"];
+  tr -> est [class="emphasis"];
+  tr -> bud [class="emphasis"];
+  tr -> sur [class="emphasis"];
+  vol -> est [class="data"];
+  vol -> sur [class="data"];
+  caps -> bud [class="data"];
+  est -> o1 [class="control"];
+  bud -> o2 [class="control"];
+  sur -> o3 [class="control"];
+  { rank=same; tr; vol; caps; }
+}

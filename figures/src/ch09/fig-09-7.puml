@@ -1,0 +1,19 @@
+@startuml
+' Figure 9.7  Durable timers
+' Reading order: top to bottom; a timer due during downtime fires once
+' on resume, and a grant cancels the rest.
+!include plantuml-theme.puml
+participant "Process A" as A <<ops>>
+database "Timers" as T <<ops>>
+participant "Desk" as D <<policy>>
+participant "Process B" as B <<verified>>
+A -> D : file request
+A -> T : set escalate, deadline
+A -[$FAIL]-> A : killed
+B -> T : due now?
+T --> B : escalate
+B -> T : mark fired
+B -> D : escalate
+D --> B : granted
+B -> T : cancel deadline
+@enduml

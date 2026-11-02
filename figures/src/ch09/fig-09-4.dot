@@ -1,0 +1,20 @@
+// Figure 9.4  Divergence on replay
+// Reading order: top to bottom; the first mismatch stops replay.
+digraph divergence {
+#include "book.gv"
+  rankdir=TB;
+  read [label="Next journaled step", class="ops"];
+  kind [label="Model step?", class="gate"];
+  rec [label="Recorded output", class="evidence store"];
+  fix [label="Fixture\nor new code", class="model"];
+  cmp [label="Same\ndecision?", class="gate"];
+  ok [label="Reproduced", class="verified"];
+  bad [label="Diverged\nat step N", class="fail"];
+  read -> kind;
+  kind -> rec [label="strict", class="data"];
+  kind -> fix [label="what-if", class="data"];
+  rec -> cmp; fix -> cmp;
+  cmp -> read [label="yes", class="control"];
+  cmp -> ok [label="last step", class="verified"];
+  cmp -> bad [label="no", class="fail"];
+}

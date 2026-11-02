@@ -1,8 +1,8 @@
 # ch08 alt text (one line per figure; copied into 03-figures/alt.md for the build)
 fig-08-1: The asynchronous spine from the airline's schedule feed through an event log keyed by itinerary, a fan-out, and an intake gate into three queues for agent workers, the approval desk, and the agent desk, with only the gateway reaching suppliers and the trail and dead letters beside it.
 fig-08-2: Sequence for one itinerary in which the airline publishes a cancellation event, the planner issues a rebook command carrying the itinerary key and sequence number, and the gateway's result becomes a new event that drives the customer notice.
-fig-08-3: Two schedule changes for one itinerary arrive with the newer one first, pass through one partition, and meet a sequence check that applies sequence 42 and rejects the older sequence 41 as stale.
-fig-08-4: The policy engine routes each command to one of three queues, rebookings inside rebook-v2 to agent workers, refunds to an approval desk capped at 50 pending, and everything else to the agent desk with a 30-minute promise.
+fig-08-3: The policy engine routes each command to one of three queues, rebookings inside rebook-v2 to agent workers, refunds to an approval desk capped at 50 pending, and everything else to the agent desk with a 30-minute promise.
+fig-08-4: Two schedule changes for one itinerary arrive with the newer one first, pass through one partition, and meet a sequence check that applies sequence 42 and rejects the older sequence 41 as stale.
 fig-08-5: Signals from the approval desk, supplier throttling, and the hourly budget each lower what the intake gate admits, and work the gate does not admit is held oldest first rather than dropped.
 fig-08-6: Line chart of the oldest approval card on the desk over 90 minutes, rising steadily to 84 minutes without a cap while holding near 11 minutes with a cap of 50 pending, below the 15-minute quote expiry.
 fig-08-7: Activity flow in which a message that parses is recorded in the inbox, a transient failure is retried up to five times, and a poison message is quarantined with its bytes and owner while only its itinerary is parked until replay.

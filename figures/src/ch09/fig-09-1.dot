@@ -1,0 +1,29 @@
+// Figure 9.1  A run outlives its process
+// Reading order: top to bottom. Workers come and go; the run lives in
+// the run store; a new worker resumes from it and the sweeper fires
+// due timers.
+digraph outlives {
+#include "book.gv"
+  rankdir=TB;
+  w1 [label="Worker A\n(killed)", class="ops"];
+  w2 [label="Worker B\n(restarted)", class="ops"];
+  subgraph cluster_store {
+    label="Run store"; class="plane-evidence";
+    ck [label="Checkpoint", class="evidence store"];
+    jr [label="Journal", class="evidence store"];
+    tm [label="Timers", class="evidence store"];
+    { rank=same; ck; jr; tm; }
+  }
+  sw [label="Sweeper", class="ops"];
+  desk [label="Approver desk", class="org human"];
+  ext [label="Airline,\nprocessor", class="ops external"];
+  w1 -> ck [class="data"];
+  w1 -> jr [class="data"];
+  w1 -> tm [class="data"];
+  ck -> w2 [class="emphasis"];
+  jr -> w2 [label="resume", class="emphasis"];
+  tm -> sw [class="async"];
+  sw -> desk [label="escalate", class="control"];
+  desk -> w2 [label="grant", class="control"];
+  w2 -> ext [label="keyed", class="data"];
+}

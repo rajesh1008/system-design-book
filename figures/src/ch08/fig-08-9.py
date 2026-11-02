@@ -17,7 +17,7 @@ for i, (name, v, tok) in enumerate(rows):
     y = len(rows) - 1 - i
     ax.barh(y, v, color=fl.FILL[tok], edgecolor=fl.C[tok], lw=0.75,
             hatch=fl.HATCH[0 if tok == "ops" else 1], height=0.6)
-    ax.text(v * 1.15, y, f"{v:g} a minute", va="center", fontsize=9,
+    ax.text(v * 1.15, y, f"{v:,g} a minute", va="center", fontsize=9,
             color=fl.LABEL[tok])
 ax.set_yticks(range(len(rows)))
 ax.set_yticklabels([r[0] for r in reversed(rows)])

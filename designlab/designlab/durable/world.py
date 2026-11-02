@@ -30,7 +30,7 @@ create table if not exists processor(
   amount real, at text);
 create table if not exists notices(
   n integer primary key autoincrement, run_id text, kind text,
-  at text);
+  at text, note_key text unique);
 """
 
 
@@ -47,7 +47,7 @@ class World:
     # ---------------------------------------------------------- desk
     def file(self, run_id: str, itinerary: str, amount: float,
              now: datetime, grant_after_s: float | None,
-             req_key: str | None = None) -> str:
+             req_key: str | None = None, regrant: bool = True) -> str:
         """File an approval request. A known key returns the old id."""
         if req_key is not None:
             row = self.c.execute("select request_id from desk where req_key=?",
@@ -56,6 +56,10 @@ class World:
                 return row[0]
         n = self.c.execute("select count(*) from desk").fetchone()[0] + 1
         rid = f"REQ-{30000 + n}"
+        if not regrant and self.c.execute(
+                "select count(*) from desk where run_id=?",
+                (run_id,)).fetchone()[0]:
+            grant_after_s = None        # the desk held the copies
         grant_at = None if grant_after_s is None else \
             (now + timedelta(seconds=grant_after_s)).isoformat()
         self.c.execute("insert into desk values(?,?,?,?,?,?,?,?,?,0)",
@@ -64,24 +68,36 @@ class World:
         self.c.commit()
         return rid
 
-    def tick(self, now: datetime) -> None:
-        """Supervisors answer requests whose grant time has come."""
-        rows = self.c.execute(
-            "select request_id, run_id, amount, grant_at from desk "
-            "where status='open' and grant_at is not null").fetchall()
-        for rid, run_id, amount, grant_at in rows:
-            if datetime.fromisoformat(grant_at) <= now:
-                pid = self._grant(rid, run_id, amount, "supervisor",
-                                  "refunds-v3", now)
-                self.c.execute("update desk set status='granted', "
-                               "permission_id=? where request_id=?",
-                               (pid, rid))
-        self.c.commit()
-
-    def status(self, request_id: str) -> tuple[str, str | None]:
+    def status(self, request_id: str, now: datetime | None = None
+               ) -> tuple[str, str | None]:
+        """Read a request. The desk answers on its own schedule, so a
+        grant whose time has come is recorded on the first read after
+        it, whether or not the process that filed it is alive."""
+        if now is not None:
+            self.answer(now, request_id)
         row = self.c.execute("select status, permission_id from desk "
                              "where request_id=?", (request_id,)).fetchone()
         return (row[0], row[1]) if row else ("unknown", None)
+
+    def answer(self, now: datetime, request_id: str | None = None) -> int:
+        """Supervisors grant open requests whose grant time has come."""
+        q = ("select request_id, run_id, amount, grant_at from desk "
+             "where status='open' and grant_at is not null")
+        rows = self.c.execute(q).fetchall()
+        n = 0
+        for rid, run_id, amount, grant_at in rows:
+            if request_id is not None and rid != request_id:
+                continue
+            at = datetime.fromisoformat(grant_at)
+            if at <= now:
+                pid = self._grant(rid, run_id, amount, "supervisor",
+                                  "refunds-v3", at)
+                self.c.execute("update desk set status='granted', "
+                               "permission_id=? where request_id=?",
+                               (pid, rid))
+                n += 1
+        self.c.commit()
+        return n
 
     def find_request(self, req_key: str) -> str | None:
         row = self.c.execute("select request_id from desk where req_key=?",
@@ -119,7 +135,7 @@ class World:
             if row:
                 return row[0]
         pid = self._grant(None, run_id, 0.0, "policy-engine",
-                          "changes-v1", now, perm_key)
+                          "rebook-v2", now, perm_key)
         self.c.commit()
         return pid
 
@@ -168,9 +184,12 @@ class World:
                              (pay_key,)).fetchone()
         return row[0] if row else None
 
-    def notice(self, run_id: str, kind: str, now: datetime) -> None:
-        self.c.execute("insert into notices(run_id, kind, at) "
-                       "values(?,?,?)", (run_id, kind, now.isoformat()))
+    def notice(self, run_id: str, kind: str, now: datetime,
+               key: str | None = None) -> None:
+        """A message to the customer. A keyed notice is sent once."""
+        self.c.execute("insert or ignore into notices(run_id, kind, at, "
+                       "note_key) values(?,?,?,?)",
+                       (run_id, kind, now.isoformat(), key))
         self.c.commit()
 
     def count(self, sql: str, *args) -> int:

@@ -21,7 +21,7 @@ ax.plot(mins, cap, color=fl.C["verified"], marker=fl.MARKERS[0],
         ls=fl.LINESTYLES[0], ms=4)
 ax.axhline(15, color=fl.GREY_DARK, lw=0.75, ls=":")
 ax.text(1, 16.5, "quote expires, 15 min", fontsize=9, color=fl.INK)
-fl.label_line(ax, 52, 60, "no cap", color=fl.LABEL["fail"])
+fl.label_line(ax, 22, 45, "no cap", color=fl.LABEL["fail"])
 fl.label_line(ax, 60, 4.5, "cap 50 pending", color=fl.LABEL["verified"])
 ax.set_xlabel("Minutes after the fan-out")
 ax.set_ylabel("Oldest card on the desk (min)")

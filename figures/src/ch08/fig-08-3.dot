@@ -1,21 +1,16 @@
-// Figure 8.3  Ordering per itinerary
-// Reading order: top to bottom. Two changes for one itinerary arrive
-// out of order; the partition keeps one consumer per itinerary; the
-// sequence check applies the newer change and rejects the older one.
-digraph order {
+// Figure 8.3  Three queues and their consumers
+// Reading order: top to bottom. The policy engine routes each
+// command; each queue has one kind of consumer and one promise.
+digraph queues {
 #include "book.gv"
-  rankdir=TB; nodesep=0.35; ranksep=0.35;
-  e42 [label="seq 42\n09:40", class="ops"];
-  e41 [label="seq 41\n07:05", class="ops"];
-  part [label="Partition\nby itinerary", class="ops"];
-  chk [label="Newer than\nlast applied?", class="ops gate"];
-  ok [label="Apply\nseq 42", class="verified"];
-  stale [label="Reject\nseq 41 stale", class="fail"];
-  e42 -> part [label=" first"];
-  e41 -> part [label=" second"];
-  part -> chk;
-  chk -> ok [label=" yes", class="verified"];
-  chk -> stale [label=" no", class="fail"];
-  { rank=same; e42; e41; }
-  { rank=same; ok; stale; }
+  rankdir=TB; nodesep=0.2; ranksep=0.4;
+  pol [label="Policy engine", class="policy gate"];
+  qw [label="Work", class="ops store"];
+  qa [label="Approvals", class="policy store"];
+  qr [label="Refusals", class="ops store"];
+  wk [label="Agent\nworkers", class="ops"];
+  desk [label="Approval\ndesk,\ncap 50", class="org human"];
+  ad [label="Agent\ndesk,\n30 min", class="org human"];
+  pol -> qw; pol -> qa [class="emphasis"]; pol -> qr;
+  qw -> wk; qa -> desk; qr -> ad;
 }

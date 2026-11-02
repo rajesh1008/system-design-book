@@ -1,0 +1,71 @@
+# Egress allow-list for agent sessions, by tool. Deny by default.
+# Owner: Owen Fletcher (security). A host is added by a reviewed change
+# that names the tool, the reason, and the person who asked for it.
+version = "2026-03-16"
+owner = "Owen Fletcher"
+
+[[host]]
+name = "model.lakeshore.internal"
+port = 443
+tools = ["loop"]
+reason = "model proxy; the provider key stays in the proxy"
+
+[[host]]
+name = "gateway.lakeshore.internal"
+port = 443
+tools = ["refund", "rebook", "voucher", "hotel_cancel"]
+reason = "the only path to systems of record"
+
+[[host]]
+name = "control.lakeshore.internal"
+port = 443
+tools = ["loop"]
+reason = "proposals and permissions"
+
+[[host]]
+name = "knowledge.lakeshore.internal"
+port = 443
+tools = ["booking_read", "policy_read"]
+reason = "context packets with source and age"
+
+[[host]]
+name = "trail.lakeshore.internal"
+port = 443
+tools = ["loop"]
+reason = "decision and denial lines"
+
+[[host]]
+name = "docs.lakeshore.internal"
+port = 443
+tools = ["doc_intake"]
+reason = "uploaded documents, read by session token"
+
+[[host]]
+name = "ocr.lakeshore.internal"
+port = 443
+tools = ["doc_intake"]
+reason = "text from passport and receipt scans"
+
+[[host]]
+name = "status.lakeshore.internal"
+port = 443
+tools = ["flight_status"]
+reason = "mirrored flight status feed"
+
+[[host]]
+name = "fares.lakeshore.internal"
+port = 443
+tools = ["fare_calc"]
+reason = "fare rules for the proration code tool"
+
+[[host]]
+name = "pkgs.lakeshore.internal"
+port = 443
+tools = ["code_run"]
+reason = "pinned package mirror; no public index"
+
+[[host]]
+name = "notices.lakeshore.internal"
+port = 443
+tools = ["notice_read"]
+reason = "carrier notices mirrored after a virus scan"

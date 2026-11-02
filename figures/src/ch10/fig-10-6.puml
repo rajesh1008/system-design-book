@@ -1,0 +1,22 @@
+@startuml
+' Figure 10.6  The loop that ran twelve steps
+' Reading order: top to bottom. Trace S018387, Monday, February 16,
+' 2026, 10:04 a.m. Central time. The task needed seven steps; the loop
+' searched the same flights five more times, and one search waited
+' on the shared rate limit. Values from corpus.traces, seed 10.
+!include plantuml-theme.puml
+participant "Agent\nloop" as L <<model>>
+participant "Model\nprovider" as M <<model>>
+participant "Tools" as T <<ops>>
+L -> M : Steps 1 to 6
+M -> T : Booking, two searches
+T --> L : 6.2 s of tools
+group Steps 7 to 11, repeats
+  L -> M : Same search
+  M -[$FAIL]> L : 429, 8.2 s wait
+  M -> T : search_flights
+  T --> L : 10.8 s of tools
+end
+L -[#1A1A1A]> M : Step 12: answer
+note over L : 38.4 s; 18.7 s capped
+@enduml

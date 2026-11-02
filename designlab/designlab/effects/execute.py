@@ -26,7 +26,7 @@ from .ledger import Entry, Ledger
 LOOKUP_AT = (5.0, 15.0, 30.0)
 TIMEOUT_S = 8.0
 LATENCY_S = 1.2
-KEY_RETENTION_S = 24 * 3600   # what one processor documents; [VERIFY]
+KEY_RETENTION_S = 24 * 3600   # Stripe documents pruning keys once at least 24 h old
 
 Faults = Callable[[str], str]   # tool name -> "", "late" or "lost"
 Lags = Callable[[str], float]   # tool name -> seconds until visible

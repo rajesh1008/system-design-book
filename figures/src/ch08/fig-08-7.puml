@@ -8,14 +8,17 @@ start
 :Receive;
 if (Applies?) then (yes)
   :Inbox records it;
-  stop
+else (no)
+  if (Transient?) then (yes)
+    :Retry, up to 5;
+  else (poison)
+    :Quarantine,
+    owner named; <<#F8DDD9>>
+    :Park the
+    itinerary;
+    :Fix, replay
+    in order;
+  endif
 endif
-if (Transient?) then (yes)
-  :Retry, up to 5;
-  stop
-endif
-:Quarantine with owner;
-:Park the itinerary;
-:Fix, then replay;
 stop
 @enduml

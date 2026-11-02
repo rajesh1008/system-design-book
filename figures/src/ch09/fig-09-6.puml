@@ -1,0 +1,24 @@
+@startuml
+' Figure 9.6  A wait for a human lasting a week
+' Reading order: top to bottom from filed to granted or expired; a
+' restart leaves the state where it was.
+!include plantuml-theme.puml
+hide empty description
+skinparam defaultFontSize 16
+state Filed <<ops>>
+state Waiting <<ops>>
+state Reminded <<org>>
+state Escalated <<org>>
+state Granted <<verified>>
+state Expired <<fail>>
+[*] --> Filed
+Filed --> Waiting
+Waiting --> Reminded : 24 h, 72 h
+Reminded --> Waiting
+Waiting --> Escalated : day 5
+Escalated --> Waiting
+Waiting --> Granted : answer
+Waiting --> Expired : day 7
+Granted --> [*]
+Expired --> [*]
+@enduml

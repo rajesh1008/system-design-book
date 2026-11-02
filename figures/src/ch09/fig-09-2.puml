@@ -1,0 +1,34 @@
+@startuml
+' Figure 9.2  What a checkpoint contains
+' Reading order: the checkpoint at the center, the journal it is
+' written with on the left, and the pending fields below it.
+!include plantuml-theme.puml
+hide empty members
+skinparam defaultFontSize 15
+class "Checkpoint" as C <<ops>> {
+  position
+  step outputs
+  schema
+}
+class "Journal" as J <<evidence>> {
+  seq, step
+  begun | done
+}
+class "Approval" as A <<policy>> {
+  request_id
+}
+class "Permission" as P <<policy>> {
+  permission_id
+}
+class "Key" as K <<policy>> {
+  action, key
+}
+class "Timer" as T <<org>> {
+  fire_at
+}
+J -- C : same commit
+C *-- A
+C *-- P
+C *-- K
+C o-- T
+@enduml

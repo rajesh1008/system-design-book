@@ -1,0 +1,28 @@
+// Figure 11.2  One sandbox per session
+// Reading order: top to bottom. The harness and the credential stay
+// outside; each session gets its own sandbox with its own /work and no
+// network of its own. Every outbound call goes through the egress proxy,
+// and the only path to systems of record is the gateway.
+digraph persession {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.45;
+  subgraph cluster_h { label="Outside the sandboxes"; class="plane-ops";
+    loop [label="Agent loop", class="model"];
+  }
+  subgraph cluster_s { label="One sandbox per session"; class="plane-ops";
+    s1 [label="Session 1\n/work", class="ops code"];
+    s2 [label="Session 2\n/work", class="ops code"];
+    s3 [label="Session 3\n/work", class="ops code"];
+  }
+  px [label="Egress proxy\n11 hosts", class="policy gate"];
+  gw [label="Gateway\nholds the key", class="ops gate"];
+  sor [label="Systems\nof record", class="ops external store"];
+  loop -> s1 [class="control"];
+  loop -> s2 [class="control"];
+  loop -> s3 [class="control"];
+  s1 -> px [class="data"];
+  s2 -> px [class="data"];
+  s3 -> px [class="data"];
+  px -> gw [label=" listed", class="emphasis"];
+  gw -> sor [class="control"];
+}

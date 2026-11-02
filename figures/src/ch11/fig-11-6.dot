@@ -1,0 +1,21 @@
+// Figure 11.6  Cache isolation across tenants
+// Reading order: top to bottom. The public prefix (instructions and
+// policy) is cached once for everyone. Anything after it is cached under
+// a namespace taken from the authenticated identity. The bug path keys
+// the summary cache by record locator alone and serves one traveler's
+// entry to another.
+digraph cache {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.45;
+  id [label="Authenticated\nidentity", class="policy gate"];
+  pre [label="Public prefix\nshared entry", class="knowledge store"];
+  ns [label="Namespace\nper tenant", class="policy"];
+  t1 [label="Tenant 1\nentries", class="knowledge store"];
+  t2 [label="Tenant 2\nentries", class="knowledge store"];
+  bug [label="Key: locator\nonly", class="fail"];
+  id -> ns [class="policy"];
+  pre -> ns [class="data"];
+  ns -> t1 [class="data"];
+  ns -> t2 [class="data"];
+  bug -> t2 [label=" tenant 1 reads", class="fail"];
+}
