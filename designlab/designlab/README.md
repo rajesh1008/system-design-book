@@ -44,6 +44,7 @@ the key is read from the environment only.
 | `identity/` | 32 | Per-run identity: run tokens minted at grant (delegation, not impersonation), the secret broker, data classes, the identity test and the trail check |
 | `threats/` | 33 | The injection and poisoning battery: 61 attacks in six classes against an obedient stand-in model, the four controls (session binding, reply filter, egress, memory gate), the gateway's quote check, the trifecta and Rule of Two from configuration, and a recorded small-model replay |
 | `evals/` | 34 | The release gate: a versioned golden set (640 tasks, eight classes), four-part scoring (outcome, trajectory, effects, forbidden effects), pass^k over three trials, a wording judge calibrated against people (kappa), online signals, and the improvement loop with release cuts |
+| `trace/` | 35 | The run as a trace: spans named by the GenAI semantic conventions with local `lakeshore.*` attributes and content by reference, the completeness check against the gateway trail, tail sampling, cost per decision and per harness version, the alerts, and strict and what-if replay |
 
 ## Install
 
