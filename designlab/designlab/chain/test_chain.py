@@ -43,7 +43,7 @@ class ChainTests(unittest.TestCase):
         bad = lambda n, r: {"verified_by": ACTOR, "credits_found": 1, "ok": True}
         with self.assertRaises(Refused) as ctx:
             ChainLoop(CardNetwork(), Trail(), verifier=bad).execute(full_record())
-        self.assertIn("verification by a component that did not act", ctx.exception.missing)
+        self.assertIn("independent verification", ctx.exception.missing)
 
     def test_unanswered_effect_is_not_counted_done(self):
         net = CardNetwork(lost_calls={1, 2, 3})

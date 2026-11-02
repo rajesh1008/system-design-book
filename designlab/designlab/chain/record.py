@@ -20,7 +20,7 @@ class Refused(Exception):
 
     def __init__(self, missing: list[str]):
         self.missing = missing
-        super().__init__("refused: missing " + ", ".join(missing))
+        super().__init__("refused: " + ", ".join(missing))
 
 
 @dataclass(frozen=True)
@@ -55,7 +55,7 @@ class ChainRecord:
                    if getattr(self, name) is None]
         p = self.permission
         if p is not None and p.granted_by == actor:
-            missing.append("permission granted outside the loop")
+            missing.append("permission from outside the loop")
         if p is not None and self.proposal is not None \
                 and self.proposal.amount_usd > p.max_amount_usd:
             missing.append("permission covering this amount")
@@ -67,5 +67,5 @@ class ChainRecord:
                    if getattr(self, name) is None]
         v = self.verification
         if v is not None and v.get("verified_by") == actor:
-            missing.append("verification by a component that did not act")
+            missing.append("independent verification")
         return missing
