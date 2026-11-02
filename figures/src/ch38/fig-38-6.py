@@ -17,18 +17,18 @@ from economics import bill, chargeback  # noqa: E402
 
 inv = {ln.identity: ln.usd for ln in bill.invoice("July")}
 uc = chargeback.by_use_case("July")
-rows = [(k.capitalize(), "Customer ops", f"{v:,.0f}", "0", "org")
+rows = [(k.capitalize(), "Customer", f"{v:,.0f}", "0", "org")
         for k, v in uc.items()]
-rows += [("Waiver watch", "Platform eng.",
+rows += [("Waiver watch", "Platform",
           f"{inv['agent:waiver-watch']:,.0f}",
           f"{inv['agent:waiver-watch (Jul 25-26)']:,.0f}", "fail"),
-         ("Fare watch", "Platform eng.",
+         ("Fare watch", "Platform",
           f"{inv['loop:fare-watch']:,.0f}", "0", "ops"),
          ("Evaluation", "Research", f"{inv['eval:harness']:,.0f}", "0",
-          "knowledge"),
+          "org"),
          ("No identity", "Unallocated",
-          f"{inv['(no identity)']:,.0f}", "0", "ops")]
-heads = ("Use case", "Owner", "Model $", "Incident $")
+          f"{inv['(no identity)']:,.0f}", "0", "org")]
+heads = ("Use case", "Owner", "Model", "Incident")
 cols = (0.0, 1.5, 3.0, 3.95)
 fig, ax = fl.figure(4.5, 3.4)
 n = len(rows)

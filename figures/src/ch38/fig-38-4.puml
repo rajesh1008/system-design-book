@@ -16,6 +16,6 @@ B -> G : Fits
 G -> P : Send
 P -> G : Usage or timeout
 G -> B : Settle actual
-note over G, B : No usage: worst
+note over G, B $F_POLICY : No usage: worst
 G -[$POLICY]> L : Refused at limit
 @enduml

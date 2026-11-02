@@ -17,6 +17,7 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "gateway", "harness", "knowops", "context", "inputs", "topology",
             "sandbox", "loops", "runtimes", "threats", "identity", "policy", "evals",
             "reliability",
+            "assurance",
             "economics",
             "trace"]
 
@@ -46,3 +47,4 @@ runtimes = ["grid.yaml", "fixtures/*.json", "skills/*/*.md",
 threats = ["*.toml", "fixtures/live/*.json"]
 policy = ["fixtures/live/*.json"]
 reliability = ["golden/*.jsonl", "fixtures/live/*.json"]
+assurance = ["fixtures/live/*.json"]
