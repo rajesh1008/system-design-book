@@ -15,7 +15,7 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "isolation", "failure", "models", "serving", "portfolio",
             "toolargs", "adapt", "cost", "knowledge", "retrieval", "memory",
             "gateway", "harness", "knowops", "context", "topology",
-            "sandbox"]
+            "sandbox", "loops"]
 
 [tool.setuptools.package-data]
 common = ["models.toml", "fixtures/*.json"]
