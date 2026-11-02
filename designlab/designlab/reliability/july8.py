@@ -24,7 +24,7 @@ from datetime import timedelta
 
 from common.rand import seeded
 
-from .records import Records, Task, at
+from .records import Escalation, Records, Task, at
 
 DAY = "2026-07-08"
 MOVED = at(DAY, "01:15")
@@ -38,6 +38,7 @@ HOURS = {1: (12, 0, 0), 2: (10, 0, 0), 3: (8, 0, 0), 4: (11, 0, 0),
 KINDS = ("rebooking", "refund", "cancellation", "credit")
 SHARE = (0.36, 0.30, 0.20, 0.14)
 FRONT_DOOR_ERRORS = 2
+ESCALATED = 59               # tasks handed to the desk
 
 OLD_CODES = {"retime": ("RETIME",), "renumber": ("FLT_NUMBER_CHANGE",),
              "combined": ("RETIME", "FLT_NUMBER_CHANGE"),
@@ -113,6 +114,11 @@ def build(seed: int = 37, pinned: bool = False) -> Records:
                 message=msg, cause=cause))
     for t in rng.sample(rec.tasks, FRONT_DOOR_ERRORS):
         t.errors = 1
+    desk = seeded(seed, "july8-desk")          # escalations to people
+    for i, t in enumerate(desk.sample(rec.tasks, ESCALATED)):
+        wait = 70.0 if i == 0 else desk.uniform(2, 40)
+        rec.escalations.append(Escalation(
+            f"ESC-{i + 1:03d}", t.ended, t.ended + timedelta(minutes=wait)))
     return rec
 
 

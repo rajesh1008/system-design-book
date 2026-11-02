@@ -117,6 +117,9 @@ def read(obj: Objective, rec: Records, start: datetime, end: datetime,
     elif obj.key == "unauthorized":
         total = len(ts)
         bad = sum(t.unauthorized for t in ts)
+        if not total:
+            return Reading(obj.key, 0, 0, 0.0, 0, "unknown",
+                           "no eligible records")
         return Reading(obj.key, total - bad, total, 0.0, bad,
                        _status(bad, 0, zero=True))
     elif obj.key == "latency":
@@ -142,6 +145,9 @@ def read(obj: Objective, rec: Records, start: datetime, end: datetime,
                   or e.picked - e.queued > PICKUP)
     else:
         raise KeyError(obj.key)
+    if not total:
+        return Reading(obj.key, 0, 0, 0.0, 0, "unknown",
+                       "no eligible records")
     n = full_window if full_window is not None else total
     budget = obj.budget_ratio * n
     return Reading(obj.key, total - bad, total, budget, bad,

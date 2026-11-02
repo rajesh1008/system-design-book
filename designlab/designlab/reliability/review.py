@@ -115,6 +115,6 @@ INC6 = Review(
                     "Ben Carter", "2026-07-29")],
     handoffs=["what the storm cost, and spend policies (Ch38)"],
     numbers={"time to detect": "41 h 14 min", "time to stop": "116 s",
-             "affected": "0 travelers; servicing p95 over 40 s 1 h"})
+             "affected": "0 travelers messaged; servicing slow 97 min"})
 
 REVIEWS = (INC5, INC6)

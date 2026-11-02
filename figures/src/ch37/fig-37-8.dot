@@ -1,0 +1,25 @@
+// Figure 37.8  Post-incident review structure
+// Reading order: top to bottom. The records feed the timeline; the
+// review accounts for effects, names contributing factors without
+// naming people, assigns actions with owners and dates, and hands off
+// what belongs to another owner. The gate closes the review.
+// From reliability.review.
+digraph review {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.3;
+  rec [label="Records\ntrail, reconciler, provider", class="evidence store"];
+  tl [label="Timeline\nfrom records", class="evidence"];
+  eff [label="Effects\neach accounted for", class="evidence"];
+  fac [label="Contributing factors\nno person as a cause", class="evidence"];
+  act [label="Actions\nowner and date", class="org"];
+  hand [label="Hand-offs\nanother owner", class="org"];
+  gate [label="Closure gate", class="org gate"];
+  rec -> tl [class="trail"];
+  tl -> eff [class="data"];
+  tl -> fac [class="data"];
+  fac -> act [class="data"];
+  fac -> hand [class="data"];
+  eff -> gate [class="control"];
+  act -> gate [class="emphasis"];
+  hand -> gate [class="control"];
+}

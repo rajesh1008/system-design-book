@@ -27,19 +27,22 @@ from common.text import emit
 
 from . import (budget, burn, card, daily, gameday, july8, review,
                runbook, stop, storm)
-from .objectives import BY_KEY, FIVE, UPTIME, Reading, read_all
+from .objectives import BY_KEY, FIVE, UPTIME, Reading, read, read_all
 from .records import at, hm
 
-KINDS = ("rebooking", "refund", "seat", "baggage")
+KINDS = july8.KINDS
 
 
 def fmt(r) -> str:
     if r.status == "unknown":
         return f"{r.key:<22} unknown   {r.note}"[:70]
     if r.key.startswith("unauthorized"):
-        return f"{r.key:<22} {r.bad} events  {r.status}"
-    used = f"{r.used:>5.0%}" if r.used is not None else "  n/a"
-    return (f"{r.key:<22} {r.rate:>7.2%} {used} spent  {r.status}")
+        return f"{r.key:<22} {r.bad:>7}       0  bad {r.bad:>3}  " + \
+            ("met" if not r.bad else "MISSED")
+    target = BY_KEY.get(r.key.split(":")[0].split(" ")[0], UPTIME).target
+    state = "met" if r.rate >= target else "MISSED"
+    return (f"{r.key:<22} {r.rate:>7.2%} {target:>7.2%}  bad "
+            f"{r.bad:>3}  {state}")
 
 
 def part_objectives(a) -> list[str]:
@@ -48,8 +51,12 @@ def part_objectives(a) -> list[str]:
     out = [f"July 8, {hm(s)} to {hm(e)} CDT; "
            f"{len(rec.tasks):,} agent tasks"]
     objs = (UPTIME,) if a.uptime_only else (UPTIME,) + FIVE
-    out.append(f"{'objective':<22} {'reading':>7} {'budget':>11}")
+    out.append(f"{'objective':<22} {'reading':>7} {'target':>7}")
     for r in read_all(objs, rec, s, e, kinds=KINDS):
+        if r.key == "verified:" + KINDS[0]:
+            whole = read(BY_KEY["verified"], rec, s, e)
+            whole.key = "verified (all kinds)"
+            out.append(fmt(whole))
         out.append(fmt(r))
     return out
 
@@ -69,7 +76,7 @@ def part_alerts(a) -> list[str]:
                        f"{x.long_burn:4.1f}x  bad {x.bad_in_long}")
     flag = july8.first_code_flag(rec)
     out.append(f"{'code check':<20} " +
-               (f"first hold {hm(flag.ended)}" if flag else "no hold"))
+               (f"first hold {hm(flag[0].ended)}" if flag[0] else "no hold"))
     out.append(f"{'desk lead saw':<20} {hm(july8.DESK_SAW)}")
     return out
 
@@ -86,7 +93,7 @@ def part_budget(a) -> list[str]:
         dec = budget.decide(Reading("verified:rebooking", n - bad, n,
                                     bud, bad, "met"))
         out.append(f"{d:%b %d}  {n:>6,} tasks  bad {bad:>3} of "
-                   f"{bud:5.1f}  {used:>4.0%}  {dec.state}")
+                   f"{bud:5.1f}  {used:>6.1%}  {dec.state}")
     if a.extra:
         out.append(f"(+{a.extra} unverified added on July 9)")
     return out
@@ -102,12 +109,16 @@ def part_storm(a) -> list[str]:
            f"loop calls billed by provider {st.billed():>10,}",
            f"loop calls counted by enforcer {st.counted():>9,}",
            f"chains running at the end {st.minutes[-1].chains:>14,}",
-           f"first 429 to servicing         Sun {hm(lim.t)}",
+           f"first 429 to servicing         Sun {hm(lim)}",
            f"task latency page              Sun {hm(first_page.at)}",
            f"hours with no objective red    "
            f"{storm.hidden_hours(st, first_page.at):.1f}"]
     t = gameday.usage_page(st)
     out.append(f"with the provider-count alert  Sat {hm(t)}")
+    out.append(f"billed, no scheduler requeue    "
+               f"{storm.simulate(requeue=False).billed():>8,}")
+    out.append(f"billed, retries in one layer    "
+               f"{storm.simulate(harness=1, requeue=False).billed():>8,}")
     return out
 
 

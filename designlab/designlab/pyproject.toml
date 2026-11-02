@@ -15,9 +15,12 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "isolation", "failure", "models", "serving", "portfolio",
             "toolargs", "adapt", "cost", "knowledge", "retrieval", "memory",
             "gateway", "harness", "knowops", "context", "inputs", "topology",
-            "sandbox", "loops", "runtimes", "threats", "identity", "policy"]
+            "sandbox", "loops", "runtimes", "threats", "identity", "policy", "evals",
+            "reliability",
+            "trace"]
 
 [tool.setuptools.package-data]
+evals = ["fixtures/live/*.json"]
 common = ["models.toml", "fixtures/*.json"]
 bank = ["fixtures/*.md"]
 isolation = ["egress.toml"]
@@ -41,3 +44,4 @@ runtimes = ["grid.yaml", "fixtures/*.json", "skills/*/*.md",
             "skills/*/reference/*.md"]
 threats = ["*.toml", "fixtures/live/*.json"]
 policy = ["fixtures/live/*.json"]
+reliability = ["golden/*.jsonl", "fixtures/live/*.json"]

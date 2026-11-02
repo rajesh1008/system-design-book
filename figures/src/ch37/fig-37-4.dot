@@ -1,0 +1,23 @@
+// Figure 37.4  On-call rota and escalation
+// Reading order: top to bottom. An objective's page goes to the primary
+// on Ben Carter's rota; unacknowledged in five minutes it goes to the
+// secondary, then to the incident lead. Any unauthorized action also
+// pages the security owner at once. The primary calls in the owner of
+// the part that moved. From reliability.runbook.
+digraph oncall {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.32;
+  obj [label="Objective pages\nfast burn", class="ops"];
+  pri [label="Primary on call\nweekly rota", class="org human"];
+  sec [label="Secondary\nafter 5 min", class="org human"];
+  lead [label="Incident lead\nBen Carter", class="org human"];
+  sev [label="Security owner\nunauthorized action", class="org human"];
+  own [label="Owner of\nwhat moved", class="org human"];
+  rb [label="Runbook\nstop first", class="ops gate"];
+  obj -> pri [class="emphasis"];
+  pri -> sec [class="control", label="no ack"];
+  sec -> lead [class="control", label="no ack"];
+  obj -> sev [class="control", label="zero rule"];
+  pri -> rb [class="control"];
+  rb -> own [class="data"];
+}

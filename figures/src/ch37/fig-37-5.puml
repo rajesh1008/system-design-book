@@ -1,0 +1,19 @@
+@startuml
+' Figure 37.5  Incident response with the kill switch
+' Reading order: top to bottom. On call is paged on an outcome objective
+' and stops first with the tier the runbook names; the gateways read the
+' flag; the far end's own count proves the stop; then pin, replay, and a
+' fresh decision lowers the tier. From reliability.stop and runbook.
+!include plantuml-theme.puml
+participant "On call" as P <<ops>>
+participant "Kill switch" as K <<policy>>
+participant "Gateways" as G <<policy>>
+participant "Far end" as F <<ops>>
+P -> P : Paged
+P -> K : Pull tier
+K -> G : Read, 5 s
+G -> F : No new calls
+F -> P : Flat 20 s
+P -> P : Pin, replay
+P -[$POLICY]> K : Lower
+@enduml

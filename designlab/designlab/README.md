@@ -43,6 +43,7 @@ the key is read from the environment only.
 | `policy/` | 31 | The policy engine outside the loop: risk tiers, approval cards bound to the argument digest, temporal and sequence rules, effect budgets, signed bundles with shadow, and the three kill-switch tiers with drills |
 | `identity/` | 32 | Per-run identity: run tokens minted at grant (delegation, not impersonation), the secret broker, data classes, the identity test and the trail check |
 | `threats/` | 33 | The injection and poisoning battery: 61 attacks in six classes against an obedient stand-in model, the four controls (session binding, reply filter, egress, memory gate), the gateway's quote check, the trifecta and Rule of Two from configuration, and a recorded small-model replay |
+| `evals/` | 34 | The release gate: a versioned golden set (640 tasks, eight classes), four-part scoring (outcome, trajectory, effects, forbidden effects), pass^k over three trials, a wording judge calibrated against people (kappa), online signals, and the improvement loop with release cuts |
 
 ## Install
 
@@ -100,6 +101,8 @@ From this directory:
     bash ch31/run.sh               # Chapter 31: policy, approvals, kill switch
     bash ch32/run.sh               # Chapter 32: identity, secrets, data classes
     bash ch33/run.sh               # Chapter 33: the injection and poisoning battery
+    bash ch34/run.sh               # Chapter 34: the release gate and golden set
+    bash ch35/run.sh               # Chapter 35: traces, cost, replay
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

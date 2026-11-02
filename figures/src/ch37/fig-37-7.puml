@@ -1,0 +1,18 @@
+@startuml
+' Figure 37.7  The model update that moved the outcome
+' Reading order: top to bottom, Wednesday, July 8, 2026, CDT. The
+' vendor moves the alias; a combined retime and renumber is coded as a
+' retime; the agent reissues on the old number; the reconciler cannot
+' verify it; the desk sees the rework at 2:41 p.m.
+!include plantuml-theme.puml
+participant "Vendor" as V <<model>>
+participant "Classifier" as C <<model>>
+participant "Agent" as A <<model>>
+participant "Reconciler" as R <<fail>>
+V -> C : 1:15 alias
+note over V, C : No deploy
+C -> A : Retime only
+A -> R : Old number
+R -[$FAIL]> R : Not verified
+note over R : 40 by 2:41 p.m.
+@enduml
