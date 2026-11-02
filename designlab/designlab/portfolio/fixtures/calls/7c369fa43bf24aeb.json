@@ -1,0 +1,56 @@
+{
+  "request": {
+    "max_tokens": 4000,
+    "messages": [
+      {
+        "content": "Trip: Flight 315, Chicago (ORD) to Mexico City (MEX), June 5, 2026\nCarrier notice: Flight 315 now departs 15:00 (was 10:00) and now arrives 18:30 (was 13:30).\nFare: nonrefundable economy\nFacts: The customer asks to cancel 30 hours before departure. The customer has not accepted any new schedule.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-sonnet-5-5",
+    "output_config": {
+      "effort": "high"
+    },
+    "system": "You decide which Lakeshore Travel Group refund rule applies to one\nsegment. Apply the rules in order and stop at the first that applies.\n1. The carrier canceled the segment, or moved its departure or its\narrival by more than 3 hours on a domestic trip or more than 5 hours\non an international trip (use whichever of the two moved more, and an\nearlier time counts as a move): involuntary-cash. If the customer\naccepted the new schedule in writing, skip this rule.\n2. The fare is refundable: fare-rule-cash.\n3. The fare is nonrefundable and the customer cancels at least 24\nhours before departure: credit-only.\n4. Otherwise: no-refund.\nIf the facts are missing or contradict each other: needs-person.\nA trip is domestic when both airports are in the same country. Times\nare local to each airport.\nReply with one JSON object and nothing else, with exactly one key,\nrule. Never include an amount."
+  },
+  "request_hash": "7c369fa43bf24aeb",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSxwkKEAgTGAI4AUIIdGhpbmtpbmcSDLIPuolslvoebztXxRoMRECgEI+VsZDYsY5XIjDQ5tUVdTTA66K95snJQwga3NQLjSH/FqR9DJZxygtaucHd0oCdmFzy/uCADgRPODUq5AgvWIJV89Ivw+U/tzfSwnh8BhaYMpAmoEKEYxlmsc75a2/GyH92/KDOeIw5CEB63wSmWxIrmgVxvuR/5ZYxagsI2LVWrDHC7T/e5IH1POXqOFGObFYNjOW4qBjPEY/xknq0WApnOAwwNrOEOb7BN9hiEbRbhXKD7Xiy2rFsQZuMKLgGxV+Myz/Qhj5aMUOf9qZhPTrBOewCztWTopozIAUFCFxFGcAh2XqR99K0CxBuaKNR01d3E5K3zqdCxRhiPQ7F3ktciOYIkwj7PZDg9NcgJ0Pi8fRhRDnB2oRgblNqVYw7zTG2Re38M+SKL6ui1tEvjERkMeCNNDl6X6mCGdwtDf3XlMnmS2VVPhFHeHfCBdWBFH7nKzYZjcc06f5KNj4N5OqgUVbugu9PhCRdIa94Z7wVF/Omt8Fd+TY6NwQ0d203XUbXBJXb8WmSvP3P6MpHebFhWFZ3oqiZFb3c7mK8nmN3TiMZ5c3OmhTEkLkzQ1v518xSh2LdhLi+Mc/fUb4DnaVEwA52PO3TOeW4oX07guOV1MPt8P9SBwEXM6PvG0zrMUwRklnuYiixkZ1Q5mUTyNr5/15X7xlwBzR6+1C2rzsAFYRQhM8agF1v/qHnhnmGhCt8pTQ9O26Q4dCfeiFVB+cJGML0dFnLy8GzmJy5KHL01k9TJkci8p9i8QWcG7gwtJm2CJmWqqf6UGhl7Bx5a4wee7GzHSdWZNOW3TswJowX7TYEuMpPXi8CswyfYgtWbkO3oOo1LrixKaGY3wsDpQQJ0LdNnGD6gYD012+NsfAPOy+rP8B7TtdDPw7cxTPTcXMwJ3kLAjN5/kmBEzNF1E2Up7+zQCJ6fNRBW1gM+RP/CE6cnhuDuyyrnkQLOEDcDE0EDilhWE+er8TNtLJxHYmydf7VDl7aNL7AmWouIWvJywi6HTW+ywQgWkivlf+Br82CU9PKleFM/VZDUIyUXI2bcuAsm+SreQI6ZPJzZZAwAu6REkHcl8K2bEBxegrZD6ZR6EfJ1ltquJ4BejhbqyaAFCdaO8ZCrw0EGIn4rBoR63BTYX58ABnZTSW2PV9BPDn+eleXLoNnFYOL5xlnP+qblcWIC/WdOLQkbbERvvkK6xuJq5y7cnZh8Eg/EJzpKKWXpk4lEKm9KrMnOM+qwA8+eFL0uy5jZ/YhUmUEJDkbCGd+/KFmRMWS3GBbG6v5+Jyp4CN8uHvQmWZvofdSBrcTnn6ohNv1F1ZdHMLmxulGZR2OSD/9BMCZba5GpcIBnmMDmEzDKWL0ya9r881rtuiD2Mh46W2NORPEtV9FkiN5aH9RNa055QRUJEHCc+Sz6H+TeiYRd2NqrjFMljBjriDfbubQVxJzsXi+vJmZwVoqELBAAxrucGuMxaECq33RuXIJucx9R8szzZ/P1Dbl+tPcL2oRcCujfajuUo7i0O75SJqpTWCSbFpVJhmcfcybJpbNbtxfc7IhZG0qwsOZlsCy3e/OQ58ntyIUxRFEtainBhgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"rule\":\"credit-only\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeFizoPVB58Zv9bgghEi",
+    "model": "claude-sonnet-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 450,
+      "output_tokens": 289,
+      "output_tokens_details": {
+        "thinking_tokens": 275
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 2906
+  }
+}

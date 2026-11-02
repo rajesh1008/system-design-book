@@ -1,0 +1,20 @@
+// Figure 18.6  Budgets at the control plane
+// Reading order: top to bottom. The loop asks the gateways; the
+// gateways ask the enforcer before every call; the enforcer reserves
+// the worst case on three rows in the run store or refuses. A refusal
+// ends the task with a hand-off; the intake gate reads the day row.
+digraph budgets {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  intake [label="Intake gate", class="policy"];
+  loop [label="Agent loop\nno counters", class="ops"];
+  gw [label="Model and\ntool gateways", class="ops"];
+  enf [label="Budget enforcer", class="policy"];
+  rows [label="Run store\ntask $1.00\ntraveler-day $3.00\nfleet-day $120", class="policy"];
+  hand [label="Hand-off\nwith the trail", class="ops"];
+  intake -> loop -> gw [class="data"];
+  gw -> enf [class="data", label=" worst case"];
+  enf -> rows [class="data"];
+  enf -> hand [class="emphasis", label=" refused"];
+  { rank=same; rows; hand; }
+}

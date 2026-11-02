@@ -1,0 +1,18 @@
+// Figure 18.5  Caching as architecture: prefix, response, and semantic caches
+// Reading order: left to right. A prefix cache reuses work and still
+// computes a fresh answer; a response cache returns an exact match; a
+// semantic cache returns a near match, so it may hold only answers
+// with no customer-specific effect.
+digraph caches {
+#include "book.gv"
+  rankdir=LR; nodesep=0.2; ranksep=0.5;
+  req [label="Agent step", class="model"];
+  p [label="Prefix cache\nanswer fresh", class="model"];
+  r [label="Response cache\nexact key", class="knowledge"];
+  s [label="Semantic cache\npolicy text only", class="knowledge"];
+  no [label="Customer's\nown decision:\nno cache", class="ops"];
+  req -> p [class="data"];
+  req -> r [class="data"];
+  req -> s [class="data"];
+  req -> no [class="emphasis"];
+}

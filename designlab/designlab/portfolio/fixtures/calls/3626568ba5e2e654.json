@@ -1,0 +1,56 @@
+{
+  "request": {
+    "max_tokens": 4000,
+    "messages": [
+      {
+        "content": "Trip: Flight 938, Chicago (ORD) to London (LHR), June 2, 2026\nCarrier notice: Flight 938 now departs 04:30 on June 3 (was 22:00 on June 2) and now arrives 18:25 on June 3 (was 11:55 on June 3).\nFare: nonrefundable economy\nFacts: The customer asks to cancel 200 hours before departure. The customer has not accepted any new schedule.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-sonnet-5-5",
+    "output_config": {
+      "effort": "high"
+    },
+    "system": "You decide which Lakeshore Travel Group refund rule applies to one\nsegment. Apply the rules in order and stop at the first that applies.\n1. The carrier canceled the segment, or moved its departure or its\narrival by more than 3 hours on a domestic trip or more than 5 hours\non an international trip (use whichever of the two moved more, and an\nearlier time counts as a move): involuntary-cash. If the customer\naccepted the new schedule in writing, skip this rule.\n2. The fare is refundable: fare-rule-cash.\n3. The fare is nonrefundable and the customer cancels at least 24\nhours before departure: credit-only.\n4. Otherwise: no-refund.\nIf the facts are missing or contradict each other: needs-person.\nA trip is domestic when both airports are in the same country. Times\nare local to each airport.\nReply with one JSON object and nothing else, with exactly one key,\nrule. Never include an amount."
+  },
+  "request_hash": "3626568ba5e2e654",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSiwoKEAgTGAI4AUIIdGhpbmtpbmcSDIrD9K2fr9taXuQAkRoMd3anJOsMDV+LZH80IjBfdqMPCsEWITxD8CJ+dw4VMl0H2Mwk+cBXDPbX8Ez2PSCooONF4rMdr77K5U8vSD0qqAmNqJ6Vo/hrzyqzS4CaXeXSTe2epEFmt9r28aJ8DBmoTrgBmPk8qh75Sks4cXTlAD22seNcOXLDb0VCaSHZPFAdwJhZw62GA5ZRLr0ZFeT2enn1HACGnIJdlvCr3QiyvOQpAoYKZECbcbJwpKy8o0IrM8EgqcHFxmbJYyOyrBdlRxSPqm11X79/GGBVxmNzUEuVP5uHwUWUolOrMUyCjacuupKMqRTiXi6YtNfcG8FjxEIe8ZYvkD2fksDxjkLbGqw9CFjuRqZWFV0S8D8K1q7qqcnhsweKG6QodOnDh/QXghmtPzvIcdrDNi7qvQKu46hDwViAaggCbQmT1/jUNzhITR6dBYbyoDOaw5dJJTp7RmHGigWRPX7ihSWMo8sqScf+co4DYFQ5yV0V0GAd37ut62p4jytt3x0/OAMe0Y80aun4qjA563ydJMt50ni+YAl9ho8rFxXNAQ1r4xmvc6JaRfmV8y0AXKTnN1NRxGqj3sr1pOngoYc8ZD/YXPNNjGnLFuQCgPod6JfTQ92vyJdD3xXO/iUUAywLpt9CDqE2huQYVPIffCxeZYKEKMBiXqVGB3z3CotmhWV9ouCNIogV0969mvd3b8K2Jh/XjDyOan5jmfYmuUzCjXZjsCCS9Zk3wj56XD0e5XLw650d8VttBsqQJ7q1et/3MZTOhBA688qr8L9pKWqp5+CJUi5wsDtBnRU/zayLbwLvt+DDq/FUPQgWfF+JR/+3j17CetfhcMOoHV+qm88WahAw4mZ2ch1rkrgQhOl4mvmmz+ezUN5eoYGOF+veIpFHbT2m3yI+uBHZfwP+XzqHyLI/KwSRPjFXPvtaiPbw3GLOvJYUp3rTTvq9I1/YdkPxZVSoqg+N63Tba4sFiDovWMU4kXOCOGsvyphnWiUV8rzcm7IyIfJYhuoqBrD43u7iTDadn4dUVy+rIvnjOxdrex68FMgRU9piNrBy0xIsPfjDbLmfprlEqPOphmgWZDn+LWHSdGwSW7PIPu5qnSnQHry2qM+EF1hC5UJbdbALsTros3eSg0EjO6+1bzbMNgdJjrXVjHqLbRyrKJGwYAXAHgtHLQaIeFa1ZljmEp5TlP6FpTYJJRYlEUXtrA0kFVgPjh0B1IOqrbFzJaVN2z1qev3c8S7dw49Bji1twWFnVrRDmWoR47VakCSs76FnInfOnqj3iPw5ePcIcPteHbbKjEsyFV53Nf9mg1nubYoP+M5IgQowHTNgOxhSvKfGppzXkQyKwIjka4NnplmM7Hmx2w3HZVECKzNfYKpgL5tqohux1ZyzX0E7w1o73fgcZybaIDIbPXkYIXNHRGM+BGffmV61ndlNslugvSI1bY5ofiFwuw9gPyyrWmQbwAz8lNimgp/YkNjChqGtK8GgsjXhG2S45SmE+gF2sFWmONKDT964QXd6p+OWQfG3QB10sGtRnm94INaOsupeh+0ftfa5vNDlGw8jmY+B0L/Dix/ucFpsjM9LYg8HRJLgRazBsA8dfsZdY7WoNJRLL33iGuS0j+FaXtWZJTqtrXNIGzzAyx1iP8GcoSEB4ltN1JMMpp/vvkYuwdLrSLy46DvyYgi/GAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"rule\": \"involuntary-cash\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeFvnw661dGiuCUcFi6m",
+    "model": "claude-sonnet-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 466,
+      "output_tokens": 344,
+      "output_tokens_details": {
+        "thinking_tokens": 327
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 3201
+  }
+}

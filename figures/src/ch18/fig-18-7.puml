@@ -1,0 +1,20 @@
+@startuml
+' Figure 18.7  The runaway run stopped
+' Reading order: top to bottom. The April 18 run replayed under the
+' enforcer: eight calls settle for $0.97, the ninth would cross the
+' $1.00 task budget and is refused, the task hands off, and the ten
+' later feed wakes find the budget spent. From cost.demo --part budget.
+!include plantuml-theme.puml
+participant "Feed" as F <<org>>
+participant "Loop" as L <<org>>
+participant "Enforcer" as E <<policy>>
+participant "Desk" as D <<verified>>
+F -> L : Wake 1
+L -> E : Calls 1 to 8 settle, $0.97
+L -> E : Call 9
+E -[$FAIL]> L : Refused
+L -> D : Hand-off
+F -> L : Wakes 2 to 11
+E -[$FAIL]> L : Refused, no call
+note over F, D : As run: 264 calls, $45.95
+@enduml

@@ -1,0 +1,44 @@
+{
+ "ci-01": {
+  "carrier_event": false
+ },
+ "ci-02": {
+  "carrier_event": true
+ },
+ "ci-03": {
+  "carrier_event": true
+ },
+ "ci-04": {
+  "carrier_event": false
+ },
+ "ci-05": {
+  "carrier_event": false
+ },
+ "ci-06": {
+  "carrier_event": true
+ },
+ "ci-07": {
+  "carrier_event": false
+ },
+ "ci-08": {
+  "carrier_event": false
+ },
+ "ci-09": {
+  "carrier_event": false
+ },
+ "ci-10": {
+  "carrier_event": false
+ },
+ "ci-11": {
+  "carrier_event": false
+ },
+ "ci-12": {
+  "carrier_event": false
+ },
+ "ci-13": {
+  "carrier_event": false
+ },
+ "ci-14": {
+  "carrier_event": false
+ }
+}

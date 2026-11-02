@@ -1,0 +1,53 @@
+{
+  "request": {
+    "max_tokens": 4000,
+    "messages": [
+      {
+        "content": "Trip: Flight 1631, Denver (DEN) to Chicago (ORD), May 29, 2026\nCarrier notice: Flight 1631 now departs 20:30 (was 17:15) and now arrives 00:05 on May 30 (was 20:50 on May 29).\nFare: refundable economy\nFacts: The customer asks to cancel 10 hours before departure. The customer replied to the notice by email: \"ok, that works for me\".",
+        "role": "user"
+      }
+    ],
+    "model": "claude-sonnet-5-5",
+    "system": "You decide which Lakeshore Travel Group refund rule applies to one\nsegment. Apply the rules in order and stop at the first that applies.\n1. The carrier canceled the segment, or moved its departure or its\narrival by more than 3 hours on a domestic trip or more than 5 hours\non an international trip (use whichever of the two moved more, and an\nearlier time counts as a move): involuntary-cash. If the customer\naccepted the new schedule in writing, skip this rule.\n2. The fare is refundable: fare-rule-cash.\n3. The fare is nonrefundable and the customer cancels at least 24\nhours before departure: credit-only.\n4. Otherwise: no-refund.\nIf the facts are missing or contradict each other: needs-person.\nA trip is domestic when both airports are in the same country. Times\nare local to each airport.\nReply with one JSON object and nothing else, with exactly one key,\nrule. Never include an amount."
+  },
+  "request_hash": "256154424af6cbdc",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSwQkKEAgTGAI4AUIIdGhpbmtpbmcSDKVCGElnEYeuotVtOBoMNMDSe9gbNKFMu2J3IjC+V9GiWD8w8pDnjEY4XmBIl6HDQWHLD6RsFQKYABL4wTrT8uKmtPfpDb1RoL1VqoMq3ghGpJjMSZKwo7nY9rVohT/OG2p0kI0HLjmR/M/4RsMFmFNv0claIIN4Jnl3RVyb6fTogg0xsNg49ufNvQgTPWB53pjLP07jqgVGtEGKHd28PqhcdCmtEwr3xwB0DrQ5gGg3bDXpWZd6yQHOcOUpZrnK7qnR71L7H3F6vpZZnPLZTowbkQ3bk9lWGjYMA2j8zAU2QQgd0S3u2sJw4xuzN79okj1r9K9p8f9hWcvf3noZSkvjfqTiwJ0ZfDId8k9hSJc1NOzrnRQcmVQpVVXsSo6qLhr/0z27Vxepgiua1PQgmWmp0zGNDfXhagp6B5Ww6EyXhykUKoURvlhw8WOdLX8O8BbUiukqG3ZUHa42GxYEYr7Qg7KPTJVAB6c01LDwmw2PBRLpgFlQYGQC9nXAPpEtsknrOV82YX/sQ0SZcPB261twk92fnQXnLZqykVXhDAdLRhM5arRyVeLs9d9E6jG37ryarYBQcAN4uiAJGwn0NrY1E6/E2EVYK9dTvRbM1I+MejYCC7KS+94ZScKuLH960i9p4uQ3Hb828fCokReElo4fALEgnRd2dy36zY2limAmRYXasGKOR2HPvaic0uNLZLC22+h3hp8jNviLLb/5dG9JcwoRLRYDsMsURLibiKeanoXN1IFppsOT0W6K5aL6thGq6ny/V1QKQ2AeiXHaYrJ901sgIfujFYV2WO4w8WgDohEBLG5WksomrKhcNXrvzaU977uaJM4wcPuzujLeMTS3xtm1v39RXmxP3zX+MNEndRIx8QtEQgCgC6aaoxJbPvANORr0L/J2tbWki8eySM1lq1WtvPHEVJBws9SoPssB9b0G9RLqkFKcJh9wq7VTw1/aqC/u70inVokbiujz6Ya1d+92NtiXR7ffY+nrkv01xZ8lw+zCZXWfNSr3EmIww5vpj7KcGgaiqdwtRbj+KWvt7m2BMTgNmS10xIyiI7Gt8t5XOCGlWsdbtvKuGtLoIAYUBSdypRbR0tJTo2sKp/n+2lZt3ro8rWNIUsFf2dp3l373orl+sDIgosH9CCOykofNK58iN1ZrRlGVFftotmuOocKbdBABL5Fos1AElXNAQyb3xLg5+k5uGpHHri1+2nrvc+N/4kKHjkvovUCLjhHE7nTb3KEd7R02Xv9hPZTNf2z185RBWiNIUIvm1J9IImp5pBR6rKR0xU3sHfDRklgsF/H0jzjo0aLya/HkTyjsB33WzPAv4Sd8JzuE6l1hrfYtJZ9KUlWZjzae9JTm/VxhXNt/8CHd6KsvDdk8tRuipQnblyVN+mPL3T0gL2eGr1VxNQ1nkUk0q1X0baHZSe2KYI86Zrm0WmeRjX37biCFuXIcE2bjvx2Xy8hjJDQL9DicrpqHqoPt2/t0KONnB/scx+/FnZhmX2BWtbJbcR28PaAGbpnY+CLI2QFTKj5SEG9Fc+c9vtARN8xJjIEPDvc+BHiqIwE5uaEof9V2DsrlFRMpqVnCr3Kl25Mo0BgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"rule\":\"fare-rule-cash\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeFgb3qEsW28cRs3xFqs",
+    "model": "claude-sonnet-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 464,
+      "output_tokens": 275,
+      "output_tokens_details": {
+        "thinking_tokens": 257
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 2828
+  }
+}

@@ -1,0 +1,44 @@
+# Routing policy (Chapter 15). Owned by Applied Research; changed only
+# through the release gate. The router reads this file and the gate
+# results; it never reads a prompt's length or a model's opinion of
+# its own confidence.
+
+# The lowest tier each risk class may use. Evaluation then picks the
+# cheapest candidate at or above the floor that passes the step's gate.
+[floors]
+low = "small"
+medium = "small"
+high = "mid"
+
+# The control plane's ceiling on reasoning budgets, and the cascade
+# alarm: a cascade escalating more often than this is paged, because
+# its savings case has failed.
+[limits]
+max_effort = "high"
+escalation_alert = 0.20
+
+[steps.change-intent]
+contract = "models"           # Chapter 13's contract, unchanged
+kind = "classify"
+risk = "medium"
+candidates = ["small", "frontier"]
+cascade = ["small", "frontier"]
+
+[steps.booking-read]
+contract = "portfolio"
+kind = "read"
+risk = "low"
+candidates = ["small", "mid", "frontier"]
+
+[steps.refund-rule]
+contract = "portfolio"
+kind = "judge"
+risk = "high"
+candidates = ["small", "mid", "mid@high", "frontier"]
+
+[steps.offer-choice]
+contract = "portfolio"
+kind = "judge"
+risk = "medium"
+candidates = ["small", "mid", "frontier"]
+measure = "ladder"            # stop at the first passing candidate

@@ -1,0 +1,53 @@
+{
+  "request": {
+    "max_tokens": 4000,
+    "messages": [
+      {
+        "content": "Trip: Flight 2207, Chicago (ORD) to Toronto (YYZ), May 21, 2026\nCarrier notice: Flight 2207 now departs 13:40 (was 09:00) and now arrives 16:35 (was 11:55).\nFare: refundable economy\nFacts: The customer asks to cancel 48 hours before departure. The customer has not accepted any new schedule.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You decide which Lakeshore Travel Group refund rule applies to one\nsegment. Apply the rules in order and stop at the first that applies.\n1. The carrier canceled the segment, or moved its departure or its\narrival by more than 3 hours on a domestic trip or more than 5 hours\non an international trip (use whichever of the two moved more, and an\nearlier time counts as a move): involuntary-cash. If the customer\naccepted the new schedule in writing, skip this rule.\n2. The fare is refundable: fare-rule-cash.\n3. The fare is nonrefundable and the customer cancels at least 24\nhours before departure: credit-only.\n4. Otherwise: no-refund.\nIf the facts are missing or contradict each other: needs-person.\nA trip is domestic when both airports are in the same country. Times\nare local to each airport.\nReply with one JSON object and nothing else, with exactly one key,\nrule. Never include an amount."
+  },
+  "request_hash": "7dba48b040e2c1a2",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS/gYKEAgTGAI4AUIIdGhpbmtpbmcSDGqBt/Jgz8oXYRzv+RoMObUFp9a2/ETKV6lfIjArUUyzyQB8RKf5/MzL04Rhc84RggDtHnRIm8ks0kqfXghpgkF/09IfuXhXfvh75WAqmwZcy8c6eqaJ/uu8e3jTBJ2QZ8iJ69AZjeEza1+kDveOrWriFP4eWRka/ESdexPefpPEfy7Xh6KEyqD+CBCIJhdB4QdoWRPQIaZULui7BVGgOlXIc1XdrrQlQV0WAm/TFmMCsiK8bDjc3yyj1gq4EGwyyc/7nozIPo6wNSJDrdCM6XaG/+gZYE9BdW74e/3MEMH+z2MlsBqV3SKSXD+ndcSHXBQoT7Gkom7/xG1b2K+Rb5FPq8AbZToNug6lAD5VUbMnIl5fs1GuBGKJZP1+TjECmML5HMA132W9w8ZQ0Ba2l9gKSbdDvru191g3O8d5YVMe+QL3/JX8nL3Qx8T74QVut6re0OcUV5KVooQm72MoXcDaBj62WP6fZGFV+sruJSfDm2VwbleAbpYUA6Vg+LiSUx6ZyKi4YsI5Q2VjDV8/2bhgdkApiIUCyU//+L32fiuR60rmJy3EkHPF6FWQmmq0xoVzTBQq4un7flCMa++QuwJRJ51+CqOI5xUBs9pfUk8JMXMbifvLC1eU3hBgXKUeCcsa4gyRp5EmFNz7cvxEo7Wn8eNdswxTTjXfEkWixR8ZQrUXVFmrnb2hJ9qMmEyH5w/QSrhFUa07VJL02AYWXtdf8yvNZFFpqWCNUqdiwvAS+3kPrLajTzFNcDe55kp7h1Ybm8W64AVxJtRRR/KsRQhZv7zwNp8S5jAf0m1w7Lan3m7s9i3CMrg/BokTdBivGyddo5UTyhEJq419Y5vF+18isOjUkSa4y5mANkd4xurLtrES3wO41DcqIR30LCoGvmAnLz0Xu6CJGyO/+YQwhZMCfFdmabCyk3ls4VteoYtEvk+HrZ6EJ6dcv7bb+LnTYFNL+cGVBvbzpvwYcav3r+cSdx3pOPfrvMaULpNbVPDwdr87hK7rh8ZrGqTohzG8soOszKHy6G90Kwu9slT+kl4xIn+9yH4j3r7J/FJOewvGjyAnKcRrrTZsmSN8LtEoSlFdPlThdcB9ZR5kuiqoqkGirZ2GLd/777a4sG2eXLu5PkqQ5sBrVfM4V6SipEEw6rCLV7nx17eQWx4YAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"rule\": \"fare-rule-cash\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeFcqsSbnbCL9XrbwpHv",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 449,
+      "output_tokens": 163,
+      "output_tokens_details": {
+        "thinking_tokens": 145
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 1539
+  }
+}

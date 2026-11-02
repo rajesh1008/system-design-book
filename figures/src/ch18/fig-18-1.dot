@@ -1,0 +1,20 @@
+// Figure 18.1  Cost per decision and per verified outcome
+// Reading order: top to bottom. Tokens price a call; calls make an
+// attempt. Every attempt is paid for, including the ones a person
+// finishes; only verified outcomes divide the bill. Values from
+// cost.demo --part ladder (May 2026).
+digraph unit {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  tok [label="Tokens\n$0.50 a million", class="ops"];
+  call [label="Model call\n$0.0033", class="ops"];
+  att [label="Attempt\n$0.040", class="ops"];
+  ho [label="Hand-offs\nand failures", class="ops"];
+  add [label="Fees, platform,\npeople's minutes", class="ops"];
+  vo [label="Verified outcome\n$1.84", class="verified"];
+  tok -> call -> att [class="data"];
+  att -> add [class="data"];
+  ho -> add [class="data"];
+  add -> vo [class="emphasis", label=" verified only"];
+  { rank=same; att; ho; }
+}

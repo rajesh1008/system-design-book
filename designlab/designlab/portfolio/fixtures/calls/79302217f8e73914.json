@@ -1,0 +1,56 @@
+{
+  "request": {
+    "max_tokens": 4000,
+    "messages": [
+      {
+        "content": "Trip: Flight 1631, Denver (DEN) to Chicago (ORD), May 29, 2026\nCarrier notice: Flight 1631 now departs 20:30 (was 17:15) and now arrives 00:05 on May 30 (was 20:50 on May 29).\nFare: refundable economy\nFacts: The customer asks to cancel 10 hours before departure. The customer replied to the notice by email: \"ok, that works for me\".",
+        "role": "user"
+      }
+    ],
+    "model": "claude-sonnet-5-5",
+    "output_config": {
+      "effort": "high"
+    },
+    "system": "You decide which Lakeshore Travel Group refund rule applies to one\nsegment. Apply the rules in order and stop at the first that applies.\n1. The carrier canceled the segment, or moved its departure or its\narrival by more than 3 hours on a domestic trip or more than 5 hours\non an international trip (use whichever of the two moved more, and an\nearlier time counts as a move): involuntary-cash. If the customer\naccepted the new schedule in writing, skip this rule.\n2. The fare is refundable: fare-rule-cash.\n3. The fare is nonrefundable and the customer cancels at least 24\nhours before departure: credit-only.\n4. Otherwise: no-refund.\nIf the facts are missing or contradict each other: needs-person.\nA trip is domestic when both airports are in the same country. Times\nare local to each airport.\nReply with one JSON object and nothing else, with exactly one key,\nrule. Never include an amount."
+  },
+  "request_hash": "79302217f8e73914",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS3QkKEAgTGAI4AUIIdGhpbmtpbmcSDFmSoXIIg8rfYAECtRoMe9hpBZkx5SFz6B72IjBMkUz13T/4ezyjQbQPxlxwN0vlvpAJHvhIrNx9HLd9kt4iNQ1edPUalBF0266I8tkq+ggW4uT5K9RGPOA9mmYXG8IdgzRCORml9gmd8tta0JRiqj/WKHxQDLqvJqyMeWJt83GqcGFzQtICRozQDMfGZfx/Hse8XllLqDE/UOlOcfAXf7LBX4KtcyIaraPKW9QNNTaym3xpXw9TVZzN8vYf8QTwrJ6TD1+6TNPqgYfY1l46g7s7nwjE9rn1Z5NrgT2ZFIWpi34d5Tk7SBQo/mEqlY42gvUUiTuGdZx+36W9ObUfD3JafTfj1BrJ21cheWtmjmlvj+07J7YEudILhOTf6rDyfClsN8GNpHyrTXaiPyu0MU1vf0hiBEzl+8dixeDipvLwgivnGPy1/67H1ndl2IZg2gug9wemB0gK/N4dpDRhiFsyMp+lS3gOmcKrbRKRWZoB+9zuFNAFEcZG2Yd9V/7y0CZlSEej73IVUsMVV6KZSXjY40KLZDco9oW/OAdUlkFE90wa4qzS/woazOJ0urZRwA0pV/+q9l0iePXsYwa0HRzyyqRbKhBGDagpAsW8TpD58R+fmNHEsnJ1Xh7i9j4Ij/gJDMHCdbrPIWoHEmGx7Np44tGty4PiLZFXu6AGyz5PxkHAfbzF/IopmXksuCA9ZwYibczqN3DyZDnLEKV8qN143PYn4XlRiK1Ybl3ZoEqVIIQsr0pMHT2AuqVZ6h66OJLkIQP1XIaPyaNDS3azy2FXgS8L2EbL59EF6Snj+oAaVpUsBDBQjqTXu3j7SWx6VjfHwjIQPeNUwMnLUTfUwvUr/CFSeU9QMrA7x8hp/vM4REYjhBw20Vyz6qzAHJ9M/ak3yxtZnpzmzYNqde3wMSKU8s5YJ4Wj8EbznJLQBrhhy3QhWLvdBB7lxJPO5dvQysW+T6rIbpWoIU9vik+EisAWDhWT9g25aNO/cShreDNSlF9FvUJHAEM5TLQUvRIMVhoA2916M/4uicaI7W2HihhgJ+e+V+J+7vuzhxYmJP6RpWmqsn0RUTCMCFA0S/CLB2+BHID1JoiZkvkQC9LC7g6ks9auIgQ8/vtN1yjx22zef43iRK+XYjzEzzs6dP/PbWByuBfdXRvOmA92el1BRbyecc/ukwtXSrynUDMZNRN3eB3JpQUNMyokxu4IiQH5bDBGowxIhLjVguXzPH4B9pBMqFkD2gxOiNtGSlTZr0BXhze1LKwdtNWqUpcxfSK8OOfSt2CBXv5+Flz6evrCwdcBpC2xPKbvf94umK2ycPmV/C5ss7BxQeueDYwPVleINNVu7gA973UlM357x2NgiYSHiSs5SmjzH8YsKchvupB4nXQ8NEGSdRu49xlR8xGqbGjFWCIukeQy78C2O0SR6rl98H23JBsYdoMyuV5x/cTj4jJLaZ+6RcEIdwAhDpPuixZstIdqXnzPPpwoqHxdU4CyF0uBRYameXVn2+N99YmQ6juNATRWR81/Df5s0KWvQv2JJmsGmgX6LbZNZkVUaJ9gs2CVR7s4CHjIoHhtGKe+HNHMuJHAZRQt3dhf0jw0+0ewov2G3/KKp23IeZGmPa/XyTCytISpbbkYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"rule\": \"fare-rule-cash\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeFjDLBq8F79dTeekF1p",
+    "model": "claude-sonnet-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 464,
+      "output_tokens": 286,
+      "output_tokens_details": {
+        "thinking_tokens": 268
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 2647
+  }
+}

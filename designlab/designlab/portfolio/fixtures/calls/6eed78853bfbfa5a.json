@@ -1,0 +1,53 @@
+{
+  "request": {
+    "max_tokens": 4000,
+    "messages": [
+      {
+        "content": "Trip: Flight 315, Chicago (ORD) to Mexico City (MEX), June 5, 2026\nCarrier notice: Flight 315 now departs 15:00 (was 10:00) and now arrives 18:30 (was 13:30).\nFare: nonrefundable economy\nFacts: The customer asks to cancel 30 hours before departure. The customer has not accepted any new schedule.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-sonnet-5-5",
+    "system": "You decide which Lakeshore Travel Group refund rule applies to one\nsegment. Apply the rules in order and stop at the first that applies.\n1. The carrier canceled the segment, or moved its departure or its\narrival by more than 3 hours on a domestic trip or more than 5 hours\non an international trip (use whichever of the two moved more, and an\nearlier time counts as a move): involuntary-cash. If the customer\naccepted the new schedule in writing, skip this rule.\n2. The fare is refundable: fare-rule-cash.\n3. The fare is nonrefundable and the customer cancels at least 24\nhours before departure: credit-only.\n4. Otherwise: no-refund.\nIf the facts are missing or contradict each other: needs-person.\nA trip is domestic when both airports are in the same country. Times\nare local to each airport.\nReply with one JSON object and nothing else, with exactly one key,\nrule. Never include an amount."
+  },
+  "request_hash": "6eed78853bfbfa5a",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSzQsKEAgTGAI4AUIIdGhpbmtpbmcSDATnaf2V+eXMnGwaWRoM+gcJcn+e4CdTT2SMIjBZZ0USTIDP7F6yd792xK5eB35DOYaOfqPtNpEQuao021fmcVy1NuHpSDHAJGhtdZYq6gqHwEzlufSPEABUTR4IsuR8pfB7D9kpLqn/ywFa97gvG0EtEHZ6cZVwnM3YNQJlVhTKz7Gz7iwsseIJQ71uq7oX671kFOqm8+VK+h3wps83i+euk8w2fJLPLCQ5CVvkttYiuq1oUP5X/K5DHKaAAYwvxblpVg3o/gH7TAW78idbPpBQJH2tfKNt4aBMQX7dUaMANDnPit9y8XMAc6YxD4Jb1QkVLU/Et50ZGFF/HJurNkjropuvA1AuSevpdaQhS4vWbCOPZIfO92x69nWykbOIiGWLzbFxT+d3+ObA562ZCiApfp6pkHzAfuy+wBLVTUjVuhqiNH7ddq8IodejQIvexSCbldzBCHAVD67xhJfnK6CsSNDwrJR7lgsRJSx3dkAVIg/WyXHC+TdU9+x4Xjl8Xe2/I996Xje0dzzPb7lISJcvjcUwE/7aMiG3KUGhT26XxYcjSyed9Xu1jGfeK1flk4s5ZqbT2tx5fGy9owAgWMDJqglrutrpJUBnraiieETxyzk0OKLsM2sd2YwGGZWDLjG3PuBfI8sb9ovBouivneMz1joee9yYWMyLrpS/XJdd932yV5nSh0VmPEZq2ec3MXkK9CR+KA13u58Vwg1ihN1CgBp4XsbqO14Guw1RigPXdSe6RuAUgfTQtwQOjcM/QyasdKizNLVirB4wVRAXei9pZYjAH5PWqdL3Fe8EteorVLrJBCsdyQaW9vv1mk3ZQEXRDg1ReYvxO2LChyO+p/J1qyFd5AA7iq30Ms6Yq0239+D+Wf97XywtCdsyWRsURPhOVGyGNgmusDbVzxohgSc2qT/SalAumQVCwjIoX+9iso8y/F+E4FazZZCRm4fS6ohEUduGUZjFF5y7OpBQe2uFKGMvtgab43c5sfC0F3I3iayD6X6JSgm3PQ7GPE3aJAFykhROvQCbzpo/ziJUpcCcf9Z7qzlajC3KmWYr43DFEkRH/RLhNu3xdKsoxetsRhq00+3F5M2HSnT9OOTKURPSqfqRDfJfIgZQwWlP0I/KvX0rMc3CY7DazMwY1dRP2HYz0gmWPKfaitPMomJMFvSxr4fD1rEuAeeH76pUtz2IN+LMX4cmolUdujhYct5P5mn9CjUAgroMGKEq1VqxLYcvG9wMOxNFI6xB/HylyDifgqLwKGgCHUMmJ+T7/8D8bLeSEuTRAbp9hi44cWK519cuWLfe/cV+VN29nWbvj7bFlWKAoS9u5Wsnoil0M+ycf/4HQMS89cPVxJwmaCN7R7LyL2MjPziPu2n4eRFg+uiARxmz8nudhJYNZcg+ZArDFOqqnDJmob7RckutEdkhhCg8N+mKOervZq+rbF8t7jj5No6nZJaUA1CfIjyKNNbiksYiBDvSPqrM8GxocR8EL2fvT3yDTzDnXvM+LwIkdnNnRug7XGtJNHnvjPOhytZTGMPl/S7LnDjm65GegJag2KppbTmhQRtvxnZiFXDqTJQmk6Fcb3d/LZs05s2Qsnq+3h6Rc6KI06pbBPbsU9WsmbQBwGvhVh3sVWhRkYHsvsAybsiYkTKZBWSf7bH5g/wEXbHF2fl8KvLkGc/+w5WLwzHTlZKrszbhT3bz0EbiQQPbceFgBosqzeSYN+FDzWHUm0bwuTr/jBvWYENwVyhR0ZA/s2tp+15P76kiGqk1GtpoqcaMqsmc89Ucv+LlXlqSvQvyc79D1d5OfOam+cFi5nK9MKicZGqZhMitWf3OyffH48jHVmkBlve14Hs2lEcVQlLSozJYebFy6FAWT9kO9t708132KPx7yR0nFgkoQud/qOuvg7pconi+Y5qXDrD0mIoBDKhfFHfca3V62ZxKMgzxHP+KyiPoaOMYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"rule\":\"credit-only\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeFgKkKfahqWjkLkqawP",
+    "model": "claude-sonnet-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 450,
+      "output_tokens": 370,
+      "output_tokens_details": {
+        "thinking_tokens": 356
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 3618
+  }
+}

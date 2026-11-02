@@ -1,0 +1,56 @@
+# Model Contract: refund-rule (Chapter 15). Owned by Applied Research.
+# A judgment step: which refund rule applies. It never computes money;
+# the fare tool computes the amount and the control plane permits it.
+name = "refund-rule"
+version = "1.0"
+owner = "Applied Research (Dr. Hannah Clarke)"
+alert_to = "SRE on-call (Ben Carter)"
+step = "refund path: name the refund rule that applies"
+role = "mid"
+model_id = "claude-sonnet-5-5"
+id_kind = "snapshot"          # provider docs, checked 2026-11-02
+expect_echo = "claude-sonnet-5-5"
+retire_not_before = "2027-09-29"
+review_by = "2027-07-01"
+max_input_chars = 3200
+max_tokens = 4000
+sampling = "provider default"
+p95_latency_s = 20.0
+max_cost_usd = 0.03
+on_violation = "one repair attempt, then the case goes to a person"
+golden = "refund-rule.jsonl"
+system = """
+You decide which Lakeshore Travel Group refund rule applies to one
+segment. Apply the rules in order and stop at the first that applies.
+1. The carrier canceled the segment, or moved its departure or its
+arrival by more than 3 hours on a domestic trip or more than 5 hours
+on an international trip (use whichever of the two moved more, and an
+earlier time counts as a move): involuntary-cash. If the customer
+accepted the new schedule in writing, skip this rule.
+2. The fare is refundable: fare-rule-cash.
+3. The fare is nonrefundable and the customer cancels at least 24
+hours before departure: credit-only.
+4. Otherwise: no-refund.
+If the facts are missing or contradict each other: needs-person.
+A trip is domestic when both airports are in the same country. Times
+are local to each airport.
+Reply with one JSON object and nothing else, with exactly one key,
+rule. Never include an amount.
+"""
+template = """
+Trip: {trip}
+Carrier notice: {notice}
+Fare: {fare}
+Facts: {facts}
+"""
+
+[output]
+extra_fields = "reject"
+forbidden_fields = ["amount", "refund_amount", "amount_usd", "price"]
+refusal_codes = ["needs-person"]
+
+[[output.fields]]
+name = "rule"
+type = "enum"
+values = ["involuntary-cash", "fare-rule-cash", "credit-only",
+          "no-refund", "needs-person"]
