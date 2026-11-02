@@ -15,7 +15,7 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "isolation", "failure", "models", "serving", "portfolio",
             "toolargs", "adapt", "cost", "knowledge", "retrieval", "memory",
             "gateway", "harness", "knowops", "context", "topology",
-            "sandbox", "loops", "runtimes", "threats", "identity"]
+            "sandbox", "loops", "runtimes", "threats", "identity", "policy"]
 
 [tool.setuptools.package-data]
 common = ["models.toml", "fixtures/*.json"]
@@ -39,3 +39,4 @@ sandbox = ["fixtures/fare_rules/*", "fixtures/fare_rules/tests/*", "fixtures/far
 runtimes = ["grid.yaml", "fixtures/*.json", "skills/*/*.md",
             "skills/*/reference/*.md"]
 threats = ["*.toml", "fixtures/live/*.json"]
+policy = ["fixtures/live/*.json"]
