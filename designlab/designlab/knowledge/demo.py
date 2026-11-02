@@ -110,6 +110,9 @@ def part_layer(extra: bool) -> L.Layer:
                                     sorted(kinds.items())))
     emit(f"  finance- or risk-only: {gated}; desk-scoped: "
          f"{sum(m.desk_scoped for m in lay.metrics.values())}")
+    cat = lay.catalog_text()
+    emit(f"  catalog text for the model: {len(cat.splitlines())} lines, "
+         f"{len(cat):,} characters, no SQL")
     q = L.MetricQuery("refund_clock_met_rate", date(2026, 5, 1),
                       date(2026, 5, 26), ("desk",), "none")
     c = L.compile_query(lay, q, ("CHI-2", "CHI-3"))

@@ -79,7 +79,8 @@ def part_pilot() -> None:
     rec = s.write(tok(TOKYO), Draft("seat", "aisle", "trip", TURN, 0.9,
                                     trip=TOKYO,
                                     observed_at="2026-02-09T18:40:00-06:00"))
-    say(f"  {rec.memory_id} seat=aisle scope=trip {rec.trip}")
+    say(f"  {rec.memory_id} seat=aisle scope={rec.scope} "
+        f"{rec.trip or ''}".rstrip())
     say(f"  source {rec.source.event_id} {rec.source.kind}")
     for it in LATER:
         got = s.read(tok(it))
