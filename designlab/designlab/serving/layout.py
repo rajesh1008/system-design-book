@@ -11,7 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from .trace import (EXAMPLES, POLICY, SYSTEM, TIMESTAMP_TOKENS, TOOLS,
-                    Call, Seg, Task)
+                    Call, Seg, Task, itinerary)
 
 STABLE_PREFIXES = ("tools-", "instructions-", "examples-", "refunds-",
                    "changes-", "rebook-", "vouchers-")
@@ -41,7 +41,7 @@ def stamp(call: Call) -> Seg:
 
 def pilot(task: Task, call: Call) -> Rendered:
     """As found: one breakpoint on the last tool, the clock up top."""
-    segs = [Seg(*TOOLS), stamp(call), task.itinerary, Seg(*SYSTEM),
+    segs = [Seg(*TOOLS), stamp(call), itinerary(task, call), Seg(*SYSTEM),
             Seg(*POLICY[task.kind]), Seg(*EXAMPLES)]
     segs += history(task, call.step)
     return Rendered(segs, [0])
@@ -52,7 +52,7 @@ def stable_first(task: Task, call: Call) -> Rendered:
     segs = [Seg(*TOOLS), Seg(*SYSTEM), Seg(*POLICY[task.kind]),
             Seg(*EXAMPLES)]
     bp1 = len(segs) - 1
-    segs += [task.itinerary] + history(task, call.step)
+    segs += [itinerary(task, call)] + history(task, call.step)
     bp2 = len(segs) - 1
     segs.append(stamp(call))
     return Rendered(segs, [bp1, bp2])

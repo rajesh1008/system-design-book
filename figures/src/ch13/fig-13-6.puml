@@ -1,0 +1,33 @@
+@startuml
+' Figure 13.6  The contract document
+' Reading order: the Model Contract in the middle; the pin above it,
+' the prompt to its left, the output fields and the golden set below.
+' Each line is a field a test can check.
+!include plantuml-theme.puml
+class "Model Contract" as C <<policy>> {
+  owner, alert_to
+  input limit
+  latency, cost bounds
+  on_violation
+}
+class "Pin" as P <<model>> {
+  snapshot ID
+  expected echo
+  review_by
+}
+class "Output field" as F <<policy>> {
+  type, values
+  length, quote_of
+}
+class "Golden Set" as G <<evidence>> {
+  input
+  expected decision
+}
+class "Prompt" as R <<evidence>> {
+  prompt hash
+}
+C *-up- P
+C *-left- R
+C *-down- "1..*" F
+C o-down- G
+@enduml

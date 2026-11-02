@@ -168,16 +168,20 @@ class World:
 
 
 # -- an optional cross-field rule (Try It Yourself) -------------------
-def rule_schedule_change_no_charge(world, tool, args, ticket):
-    """A carrier schedule change is rebooked at no charge to the
-    passenger, so a positive fare difference with that reason is wrong.
-    Two fields, each valid alone, that cannot both be true."""
-    if tool != "rebook_ticket" or args["reason"] != "schedule_change":
+def rule_reason_in_record(world, tool, args, ticket):
+    """A refund labeled cancelled_by_carrier is billed back to the
+    carrier, so the record must show the flight canceled. The reason and
+    the ticket are each valid alone; together they can be false."""
+    if tool != "refund_ticket" or \
+            args["reason"] != "cancelled_by_carrier":
         return None
-    if money(args["fare_difference_usd"]) > 0:
-        return Rejection("schedule_change_charged", "fare_difference_usd",
-                         "a schedule change is rebooked at 0.00")
+    if world.flights[ticket.segments[0]].status != "canceled":
+        return Rejection("reason_not_in_record", "reason",
+                         "the record shows no carrier cancellation")
     return None
+
+
+RULES = {"reason-in-record": rule_reason_in_record}
 
 
 # -- the store ----------------------------------------------------------

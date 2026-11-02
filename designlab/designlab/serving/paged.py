@@ -24,11 +24,19 @@ class Fit:
 
     @property
     def waste(self) -> float:
+        """Share of held memory no request is using. Zero once a shared
+        prefix makes one held block serve many requests."""
         r = self.reserved_tokens
-        return (r - self.used_tokens) / r if r else 0.0
+        return max(0.0, (r - self.used_tokens) / r) if r else 0.0
+
+    @property
+    def served_per_held(self) -> float:
+        """Tokens of context served for each token of memory held."""
+        r = self.reserved_tokens
+        return self.used_tokens / r if r else 0.0
 
 
-def fit(lengths: list[int], kv_gib: float = 40.0, max_context: int = 16384,
+def fit(lengths: list[int], kv_gib: float = 60.0, max_context: int = 16384,
         block: int = 16, shared_prefix: int = 0,
         per_token: int | None = None) -> list[Fit]:
     """Admit requests in order until memory runs out, per scheme."""

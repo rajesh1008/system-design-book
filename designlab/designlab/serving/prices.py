@@ -5,6 +5,10 @@ Per-token prices come from common/models.toml (verified November 2,
 on the same date (prompt-caching documentation, accessed 2026-11-02):
 a write with the default 5-minute lifetime costs 1.25 times base input,
 a 1-hour write 2 times; a read costs what models.toml says.
+
+Lakeshore's own bill uses its contract's illustrative prices, the ones
+Chapter 10 quoted: $3.00 per million input tokens and $15.00 per
+million output, with the provider's read multiplier of 0.1.
 """
 from __future__ import annotations
 
@@ -14,6 +18,25 @@ from common import pin
 
 WRITE_5M = 1.25
 WRITE_1H = 2.0
+READ = 0.1
+
+
+@dataclass(frozen=True)
+class Price:
+    input_usd_per_mtok: float
+    output_usd_per_mtok: float
+    cache_read_usd_per_mtok: float
+
+
+CONTRACT = Price(3.00, 15.00, 3.00 * READ)
+
+
+def price(role: str) -> Price:
+    if role == "contract":
+        return CONTRACT
+    p = pin(role)
+    return Price(p.input_usd_per_mtok, p.output_usd_per_mtok,
+                 p.cache_read_usd_per_mtok)
 
 
 @dataclass(frozen=True)
@@ -33,8 +56,8 @@ class Bill:
     def input_tokens(self) -> int:
         return self.uncached + self.written + self.written_1h + self.read
 
-    def usd(self, role: str = "frontier") -> float:
-        p = pin(role)
+    def usd(self, role: str = "contract") -> float:
+        p = price(role)
         return (self.uncached * p.input_usd_per_mtok
                 + self.written * p.input_usd_per_mtok * WRITE_5M
                 + self.written_1h * p.input_usd_per_mtok * WRITE_1H

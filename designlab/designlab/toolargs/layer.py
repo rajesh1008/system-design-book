@@ -19,7 +19,7 @@ from common.trail import TrailWriter
 
 from . import schema
 from .tools import TOOLS
-from .world import World
+from .world import World, rule_reason_in_record
 
 
 def digest(tool: str, args: dict) -> str:
@@ -101,12 +101,17 @@ class Tool:
     rejected_by_intake: int = 0
     wrong_ticket: int = 0
     over_fare_usd: float = 0.0
+    mislabeled: int = 0
 
     def call(self, intake: Intake, session_itinerary: str, tool: str,
              args: dict) -> None:
         self.received += 1
         if intake.verdicts.get(digest(tool, args)) is False:
             self.rejected_by_intake += 1
+        if self.world.check(tool, args, session_itinerary,
+                            (rule_reason_in_record,)) and \
+                not self.world.check(tool, args, session_itinerary):
+            self.mislabeled += 1
         rej = self.world.check(tool, args, session_itinerary)
         if rej is not None:
             self.world_invalid += 1

@@ -1,0 +1,15 @@
+// Figure 13.5  Provider abstraction layers and their cost
+// Reading order: top to bottom. Each layer between the step and the
+// provider can hide something, named on its second line. The heavy
+// return edge is the echo: it has to reach the contract intact.
+digraph abstraction {
+#include "book.gv"
+  rankdir=TB; nodesep=0.5; ranksep=0.3;
+  step [label="Workflow step", class="ops"];
+  contract [label="Model Contract and client\nreads echo and usage", class="ops gate"];
+  gateway [label="Model gateway\ncan hide which model answered", class="ops"];
+  sdk [label="Provider SDK\ncan retry or rewrite", class="ops external"];
+  model [label="Hosted model", class="model external"];
+  step -> contract -> gateway -> sdk -> model [class="data"];
+  model -> contract [class="emphasis", label="echo must\nsurvive", constraint=false];
+}

@@ -29,9 +29,13 @@ from .trace import Seg, day
 
 PARTS = ("clocks", "batching", "paged", "layout", "bakeoff", "salt",
          "probe", "speculative", "disagg", "tco", "card")
-STORM = 18.6          # model calls a second at the storm peak, Ch 1
+# Chapter 10's measured loop and plan. All amounts are US dollars.
+PEAK = 2.37           # model calls a second at the planned surge
+PROVIDER_CALL_S = 1.04  # mean provider call at that surge
+CALLS = 8.79          # model calls a change, as run
+PROMPT = 6217         # input tokens a model call, mean
+OUTPUT = 173          # output tokens a model call, mean
 APRIL_TASKS = 20100   # agent and assisted tasks a month, April 2026
-CALLS = 6
 
 
 def part_clocks() -> None:
@@ -40,18 +44,22 @@ def part_clocks() -> None:
     for b in (1, 16, 64):
         s = decode_step_s(b, e["decode_base_ms"], e["decode_per_seq_ms"])
         emit(f"  batch {b:>3}: step {s * 1000:5.1f} ms,"
-             f" {b / s:>7,.0f} tok/s for the GPU,"
-             f" {1 / s:4.0f} tok/s each")
-    itl = decode_step_s(64, e["decode_base_ms"], e["decode_per_seq_ms"])
-    for label, cached in (("cold", 0), ("warm", 6230)):
-        c = three_clocks(0.0, 7970, cached, 1615, e["prefill_tok_s"], itl)
-        emit(f"  {label} 7,970-token prompt, 1,615 out:"
-             f" TTFT {c.ttft_s:4.2f} s, end {c.e2e_s:5.1f} s")
-    emit(f"  KV per token, 8B-class model: "
-         f"{kv_bytes_per_token() // 1024} KiB")
-    emit(f"  storm, {STORM} calls/s x {c.e2e_s:.0f} s each:"
-         f" {in_flight(STORM, c.e2e_s):,.0f} in flight,"
-         f" {kv_gib(in_flight(STORM, c.e2e_s), 9600):,.0f} GiB of KV")
+             f" {b / s:>6,.0f} tok/s for the GPU,"
+             f" {1 / s:3.0f} tok/s each")
+    itl = decode_step_s(16, e["decode_base_ms"], e["decode_per_seq_ms"])
+    warm = round(PROMPT * 0.78)
+    for label, cached in (("cold", 0), ("warm", warm)):
+        c = three_clocks(0.0, PROMPT, cached, OUTPUT, e["prefill_tok_s"],
+                         itl)
+        emit(f"  {label}, {PROMPT:,} in, {OUTPUT} out, batch 16:"
+             f" TTFT {c.ttft_s:4.2f} s, end {c.e2e_s:4.2f} s")
+    emit(f"  provider, Chapter 10: {PROVIDER_CALL_S:.2f} s mean,"
+         f" 1.9 s p95")
+    emit(f"  KV per token, 8B-class model:"
+         f" {kv_bytes_per_token() // 1024} KiB")
+    n = in_flight(PEAK, c.e2e_s)
+    emit(f"  planned surge, {PEAK} calls/s x {c.e2e_s:.2f} s:"
+         f" {n:4.1f} in flight, {kv_gib(n, PROMPT + OUTPUT):4.1f} GiB KV")
 
 
 def part_batching(seed: int, batch: int) -> None:
@@ -80,13 +88,14 @@ def call_lengths(seed: int) -> list[int]:
 
 def part_paged(seed: int) -> None:
     ls = call_lengths(seed)
-    emit(f"KV memory: 40 GiB at 128 KiB a token, {len(ls):,} calls,"
+    emit(f"KV memory: 60 GiB at 128 KiB a token, {len(ls):,} calls,"
          f" mean {sum(ls) / len(ls):,.0f} tokens")
-    emit(f"  {'scheme':<14}{'fit':>5}{'held':>10}{'in use':>10}"
-         f"{'waste':>7}")
-    for f in fit(ls, shared_prefix=3240):
+    emit(f"  {'scheme':<14}{'fit':>5}{'held':>10}{'served':>10}"
+         f"{'waste':>7}{'served/held':>13}")
+    for f in fit(ls, shared_prefix=2880):
         emit(f"  {f.scheme:<14}{f.requests:>5}{f.reserved_tokens:>10,}"
-             f"{f.used_tokens:>10,}{f.waste:>7.1%}")
+             f"{f.used_tokens:>10,}{f.waste:>7.1%}"
+             f"{f.served_per_held:>12.2f}x")
 
 
 def part_layout(seed: int, layout: str) -> None:
@@ -152,13 +161,13 @@ def part_probe(seed: int) -> None:
 
 
 def part_speculative(accept: float) -> None:
-    emit(f"speculative decoding, k=4, draft cost 0.05 (lab model)")
+    emit("speculative decoding, k=4, draft cost 0.05 (lab model)")
     emit(f"  measured tokens per pass at {accept:.0%}:"
          f" {sp.simulate(accept, 4):.3f},"
          f" formula {sp.expected_tokens(accept, 4):.3f}")
     emit(f"  {'acceptance':<12}" + "".join(f"{'b' + str(b):>8}"
                                            for b in (1, 8, 32, 64, 128)))
-    for a in dict.fromkeys((0.7, accept)):
+    for a in dict.fromkeys((0.7, 0.4, accept)):
         emit(f"  {a:<12.0%}" + "".join(
             f"{sp.speedup(a, 4, 0.05, b):>7.2f}x"
             for b in (1, 8, 32, 64, 128)))
@@ -171,49 +180,61 @@ def part_disagg() -> None:
     emit("prefill and decode: one pool or two (toy model)")
     emit(f"  {'workload':<22}{'pool':<10}{'TTFT':>7}{'ITL p95':>9}"
          f"{'batch':>7}")
-    for name, rate, p, o, g in (("Lakeshore storm", STORM, 1750, 1600, 24),
-                                ("long prompt, short", 6.0, 12000, 250, 12)):
+    uncached = round(PROMPT * 0.22)
+    for name, rate, p, o, g in (
+            ("Lakeshore surge", PEAK, uncached, OUTPUT, 3),
+            ("Lakeshore x10", PEAK * 10, uncached, OUTPUT, 12),
+            ("voice, long prompt", 6.0, 12000, 250, 12)):
         c = colocated(rate, p, o, g)
         emit(f"  {name:<22}{'one/' + str(g):<10}{c.ttft_s:>6.2f}s"
-             f"{c.itl_p95_s * 1000:>7.0f}ms{c.decode_batch:>7.0f}")
-        gp, s = best_split(rate, p, o, g)
-        emit(f"  {'  in ' + str(p) + ', out ' + str(o):<22}"
+             f"{c.itl_p95_s * 1000:>7.0f}ms{c.decode_batch:>7.1f}")
+        try:
+            gp, s = best_split(rate, p, o, g)
+        except ValueError:
+            emit(f"  {'  in ' + str(p) + ', out ' + str(o):<22}"
+                 f"{'no split':<10}")
+            continue
+        emit(f"  {'  in ' + f'{p:,}' + ', out ' + str(o):<22}"
              f"{str(gp) + '+' + str(g - gp):<10}{s.ttft_s:>6.2f}s"
-             f"{s.itl_p95_s * 1000:>7.0f}ms{s.decode_batch:>7.0f}")
+             f"{s.itl_p95_s * 1000:>7.0f}ms{s.decode_batch:>7.1f}")
 
 
 def part_tco(seed: int, gpu_hour: float) -> None:
     r = replay(day(seed), "stable-first")
     per_call = {k: r["bill"].usd(k) / r["calls"]
-                for k in ("frontier", "small")}
-    month = APRIL_TASKS * CALLS
+                for k in ("contract", "small")}
+    month = round(APRIL_TASKS * CALLS)
     emit(f"cost a month, April volume: {month:,} calls")
-    emit(f"  API frontier at 78% hit    ${month * per_call['frontier']:>9,.0f}")
-    emit(f"  API small at 78% hit       ${month * per_call['small']:>9,.0f}")
-    storm = gpus_for(STORM, 1750, 1600)
-    for label, g in (("floor", 2), ("storm", storm)):
+    emit(f"  API frontier, contract, 78% hit"
+         f"  ${month * per_call['contract']:>8,.0f}")
+    emit(f"  API small model, 78% hit"
+         f"         ${month * per_call['small']:>8,.0f}")
+    need = gpus_for(PEAK, round(PROMPT * 0.22), OUTPUT)
+    for label, g in (("floor", 2), ("surge", max(2, need))):
         f = fleet(g, gpu_hour)
-        emit(f"  self-host {label}, {g:>2} GPUs      ${f.monthly:>9,.0f}"
-             f"  (GPUs ${f.gpu_usd:,.0f})")
+        emit(f"  self-host {label}, {g} GPUs"
+             f"         ${f.monthly:>8,.0f}  (GPUs ${f.gpu_usd:,.0f})")
     f = fleet(2, gpu_hour)
-    be = break_even_calls(f, per_call["frontier"])
-    emit(f"  floor breaks even with frontier at {be:,.0f} calls")
-    emit(f"    that is {be / CALLS:,.0f} tasks a month;"
-         f" small: {break_even_calls(f, per_call['small']) / CALLS:,.0f}")
+    be = break_even_calls(f, per_call["contract"])
+    emit(f"  floor = frontier bill at {be:,.0f} calls a month")
+    emit(f"    that is {be / CALLS:,.0f} tasks; against the small"
+         f" model: {break_even_calls(f, per_call['small']) / CALLS:,.0f}")
     emit(f"  GPU-hour ${gpu_hour:.2f}; staff half of $16,000;"
          f" illustrative")
 
 
 def part_card() -> None:
     emit("serving card, April 28, 2026 (lab values)")
-    for k, v in (("frontier steps", "provider API, pinned model"),
-                 ("prompt layout", "stable-first, two breakpoints"),
-                 ("cache hit", "78% replayed; alert under 60%"),
+    for k, v in (("engines compared", "2 open engines and the API"),
+                 ("frontier steps", "provider API, pinned model"),
+                 ("prompt layout", "stable-first, serving.layout"),
+                 ("cache hit", "9% before, 78% after; alert < 60%"),
+                 ("cost per task", "$0.147 to $0.068, down 54%"),
                  ("cache scope", "public prefix shared; traveler salt"),
                  ("clocks", "TTFT, ITL, end to end, per step"),
-                 ("self-hosting", "deferred; revisit at 50,000/mo"),
-                 ("disaggregation", "not at this ratio; revisit")):
-        emit(f"  {k:<16}{v}")
+                 ("self-hosting", "deferred; see serving.tco"),
+                 ("disaggregation", "not at this scale; revisit")):
+        emit(f"  {k:<18}{v}")
 
 
 def main() -> None:

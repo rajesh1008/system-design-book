@@ -14,7 +14,7 @@ rows = [("Sessions open, Monday surge", "420"),
         ("Task p95 against 40 s", "37.7 s"),
         ("Handed to a person", "1.23%"),
         ("Storm requests a second", "27.3"),
-        ("Storm reviewers", "about 67")]
+        ("Storm reviewers", "about 75")]
 EMPH = 3
 fig, ax = fl.figure(4.5, 3.6)
 n = len(rows)

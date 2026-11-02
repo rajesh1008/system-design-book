@@ -41,7 +41,8 @@ class Call:
     step: int
     at_s: float
     new: list[Seg]          # turns this call adds to the history
-    output: int             # output tokens, thinking included
+    output: int             # output tokens
+    itin_v: int = 1         # itinerary version the call sees
 
 
 @dataclass
@@ -59,7 +60,7 @@ APPROVAL_WAIT = (180, 1800)  # seconds a person takes to approve
 CUSTOMER_WAIT = (60, 600)
 
 
-def day(seed: int = 14, tasks: int = 400, per_min: float = 1.25,
+def day(seed: int = 14, tasks: int = 300, per_min: float = 0.46,
         pause_p: float = 0.3, assisted: float = ASSISTED) -> list[Task]:
     """Tasks arrive as a Poisson stream. Steps per task are lognormal
     with a median of seven, as Chapter 10 fitted them; one model call
@@ -87,10 +88,11 @@ def day(seed: int = 14, tasks: int = 400, per_min: float = 1.25,
                 new.append(Seg(f"tool:{tid}:{k}", r.randint(*TOOL_RESULT)))
             out_tok = max(12, int(r.lognormvariate(OUTPUT_MU,
                                                    OUTPUT_SIGMA)))
-            task.calls.append(Call(tid, k, at, new, out_tok))
+            v = 2 if steps >= 4 and k >= steps - 2 else 1
+            task.calls.append(Call(tid, k, at, new, out_tok, v))
             # model time plus tool time; sometimes the customer answers
             gap = 0.6 + out_tok / 140.0 + r.uniform(1.0, 6.0)
-            if k == 1 and r.random() < pause_p:
+            if k == steps // 2 and r.random() < pause_p:
                 gap += r.uniform(*CUSTOMER_WAIT)    # customer answers
             if k == steps - 3 and r.random() < assisted:
                 gap += r.uniform(*APPROVAL_WAIT)    # a person approves
@@ -103,3 +105,10 @@ def calls_in_time_order(tasks: list[Task]) -> list[tuple[Task, Call]]:
     pairs = [(t, c) for t in tasks for c in t.calls]
     pairs.sort(key=lambda p: (p[1].at_s, p[0].id))
     return pairs
+
+
+def itinerary(task: Task, call: Call) -> Seg:
+    """The itinerary as this call sees it. After the change executes,
+    the agent re-reads the booking and the itinerary is new text."""
+    it = task.itinerary
+    return it if call.itin_v == 1 else Seg(f"{it.key}@v2", it.tokens)

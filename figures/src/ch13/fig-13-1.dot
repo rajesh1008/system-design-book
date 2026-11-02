@@ -1,0 +1,24 @@
+// Figure 13.1  The model as a component with a contract
+// Reading order: left to right. A workflow step hands inputs to the
+// contract's input check, the pinned model answers, and the output check
+// decides whether the answer becomes a proposal or goes to a person.
+// The model sits outside our control; both checks are ours.
+digraph model_component {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  step [label="Workflow step\nrefund reason", class="ops"];
+  subgraph cluster_c { label="Model Contract refund-reason 1.3"; class="plane-policy";
+    inchk [label="Input check\nsize and fields", class="policy gate"];
+    outchk [label="Output check\nschema, echo, cost", class="policy gate"];
+  }
+  model [label="Hosted model\nclaude-haiku-5-5", class="model external"];
+  prop [label="Proposal\nreason code", class="ops"];
+  person [label="Person\nafter one repair", class="human"];
+  trail [label="Trail\npin, prompt, echo", class="ops store"];
+  step -> inchk [class="data"];
+  inchk -> model [class="data"];
+  model -> outchk [class="emphasis", label="answer"];
+  outchk -> prop [class="data", label="pass"];
+  outchk -> person [class="fail", label="fail"];
+  outchk -> trail [class="trail"];
+}

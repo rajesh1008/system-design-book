@@ -49,7 +49,7 @@ def replay(tasks: list[Task], layout: str, cache: str = "api",
             b = c.call(r, call.at_s, call.output, task.customer, at)
         per_task[task.id] = per_task.get(task.id, Bill()) + b
         total = total + b
-    usd = [b.usd("frontier") for b in per_task.values()]
+    usd = [b.usd("contract") for b in per_task.values()]
     return {"layout": layout, "cache": cache, "bill": total,
             "hit": total.hit_rate(), "usd_per_task": sum(usd) / len(usd),
             "calls": sum(len(t.calls) for t in tasks)}

@@ -1,0 +1,20 @@
+@startuml
+' Figure 13.4  Version pin, alias and deprecation timeline
+' Reading order: top to bottom in time. The step called an alias; the
+' alias moved on April 7, 2026; the nightly run on April 8 caught it
+' and the step was pinned to the dated snapshot.
+!include plantuml-theme.puml
+participant "Step" as S <<ops>>
+participant "Alias" as A <<model>>
+participant "Snapshot" as D <<model>>
+actor "On-call" as B <<org>>
+S -> A : April 1 run
+A -> D : dated
+D --> S : 16 of 16
+note over A : April 7\nrepointed
+S -> A : April 8 run
+A -[$FAIL]-> S : newer, 0 of 16
+S -[$FAIL]-> B : alert
+B -> D : pin dated ID
+note over D : retires after\n60 days' notice
+@enduml
