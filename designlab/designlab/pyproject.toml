@@ -10,8 +10,12 @@ requires-python = ">=3.11"
 dependencies = []
 
 [tool.setuptools]
-packages = ["chain", "common", "corpus", "bank"]
+packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
+            "method", "planes"]
 
 [tool.setuptools.package-data]
 common = ["models.toml", "fixtures/*.json"]
 bank = ["fixtures/*.md"]
+map = ["map.yaml"]
+method = ["designs/*.toml"]
+planes = ["*.toml"]

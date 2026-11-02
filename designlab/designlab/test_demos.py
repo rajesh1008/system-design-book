@@ -8,7 +8,9 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DEMOS = ["chain.demo", "common.demo", "corpus.demo", "bank.demo"]
+DEMOS = ["common.demo", "corpus.demo", "bank.demo", "ch01.demo",
+         "chain.demo", "map.demo", "baseline.demo", "method.demo",
+         "planes.demo"]
 
 
 class TestDemos(unittest.TestCase):

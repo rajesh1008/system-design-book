@@ -92,11 +92,11 @@ source = "doc:pilot-traces-week-1 (Ben Carter)"
 
 [[estimate]]
 name = "refund_share"
-value = 0.30
+value = 0.333
 low = 0.2
 high = 0.45
 unit = "of changes"
-assumption = "three changes in ten move money"
+assumption = "one change in three moves money: 700,000 refunds in 2.1 million changes"
 source = "doc:change-type-mix (Chapter 4)"
 
 [[estimate]]
@@ -190,7 +190,7 @@ component = "approval desk"
 owner = "Marcus Bell"
 contract = "every refund proposal gets a decision within an hour, or none"
 numbers = ["est:approvals_per_hour", "est:reviewers_needed"]
-test = "replay a storm hour at 2,014 approvals into a test desk"
+test = "replay a storm hour at 2,235 approvals into a test desk"
 failure_modes = [
   { mode = "storm backlog", detect = "oldest item age, every 5 minutes", contain = "refuse new refunds past the cap; rebook only", recover = "reserve desk; drain oldest first" },
   { mode = "approval by habit", detect = "a reviewer approves over 99% in a shift", contain = "second review on a 5% sample", recover = "change what the approval card shows" },
@@ -253,7 +253,7 @@ title = "Every refund goes to a person in phase one"
 context = "no approval history yet; storm volume not yet tested"
 options = ["every refund to a person", "auto-approve under a limit"]
 decision = "in the first phase after the pilot, every refund goes to the approval desk"
-consequences = "a storm needs about 67 reviewers at this share"
+consequences = "a storm needs about 75 reviewers at this share"
 reverse_if = "any approval waits over an hour, or the agent passes 5% of changes"
 evidence = ["est:reviewers_needed", "dive:approval-queue"]
 owner = "Marcus Bell"

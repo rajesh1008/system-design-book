@@ -25,6 +25,8 @@ PILOT_START = datetime(2025, 11, 3, 14, 0, tzinfo=timezone.utc)
 CHAIN_LIVE = datetime(2025, 12, 15, 14, 0, tzinfo=timezone.utc)
 LEDGER_LIVE = datetime(2026, 2, 2, 14, 0, tzinfo=timezone.utc)
 PILOT_CAP_USD = 1500.00
+PERSON_COST_USD = 54.90        # Chapter 4, baseline cost per change by a person
+SELF_SERVICE_COST_USD = 11.40  # Chapter 4, baseline cost per self-service change
 
 CHANGE_HANDOFF_SHARE = 0.61     # changes handled by a person
 PILOT_SHARE = 0.02              # changes handled by the agent pilot
@@ -289,9 +291,11 @@ class Builder:
                 "completed_at": ts(parse(c["at"]) + timedelta(
                     minutes=r.randrange(2, 600 if handler == "person"
                                         else 30))),
-                "handle_cost_usd": 38.0 if handler == "person" else (
-                    money(r.uniform(0.4, 2.2)) if handler == "agent"
-                    else 0.9)})
+                # Chapter 4's fully loaded cost per change: $54.90 by a
+                # person, $11.40 self-service (blended $37.94, reported $38).
+                "handle_cost_usd": PERSON_COST_USD if handler == "person"
+                else (money(r.uniform(0.4, 2.2)) if handler == "agent"
+                      else SELF_SERVICE_COST_USD)})
 
     def refunds(self) -> None:
         r = self.rng("refunds")
@@ -353,7 +357,7 @@ class Builder:
                     "itinerary_id": f["itinerary_id"],
                     "credited_at": ts(at + timedelta(seconds=3 * k)),
                     "amount_usd": amount, "kind": "credit",
-                    "network_ref": f"NET-{r.getrandbits(40):010x}"})
+                    "processor_ref": f"PRC-{r.getrandbits(40):010x}"})
         lines.sort(key=lambda x: (x["credited_at"], x["refund_id"]))
         for i, line in enumerate(lines):
             anchor = line["itinerary_id"] == ANCHOR["itinerary"]

@@ -1,0 +1,14 @@
+{
+  "note": "Recorded bake-off profiles, April 2026, illustrative. Engine A and engine B are two open-source serving engines run on the same rented GPU type with the same open-weights mid-size model. Not a benchmark of any named product.",
+  "gpu_hour_usd": 3.20,
+  "engines": {
+    "engine-a": {"cache": "hash per 16-token block, LRU",
+                 "block_tokens": 16, "prefix_cache_tokens": 900000,
+                 "prefill_tok_s": 11800, "decode_base_ms": 17.5,
+                 "decode_per_seq_ms": 0.34, "max_batch": 64},
+    "engine-b": {"cache": "radix tree over tokens, LRU",
+                 "block_tokens": 1, "prefix_cache_tokens": 900000,
+                 "prefill_tok_s": 11200, "decode_base_ms": 16.9,
+                 "decode_per_seq_ms": 0.37, "max_batch": 64}
+  }
+}

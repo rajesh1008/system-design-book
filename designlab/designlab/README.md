@@ -10,7 +10,12 @@ the key is read from the environment only.
 | `common/` | all | Run ids, a fixed clock, seeded randomness, the hash-linked trail, redaction, the spend meter, pinned model IDs (`common/models.toml`) and the model client |
 | `corpus/` | 4, 7, 10, 19, 34, 44 | The synthetic Lakeshore Travel Group data, v0, generated from a seed |
 | `bank/` | 41, 47 | The interview-bank schema, loader and index generator, v0 |
+| `ch01/` | 1 | designlab v0: one action end to end, with a policy check outside the loop, an idempotency key, a reconciler that did not act, and the trail checker |
 | `chain/` | 2 | The chain record and a loop that refuses an effect without its evidence |
+| `map/` | 3 | The map of the agent field as dated data (`map/map.yaml`) and the shortlist scorer |
+| `baseline/` | 4 | Lakeshore before any agent: volume, mix, cost per change, refund error and the honest automation rate |
+| `method/` | 5 | The eight design artifacts, the Estimate Sheet (`method/designs/*.toml`) and the design linter |
+| `planes/` | 6 | The four planes, contracts C1 to C6, the path test and the autonomy table |
 
 ## Install
 
@@ -35,14 +40,22 @@ From this directory:
     python3 -m corpus.build --scale full     # ten times larger
     python3 -m bank.demo           # load, index and check interview questions
     python3 -m bank.index FILE.md  # print the interview index for a bank file
+    python3 -m ch01.demo           # Chapter 1: one action end to end
     python3 -m chain.demo          # Chapter 2: the refund that happened twice
+    python3 -m map.demo            # Chapter 3: the map as data
+    python3 -m baseline.demo       # Chapter 4: the baseline from operations data
+    python3 -m method.demo         # Chapter 5: lint designs, the estimate sheet
+    python3 -m planes.demo         # Chapter 6: the four planes and six contracts
+
+Each chapter also has a script that runs its tests and demos, for example
+`bash ch05/run.sh`.
 
 ## Tests
 
     ./run_all.sh
 
-This runs the offline unit tests, then the live tests if `ANTHROPIC_API_KEY`
-is set, then a secret scan of the whole tree. Without a key the live tests
+This runs the offline unit tests, then every live test if `ANTHROPIC_API_KEY`
+is set, then the Part I demos offline, then a secret scan of the whole tree. Without a key the live tests
 skip cleanly; set `DESIGNLAB_OFFLINE=1` to skip them even with a key. A full
 live run makes six short calls and costs well under one cent.
 

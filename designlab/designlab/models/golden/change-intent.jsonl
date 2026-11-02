@@ -1,0 +1,14 @@
+{"id": "ci-01", "input": {"message": "Please move me to the later flight on the same day, booking LTG-4471902. I just want more time before the airport."}, "expect": {"change_type": "voluntary-rebook", "itinerary_ref": "LTG-4471902"}}
+{"id": "ci-02", "input": {"message": "Airline canceled my flight to Lisbon, reference LTG-5203318. Put me on the next one please."}, "expect": {"change_type": "involuntary-rebook", "itinerary_ref": "LTG-5203318"}}
+{"id": "ci-03", "input": {"message": "The airline changed my departure by 25 minutes on LTG-3310457. That's fine, I accept the new time."}, "expect": {"change_type": "schedule-change-accept", "itinerary_ref": "LTG-3310457"}}
+{"id": "ci-04", "input": {"message": "I need to cancel LTG-6012284 and get a refund to my card, the fare was refundable."}, "expect": {"change_type": "cancel-with-refund", "itinerary_ref": "LTG-6012284"}}
+{"id": "ci-05", "input": {"message": "Cancel my trip LTG-2208819 but keep the value as a credit for later."}, "expect": {"change_type": "cancel-for-credit", "itinerary_ref": "LTG-2208819"}}
+{"id": "ci-06", "input": {"message": "The carrier canceled both legs of LTG-7781023 and I don't want another flight, just the refund they owe."}, "expect": {"change_type": "involuntary-refund", "itinerary_ref": "LTG-7781023"}}
+{"id": "ci-07", "input": {"message": "My passport says Katarzyna but the ticket says Katarina, can you fix the name on LTG-1940036?"}, "expect": {"change_type": "name-correction", "itinerary_ref": "LTG-1940036"}}
+{"id": "ci-08", "input": {"message": "Is it possible to move up to business on my Chicago to Tokyo flight, LTG-8830192?"}, "expect": {"change_type": "upgrade", "itinerary_ref": "LTG-8830192"}}
+{"id": "ci-09", "input": {"message": "Could you shift my hotel in Austin by one night, check in Thursday instead of Wednesday? Ref LTG-4120775."}, "expect": {"change_type": "hotel-date-change", "itinerary_ref": "LTG-4120775"}}
+{"id": "ci-10", "input": {"message": "Cancel the hotel part of LTG-5591340, we found somewhere closer to the venue."}, "expect": {"change_type": "hotel-cancel", "itinerary_ref": "LTG-5591340"}}
+{"id": "ci-11", "input": {"message": "I need the car pickup moved from the airport to the downtown office on LTG-6603421."}, "expect": {"change_type": "car-rental-change", "itinerary_ref": "LTG-6603421"}}
+{"id": "ci-12", "input": {"message": "I paid for a checked bag on LTG-3087754 but ended up flying carry-on only. Refund the bag fee please."}, "expect": {"change_type": "ancillary-refund", "itinerary_ref": "LTG-3087754"}}
+{"id": "ci-13", "input": {"message": "I want to change my flight next week to the Monday one instead."}, "expect": {"change_type": "voluntary-rebook", "itinerary_ref": null}}
+{"id": "ci-14", "input": {"message": "hello? anyone? about my thing from before"}, "expect": {"change_type": "unclear", "itinerary_ref": null}}

@@ -3,7 +3,15 @@
 
     python3 05-build/build_epub.py                       # full book from 05-build/book.yaml
     python3 05-build/build_epub.py 05-build/sample.yaml  # the sample chapter
-    options: --azw3  also convert with Calibre ebook-convert
+    python3 05-build/build_epub.py --chapters 4 --output 05-build/out/chapters/ch04-draft.epub
+    python3 05-build/build_epub.py --chapters 1-6 --output 05-build/out/chapters/part1-draft.epub
+    options: --help, -h  print this help and exit (builds nothing)
+             --chapters LIST  build only these chapters from the manifest, with their Part
+                     pages (for example 4, 01, 1-6 or 1,3,5); front matter is kept, appendices
+                     and back matter are dropped, and figures render for those chapters only
+             --output PATH, -o PATH  write the EPUB here (relative to the current directory,
+                     or absolute; may be outside the repository)
+             --azw3  also convert with Calibre ebook-convert
              --embed-fonts  embed Source Sans 3 and JetBrains Mono (adds about 1 MB; KDP charges delivery per MB)
              --strict  fail on any missing manuscript file (the full-book release build)
              --no-figures  skip the render_figures.py step
@@ -183,15 +191,89 @@ def assemble(m, strict):
     return A
 
 
+KNOWN_FLAGS = {"--azw3", "--embed-fonts", "--strict", "--no-figures"}
+
+
+def show(p):
+    """A path for messages: relative to the repository when inside it, else absolute."""
+    p = Path(p).resolve()
+    try:
+        return str(p.relative_to(ROOT))
+    except ValueError:
+        return str(p)
+
+
+def parse_chapters(spec):
+    """'4' -> {4}; '1-6' -> {1..6}; '1,3,05' -> {1, 3, 5}."""
+    out = set()
+    for part in spec.split(","):
+        part = part.strip()
+        if not part: continue
+        if "-" in part:
+            a, b = part.split("-", 1)
+            out.update(range(int(a), int(b) + 1))
+        else:
+            out.add(int(part))
+    if not out: sys.exit(f"--chapters: no chapter numbers in {spec!r}")
+    return out
+
+
+def parse_args(argv):
+    args, flags, opts = [], set(), {}
+    it = iter(argv)
+    for a in it:
+        if a in ("-h", "--help"):
+            print(__doc__.strip()); sys.exit(0)
+        key, eq, val = a.partition("=")
+        if key in ("--chapters", "--output", "-o"):
+            if not eq:
+                val = next(it, None)
+                if val is None: sys.exit(f"{key} needs a value (see --help)")
+            opts["output" if key == "-o" else key[2:]] = val
+        elif a.startswith("-"):
+            if a not in KNOWN_FLAGS: sys.exit(f"unknown option {a} (see --help)")
+            flags.add(a)
+        else:
+            args.append(a)
+    return args, flags, opts
+
+
+def select_chapters(m, wanted):
+    """Keep only the wanted chapters (and their Parts) in manifest m."""
+    parts, found = [], set()
+    for part in m.get("parts", []):
+        chs = [c for c in part.get("chapters", []) if int(c["number"]) in wanted]
+        if chs:
+            parts.append(dict(part, chapters=chs))
+            found.update(int(c["number"]) for c in chs)
+    missing = sorted(wanted - found)
+    if missing: sys.exit(f"--chapters: not in the manifest: {missing}")
+    m = dict(m, parts=parts, appendices=[], back=[])
+    m["figure_dirs"] = [f"ch{n:02d}" for n in sorted(found)]
+    return m
+
+
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    flags = {a for a in sys.argv[1:] if a.startswith("--")}
+    args, flags, opts = parse_args(sys.argv[1:])
     man = Path(args[0]) if args else BUILD / "book.yaml"
     if not man.is_absolute(): man = (Path.cwd() / man).resolve()
     m = load_manifest(man)
+    full = man.stem == "book"
+    tag = man.stem
+    if "chapters" in opts:
+        m = select_chapters(m, parse_chapters(opts["chapters"]))
+        full = False
+        tag = man.stem + "-ch" + "-".join(f"{int(c['number']):02d}" for p in m["parts"] for c in p["chapters"])
     OUT.mkdir(parents=True, exist_ok=True)
-    work = OUT / ("_work-" + man.stem); shutil.rmtree(work, ignore_errors=True); work.mkdir(parents=True)
-    out_epub = ROOT / m.get("output", f"05-build/out/{man.stem}.epub")
+    work = OUT / ("_work-" + tag); shutil.rmtree(work, ignore_errors=True); work.mkdir(parents=True)
+    if "output" in opts:
+        out_epub = Path(opts["output"]).expanduser()
+        if not out_epub.is_absolute(): out_epub = Path.cwd() / out_epub
+    else:
+        out_epub = Path(m.get("output", f"05-build/out/{man.stem}.epub")).expanduser()
+        if not out_epub.is_absolute(): out_epub = ROOT / out_epub
+    out_epub = out_epub.resolve()
+    out_epub.parent.mkdir(parents=True, exist_ok=True)
     (OUT / "filter-errors.txt").unlink(missing_ok=True)
 
     if "--no-figures" not in flags:
@@ -221,14 +303,14 @@ def main():
         for f in ["SourceSans3-Regular.otf", "SourceSans3-Bold.otf", "SourceSans3-It.otf", "JetBrainsMonoNL-Regular.ttf"]:
             fp = ROOT / "03-figures/fonts" / f
             if fp.exists(): cmd += ["--epub-embed-font", str(fp)]
-    env = dict(os.environ, BOOK_ROOT=str(ROOT), BOOK_FULL="1" if man.stem == "book" else "0")
+    env = dict(os.environ, BOOK_ROOT=str(ROOT), BOOK_FULL="1" if full else "0")
     r = sh(cmd, env=env, cwd=ROOT)
     sys.stderr.write(r.stderr)
     errfile = OUT / "filter-errors.txt"
     if r.returncode != 0 or errfile.exists():
         sys.exit("build failed" + (f": see {errfile}" if errfile.exists() else ""))
     for p in A.problems: print("warn ", p)
-    print("built", out_epub.relative_to(ROOT), f"{out_epub.stat().st_size/1e6:.2f} MB")
+    print("built", show(out_epub), f"{out_epub.stat().st_size/1e6:.2f} MB")
 
     ec = sh(["epubcheck", "--json", str(work / "epubcheck.json"), str(out_epub)])
     rep = json.loads((work / "epubcheck.json").read_text())
@@ -241,7 +323,7 @@ def main():
     for x in msgs:
         loc = x.get("locations", [{}])[0]
         lines.append(f"  {x['severity']} {x['ID']} {loc.get('path','')}:{loc.get('line','')} {x['message']}")
-    (OUT / f"epubcheck-{man.stem}.txt").write_text("\n".join(lines) + "\n")
+    (OUT / f"epubcheck-{tag}.txt").write_text("\n".join(lines) + "\n")
     print("\n".join(lines))
     if sev.get("ERROR", 0) or sev.get("FATAL", 0):
         sys.exit(1)
@@ -252,7 +334,7 @@ def main():
                # Calibre must use Debian's lxml, not the pip one in /usr/local (libxml2 mismatch)
                env=dict(os.environ, QTWEBENGINE_CHROMIUM_FLAGS="--no-sandbox", PYTHONNOUSERSITE="1",
                         PYTHONPATH="/usr/lib/python3/dist-packages"))
-        print(("converted " + str(azw.relative_to(ROOT))) if r.returncode == 0 else ("ebook-convert failed:\n" + r.stderr[-1500:]))
+        print(("converted " + show(azw)) if r.returncode == 0 else ("ebook-convert failed:\n" + r.stderr[-1500:]))
 
 
 if __name__ == "__main__":

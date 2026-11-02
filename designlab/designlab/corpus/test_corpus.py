@@ -15,7 +15,7 @@ from corpus.generate import (ANCHOR, CHANGE_TYPES, PILOT_CAP_USD,
 # Changing the generator changes this digest. That is deliberate: a
 # chapter that depends on the corpus must say which digest it used.
 PINNED_DIGEST = (
-    "1eff42af7b9aaea13e893b18a2645e56b7cae6f55dfc9a43f0436a2315d1fd26")
+    "f26e2b00cf62306affb44882a740e0047f6270298b3537819f5192fe31784315")
 
 T = generate(2026)
 
@@ -32,6 +32,16 @@ class TestDeterminism(unittest.TestCase):
 
     def test_pinned_digest(self):
         self.assertEqual(manifest(T, 2026, "v0")["digest"], PINNED_DIGEST)
+
+    def test_handle_cost_matches_chapter_4(self):
+        # The book's baseline: $54.90 by a person, $11.40 self-service.
+        costs = {}
+        for ch in T["changes"]:
+            if ch["handled_by"] != "agent":
+                costs.setdefault(ch["handled_by"], set()).add(
+                    ch["handle_cost_usd"])
+        self.assertEqual(costs, {"person": {54.90},
+                                 "self-service": {11.40}})
 
     def test_other_seed_differs(self):
         other = manifest(generate(7), 7, "v0")

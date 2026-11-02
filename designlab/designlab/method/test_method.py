@@ -64,7 +64,7 @@ class Designs(unittest.TestCase):
         v = load("v0_1").values
         self.assertAlmostEqual(v["avg_per_day"], 5753.4, places=1)
         self.assertAlmostEqual(v["peak_requests_per_s"], 18.65, places=2)
-        self.assertAlmostEqual(v["reviewers_needed"], 67.1, places=1)
+        self.assertAlmostEqual(v["reviewers_needed"], 74.5, places=1)
 
     def test_sensitivity_names_storm_days_first(self):
         top = load("v0_1").sensitivity("reviewers_needed")[0]

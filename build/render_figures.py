@@ -310,8 +310,10 @@ def main():
 def write_report(results, secs):
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "render-report.json").write_text(json.dumps(results, indent=2))
-    alt = FIG / "alt.md"
-    alts = set(re.findall(r"^(fig-[\w-]+):", alt.read_text(), re.M)) if alt.exists() else set()
+    # Shared 03-figures/alt.md plus each chapter's src/chNN/alt.md (as book.lua reads them)
+    alts = set()
+    for alt in [FIG / "alt.md"] + sorted((FIG / "src").glob("*/alt.md")):
+        alts |= set(re.findall(r"^(fig-[\w-]+):", alt.read_text(), re.M))
     lines = ["# Figure render report", "",
              f"Generated {__import__('datetime').datetime.now(__import__('zoneinfo').ZoneInfo('Asia/Kolkata')).strftime('%Y-%m-%d %H:%M')} IST in {secs:.1f} s. "
              f"{len(results)} figures; {sum(r['status'] == 'fail' for r in results)} fail, "
