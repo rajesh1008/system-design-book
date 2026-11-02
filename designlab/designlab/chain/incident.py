@@ -40,7 +40,8 @@ def pilot_counts(data: dict) -> dict:
                                    if r["issued_at"] >= live])):
         out[label] = {
             "refunds": len(rows),
-            "with_permission": sum(1 for r in rows if r["permission_id"]),
+            "with_permission": sum(1 for r in rows
+                                   if r["permission_id"]),
             "with_key": sum(1 for r in rows if r["idempotency_key"]),
             "double_credit": sum(1 for r in rows
                                  if credits[r["refund_id"]] > 1),

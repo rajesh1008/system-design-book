@@ -141,14 +141,18 @@ def grant(proposal: dict, proposal_ref: str, now: str) -> tuple:
     if (old["origin"], old["destination"]) != (new["origin"],
                                                new["destination"]):
         problems.append("route differs from the booked route")
-    if proposal["fare_difference_usd"] > POLICY["max_fare_difference_usd"]:
+    limit = POLICY["max_fare_difference_usd"]
+    if proposal["fare_difference_usd"] > limit:
         problems.append("fare difference above the policy limit")
     if problems:
         return None, problems
-    perm = {"permission_id": "PRM-20932", "granted_by": "policy-engine",
-            "policy_version": POLICY["policy_id"], "bound_to": proposal_ref,
-            "max_fare_difference_usd": POLICY["max_fare_difference_usd"],
-            "issued_at": now, "valid_minutes": POLICY["valid_minutes"],
+    perm = {"permission_id": "PRM-20932",
+            "granted_by": "policy-engine",
+            "policy_version": POLICY["policy_id"],
+            "bound_to": proposal_ref,
+            "max_fare_difference_usd": limit,
+            "issued_at": now,
+            "valid_minutes": POLICY["valid_minutes"],
             "single_use": True}
     perm["idempotency_key"] = "idem-" + digest([proposal_ref, perm])
     return perm, []
