@@ -5,4 +5,4 @@ fig-01-4: A table of five audit questions; the demo log answers only whether the
 fig-01-5: Horizontal bars of Lakeshore's 2.1 million yearly changes by type, rebookings largest at 840,000, each split into people and self-service.
 fig-01-6: Four planes: knowledge feeds the agent loop, the loop proposes to the control plane, permission reaches the executor, and the trail plane records and reconciles effects.
 fig-01-7: The book map as eight stacked Parts, each naming the gaps it works on, ending with worked architectures that use all five.
-fig-01-8: A sequence for one refund: permission and key, a timeout, a retry with the same key that replays, and a reconciler finding one credit.
+fig-01-8: A sequence for one refund: permission and key, a timeout, a retry with the same key that the payment processor replays, and a reconciler finding one credit in the processor's record.

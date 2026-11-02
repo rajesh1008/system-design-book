@@ -46,7 +46,7 @@ class Timeout(Exception):
 # ------------------------------------------------------------ the world
 @dataclass
 class Network:
-    """A stand-in for the card network, airline or hotel system.
+    """A stand-in for the payment processor, airline, or hotel system.
 
     `slow_calls` holds 1-based call numbers whose effect is applied but
     whose answer arrives after the caller's 8.0 s timeout.

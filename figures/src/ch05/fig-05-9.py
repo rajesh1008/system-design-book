@@ -15,9 +15,9 @@ from method.artifacts import CHECKLIST  # noqa: E402
 fig, ax = fl.figure(4.5, 4.6)
 n = len(CHECKLIST)
 ax.set_xlim(0, 10)
-ax.set_ylim(0, n + 1.6)
+ax.set_ylim(0, n + 1.75)
 ax.axis("off")
-ax.text(0.1, n + 1.1, "Gap items", fontweight="bold", color=fl.LABEL["policy"], va="center")
+ax.text(0.1, n + 1.35, "Gap items", fontweight="bold", color=fl.LABEL["policy"], va="center")
 y = n + 0.5
 for k, (item, area, q, rules) in enumerate(CHECKLIST):
     if k == 5:

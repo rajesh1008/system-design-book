@@ -1,11 +1,11 @@
 @startuml
 ' Figure 1.8  designlab v0: one request through one trail entry
 ' Reading order: top to bottom. The first answer arrives late; the retry
-' carries the same key, so the network replays instead of paying twice.
+' carries the same key, so the processor replays instead of paying twice.
 !include plantuml-theme.puml
 participant "Policy" as P <<policy>>
 participant "Executor" as X <<ops>>
-participant "Network" as N <<ops>>
+participant "Processor" as N <<ops>>
 participant "Checker" as R <<evidence>>
 database "Trail" as T <<evidence>>
 [-> P : refund

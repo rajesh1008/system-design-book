@@ -18,7 +18,7 @@ TOK = {"action": "ops", "control": "policy", "knowledge": "knowledge",
 SHORT = {"A1": "effects", "A2": "undo", "A3": "largest", "A4": "systems",
          "A5": "repeats", "A6": "read-only", "C1": "grantor", "C2": "autonomy",
          "C3": "wait", "C4": "stop", "C5": "off switch", "C6": "obligations",
-         "K1": "what it knows", "K2": "freshness", "K3": "outside input",
+         "K1": "knows", "K2": "freshness", "K3": "outside",
          "K4": "memory", "T1": "proof", "T2": "truth", "T3": "verifier",
          "T4": "retention", "O1": "number", "O2": "volume", "O3": "cost",
          "O4": "failure cost"}
