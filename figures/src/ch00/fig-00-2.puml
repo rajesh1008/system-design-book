@@ -1,0 +1,17 @@
+@startuml
+' Figure 0.2  Retry after a timeout without a duplicate effect
+!include plantuml-theme.puml
+participant "Agent\nloop" as A <<model>>
+participant "Policy\nengine" as P <<policy>>
+participant "Airline\nAPI" as T <<ops>>
+database "Effect\nledger" as L <<evidence>>
+[-> A : change flight
+A -> P : proposal
+P --> A : permitted
+A -> L : reserve key K
+A -> T : rebook(K)
+T -[$FAIL]-> A : timeout
+A -> L : look up K
+L --> A : already done
+[<-- A : confirmed once
+@enduml

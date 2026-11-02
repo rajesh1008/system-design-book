@@ -1,0 +1,47 @@
+// Figure 0.1  High-level design: one governed action at Lakeshore (sample HLD)
+// Reading order: top to bottom. Thick black arrow = the one path to notice (the proposal).
+// Cluster labels sit where no edge enters (labeljust/labelloc per cluster).
+digraph hld {
+#include "book.gv"
+  rankdir=TB;
+  customer [label="Customer", class="human"];
+  subgraph cluster_runtime { label="Agent runtime"; class="plane-model"; labeljust="r";
+    loop    [label="Agent loop", class="model"];
+    gateway [label="Model\ngateway", class="model"];
+    { rank=same; loop; gateway; }
+  }
+  subgraph cluster_control { label="Control plane"; class="plane-policy"; labeljust="l";
+    budget [label="Budgets and\nstop rules", class="policy"];
+    policy [label="Policy engine", class="policy gate"];
+    { rank=same; budget; policy; }
+  }
+  subgraph cluster_knowledge { label="Knowledge"; class="plane-knowledge"; labelloc="b";
+    retrieval [label="Retrieval", class="knowledge"];
+  }
+  subgraph cluster_tools { label="Operations"; class="plane-ops"; labeljust="r";
+    queue   [label="Action\nqueue", class="ops"];
+    airline [label="Airline\nAPI", class="ops external"];
+    { rank=same; queue; airline; }
+  }
+  verifier [label="Verifier", class="verified gate"];
+  subgraph cluster_evidence { label="Evidence"; class="plane-evidence"; labelloc="b"; labeljust="l";
+    ledger [label="Effect\nledger", class="evidence store"];
+    chain  [label="Chain\nrecord", class="evidence store"];
+    { rank=same; ledger; chain; }
+  }
+  auditor [label="Auditor", class="human"];
+
+  customer -> loop [label=" request", class="control"];
+  loop -> gateway [class="data"];
+  loop -> retrieval [label="context ", class="data"];
+  loop -> policy [label=" proposal", class="emphasis"];
+  budget -> policy [class="policy"];
+  policy -> queue [label=" permitted", class="control"];
+  queue -> airline [label="rebook", class="control"];
+  queue -> ledger [label=" key", class="data"];
+  airline -> verifier [label=" result", class="data"];
+  verifier -> chain [class="trail"];
+  ledger -> auditor [style=invis];
+  chain -> auditor [label=" reads", class="trail"];
+  { rank=same; policy; retrieval; }
+}

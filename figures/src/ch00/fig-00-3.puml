@@ -1,0 +1,29 @@
+@startuml
+' Figure 0.3  Low-level design: the contracts on the action path (class diagram)
+!include plantuml-theme.puml
+class ActionRequest <<model>> {
+  +intent: Intent
+  +tool: ToolRef
+  +args: Json
+  +idempotency_key: Key
+}
+interface PolicyEngine <<policy>> {
+  +decide(req): Decision
+}
+class Decision <<policy>> {
+  +verdict: Allow | Deny | Escalate
+  +tier: int
+}
+class Executor <<ops>> {
+  +execute(req, d): Effect
+}
+class EffectRecord <<evidence>> {
+  +key: Key
+  +status: Reserved | Done | Failed
+  +result_ref: Uri
+}
+ActionRequest .down.> PolicyEngine : submitted to
+PolicyEngine -down-> Decision : returns
+Executor .left.> Decision : needs Allow
+Executor -down-> EffectRecord : reserves first
+@enduml
