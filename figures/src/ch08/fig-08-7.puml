@@ -13,7 +13,7 @@ else (no)
     :Retry, up to 5;
   else (poison)
     :Quarantine,
-    owner named; <<#F8DDD9>>
+    owner named; <<$F_FAIL>>
     :Park the
     itinerary;
     :Fix, replay

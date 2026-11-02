@@ -13,12 +13,12 @@ note right of C : 8.0 s, no answer
 C -> P : refund, key fw-2
 P --> C : credit 1 (late, for fw-1)
 P --> C : credit 2 (for fw-2)
-note over C, P #F8DDD9 : two credits, one refund owed
+note over C, P $F_FAIL : two credits, one refund owed
 == Key per action (April 28 path) ==
 C -> P : refund, key idem-7f3a
 note right of C : 8.0 s, no answer
 C -> P : refund, key idem-7f3a
 P --> C : credit 1
 P --> C : same result, replayed
-note over C, P #DCEEDD : one credit
+note over C, P $F_VERIFIED : one credit
 @enduml

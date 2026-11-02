@@ -15,13 +15,17 @@ from the series hexes so that strokes and labels clear 4.5:1 on white (3:1 for t
 | Token | Name | Stroke | Fill | Series hex | Means |
 |---|---|---|---|---|---|
 | `model` | Navy | #1F2A44 | #1F2A44 (white text) | #1F2A44 | Models, inference, the agent loop, the harness |
-| `ops` | Teal | #0F766E | #D5ECE9 | #0F9D8A | Lakeshore itineraries, queues, tools, services, operations |
+| `ops` | Teal | #0F766E | #CCE8E4 | #0F9D8A | Lakeshore itineraries, queues, tools, services, operations |
 | `policy` | Amber | #B7791F (text #8A5A12) | #FBEBC8 | #E0A100 | Permission, policy, approval tiers, budgets, stop conditions |
-| `evidence` | Slate blue | #4F6D9A | #E1E7F0 | #4F6D9A | The chain record, the trail, evidence, traces |
+| `evidence` | Slate blue | #4F6D9A | #D8E0EC | #4F6D9A | The chain record, the trail, evidence, traces |
 | `org` | Gray | #6B7280 | #FFFFFF | none | People, the organization, customers, auditors, regulators |
-| `knowledge` | Plum (accent) | #7B4B94 | #ECE1F2 | #7B4B94 | Knowledge plane: retrieval, semantic layer, context, memory |
-| `verified` | Green (accent) | #2F7A3E | #DCEEDD | #3A9D5D | Verified outcome, a passed gate, a check by something that did not act |
-| `fail` | Coral red (accent) | #C0392B | #F8DDD9 | #D64545 | Failure, denial, attack, incident, the duplicate effect |
+| `knowledge` | Plum (accent) | #7B4B94 | #DCC8E7 | #7B4B94 | Knowledge plane: retrieval, semantic layer, context, memory |
+| `verified` | Green (accent) | #2F7A3E | #D1E8D2 | #3A9D5D | Verified outcome, a passed gate, a check by something that did not act |
+| `fail` | Coral red (accent) | #C0392B | #F3C4BD | #D64545 | Failure, denial, attack, incident, the duplicate effect |
+
+Fills are spaced in grey so the tokens that share figures stay apart on an e-ink Kindle (ITU-R 601 grey:
+policy 236; ops, evidence and verified 223; knowledge and fail about 210; org tint 248). Hues are the series
+hues; only the tint lightness was moved. Keep at least 12 grey levels between fills that appear together.
 
 Neutrals: ink #1A1A1A (all text and the emphasis arrow), gray dark #4B5563 (default borders and
 arrows), gray light #D9DCE1 (rules, gridlines), white background.
