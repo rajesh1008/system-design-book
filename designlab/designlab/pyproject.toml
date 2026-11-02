@@ -17,6 +17,7 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "gateway", "harness", "knowops", "context", "inputs", "topology",
             "sandbox", "loops", "runtimes", "threats", "identity", "policy", "evals",
             "reliability",
+            "economics",
             "trace"]
 
 [tool.setuptools.package-data]

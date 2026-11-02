@@ -1,0 +1,25 @@
+// Figure 36.1  What assurance asks
+// Reading order: left to right. The auditor's questions are answered
+// from records the agent path writes as it works: the trail, the
+// signed bundles, the bound approvals, and the ledger match. The pack
+// is generated from them; the daily roots the auditor checks it
+// against are held by audit, outside engineering. From assurance.pack.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.2; ranksep=0.55;
+  trail [label="Trail", class="evidence store"];
+  bund [label="Signed bundles", class="policy store"];
+  appr [label="Bound approvals", class="policy gate"];
+  led [label="Ledger match", class="verified store"];
+  pack [label="Evidence pack", class="evidence"];
+  roots [label="Daily roots\nheld by audit", class="evidence store"];
+  aud [label="Auditor", class="org human"];
+  reg [label="Regulator or\nexternal auditor", class="org human external"];
+  trail -> pack [class="trail"];
+  bund -> pack [class="trail"];
+  appr -> pack [class="trail"];
+  led -> pack [class="trail"];
+  pack -> aud [class="control"];
+  roots -> aud [class="data", label=" check"];
+  aud -> reg [class="data", label=" pack"];
+}

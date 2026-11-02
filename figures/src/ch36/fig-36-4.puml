@@ -1,0 +1,19 @@
+@startuml
+' Figure 36.4  The email that carried an instruction
+' Reading order: top to bottom, Wednesday, June 24, 2026, times CDT.
+' The hotel's email becomes a supplier note on the booking; the agent
+' reads it as a tool result with no tag, the tokenizer turns its card
+' number into a valid reference, and the proposal reaches the desk,
+' where the approver rejects it. From assurance.case and the trail.
+!include plantuml-theme.puml
+participant "Hotel email" as E <<fail>>
+participant "Booking notes" as N <<knowledge>>
+participant "Agent" as A <<model>>
+participant "Approver desk" as D <<policy>>
+E -[$FAIL]> N : 06:41 card 7731
+A -> N : 08:29 read
+N --> A : note, untagged
+A -> A : token for 7731
+A -> D : 08:29 refund $486.20\nto 7731; checks pass
+D -[$FAIL]-> A : 08:31 rejected
+@enduml

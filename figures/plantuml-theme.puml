@@ -188,7 +188,7 @@ skinparam rectangleFontColor<<knowledge>> #1A1A1A
 skinparam rectangleBackgroundColor<<verified>> #D1E8D2
 skinparam rectangleBorderColor<<verified>> #2F7A3E
 skinparam rectangleFontColor<<verified>> #1A1A1A
-skinparam rectangleBackgroundColor<<fail>> #F3C4BD
+skinparam rectangleBackgroundColor<<fail>> #F0B4AB
 skinparam rectangleBorderColor<<fail>> #C0392B
 skinparam rectangleFontColor<<fail>> #1A1A1A
 skinparam componentBackgroundColor<<model>> #1F2A44
@@ -212,7 +212,7 @@ skinparam componentFontColor<<knowledge>> #1A1A1A
 skinparam componentBackgroundColor<<verified>> #D1E8D2
 skinparam componentBorderColor<<verified>> #2F7A3E
 skinparam componentFontColor<<verified>> #1A1A1A
-skinparam componentBackgroundColor<<fail>> #F3C4BD
+skinparam componentBackgroundColor<<fail>> #F0B4AB
 skinparam componentBorderColor<<fail>> #C0392B
 skinparam componentFontColor<<fail>> #1A1A1A
 skinparam nodeBackgroundColor<<model>> #1F2A44
@@ -236,7 +236,7 @@ skinparam nodeFontColor<<knowledge>> #1A1A1A
 skinparam nodeBackgroundColor<<verified>> #D1E8D2
 skinparam nodeBorderColor<<verified>> #2F7A3E
 skinparam nodeFontColor<<verified>> #1A1A1A
-skinparam nodeBackgroundColor<<fail>> #F3C4BD
+skinparam nodeBackgroundColor<<fail>> #F0B4AB
 skinparam nodeBorderColor<<fail>> #C0392B
 skinparam nodeFontColor<<fail>> #1A1A1A
 skinparam databaseBackgroundColor<<model>> #1F2A44
@@ -260,7 +260,7 @@ skinparam databaseFontColor<<knowledge>> #1A1A1A
 skinparam databaseBackgroundColor<<verified>> #D1E8D2
 skinparam databaseBorderColor<<verified>> #2F7A3E
 skinparam databaseFontColor<<verified>> #1A1A1A
-skinparam databaseBackgroundColor<<fail>> #F3C4BD
+skinparam databaseBackgroundColor<<fail>> #F0B4AB
 skinparam databaseBorderColor<<fail>> #C0392B
 skinparam databaseFontColor<<fail>> #1A1A1A
 skinparam queueBackgroundColor<<model>> #1F2A44
@@ -284,7 +284,7 @@ skinparam queueFontColor<<knowledge>> #1A1A1A
 skinparam queueBackgroundColor<<verified>> #D1E8D2
 skinparam queueBorderColor<<verified>> #2F7A3E
 skinparam queueFontColor<<verified>> #1A1A1A
-skinparam queueBackgroundColor<<fail>> #F3C4BD
+skinparam queueBackgroundColor<<fail>> #F0B4AB
 skinparam queueBorderColor<<fail>> #C0392B
 skinparam queueFontColor<<fail>> #1A1A1A
 skinparam participantBackgroundColor<<model>> #1F2A44
@@ -315,7 +315,7 @@ skinparam participantBackgroundColor<<verified>> #D1E8D2
 skinparam participantBorderColor<<verified>> #2F7A3E
 skinparam participantFontColor<<verified>> #1A1A1A
 skinparam participantStereotypeFontColor<<verified>> #1A1A1A
-skinparam participantBackgroundColor<<fail>> #F3C4BD
+skinparam participantBackgroundColor<<fail>> #F0B4AB
 skinparam participantBorderColor<<fail>> #C0392B
 skinparam participantFontColor<<fail>> #1A1A1A
 skinparam participantStereotypeFontColor<<fail>> #1A1A1A
@@ -347,7 +347,7 @@ skinparam actorBackgroundColor<<verified>> #D1E8D2
 skinparam actorBorderColor<<verified>> #2F7A3E
 skinparam actorFontColor<<verified>> #1A1A1A
 skinparam actorStereotypeFontColor<<verified>> #1A1A1A
-skinparam actorBackgroundColor<<fail>> #F3C4BD
+skinparam actorBackgroundColor<<fail>> #F0B4AB
 skinparam actorBorderColor<<fail>> #C0392B
 skinparam actorFontColor<<fail>> #1A1A1A
 skinparam actorStereotypeFontColor<<fail>> #1A1A1A
@@ -387,7 +387,7 @@ skinparam classBorderColor<<verified>> #2F7A3E
 skinparam classFontColor<<verified>> #1A1A1A
 skinparam classStereotypeFontColor<<verified>> #1A1A1A
 skinparam classAttributeFontColor<<verified>> #1A1A1A
-skinparam classBackgroundColor<<fail>> #F3C4BD
+skinparam classBackgroundColor<<fail>> #F0B4AB
 skinparam classBorderColor<<fail>> #C0392B
 skinparam classFontColor<<fail>> #1A1A1A
 skinparam classStereotypeFontColor<<fail>> #1A1A1A
@@ -413,7 +413,7 @@ skinparam interfaceFontColor<<knowledge>> #1A1A1A
 skinparam interfaceBackgroundColor<<verified>> #D1E8D2
 skinparam interfaceBorderColor<<verified>> #2F7A3E
 skinparam interfaceFontColor<<verified>> #1A1A1A
-skinparam interfaceBackgroundColor<<fail>> #F3C4BD
+skinparam interfaceBackgroundColor<<fail>> #F0B4AB
 skinparam interfaceBorderColor<<fail>> #C0392B
 skinparam interfaceFontColor<<fail>> #1A1A1A
 skinparam stateBackgroundColor<<model>> #1F2A44
@@ -444,7 +444,7 @@ skinparam stateBackgroundColor<<verified>> #D1E8D2
 skinparam stateBorderColor<<verified>> #2F7A3E
 skinparam stateFontColor<<verified>> #1A1A1A
 skinparam stateStereotypeFontColor<<verified>> #1A1A1A
-skinparam stateBackgroundColor<<fail>> #F3C4BD
+skinparam stateBackgroundColor<<fail>> #F0B4AB
 skinparam stateBorderColor<<fail>> #C0392B
 skinparam stateFontColor<<fail>> #1A1A1A
 skinparam stateStereotypeFontColor<<fail>> #1A1A1A
@@ -469,7 +469,7 @@ skinparam activityFontColor<<knowledge>> #1A1A1A
 skinparam activityBackgroundColor<<verified>> #D1E8D2
 skinparam activityBorderColor<<verified>> #2F7A3E
 skinparam activityFontColor<<verified>> #1A1A1A
-skinparam activityBackgroundColor<<fail>> #F3C4BD
+skinparam activityBackgroundColor<<fail>> #F0B4AB
 skinparam activityBorderColor<<fail>> #C0392B
 skinparam activityFontColor<<fail>> #1A1A1A
 skinparam cardBackgroundColor<<model>> #1F2A44
@@ -493,7 +493,7 @@ skinparam cardFontColor<<knowledge>> #1A1A1A
 skinparam cardBackgroundColor<<verified>> #D1E8D2
 skinparam cardBorderColor<<verified>> #2F7A3E
 skinparam cardFontColor<<verified>> #1A1A1A
-skinparam cardBackgroundColor<<fail>> #F3C4BD
+skinparam cardBackgroundColor<<fail>> #F0B4AB
 skinparam cardBorderColor<<fail>> #C0392B
 skinparam cardFontColor<<fail>> #1A1A1A
 skinparam artifactBackgroundColor<<model>> #1F2A44
@@ -517,7 +517,7 @@ skinparam artifactFontColor<<knowledge>> #1A1A1A
 skinparam artifactBackgroundColor<<verified>> #D1E8D2
 skinparam artifactBorderColor<<verified>> #2F7A3E
 skinparam artifactFontColor<<verified>> #1A1A1A
-skinparam artifactBackgroundColor<<fail>> #F3C4BD
+skinparam artifactBackgroundColor<<fail>> #F0B4AB
 skinparam artifactBorderColor<<fail>> #C0392B
 skinparam artifactFontColor<<fail>> #1A1A1A
 skinparam collectionsBackgroundColor<<model>> #1F2A44
@@ -541,7 +541,7 @@ skinparam collectionsFontColor<<knowledge>> #1A1A1A
 skinparam collectionsBackgroundColor<<verified>> #D1E8D2
 skinparam collectionsBorderColor<<verified>> #2F7A3E
 skinparam collectionsFontColor<<verified>> #1A1A1A
-skinparam collectionsBackgroundColor<<fail>> #F3C4BD
+skinparam collectionsBackgroundColor<<fail>> #F0B4AB
 skinparam collectionsBorderColor<<fail>> #C0392B
 skinparam collectionsFontColor<<fail>> #1A1A1A
 skinparam entityBackgroundColor<<model>> #1F2A44
@@ -580,7 +580,7 @@ skinparam entityBorderColor<<verified>> #2F7A3E
 skinparam entityFontColor<<verified>> #1A1A1A
 skinparam entityStereotypeFontColor<<verified>> #1A1A1A
 skinparam entityAttributeFontColor<<verified>> #1A1A1A
-skinparam entityBackgroundColor<<fail>> #F3C4BD
+skinparam entityBackgroundColor<<fail>> #F0B4AB
 skinparam entityBorderColor<<fail>> #C0392B
 skinparam entityFontColor<<fail>> #1A1A1A
 skinparam entityStereotypeFontColor<<fail>> #1A1A1A
@@ -606,7 +606,7 @@ skinparam controlFontColor<<knowledge>> #1A1A1A
 skinparam controlBackgroundColor<<verified>> #D1E8D2
 skinparam controlBorderColor<<verified>> #2F7A3E
 skinparam controlFontColor<<verified>> #1A1A1A
-skinparam controlBackgroundColor<<fail>> #F3C4BD
+skinparam controlBackgroundColor<<fail>> #F0B4AB
 skinparam controlBorderColor<<fail>> #C0392B
 skinparam controlFontColor<<fail>> #1A1A1A
 skinparam boundaryBackgroundColor<<model>> #1F2A44
@@ -630,7 +630,7 @@ skinparam boundaryFontColor<<knowledge>> #1A1A1A
 skinparam boundaryBackgroundColor<<verified>> #D1E8D2
 skinparam boundaryBorderColor<<verified>> #2F7A3E
 skinparam boundaryFontColor<<verified>> #1A1A1A
-skinparam boundaryBackgroundColor<<fail>> #F3C4BD
+skinparam boundaryBackgroundColor<<fail>> #F0B4AB
 skinparam boundaryBorderColor<<fail>> #C0392B
 skinparam boundaryFontColor<<fail>> #1A1A1A
 skinparam frameBackgroundColor<<model>> #1F2A44
@@ -654,7 +654,7 @@ skinparam frameFontColor<<knowledge>> #1A1A1A
 skinparam frameBackgroundColor<<verified>> #D1E8D2
 skinparam frameBorderColor<<verified>> #2F7A3E
 skinparam frameFontColor<<verified>> #1A1A1A
-skinparam frameBackgroundColor<<fail>> #F3C4BD
+skinparam frameBackgroundColor<<fail>> #F0B4AB
 skinparam frameBorderColor<<fail>> #C0392B
 skinparam frameFontColor<<fail>> #1A1A1A
 skinparam packageBackgroundColor<<model>> #1F2A44
@@ -678,7 +678,7 @@ skinparam packageFontColor<<knowledge>> #1A1A1A
 skinparam packageBackgroundColor<<verified>> #D1E8D2
 skinparam packageBorderColor<<verified>> #2F7A3E
 skinparam packageFontColor<<verified>> #1A1A1A
-skinparam packageBackgroundColor<<fail>> #F3C4BD
+skinparam packageBackgroundColor<<fail>> #F0B4AB
 skinparam packageBorderColor<<fail>> #C0392B
 skinparam packageFontColor<<fail>> #1A1A1A
 skinparam storageBackgroundColor<<model>> #1F2A44
@@ -702,7 +702,7 @@ skinparam storageFontColor<<knowledge>> #1A1A1A
 skinparam storageBackgroundColor<<verified>> #D1E8D2
 skinparam storageBorderColor<<verified>> #2F7A3E
 skinparam storageFontColor<<verified>> #1A1A1A
-skinparam storageBackgroundColor<<fail>> #F3C4BD
+skinparam storageBackgroundColor<<fail>> #F0B4AB
 skinparam storageBorderColor<<fail>> #C0392B
 skinparam storageFontColor<<fail>> #1A1A1A
 skinparam cloudBackgroundColor<<model>> #1F2A44
@@ -726,7 +726,7 @@ skinparam cloudFontColor<<knowledge>> #1A1A1A
 skinparam cloudBackgroundColor<<verified>> #D1E8D2
 skinparam cloudBorderColor<<verified>> #2F7A3E
 skinparam cloudFontColor<<verified>> #1A1A1A
-skinparam cloudBackgroundColor<<fail>> #F3C4BD
+skinparam cloudBackgroundColor<<fail>> #F0B4AB
 skinparam cloudBorderColor<<fail>> #C0392B
 skinparam cloudFontColor<<fail>> #1A1A1A
 skinparam folderBackgroundColor<<model>> #1F2A44
@@ -750,7 +750,7 @@ skinparam folderFontColor<<knowledge>> #1A1A1A
 skinparam folderBackgroundColor<<verified>> #D1E8D2
 skinparam folderBorderColor<<verified>> #2F7A3E
 skinparam folderFontColor<<verified>> #1A1A1A
-skinparam folderBackgroundColor<<fail>> #F3C4BD
+skinparam folderBackgroundColor<<fail>> #F0B4AB
 skinparam folderBorderColor<<fail>> #C0392B
 skinparam folderFontColor<<fail>> #1A1A1A
 skinparam fileBackgroundColor<<model>> #1F2A44
@@ -774,7 +774,7 @@ skinparam fileFontColor<<knowledge>> #1A1A1A
 skinparam fileBackgroundColor<<verified>> #D1E8D2
 skinparam fileBorderColor<<verified>> #2F7A3E
 skinparam fileFontColor<<verified>> #1A1A1A
-skinparam fileBackgroundColor<<fail>> #F3C4BD
+skinparam fileBackgroundColor<<fail>> #F0B4AB
 skinparam fileBorderColor<<fail>> #C0392B
 skinparam fileFontColor<<fail>> #1A1A1A
 skinparam agentBackgroundColor<<model>> #1F2A44
@@ -798,7 +798,7 @@ skinparam agentFontColor<<knowledge>> #1A1A1A
 skinparam agentBackgroundColor<<verified>> #D1E8D2
 skinparam agentBorderColor<<verified>> #2F7A3E
 skinparam agentFontColor<<verified>> #1A1A1A
-skinparam agentBackgroundColor<<fail>> #F3C4BD
+skinparam agentBackgroundColor<<fail>> #F0B4AB
 skinparam agentBorderColor<<fail>> #C0392B
 skinparam agentFontColor<<fail>> #1A1A1A
 skinparam usecaseBackgroundColor<<model>> #1F2A44
@@ -822,7 +822,7 @@ skinparam usecaseFontColor<<knowledge>> #1A1A1A
 skinparam usecaseBackgroundColor<<verified>> #D1E8D2
 skinparam usecaseBorderColor<<verified>> #2F7A3E
 skinparam usecaseFontColor<<verified>> #1A1A1A
-skinparam usecaseBackgroundColor<<fail>> #F3C4BD
+skinparam usecaseBackgroundColor<<fail>> #F0B4AB
 skinparam usecaseBorderColor<<fail>> #C0392B
 skinparam usecaseFontColor<<fail>> #1A1A1A
 skinparam objectBackgroundColor<<model>> #1F2A44
@@ -861,7 +861,7 @@ skinparam objectBorderColor<<verified>> #2F7A3E
 skinparam objectFontColor<<verified>> #1A1A1A
 skinparam objectStereotypeFontColor<<verified>> #1A1A1A
 skinparam objectAttributeFontColor<<verified>> #1A1A1A
-skinparam objectBackgroundColor<<fail>> #F3C4BD
+skinparam objectBackgroundColor<<fail>> #F0B4AB
 skinparam objectBorderColor<<fail>> #C0392B
 skinparam objectFontColor<<fail>> #1A1A1A
 skinparam objectStereotypeFontColor<<fail>> #1A1A1A
@@ -887,7 +887,7 @@ skinparam partitionFontColor<<knowledge>> #1A1A1A
 skinparam partitionBackgroundColor<<verified>> #D1E8D2
 skinparam partitionBorderColor<<verified>> #2F7A3E
 skinparam partitionFontColor<<verified>> #1A1A1A
-skinparam partitionBackgroundColor<<fail>> #F3C4BD
+skinparam partitionBackgroundColor<<fail>> #F0B4AB
 skinparam partitionBorderColor<<fail>> #C0392B
 skinparam partitionFontColor<<fail>> #1A1A1A
 
@@ -908,7 +908,7 @@ skinparam partitionFontColor<<fail>> #1A1A1A
 !$F_ORG = "#FFFFFF"
 !$F_KNOWLEDGE = "#DCC8E7"
 !$F_VERIFIED = "#D1E8D2"
-!$F_FAIL = "#F3C4BD"
+!$F_FAIL = "#F0B4AB"
 !$FAIL = "#C0392B,dashed"
 !$TRAIL = "#4F6D9A,dotted"
 !$POLICY = "#B7791F"

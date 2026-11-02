@@ -1,0 +1,21 @@
+// Figure 38.3  Budgets at three levels
+// Reading order: top to bottom. A run's worst case is computed before
+// its first call and must fit the run budget; every attempt reserves
+// against the loop's day; every loop's day sits inside the day envelope
+// for all loops. Each level pages at half and stops at the limit for
+// the rest of the Chicago day. From economics.policy and bound.
+digraph budgets {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.32;
+  run [label="Run budget\nworst case first\n$0.25, 12 steps", class="policy gate"];
+  loop [label="Loop day\nwaiver watch $200\nfare watch $20", class="policy gate"];
+  env [label="Day envelope\nall loops $260", class="policy gate"];
+  page [label="Page at 50%", class="org human"];
+  stop [label="Stop at 100%\nuntil midnight", class="fail"];
+  run -> loop [class="control", label="reserve per attempt"];
+  loop -> env [class="control", label="same step"];
+  loop -> page [class="data"];
+  env -> page [class="data"];
+  loop -> stop [class="emphasis"];
+  env -> stop [class="emphasis"];
+}

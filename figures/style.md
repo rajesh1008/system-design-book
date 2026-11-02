@@ -21,11 +21,14 @@ from the series hexes so that strokes and labels clear 4.5:1 on white (3:1 for t
 | `org` | Gray | #6B7280 | #FFFFFF | none | People, the organization, customers, auditors, regulators |
 | `knowledge` | Plum (accent) | #7B4B94 | #DCC8E7 | #7B4B94 | Knowledge plane: retrieval, semantic layer, context, memory |
 | `verified` | Green (accent) | #2F7A3E | #D1E8D2 | #3A9D5D | Verified outcome, a passed gate, a check by something that did not act |
-| `fail` | Coral red (accent) | #C0392B | #F3C4BD | #D64545 | Failure, denial, attack, incident, the duplicate effect |
+| `fail` | Coral red (accent) | #C0392B | #F0B4AB | #D64545 | Failure, denial, attack, incident, the duplicate effect |
 
 Fills are spaced in grey so the tokens that share figures stay apart on an e-ink Kindle (ITU-R 601 grey:
-policy 236; ops, evidence and verified 223; knowledge and fail about 210; org tint 248). Hues are the series
-hues; only the tint lightness was moved. Keep at least 12 grey levels between fills that appear together.
+policy 236; ops, evidence and verified 223; knowledge 210; fail 197; org tint 248). Hues are the series
+hues; only the tint lightness was moved. Keep at least 12 grey levels between other fills that appear together; ops, evidence and verified share
+a grey, so where two of them meet, a label, border or shape must also tell them apart.
+Colored text on a tint (or on white) uses the token's label color, `fl.LABEL[token]` in charts: ops #0E6C65,
+policy #8A5A12, evidence #466088, knowledge #6E4384, verified #2A6D37, fail #8B291F. Each clears 4.8:1 on its own fill.
 
 Neutrals: ink #1A1A1A (all text and the emphasis arrow), gray dark #4B5563 (default borders and
 arrows), gray light #D9DCE1 (rules, gridlines), white background.

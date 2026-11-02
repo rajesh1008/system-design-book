@@ -1,0 +1,21 @@
+// Figure 38.5  Rate limits and spend policies
+// Reading order: left to right. A request first meets its identity's
+// share of the provider rate limit, which protects capacity this
+// minute and answers with a wait; then the spend policy, which
+// protects money this day and answers with a stop. Both read the
+// identity on the request. From economics.policy and replay.
+digraph limits {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  req [label="Request\nidentity, max_tokens", class="model"];
+  rate [label="Rate share\ntokens a minute", class="ops gate"];
+  wait [label="429, wait\ncapacity kept", class="ops"];
+  spend [label="Spend policy\ndollars a day", class="policy gate"];
+  stop [label="Refused\nrest of the day", class="fail"];
+  prov [label="Provider", class="ops external"];
+  req -> rate [class="data"];
+  rate -> wait [class="control", label="over share"];
+  rate -> spend [class="data"];
+  spend -> stop [class="emphasis", label="over budget"];
+  spend -> prov [class="data"];
+}

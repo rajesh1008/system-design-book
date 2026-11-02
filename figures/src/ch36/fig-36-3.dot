@@ -1,0 +1,27 @@
+// Figure 36.3  The evidence pack from the trail
+// Reading order: top to bottom. A month of trail answers the period
+// questions with counts, exceptions, and the sequence numbers behind
+// them; the auditor's seed draws 60 complete chains, each proven
+// against its day's root; a manifest of hashes and a seal close the
+// pack, and the auditor verifies it against roots audit holds.
+// From assurance.pack and assurance.anchor.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  trail [label="June trail\n41,853 lines", class="evidence store"];
+  q [label="Questions P1 to P11\nmapped to records", class="evidence"];
+  seed [label="Auditor's seed", class="org human"];
+  ans [label="Answers\ncount, exceptions, lines", class="evidence"];
+  smp [label="Sample of 60 chains\nproof to each day's root", class="evidence"];
+  man [label="Manifest of hashes\nand seal", class="policy gate"];
+  roots [label="30 daily roots\nheld by audit", class="evidence store"];
+  ver [label="Auditor verifies\nseal, manifest, proofs", class="verified gate"];
+  trail -> q [class="data"];
+  q -> ans [class="data"];
+  trail -> smp [class="data"];
+  seed -> smp [class="data"];
+  ans -> man [class="control"];
+  smp -> man [class="control"];
+  man -> ver [class="control"];
+  roots -> ver [class="trail"];
+}

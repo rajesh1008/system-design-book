@@ -1,0 +1,23 @@
+// Figure 36.6  The destination-account policy
+// Reading order: top to bottom. Every refund proposal names where the
+// money goes, or defaults to the form that paid. The policy compares
+// it with the forms of payment on the booking record, which only the
+// payment system writes; a match goes on to the tier rules and the
+// gateway's card-on-file v2 check; anything else is refused and sent
+// to the payments desk, which confirms with the customer out of band.
+// From assurance.case and pb-2026.06.22.2.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  prop [label="Refund proposal\nrefund_to, or none", class="ops"];
+  rec [label="Booking record\nforms that paid", class="evidence store"];
+  dest [label="destination-v1\na form that paid?", class="policy gate"];
+  tier [label="refunds-v3 tiers\napprover desk", class="policy gate"];
+  cof [label="card-on-file v2\nreads refund_to", class="verified gate"];
+  pay [label="Refused\npayments desk confirms", class="fail"];
+  prop -> dest [class="control"];
+  rec -> dest [class="data", label=" read"];
+  dest -> tier [class="emphasis", label=" yes"];
+  tier -> cof [class="control"];
+  dest -> pay [class="fail", label=" no"];
+}

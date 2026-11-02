@@ -34,6 +34,6 @@ for i, (a, b, c, tok) in enumerate(rows):
                            lw=0.75))
     for x, t in zip(cols, (a, b, c)):
         ax.text(x + 0.05, y + 0.5, t, va="center", fontsize=9,
-                color=fl.INK, linespacing=0.95,
+                color=fl.TEXT_ON[tok], linespacing=0.95,
                 fontweight="bold" if x == cols[0] else None)
 fl.save(fig)

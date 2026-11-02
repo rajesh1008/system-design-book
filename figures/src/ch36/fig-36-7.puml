@@ -1,0 +1,18 @@
+@startuml
+' Figure 36.7  The finding lifecycle
+' Reading order: top to bottom, F-0624-01 from June 24 to July 3, 2026.
+' The owner moves the finding through containment, triage, the fix,
+' and evidence; only the auditor opens and closes it, and she sends
+' it back when the evidence does not hold. A later record that rebuts
+' the claim sends it back to triage. From assurance.findings.
+!include plantuml-theme.puml
+hide empty description
+[*] -right-> Opened : auditor
+Opened -right-> Contained : owner
+Contained -down-> Triaged : owner
+Triaged -left-> FixLive : owner
+FixLive -down-> Submitted : owner
+Submitted -up-> FixLive : auditor,\nclaim fails
+Submitted -right-> Closed : auditor
+Closed -up-> Triaged : rebutted
+@enduml

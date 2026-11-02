@@ -1,0 +1,21 @@
+@startuml
+' Figure 38.4  Enforcement at the model gateway
+' Reading order: top to bottom. The loop asks for a model call; the
+' gateway reserves the attempt's worst case in one atomic step against
+' the loop day and the envelope; only then is the call sent. Usage
+' settles the reservation; a call with no usage settles at the worst
+' case, never at zero. From economics.policy.
+!include plantuml-theme.puml
+participant "Loop" as L <<model>>
+participant "Model gateway" as G <<policy>>
+participant "Ledger" as B <<evidence>>
+participant "Provider" as P <<ops>>
+L -> G : Call, max_tokens
+G -> B : Reserve worst
+B -> G : Fits
+G -> P : Send
+P -> G : Usage or timeout
+G -> B : Settle actual
+note over G, B : No usage: worst
+G -[$POLICY]> L : Refused at limit
+@enduml
