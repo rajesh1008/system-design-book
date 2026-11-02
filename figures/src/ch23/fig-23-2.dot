@@ -1,0 +1,20 @@
+// Figure 23.2  Document pipeline with provenance and confidence
+// Reading order: top to bottom. The file is hashed as it arrives;
+// the layers are split into visible and hidden; the extractor reads
+// contract fields only, each with a confidence and a location; the
+// record check compares identifiers with the booking; the route is
+// the worst field's route. From inputs.edge and inputs.demo.
+digraph docs {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  file [label="File arrives\nsha256, channel, sender, time", class="evidence"];
+  layers [label="Split layers\nvisible | hidden", class="knowledge"];
+  ext [label="Extract contract fields\nvalue, confidence, where", class="knowledge"];
+  chk [label="Record check\nlocator, date, card,\npassport number", class="evidence"];
+  route [label="Route: worst field\naccept | review | ask | reject", class="policy"];
+  sig [label="Signals\nhidden text,\ninstruction-like", class="knowledge"];
+  file -> layers -> ext -> chk -> route [class="data"];
+  layers -> sig [class="data"];
+  sig -> route [class="emphasis", label=" forces review"];
+  { rank=same; ext; sig; }
+}

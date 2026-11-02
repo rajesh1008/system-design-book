@@ -1,0 +1,38 @@
+@startuml
+' Figure 23.6  The input contract
+' Reading order: top to bottom. A Contract names a modality, an owner,
+' its fields, and the signals it watches, and has no free-text field.
+' The edge admits a RawInput against it and returns an Envelope:
+' trust, provenance, fields, signals. Only an Envelope renders into
+' context. From inputs.contract and inputs.edge.
+!include plantuml-theme.puml
+class Contract <<policy>> {
+  +name, version: str
+  +modality: document | image | voice
+  +owner: str
+  +fields: Field[]
+  +signals: instruction_like, hidden_text
+  +free_text = False
+}
+class Field <<policy>> {
+  +pattern: regex
+  +accept_at, review_at: float
+  +check: pnr | profile | supplier
+}
+class RawInput <<knowledge>> {
+  +channel, sender, received_at
+  +layers: visible | hidden
+  +extracted: value, conf, where
+}
+class Envelope <<evidence>> {
+  +trust = untrusted
+  +provenance: sha256, extractor
+  +fields: value, conf, route
+  +read_back: amount, date
+  +route(): worst field
+}
+Contract *-down- Field
+RawInput .right.> Contract : admitted against
+RawInput -down-> Envelope : admit()
+Envelope ..> Contract : names version
+@enduml

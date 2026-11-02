@@ -1,0 +1,25 @@
+// Figure 23.5  Web content and the injection surface
+// Reading order: top to bottom. One carrier notice page has a visible
+// part a person reads and four hidden parts a person never sees. The
+// reader splits them; fields come from the visible text only; every
+// hidden part and one visible line become signals. From inputs.web
+// (the Prairie Airways weather waiver, May 14, 2026).
+digraph web {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.35;
+  page [label="Carrier notice page\nnotices/xpa/...", class="knowledge"];
+  vis [label="Visible text\nairport, dates, fee waived\n+ one line to booking agents", class="knowledge"];
+  hid [label="Hidden: comment, white 1px text,\nimage alt, hidden div", class="fail"];
+  f [label="Contract fields\nfrom visible text only", class="knowledge"];
+  sig [label="Signals\ninstruction-like 5\nhidden text 4", class="policy"];
+  rev [label="Route: review", class="policy"];
+  page -> vis [class="data"];
+  page -> hid [class="fail"];
+  vis -> f [class="data"];
+  vis -> sig [class="data"];
+  hid -> sig [class="emphasis"];
+  f -> rev [class="data"];
+  sig -> rev [class="data"];
+  { rank=same; vis; hid; }
+  { rank=same; f; sig; }
+}

@@ -209,8 +209,9 @@ def main(argv=None) -> int:
     rows = run(cl)
     report(rows, "live" if a.record else "replayed",
            rows[0]["model"] or cl.pin.id)
-    emit(f"spend this run: ${meter.spent_usd:.4f} "
-         f"(cap ${CAP_USD:.2f}), calls {meter.calls}")
+    emit(f"{'spend this run' if a.record else 'recorded cost'}: "
+         f"${meter.spent_usd:.4f} (cap ${CAP_USD:.2f}), "
+         f"calls {meter.calls}")
     return 0
 
 

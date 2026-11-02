@@ -1,0 +1,105 @@
+# Harness Manifest: the servicing agent, harness 1.1, planned for July.
+# Refunds move from ReAct to an explicit state machine (Section 2).
+# Owned by Agent Platform. A change to anything in this file, or to a
+# tool description it resolves, is a new version and goes through the
+# release gate. The deploy check refuses a hash it has not registered.
+name = "servicing"
+version = "1.1.0"
+owner = "Agent Platform (Daniel Price)"
+on_call = "SRE (Ben Carter)"
+released = ""
+runtime = "LangGraph (rented; Chapter 3)"
+router_table = "2026-05-12"          # per-step model roles, Chapter 15
+model_contracts = ["refund-reason@1.3", "desk-note@2.1",
+                   "change-intent@1.0"]
+
+[loop]
+shape = "react"
+instructions = """
+You service one Lakeshore Travel Group case. Use the tools. Amounts
+come from fare_calc and nowhere else. An effect needs a permission the
+control plane issued. You may hand the case to a person at any step.
+You may stop by handing off; you do not decide that the case is done.
+"""
+
+[loop.tasks.refund]
+shape = "state_machine"
+start = "intake"
+terminals = ["done", "declined", "handed_off"]
+# state = [what runs, the states it may go to]
+states.intake = ["model:small", "gather", "handed_off"]
+states.gather = ["tools", "assess", "handed_off"]
+states.assess = ["model:mid", "propose", "handed_off"]
+states.propose = ["fare_calc", "permit", "handed_off"]
+states.permit = ["control_plane", "execute", "declined", "handed_off"]
+states.execute = ["gateway", "verify", "handed_off"]
+states.verify = ["verifier", "done", "handed_off"]
+
+[[tools]]
+name = "booking_read"
+version = "1.4"
+[[tools]]
+name = "fare_calc"
+version = "2.0"
+[[tools]]
+name = "fare_rules_search"
+version = "1.2"
+[[tools]]
+name = "flight_status"
+version = "1.1"
+[[tools]]
+name = "offers_search"
+version = "1.3"
+[[tools]]
+name = "notice_read"
+version = "1.0"
+[[tools]]
+name = "doc_intake"
+version = "1.1"
+[[tools]]
+name = "code_run"
+version = "1.0"
+[[tools]]
+name = "rebook_ticket"
+version = "2.1"
+[[tools]]
+name = "refund_ticket"
+version = "3.0"
+[[tools]]
+name = "credit_issue"
+version = "1.2"
+[[tools]]
+name = "voucher_issue"
+version = "1.0"
+[[tools]]
+name = "customer_notify"
+version = "1.1"
+[[tools]]
+name = "handoff_to_desk"
+version = "1.0"
+
+[context]
+budget_tokens = 48000
+compact_at = 0.70
+keep_turns = 8
+pin = ["booking_ref", "stated_reason", "permission_ids",
+       "idempotency_keys", "amounts"]
+
+[[stops]]
+id = "verified"
+rule = "a verifier that did not act confirms the outcome"
+[[stops]]
+id = "step_budget"
+rule = "step 24 reached: hand off with the trail"
+[[stops]]
+id = "spend_budget"
+rule = "next call would pass the task cap: hand off"
+[[stops]]
+id = "no_progress"
+rule = "same tool, same arguments, twice in a row: hand off"
+
+[budgets]
+steps = 24
+model_calls = 24
+task_usd = "1.00"
+tool_retries = 1

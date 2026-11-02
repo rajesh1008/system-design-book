@@ -154,7 +154,7 @@ def for_context(item) -> str:
     lines = [f"input {p.input_id}  {p.contract}  via {p.channel}",
              f"  trust {item.trust}  route {item.route}"]
     for fv in item.fields.values():
-        lines.append(f"  {fv.name:<14} {fv.value:<15} "
+        lines.append(f"  {fv.name:<14} {fv.value:<16} "
                      f"{fv.confidence:.2f}  {fv.route}")
     for k, v in item.signals.items():
         if v:

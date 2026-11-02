@@ -1,0 +1,16 @@
+# Registered harness releases (Chapter 25). The deploy check refuses
+# any effective harness whose hash is not listed here as released.
+# A line is added by the release gate (Chapter 34), never by hand at
+# deploy time. Hashes are SHA-256 of the resolved manifest.
+
+[release."1.0.0"]
+hash = "6b225e5fa4250bc5bd908fe0bd72f395a87555d356ae5d5bcfb192afd2b25094"
+status = "released"
+date = "2026-06-08"
+signed = "Sarah Whitfield"
+
+[release."1.1.0"]
+hash = "47fff92f371b21b6c7a6fd0fe5621e2961b17cdbee434072ecfb8adb098d20c8"
+status = "candidate"          # waits for the release gate, Chapter 34
+date = ""
+signed = ""
