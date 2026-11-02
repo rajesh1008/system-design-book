@@ -40,9 +40,12 @@ def part_unit(seed: int, handoff: float | None) -> None:
              f"{c['per_outcome']:>9.3f}")
         emit(f"  people minutes {c['people_min']:,.0f};"
              f" cost per verified outcome ${c['per_outcome']:.2f}")
+    # c is May's cost here, at the hand-off rate asked for.
     emit(f"  baseline blend ${BASELINE:.2f}; May is"
-         f" {month_cost(MAY, seed)['per_outcome'] / BASELINE:.1%}"
-         f" of it")
+         f" {c['per_outcome'] / BASELINE:.1%} of it")
+    if handoff is not None:
+        emit(f"  (both months recosted at {handoff:.0%} of attempts"
+             f" handed off)")
 
 
 def part_ladder(seed: int) -> None:

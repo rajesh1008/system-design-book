@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 1500,
+    "messages": [
+      {
+        "content": "Today is Wednesday, May 27, 2026.\nSchema:\nchanges(change_id, month, created_at, change_type, handled_by, channel, desk, carrier, handle_minutes, itinerary_id, repeat_7d, cost_usd)\ncontacts(contact_id, month, created_at, channel, desk, change_id, transcript)\nrefunds(refund_id, month, issued_at, change_type, carrier, desk, handled_by, amount_usd, settled_at, clock_met, matured, error, verified, customer_id)\napprovals(approval_id, month, filed_at, desk, wait_minutes, decision, approver_id)\neffects(effect_id, month, at, change_type, verified, duplicate)\ntasks(task_id, month, at, latency_s, change_type, model_usd)\nqueue_snapshots(desk, month, at, depth)\nbookings(booking_id, month, booked_at, carrier, channel, gross_usd, customer_id)\ncarrier_notices(notice_id, month, received_at, carrier, kind)\nbooking_events(event_id, month, event_at, itinerary_id, event_type, carrier, payload)\nfin_ledger(entry_id, month, posted_at, carrier, account, amount_usd, margin_usd, receivable_usd)\nfin_payroll(employee_id, month, desk, salary_usd, bonus_usd)\ncustomers(customer_id, name, email, phone, card_last4, tier)\n\nQuestion: Verified-outcome rate by change type for May 2026.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You write one SQLite SELECT statement that answers a\nLakeshore Travel Group operations question from the warehouse schema\nbelow. Timestamps are ISO 8601 text in UTC. Reply with the SQL only."
+  },
+  "request_hash": "2b6b921f6a689117",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "```sql\n-- Assumes month is stored as 'YYYY-MM' and verified/duplicate are 0/1 flags.\n-- Duplicate effects are excluded so they don't inflate the denominator.\nSELECT\n    change_type,\n    COUNT(*) AS effects_total,\n    SUM(CASE WHEN verified = 1 THEN 1 ELSE 0 END) AS verified_count,\n    ROUND(1.0 * SUM(CASE WHEN verified = 1 THEN 1 ELSE 0 END) / COUNT(*), 4) AS verified_rate\nFROM effects\nWHERE month = '2026-05'\n  AND COALESCE(duplicate, 0) = 0\nGROUP BY change_type\nORDER BY verified_rate DESC;\n```",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeGvhxYyf3sUf4PjEX4s",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 578,
+      "output_tokens": 783,
+      "output_tokens_details": {
+        "thinking_tokens": 515
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

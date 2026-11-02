@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 1500,
+    "messages": [
+      {
+        "content": "Today is Wednesday, May 27, 2026.\nSchema:\nchanges(change_id, month, created_at, change_type, handled_by, channel, desk, carrier, handle_minutes, itinerary_id, repeat_7d, cost_usd)\ncontacts(contact_id, month, created_at, channel, desk, change_id, transcript)\nrefunds(refund_id, month, issued_at, change_type, carrier, desk, handled_by, amount_usd, settled_at, clock_met, matured, error, verified, customer_id)\napprovals(approval_id, month, filed_at, desk, wait_minutes, decision, approver_id)\neffects(effect_id, month, at, change_type, verified, duplicate)\ntasks(task_id, month, at, latency_s, change_type, model_usd)\nqueue_snapshots(desk, month, at, depth)\nbookings(booking_id, month, booked_at, carrier, channel, gross_usd, customer_id)\ncarrier_notices(notice_id, month, received_at, carrier, kind)\nbooking_events(event_id, month, event_at, itinerary_id, event_type, carrier, payload)\nfin_ledger(entry_id, month, posted_at, carrier, account, amount_usd, margin_usd, receivable_usd)\nfin_payroll(employee_id, month, desk, salary_usd, bonus_usd)\ncustomers(customer_id, name, email, phone, card_last4, tier)\n\nQuestion: What was agent task latency p95 each week in May 2026 so far?",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You write one SQLite SELECT statement that answers a\nLakeshore Travel Group operations question from the warehouse schema\nbelow. Timestamps are ISO 8601 text in UTC. Reply with the SQL only."
+  },
+  "request_hash": "6ec6d6ec42eb027a",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "```sql\nWITH t AS (\n    SELECT\n        date(at, '-' || ((CAST(strftime('%w', at) AS INTEGER) + 6) % 7) || ' days') AS week_start,\n        latency_s\n    FROM tasks\n    WHERE at >= '2026-05-01T00:00:00Z'\n      AND at <  '2026-05-28T00:00:00Z'\n),\nr AS (\n    SELECT\n        week_start,\n        latency_s,\n        ROW_NUMBER() OVER (PARTITION BY week_start ORDER BY latency_s) AS rn,\n        COUNT(*)     OVER (PARTITION BY week_start)                    AS n\n    FROM t\n)\nSELECT\n    week_start,\n    n AS task_count,\n    MIN(latency_s) AS p95_latency_s\nFROM r\nWHERE rn >= 0.95 * n\n",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeGuHrh3TNfMZrkXj7nw",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "max_tokens",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 581,
+      "output_tokens": 1500,
+      "output_tokens_details": {
+        "thinking_tokens": 1201
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

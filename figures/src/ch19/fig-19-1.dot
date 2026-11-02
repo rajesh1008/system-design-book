@@ -1,0 +1,20 @@
+// Figure 19.1  Retrieval as a component with a contract
+// Reading order: top to bottom. The agent asks with a question, an
+// as-of date, and a scope. The retrieval component answers with
+// passages that each carry their provenance, under three promises it
+// is measured against. The passages then travel under the Chapter 6
+// context contract to the step that uses them.
+digraph contract {
+#include "book.gv"
+  rankdir=TB; nodesep=0.4; ranksep=0.3;
+  ask [label="Question, as-of\ndate, scope", class="ops"];
+  ret [label="Retrieval\ncomponent", class="knowledge"];
+  out [label="Passages with\nprovenance", class="knowledge"];
+  pr  [label="In effect at as-of;\nunder 1 s; recall\non golden set", class="ops gate"];
+  c1  [label="C1 context\ncontract", class="ops"];
+  ask -> ret [class="data"];
+  ret -> out [class="emphasis"];
+  out -> c1 [class="data"];
+  pr -> ret [style="dashed", arrowhead="none"];
+  {rank=same; ret; pr;}
+}

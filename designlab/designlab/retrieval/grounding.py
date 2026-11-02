@@ -1,7 +1,9 @@
 """The grounding checker. A claim is grounded when the passage it cites
 is admissible for the question: a rule or notice, from the carrier and
-topic the claim is about, in effect on the case's as-of date, and the
-value the claim states is the value that passage gives. A citation to a
+topic the claim is about, and in effect on the case's as-of date. The
+scripted answer copies values from the passage it cites, so here the
+citation is the claim; live.py also checks the value the model wrote.
+A citation to a
 superseded page that says exactly what the claim says is not grounded;
 that is the opening of Chapter 19.
 """

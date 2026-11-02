@@ -1,0 +1,24 @@
+// Figure 19.2  Hybrid search and reranking
+// Reading order: top to bottom. One query goes to a lexical index and a
+// dense index at once. Pages not in effect on the as-of date are removed
+// before ranking. Reciprocal rank fusion merges the two lists, and a
+// reranker reads the top fifty with the query and orders them. The top
+// k leave with the reason each one ranked where it did.
+digraph hybrid {
+#include "book.gv"
+  rankdir=TB; nodesep=0.45; ranksep=0.32;
+  q   [label="Query and\nas-of date", class="ops"];
+  lex [label="Lexical index\n(exact terms, codes)", class="knowledge"];
+  den [label="Dense index\n(meaning)", class="knowledge"];
+  flt [label="Effective-date filter\nbefore ranking", class="knowledge gate"];
+  rrf [label="Fusion: reciprocal\nrank, k = 60", class="knowledge"];
+  rr  [label="Reranker reads\nquery and passage", class="model"];
+  top [label="Top k with\nprovenance and why", class="knowledge"];
+  q -> lex [class="data"];
+  q -> den [class="data"];
+  lex -> flt [class="data"];
+  den -> flt [class="data"];
+  flt -> rrf [class="emphasis", label=" 50 each"];
+  rrf -> rr [class="emphasis", label=" top 50"];
+  rr -> top [class="emphasis"];
+}

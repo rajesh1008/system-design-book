@@ -1,0 +1,21 @@
+@startuml
+' Figure 19.5  The agent as the query planner
+' Reading order: top to bottom. The model plans one query at a time from
+' what is still missing. Retrieval answers each query. Code, not the
+' model, checks which parts of the question now have a passage in effect
+' that states them, and code counts the queries against the budget.
+!include plantuml-theme.puml
+participant "Planner\n(model)" as P <<model>>
+participant "Retrieval" as R <<knowledge>>
+participant "Verifier and\nbudget (code)" as V <<ops>>
+V -> P : open parts
+P -> R : query 1
+R --> V : passages
+V -> V : check parts
+V -> P : open parts
+P -> R : query 2
+R --> V : passages
+V -> V : all parts verified
+V --> P : stop: cite\nverified only
+note right of V : at budget:\nhand off
+@enduml

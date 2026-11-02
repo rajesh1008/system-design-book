@@ -10,14 +10,15 @@ low = "small"
 medium = "small"
 high = "mid"
 
-# The control plane's ceiling on reasoning budgets, and the cascade
-# alarm: a cascade escalating more often than this is paged, because
-# its savings case has failed.
 # Risk classes where a model below the mid tier may serve only as the
 # first stage of a cascade, with a verifier behind it.
 [verifier]
 required_below_mid = ["medium"]
 
+# The control plane's ceiling on reasoning budgets, and the cascade
+# alarm: a cascade escalating more often than this is paged, because
+# it was gated at a lower rate, and a rise means its inputs or its
+# first model changed.
 [limits]
 max_effort = "high"
 escalation_alert = 0.20

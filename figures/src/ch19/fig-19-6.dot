@@ -1,0 +1,30 @@
+// Figure 19.6  The deep-research loop with budget and verifier
+// Reading order: top to bottom, then around the loop. The question is
+// split into parts. Each round plans a query, searches, reads, and
+// checks every open part against passages in effect. The loop leaves in
+// one of two ways only: every part verified, so the answer cites those
+// passages, or the budget spent, so a person gets the question and the
+// trail. Signature figure S5, the retrieval loop.
+digraph research {
+#include "book.gv"
+  rankdir=TB; nodesep=0.4; ranksep=0.3;
+  q    [label="Question,\nas-of date", class="ops"];
+  parts[label="Split into parts", class="model"];
+  plan [label="Plan next query", class="model"];
+  srch [label="Search", class="knowledge"];
+  read [label="Read passages", class="knowledge"];
+  ver  [label="Verify open parts", class="verified gate"];
+  bud  [label="Under budget\nof 8?", class="policy gate"];
+  ans  [label="Answer citing\nverified only", class="verified"];
+  hand [label="Hand off\nwith trail", class="policy"];
+  q -> parts [class="data"];
+  parts -> plan [class="data"];
+  plan -> srch [class="data"];
+  srch -> read [class="data"];
+  read -> ver [class="data"];
+  ver -> ans [class="emphasis", label=" all verified"];
+  ver -> bud [label=" parts open"];
+  bud -> plan [label=" yes", constraint=false];
+  bud -> hand [label=" no"];
+  {rank=same; ans; bud;}
+}

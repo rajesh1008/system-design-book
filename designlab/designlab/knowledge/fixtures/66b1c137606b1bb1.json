@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 1500,
+    "messages": [
+      {
+        "content": "Today is Wednesday, May 27, 2026.\nSchema:\nchanges(change_id, month, created_at, change_type, handled_by, channel, desk, carrier, handle_minutes, itinerary_id, repeat_7d, cost_usd)\ncontacts(contact_id, month, created_at, channel, desk, change_id, transcript)\nrefunds(refund_id, month, issued_at, change_type, carrier, desk, handled_by, amount_usd, settled_at, clock_met, matured, error, verified, customer_id)\napprovals(approval_id, month, filed_at, desk, wait_minutes, decision, approver_id)\neffects(effect_id, month, at, change_type, verified, duplicate)\ntasks(task_id, month, at, latency_s, change_type, model_usd)\nqueue_snapshots(desk, month, at, depth)\nbookings(booking_id, month, booked_at, carrier, channel, gross_usd, customer_id)\ncarrier_notices(notice_id, month, received_at, carrier, kind)\nbooking_events(event_id, month, event_at, itinerary_id, event_type, carrier, payload)\nfin_ledger(entry_id, month, posted_at, carrier, account, amount_usd, margin_usd, receivable_usd)\nfin_payroll(employee_id, month, desk, salary_usd, bonus_usd)\ncustomers(customer_id, name, email, phone, card_last4, tier)\n\nQuestion: What margin do we make on refunds for carrier XMY?",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You write one SQLite SELECT statement that answers a\nLakeshore Travel Group operations question from the warehouse schema\nbelow. Timestamps are ISO 8601 text in UTC. Reply with the SQL only."
+  },
+  "request_hash": "66b1c137606b1bb1",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSuwoKEAgTGAI4AUIIdGhpbmtpbmcSDF7l5qoleRkwgjkyrBoMxXvOPu5lRrQlXhz6IjAJoNcjAjeJoUCmR812Sj1XIhCVlDzHDWKWm/0rAn3YBOoslW7E+tzhe5TqX5lTxYAq2AnXg9TEW2MSM6/LlbXbhNKFijem869wvfpocLso6GGc6FpEIUZIjbqw8WyKj7Z1O31mHnft5pFAUdB9JMc6eOze0jsSFzMN/g0dpSAxKjN/HfBW1SNelkTZgzUUMzdscEV4B9lpDUXu5vR6aa0lvK+cdiLYbRQslKiCmhMgWf9EE61O2ahxA8GQvSH/tpo22fLlmKJz5xAUTOjpEInnx8pGwNe3b1hopFG1FOZyBZJDGn03B7pCyPKdoquJEad/eERVMFpOBSTyPFt19f6WAZYo7h3/p9yNk06IIsELJxQwXNCTNrlJOjHlePccpdFdLyHA9lQrabwFaj2XvJq8Pn99eIG0p8wRk60RIo/qqisDGQdh9PAeMpM+cFtzIRcZHqChNs15Zg6iNMXoZIx8Z1gTdjUAA2O38wlrk6HPD34wIUsJuJg0LhSHz0IT3HeNSROwu372DjUIzMUEcAlrKQSiIub3SYuJ2Dk5vdJfw4LdHw0FEdrFq9NHT4ldOi6sqya4kNsQR1YLTGVRdLJGhhS1T+Y3LHlgrQRBeDt5wnuqAnrzL/y4SQ5CxVXPW7ZDKxpguRrytKN2KLDxpE9jXy5q55x+uPW+VptNXvkgGiDiXZm4TaPtdquof98pFt4N9vEK6pd95H0Yf/dhE6MchVx9I97C83P9KYDhumWm+e8+Dgh8jrkNFWo1VWrRTcZz8Kl0UiSQVDTVQuFddRe9cgbUdh+YSYW5RgnzFedfsigyAZo6fyEaGn3I0E+fRXlbdsZwmfV6I8vULhpklay+xA3z/1yLFScwgrShKYdd6j/LWXzs76WjOOd0BkXPnZoC+bS+W7tuF0WwwDD970IsAS6t2KNFL9XJris8oiZGkNQAiG3exsuaGV0QTPx/HhJcoHNcNf7rGxFwr8YYeH8v66cKuL386loCwXd5idAitaos/mtFTmROGSnXo/5oR/FlyhBaBplF0E7JSOvcWoYriG1V79r9dhz5nYtkiU+s9eew9lDO/3DMkjtil2R+ErAP17xJvMTLz08wQ80cg7p4Q6vUheo67vK5v3zHSf6dTzQsUEkuSrbAmEfW/ubJYVLDhgJVkbQeVLTwGZqaR/B9S2HEcFNfraEQPnOxeN8Yh6iPotPS4d2GP1DNO8TSALzgeBhEyjH2J+YXUuHRws/6UR7c3he3XtxBdZmQsNGh2iTBpdBUYdQI1kgkionmfEaQI/fvnrULxKlcPaKLJOKwmqgUoppYpl2Ny/KAuHp6WE+dFdqd/prFdhh3UdTNbrejz/+IBRJ12ProYPT+bMUGQNdvgFm6W+BFLuz9iFKixDPwosmm2yJ9koT3jmepIGvFDbVEynXMDfWNbZeHZfgaJoHmn7K0E7Haor0xVcpH8RjsyhkuYRlFPZX7veNg8lgP5J7k6sTo8YrsJeE4zbTAILHZaqYIZzT4/WkBp1Plwt1rrxPxr4FRvfc9j8NS9jk2P3q+NMmQraj7lGIKi9AGF1aTkvOtHqJuNkAkGnggAW81BkFe1Jjq+ehm5SMjgQQKR/U66xAviWoz7m16Gxy98//fxm53hhPlpCnVtsdFrI9o1MLRl2ja1JFQheXV1cNdITSkRnqngrPbHk72mcsjfkcQ+lxv65xh6BkK1L0yVQjRpQi41htYDBiCGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "```sql\nSELECT SUM(margin_usd) AS refund_margin_usd\nFROM fin_ledger\nWHERE carrier = 'XMY'\n  AND LOWER(account) LIKE '%refund%';\n```",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeGvV4fXmi5QhLXvyWxA",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 578,
+      "output_tokens": 357,
+      "output_tokens_details": {
+        "thinking_tokens": 279
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

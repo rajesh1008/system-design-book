@@ -13,7 +13,7 @@ Three parts, each replaceable:
             accepted; "read": anything the loop read (the pilot's way)
 
 inject="no-stop" removes the verifier and the budget: the loop runs
-until the planner has nothing new to try. That is the April 30 loop.
+until the planner has nothing new to try. That is the April 29 loop.
 """
 from __future__ import annotations
 

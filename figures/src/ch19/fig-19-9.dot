@@ -1,0 +1,22 @@
+// Figure 19.9  Effective dates and the superseded page
+// Reading order: left to right along time, then down. Two versions of
+// one carrier's same-day change rule; the second replaced the first on
+// May 1, 2026. The ticket was issued May 2, so only the second is in
+// effect for it. The pilot read the first page three minutes before it
+// answered, so the freshness check called it fresh (Lakeshore figures
+// are illustrative).
+digraph dates {
+#include "book.gv"
+  rankdir=LR; nodesep=0.35; ranksep=0.4;
+  v1 [label="v1: $75\nto Apr 30", class="fail"];
+  v2 [label="v2: $100\nfrom May 1", class="knowledge"];
+  tk [label="Ticket issued\nMay 2 (as-of)", class="ops"];
+  fr [label="Pilot: read 3 min\nago, \"fresh\"", class="fail"];
+  ok [label="In effect\non May 2?", class="knowledge gate"];
+  v1 -> v2 [label=" superseded by", class="data"];
+  tk -> ok [class="emphasis"];
+  ok -> v2 [class="emphasis"];
+  fr -> v1 [class="fail"];
+  {rank=same; v1; fr;}
+  {rank=same; v2; ok;}
+}

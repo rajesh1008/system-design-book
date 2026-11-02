@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 1500,
+    "messages": [
+      {
+        "content": "Today is Wednesday, May 27, 2026.\nSchema:\nchanges(change_id, month, created_at, change_type, handled_by, channel, desk, carrier, handle_minutes, itinerary_id, repeat_7d, cost_usd)\ncontacts(contact_id, month, created_at, channel, desk, change_id, transcript)\nrefunds(refund_id, month, issued_at, change_type, carrier, desk, handled_by, amount_usd, settled_at, clock_met, matured, error, verified, customer_id)\napprovals(approval_id, month, filed_at, desk, wait_minutes, decision, approver_id)\neffects(effect_id, month, at, change_type, verified, duplicate)\ntasks(task_id, month, at, latency_s, change_type, model_usd)\nqueue_snapshots(desk, month, at, depth)\nbookings(booking_id, month, booked_at, carrier, channel, gross_usd, customer_id)\ncarrier_notices(notice_id, month, received_at, carrier, kind)\nbooking_events(event_id, month, event_at, itinerary_id, event_type, carrier, payload)\nfin_ledger(entry_id, month, posted_at, carrier, account, amount_usd, margin_usd, receivable_usd)\nfin_payroll(employee_id, month, desk, salary_usd, bonus_usd)\ncustomers(customer_id, name, email, phone, card_last4, tier)\n\nQuestion: How many schedule-change notices did carriers send in April 2026?",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You write one SQLite SELECT statement that answers a\nLakeshore Travel Group operations question from the warehouse schema\nbelow. Timestamps are ISO 8601 text in UTC. Reply with the SQL only."
+  },
+  "request_hash": "68a92af7d65b245d",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSmQkKEAgTGAI4AUIIdGhpbmtpbmcSDJK3s7cOD3cEPek7lxoMqwWEzt6qqVb8NO1HIjDHKW4ppDnNFoCSyK171ESFAHo1sgBd0+uSBQrzrc+lcVZw70x2rUXiOtY9g5H+H70qtggQc/yUTo11E5YRO+TaU6Kda6FxBdLkKSOCzjr8ov5dZ4tLV6tXpzvH3f/7E+kyeXb3y0CxQp5qVus96dGdQs0M+dvIiEmDOjM3jFkUGKa13dtkUWsGb3kAtmDDAOsoHjiSTl3vIj0nTZQ7eO15McsqYEwH6M26YQFHPheVjrHh0Yuk6TO3Yhu8UrrKCLC72Git/ZjdclI4m8c+ybZcbbwMTW5MdvZMT7zxnXHwJyWg64zeETGlMDh2AK7Li+Aq9wCguqt1JLonPTIm97buoltEE0pgCx8miyTkpYSXWHnUWg3ZDYZYKkfwG4lB13d27rYrvmYVX+UNjO0UyAm3EADqy45Fnl3h4/BK0zf4JvywxXizpt9oShCfXcp+TnHTL3s7YwT/SrGv77MMymTQ3fhsipyrfgCVj5DMHFhIM4DS5V1vh0Oi7+1WnK/GKbv4wUj89Yxe6axq+SNS7Q9epnKyI1N5jSkyHc1RQ2BNvl80w66oVPZe6QbBHbMpFCnP7tLcN/xT0ygb7rejQUdvD1gzeCXGkTqbvmfIOgevLjiz/xXfWTFoQ2R3oFyuinWxI4UIEMSb9O7XTc1EO4aoOrdPCyHvQqSZwrbOtNZcMwXyagoN3zDRj1PL++SnY0oIWRaoppNxLKDVfhJrSMjajL2zCZMo/8KncSg5CVwpyTqmeRnsJzeJK3CMQthsvjq11GmFqNV89y1DRKTWiaXPtVci4GwUzf46b0V5T0KiEbwH/ReTrIQ9rSDL+dFWPHRqPYW81XXNBaBCkDGBVHu3gmGAelxJAwNCAgfblguknOQOoYx6+GRDEVjP0OnaWyXl5SrqaauOB7b3VVnI37Zewl9JEv7L5rdpr5Ah+iaLM34YMM7mltDNITcZE7TuGBtS9UONXXbx4VD+LCs7Wh5gY2r0+vD9ufKsY0vT2UO31OUSgM5hkAkPHL/Bbs0ZARkRn2G03L9bVKZNRAUOFkCEqAu7Mj8DwH+glmL26tdpW+BNfr4cS1gQas6FdJkT/DY74NhSnqidhd7gIWuGt1gSJgatEJFQABnDMCL4yeMuMBjVFMi2VFAneKW6J561DIApQgKzJ2bur7UE0QLFu0pnD7WKOzmojJCTwMT8AtoZ2XTvNshWllLfAb+ThYYufGAQ89IhIAwinwCWWWcM+AxYeYxxiCLl4G2ug0di+ESl0Vj7zNTVHsiSAVgD6FckoNQzKg0w5zXXjnxhqk95VUiM2Q4H40BgLK9BMYTMRUcwskiEbapi5yt2+CYtKdZUOamV4nTn8EM5BUPGz5Bhm3TvTMuKv0ZLdcXOEwI1NGMh2BKJz9Xbi/VBLTVUDiLTqcDyj8BVu45vEvz5GRiNhBH5AcYdQWL3J+giLGzQUE1OHYbtjYL/HI29E0qHXjcgWD3A14B9Ns0iWnqC2Hkr8Kk1angngcdffy0AGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "```sql\nSELECT COUNT(*) AS schedule_change_notices\nFROM carrier_notices\nWHERE received_at >= '2026-04-01'\n  AND received_at < '2026-05-01'\n  AND LOWER(kind) LIKE '%schedule%';\n```",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeGwKEMZohxx3VYiscWg",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 580,
+      "output_tokens": 320,
+      "output_tokens_details": {
+        "thinking_tokens": 224
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

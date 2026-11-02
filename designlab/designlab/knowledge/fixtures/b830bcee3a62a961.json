@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 1500,
+    "messages": [
+      {
+        "content": "Today is Wednesday, May 27, 2026.\nSchema:\nchanges(change_id, month, created_at, change_type, handled_by, channel, desk, carrier, handle_minutes, itinerary_id, repeat_7d, cost_usd)\ncontacts(contact_id, month, created_at, channel, desk, change_id, transcript)\nrefunds(refund_id, month, issued_at, change_type, carrier, desk, handled_by, amount_usd, settled_at, clock_met, matured, error, verified, customer_id)\napprovals(approval_id, month, filed_at, desk, wait_minutes, decision, approver_id)\neffects(effect_id, month, at, change_type, verified, duplicate)\ntasks(task_id, month, at, latency_s, change_type, model_usd)\nqueue_snapshots(desk, month, at, depth)\nbookings(booking_id, month, booked_at, carrier, channel, gross_usd, customer_id)\ncarrier_notices(notice_id, month, received_at, carrier, kind)\nbooking_events(event_id, month, event_at, itinerary_id, event_type, carrier, payload)\nfin_ledger(entry_id, month, posted_at, carrier, account, amount_usd, margin_usd, receivable_usd)\nfin_payroll(employee_id, month, desk, salary_usd, bonus_usd)\ncustomers(customer_id, name, email, phone, card_last4, tier)\n\nQuestion: Total refund value by carrier for Q1 2026.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You write one SQLite SELECT statement that answers a\nLakeshore Travel Group operations question from the warehouse schema\nbelow. Timestamps are ISO 8601 text in UTC. Reply with the SQL only."
+  },
+  "request_hash": "b830bcee3a62a961",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQS0AcKEAgTGAI4AUIIdGhpbmtpbmcSDGKPFAljdI7m7M5dGRoM5tc0K5WA7WSxFGDLIjDCvOGWbn/73ilb63BPxPe9XQ4LrsJR1xSffn9DawgsoSCHDYTNpk9umhwNq63+fq4q7QblLxfb9aCwvqaE40So8xSPyCl0+8acEnr/tufKlLKuOMRqpdqrxgImPZoIAttloN+A3Q0dcU0u54Y2dWx2wqVoNblks7zUj0rE7GO5EA1T0AUbJPBo09t5m9DVdUKJuWTJZ9zmNcphYJgpF0eJljVzYWEHvvcunN8e1cwmZalzMC1PZywJzjoUw0c6+Rl8IKM46UZObOavuFlD3Xivj9MYc7xqH8G4+8Y/5nCMOWvxj8egbISP5bXAHoQ+paEX5gAjUv8paik9AlyJ1vj3ENEpMJbF6fqPAGGys8PXWwEXn8E3JZ2fWdB+PK9+IhFVzC71QtWfZXgDC8CmzuB5AtSIOyEBZ9uYCa9p9utphPwPc9Ptfr6Biq4+niWZndxvjpq5MoVCSEmx0LGgNAQJaAZqrmbmI2LIF5Pm3H1idZM3RgGf513JnDmdiPVAAZR7vzgcQFfvMS68dTWw0tPkrUzgSoA6ogCgyrRTirtL9ZOnmUvzeKuU+g8TdTRhvzYiBviDPhWKEuBDPWHjttxwSnFAqhANEedxzPjpkbjSlMkd3kxWf+rDviOkfqhhuYn0ChVgpgT0drr75RFsyLbnmNQRCx68gIq5JeN8nLf+TZwDWZERSjr0n8LYYR2HlC243faRHvY3oFnOSleH0Y4HpFAXCZ1dyBzYk41FAR/MFAHpOXdcPklM2Rn0AGFrc/cyK/yhudOMDmhYhRLilQuXXy7PpFmsRVBQAqUlZRBxRnYyF7Q0Tjm81E5csqEN129q7kuBlcjJif5KaAbYJNK6WUJ7bHptultzqrJDxvZ1JDfyvxGI9R+PtjbB/sXtgt59Am28KimTGZoA8OTOz0hkPrF8PCxl89qvQwMCCr09tnlrttuoTy4h1QpNz2KpRLkgzrBgiWRfLnKLWOB3RaSs3hcAQgdHtzQkcrwWdNGCeT0iq7Ye9x2GgEKTnl9ZE6qbnGlJPBvXtEt5m7HPev0upiQjvCjUUiBeopBMsO3CmH14cZEWq9dvan3iHReNa4U+LxuRskwU2XVgqCAAoZXYhymK89qdsdQoiziJIrGb/YiOzFsRvQijvH3KASUxuv04z5A58xE4sUiMJJ7wgSVU2RInY+xMkWMU7RebBXDuR4sUrmmMMbcBfz9ELgUuy8ZB5LhSE42hG85LnriCoH/NGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "```sql\nSELECT carrier,\n       SUM(amount_usd) AS total_refund_usd\nFROM refunds\nWHERE issued_at >= '2026-01-01T00:00:00Z'\n  AND issued_at <  '2026-04-01T00:00:00Z'\nGROUP BY carrier\nORDER BY total_refund_usd DESC;\n```",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeGteVttv3UjoE55EjA4",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 577,
+      "output_tokens": 290,
+      "output_tokens_details": {
+        "thinking_tokens": 165
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

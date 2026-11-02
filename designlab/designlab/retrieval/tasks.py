@@ -68,9 +68,9 @@ def tasks(seed: int = DEFAULT_SEED, n: int = 40) -> list[Task]:
     return out
 
 
-# The shadow question from April 30, 2026, in the lab's corpus: a
+# The shadow question from April 29, 2026, in the lab's corpus: a
 # waiver that does not exist for this carrier, asked about partners.
 RUNAWAY = Task("T00", "Does the Prairie Airways waiver for ORD cover "
                "Basic fares booked through a partner airline?",
-               date(2026, 4, 30), (Slot("XPA", "waiver-ORD", "Basic"),),
+               date(2026, 4, 29), (Slot("XPA", "waiver-ORD", "Basic"),),
                False)

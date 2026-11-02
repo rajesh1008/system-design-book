@@ -1,0 +1,33 @@
+// Figure 19.11  The retrieval architecture on one page
+// Reading order: top to bottom. Three sources are ingested with versions
+// and effective dates into two indexes. The retrieval service filters,
+// fuses, and reranks. The research loop plans, verifies, and stops
+// under a budget; its answer cites only verified passages and crosses
+// the C1 contract. On the right, the checks that keep each layer honest
+// and their owners.
+digraph onepage {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  src  [label="fares, docs, notices\n.lakeshore.internal", class="knowledge store"];
+  ing  [label="Ingest with\neffective dates", class="knowledge"];
+  idx  [label="Lexical and\ndense indexes", class="knowledge store"];
+  svc  [label="Filter, fuse,\nrerank", class="knowledge"];
+  loop [label="Loop: verify,\nbudget 8", class="policy gate"];
+  out  [label="Cited answer\nor hand-off", class="policy"];
+  c1   [label="C1 contract", class="ops"];
+  g1   [label="One version\nin effect", class="ops"];
+  g2   [label="Golden set\nnightly", class="ops"];
+  g3   [label="Grounding\nchecker, audit", class="ops"];
+  src -> ing [class="data"];
+  ing -> idx [class="data"];
+  idx -> svc [class="data"];
+  svc -> loop [class="emphasis"];
+  loop -> out [class="emphasis"];
+  out -> c1 [class="emphasis"];
+  g1 -> ing [style="dashed", arrowhead="none"];
+  g2 -> svc [style="dashed", arrowhead="none"];
+  g3 -> out [style="dashed", arrowhead="none"];
+  {rank=same; ing; g1;}
+  {rank=same; svc; g2;}
+  {rank=same; out; g3;}
+}

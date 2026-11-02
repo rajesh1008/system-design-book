@@ -75,7 +75,7 @@ CATALOG: dict[str, Table] = {t.name: t for t in [
        "customer_id": 12}, 1_000),
     _t("carrier_notices", 30_000, {"notice_id": 16, "month": 0,
        "received_at": 8, "carrier": 4, "kind": 12}, 100),
-    _t("booking_events", 4.0e9, {"event_id": 16, "month": 0,
+    _t("booking_events", 5.5e9, {"event_id": 16, "month": 0,
        "event_at": 8, "itinerary_id": 12, "event_type": 10,
        "carrier": 4, "payload": 610}, 1_000_000, domain="events"),
     _t("fin_ledger", 1_000_000, {"entry_id": 16, "month": 0,
@@ -91,7 +91,7 @@ CATALOG: dict[str, Table] = {t.name: t for t in [
 
 DESKS = ("CHI-1", "CHI-2", "CHI-3", "DFW-1", "DFW-2", "ATL-1",
          "ATL-2", "DEN-1", "PHX-1", "MSP-1", "BOS-1", "SEA-1")
-CARRIERS = ("LKA", "NRA", "PWX", "SKY", "BLU", "CRN")
+CARRIERS = ("XMY", "NRA", "PWX", "SKY", "BLU", "CRN")
 CHANGE_TYPES = ("voluntary_rebooking", "cancel_for_credit",
                 "involuntary_rebooking", "hotel_cancellation",
                 "cancel_with_refund", "involuntary_refund", "upgrade",
@@ -99,14 +99,22 @@ CHANGE_TYPES = ("voluntary_rebooking", "cancel_for_credit",
                 "ancillary_refund", "car_rental_change", "name_correction")
 REFUND_TYPES = ("cancel_with_refund", "involuntary_refund",
                 "hotel_cancellation", "ancillary_refund")
+CHANNELS = ("chat", "phone", "email", "app")
+DECISIONS = ("approved", "refused")
+NOTICE_KINDS = ("schedule_change", "cancellation", "equipment", "gate")
+HANDLERS = ("agent", "assisted", "self_service", "person")
 EVENT_TYPES = ("status_poll", "price_check", "view", "schedule_update",
                "refund_requested", "refund_issued", "refund_reversed",
                "carrier_refund_reported", "ticketed", "note")
 SEASON = {1: .93, 2: .88, 3: 1.02, 4: 1.0, 5: 1.04, 6: 1.12, 7: 1.15,
           8: 1.08, 9: .95, 10: .96, 11: .97, 12: .98}
-HANDLED_2026 = {"2026-01": (.03, .10, .36, .51), "2026-02": (.03, .10,
-                .36, .51), "2026-03": (.04, .11, .37, .48), "2026-04":
-                (.05, .12, .38, .45), "2026-05": (.06, .12, .38, .44)}
+# Shares (agent, assisted, self-service, person). March to May 2026
+# follow the outcome cards logged for Chapters 12 and 16.
+HANDLED_2026 = {"2026-01": (.03, .08, .38, .51),
+                "2026-02": (.03, .08, .39, .50),
+                "2026-03": (.04, .08, .39, .49),
+                "2026-04": (.025, .09, .39, .495),
+                "2026-05": (.06, .12, .38, .44)}
 
 
 def true_rows(table: str, month: str, seed: int = 20) -> float:
@@ -174,7 +182,7 @@ def _n(t: Table, month: str, r) -> int:
 def _handled(month: str, r) -> str:
     shares = HANDLED_2026.get(month, (0.0, .08, .35, .57))
     x, acc = r.random(), 0.0
-    for who, s in zip(("agent", "assisted", "self_service", "person"),
+    for who, s in zip(HANDLERS,
                       shares):
         acc += s
         if x < acc:
@@ -200,7 +208,7 @@ def _row(name: str, month: str, i: int, r) -> tuple:
     if name == "changes":
         ct = r.choice(CHANGE_TYPES)
         return (f"CHG-{key}", month, at, ct, _handled(month, r),
-                r.choice(("chat", "phone", "email", "app")), desk, car,
+                r.choice(CHANNELS), desk, car,
                 round(r.lognormvariate(2.4, 0.6), 1), f"LTG-{key[-7:]}",
                 int(r.random() < 0.11), round(r.uniform(4, 60), 2))
     if name == "refunds":
@@ -211,11 +219,11 @@ def _row(name: str, month: str, i: int, r) -> tuple:
                 int(month <= "2026-01"), int(r.random() < 0.008),
                 int(r.random() < 0.99), f"CUS-{r.randint(1, 3000):05d}")
     if name == "contacts":
-        return (f"CON-{key}", month, at, r.choice(("chat", "phone",
-                "email", "app")), desk, f"CHG-{key}", "(text)")
+        return (f"CON-{key}", month, at, r.choice(CHANNELS), desk,
+                f"CHG-{key}", "(text)")
     if name == "approvals":
         return (f"APR-{key}", month, at, desk,
-                round(r.lognormvariate(1.6, 1.0), 1),
+                round(r.lognormvariate(2.2, 1.1), 1),
                 r.choice(("approved", "approved", "approved", "refused")),
                 f"EMP-{r.randint(1, 140):04d}")
     if name == "queue_snapshots":
@@ -225,8 +233,7 @@ def _row(name: str, month: str, i: int, r) -> tuple:
                 "agency")), round(r.lognormvariate(6.2, 0.6), 2),
                 f"CUS-{r.randint(1, 3000):05d}")
     if name == "carrier_notices":
-        return (f"NTC-{key}", month, at, car, r.choice((
-                "schedule_change", "cancellation", "equipment", "gate")))
+        return (f"NTC-{key}", month, at, car, r.choice(NOTICE_KINDS))
     if name == "booking_events":
         et = r.choices(EVENT_TYPES, (60, 18, 12, 4, 1, 1, .2, 1, 2, .8))[0]
         return (f"EVT-{key}", month, at, f"LTG-{key[-7:]}", et, car,

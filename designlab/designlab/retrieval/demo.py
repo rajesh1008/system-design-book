@@ -33,8 +33,9 @@ ISSUED = date(2026, 5, 2)      # the ticket's issue date: the as-of date
 def _row(h, as_of) -> str:
     d = h.doc
     eff = "in effect" if d.in_effect(as_of) else "superseded"
-    if d.kind == "note":
-        eff = "desk note"
+    if d.kind in ("note", "help", "supplier"):
+        eff = {"note": "desk note", "help": "help page",
+               "supplier": "supplier"}[d.kind]
     return f"{h.rank}  {d.doc_id:20} {eff:10}  {h.why}"[:70]
 
 
@@ -52,14 +53,19 @@ def opening(args) -> None:
     emit(f"rank 1 says Main: ${top.facts['Main']}, in effect "
          f"{top.effective_from} to {top.effective_to}")
     emit()
-    emit("hybrid, date filter before ranking, rerank, top 5")
+    emit(f"hybrid, dates {args.dates}, rerank "
+         f"{'off' if args.no_rerank else 'on'}, top 5")
     hits = hybrid.search(OPENING_Q, ISSUED, k=5,
                          use_rerank=not args.no_rerank, dates=args.dates)
     for h in hits:
         emit(_row(h, ISSUED))
-    d = hits[0].doc
-    emit(f"rank 1 says Main: ${d.facts.get('Main', '?')}, in effect from "
-         f"{d.effective_from}")
+    rule = next((h for h in hits if h.doc.kind == "fare-rule"), None)
+    if rule is None:
+        emit("no fare rule in the top 5")
+    else:
+        emit(f"first rule at rank {rule.rank} says Main: "
+             f"${rule.doc.facts['Main']}, in effect from "
+             f"{rule.doc.effective_from}")
 
 
 def provenance(args) -> None:
@@ -161,7 +167,7 @@ def loops(args) -> None:
     emit()
     if args.inject:
         run0 = agentic.run(RUNAWAY, inject=args.inject)
-        emit(f"{RUNAWAY.tid} (the April 30 question): "
+        emit(f"{RUNAWAY.tid} (the April 29 question): "
              f"{len(run0.queries)} queries, stop {run0.stop}")
         runs = runs + [run0]
     fails = agentic.check_budget(runs, 8)
@@ -187,24 +193,26 @@ def budgets(args) -> None:
 
 
 def add_superseded() -> None:
-    """Try It Yourself 3: add a superseded page and watch the filter."""
+    """Try It Yourself 3: add an older superseded page, worded like the
+    long 2025 page, and see which configurations still rank it."""
     import corpus.docs as D
     from dataclasses import replace
     base = D.documents()
-    cur = D.by_id()["FR-XPA-same-day-v2"]
-    old = replace(cur, doc_id="FR-XPA-same-day-v0",
-                  text=cur.text.replace("$100", "$60") + " "
-                  + cur.text,
+    v1 = D.by_id()["FR-XPA-same-day-v1"]
+    old = replace(v1, doc_id="FR-XPA-same-day-v0", version=0,
+                  text=v1.text.replace("January 1, 2025",
+                                       "January 1, 2024")
+                  .replace("$75", "$60"),
+                  source=v1.source.replace("/v1", "/v0"),
                   effective_from=date(2024, 1, 1),
-                  effective_to=date(2024, 12, 31), version=0,
-                  superseded_by="FR-XPA-same-day-v1",
-                  facts=dict(cur.facts, Main="60"))
+                  effective_to=date(2024, 12, 31),
+                  superseded_by=v1.doc_id,
+                  facts=dict(v1.facts, Main="60"))
     docs = tuple(base) + (old,)
-    D.documents.cache_clear()
-    hybrid.index.cache_clear()
     D.documents = lambda seed=2026: docs              # noqa: E731
     hybrid.documents = D.documents
-    emit("added FR-XPA-same-day-v0 (2024, Main $60), worded like v2")
+    hybrid.index.cache_clear()
+    emit("added FR-XPA-same-day-v0 (2024, Main $60), worded like v1")
 
 
 def main(argv=None) -> None:
