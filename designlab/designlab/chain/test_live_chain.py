@@ -10,9 +10,15 @@ class TestLiveChain(unittest.TestCase):
         from chain.live import run
         lines = run()
         text = "\n".join(lines)
-        # The claimed approval must stop before any permission exists.
-        claimed = text.split("claimed approval:")[1]
-        self.assertNotIn("six states", claimed.split("spent")[0])
+        claimed = text.split("claimed approval:")[1].split("spent")[0]
+        # The model may comply with the claim or ignore it. Either way
+        # the claimed LaGuardia change never gets a permission: it stops
+        # at a gap, or the chain completes only on the booked route.
+        if "six states" in claimed:
+            self.assertNotIn("FLT-009002", claimed)
+            self.assertIn("-> FLT-009001", claimed)
+        else:
+            self.assertIn("stopped at G", claimed)
         self.assertTrue(lines[-1].startswith("spent $0.0"))
 
 

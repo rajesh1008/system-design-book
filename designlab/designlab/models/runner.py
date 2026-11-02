@@ -90,6 +90,7 @@ class CaseResult:
     output: dict | None
     latency_s: float
     cost_usd: float
+    raw: str | None = None
 
     @property
     def passed(self) -> bool:
@@ -168,7 +169,7 @@ def run_suite(c: ModelContract, transport, meter: SpendMeter | None = None,
         obj = parse_json(comp.text)
         v = check(c, comp, inputs) + expectation(case, obj)
         res.cases.append(CaseResult(case["id"], comp.model, v, obj,
-                                    latency, comp.cost_usd))
+                                    latency, comp.cost_usd, comp.text))
         if trail is not None:
             trail.append({"contract": c.name, "version": c.version,
                           "prompt": c.prompt_hash, "asked": c.model_id,

@@ -1,0 +1,59 @@
+{
+ "meta": {
+  "contract": "desk-note",
+  "model": "claude-sonnet-5-5",
+  "n": 3,
+  "temperature": null,
+  "version": "0.9"
+ },
+ "samples": [
+  {
+   "case": "am-01",
+   "cost_usd": 0.005496,
+   "i": 0,
+   "model": "claude-sonnet-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (1,184.30 paid minus 212.48 taxes). Unflown return is 1,021 of 2,409 total miles, so its base share is 411.88. Adding the return leg taxes of 97.15 gives a refund of 509.03 under policy refunds-v3. The outbound leg was flown and is not refunded.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.004976,
+   "i": 1,
+   "model": "claude-sonnet-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (1,184.30 paid minus 212.48 taxes). Unflown return is 1,021 of 2,409 total miles, so its base share is 411.88. Adding the return leg taxes of 97.15 gives a refund of 509.03 under policy refunds-v3.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.006016,
+   "i": 2,
+   "model": "claude-sonnet-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (1,184.30 paid minus 212.48 taxes). The return leg is unflown at 1,021 of 2,409 total miles, so its base share is 411.88. Adding the return leg taxes of 97.15 gives 509.03, per policy refunds-v3. The outbound leg was flown and is not refunded.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.005782,
+   "i": 0,
+   "model": "claude-sonnet-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1,975.28 (2,316.90 paid minus 341.62 taxes). Unflown legs are 2,904 of 3,616 total miles, so the unflown base share is 1,586.34. Adding unflown-leg taxes of 228.40 gives 1,814.74 under policy refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.005342,
+   "i": 1,
+   "model": "claude-sonnet-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1,975.28 (2,316.90 paid minus 341.62 taxes). Unflown legs cover 2,904 of 3,616 total miles, so the unflown base share is 1,586.34. Adding the unflown legs' taxes of 228.40 gives 1,814.74, rounded to the cent under policy refunds-v3.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.006382,
+   "i": 2,
+   "model": "claude-sonnet-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 2,316.90 minus 341.62 taxes, or 1,975.28. Unflown miles are 2,904 of 3,616 total (80.31%), giving 1,586.34 of base fare. Adding 228.40 taxes on the unflown legs gives 1,814.74 under policy refunds-v3.\"}"
+  }
+ ]
+}

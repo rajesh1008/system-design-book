@@ -32,7 +32,7 @@ li p { text-indent: 0; }
 blockquote { margin: 0.8em 1.2em; font-style: italic; }
 blockquote p { text-indent: 0; }
 a { color: inherit; text-decoration: underline; }
-strong { font-weight: bold; }
+strong, b { font-weight: bold; font-family: inherit; font-size: inherit; }
 hr { border: 0; border-top: 1px solid #6B7280; margin: 1.5em 20%; }
 
 /* ---------- title and copyright pages */
@@ -74,7 +74,6 @@ div.try-it-yourself .box-label  { color: #1F2A44; }
 section.interview > h3, h3.interview { border-top: 2px solid #1F2A44; padding-top: 0.4em; }
 div.qa { margin: 1.1em 0; padding: 0 0 0.6em 0; border-bottom: 1px solid #D9DCE1; }
 div.qa p { text-indent: 0; margin-top: 0.4em; }
-div.qa > p:nth-of-type(2) strong:first-child { font-family: sans-serif; }
 div.weak { margin: 0.6em 0 0.6em 0.8em; padding: 0.3em 0.6em; border-left: 3px dashed #C0392B; background-color: #FCEFED; }
 div.strong { margin: 0.6em 0 0.6em 0.8em; padding: 0.3em 0.6em; border-left: 3px solid #2F7A3E; }
 .weak-label, .strong-label { font-family: sans-serif; font-size: 0.85em; }

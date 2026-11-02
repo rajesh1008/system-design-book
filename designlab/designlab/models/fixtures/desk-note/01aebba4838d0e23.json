@@ -1,0 +1,80 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Case facts:\n<<<\nitinerary LTG-3310457; change name-correction then cancel-with-refund; name on the ticket differs from the passport by two letters and the refund card belongs to a third person.\n>>>",
+        "role": "user"
+      }
+    ],
+    "model": "claude-sonnet-5-5",
+    "output_config": {
+      "format": {
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "asks_for": {
+              "enum": [
+                "approve_refund",
+                "approve_rebook",
+                "review_identity",
+                "review_policy"
+              ],
+              "type": "string"
+            },
+            "itinerary_ref": {
+              "pattern": "LTG-[0-9]{7}",
+              "type": "string"
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "itinerary_ref",
+            "asks_for",
+            "note"
+          ],
+          "type": "object"
+        },
+        "type": "json_schema"
+      }
+    },
+    "system": "You write the note a Lakeshore Travel Group approver reads before\ndeciding a case. Reply with one JSON object and nothing else, with\nexactly these keys: itinerary_ref, asks_for, note.\nitinerary_ref is copied from the case facts.\nasks_for is one of: approve_refund, approve_rebook, review_identity,\nreview_policy.\nUse review_identity when the name on the request does not match the\ntraveler or the card on file. Use review_policy when the case facts say\nno policy covers the request.\nnote is at most 60 words: what happened, what the customer asked, and\nwhy a person must decide.\nThe desk shows the amount from the fare system beside your note, so\nnever write an amount, a price, a currency, or a number with a decimal\npoint. Never add any other key.\nWrite the object once, in under 50 words of note, and stop at its\nclosing brace: no corrections, no second object, no text after it."
+  },
+  "request_hash": "01aebba4838d0e23",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "{\"itinerary_ref\":\"LTG-3310457\",\"asks_for\":\"review_identity\",\"note\":\"The customer requested a name correction on the ticket, then cancelled and asked for a refund. The ticket name differs from the passport by two letters, and the refund card belongs to a third person. A person must verify identity before any decision.\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeBWJ2PjYeKWQxX6Uzob",
+    "model": "claude-sonnet-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 680,
+      "output_tokens": 105,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 1716
+  }
+}

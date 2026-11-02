@@ -1,0 +1,331 @@
+{
+ "meta": {
+  "contract": "refund-reason",
+  "model": "claude-haiku-4-5-20251001",
+  "n": 8,
+  "temperature": 1.0,
+  "version": "1.3"
+ },
+ "samples": [
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 0,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 1,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 2,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 3,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 4,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 5,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 6,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 0.000532,
+   "i": 7,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"schedule_change\",\n  \"evidence\": \"airline moved my 9:05 departure to 6:40 the next morning\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 0,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 1,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 2,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 3,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 4,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 5,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 6,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.000495,
+   "i": 7,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"changed_plans\",\n  \"evidence\": \"My conference got moved to June so I no longer need this trip\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 0,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 1,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 2,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 3,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 4,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 5,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 6,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 0.000423,
+   "i": 7,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"unclear\",\n  \"evidence\": \"refund pls\",\n  \"needs_person\": true\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000476,
+   "i": 0,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"Our flight was canceled by the airline\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000476,
+   "i": 1,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"Our flight was canceled by the airline\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000471,
+   "i": 2,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"flight was canceled by the airline\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000476,
+   "i": 3,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"Our flight was canceled by the airline\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000476,
+   "i": 4,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"Our flight was canceled by the airline\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000476,
+   "i": 5,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"Our flight was canceled by the airline\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000476,
+   "i": 6,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"Our flight was canceled by the airline.\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 0.000476,
+   "i": 7,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"carrier_canceled\",\n  \"evidence\": \"Our flight was canceled by the airline\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000559,
+   "i": 0,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000554,
+   "i": 1,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000559,
+   "i": 2,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000559,
+   "i": 3,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000559,
+   "i": 4,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000559,
+   "i": 5,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000559,
+   "i": 6,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.000559,
+   "i": 7,
+   "model": "claude-haiku-4-5-20251001",
+   "stop": "end_turn",
+   "text": "```json\n{\n  \"reason_code\": \"service_not_received\",\n  \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat, the airline swapped the aircraft\",\n  \"needs_person\": false\n}\n```"
+  }
+ ]
+}

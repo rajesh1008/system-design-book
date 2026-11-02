@@ -1,0 +1,491 @@
+{
+ "meta": {
+  "contract": "refund-reason",
+  "model": "claude-haiku-5-5",
+  "n": 10,
+  "temperature": null,
+  "version": "1.3"
+ },
+ "samples": [
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-01",
+   "cost_usd": 6.17e-05,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"schedule_change\", \"evidence\": \"The airline moved my 9:05 departure to 6:40 the next morning\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 5.73e-05,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June so I no longer need this trip\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001268,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 5.78e-05,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June so I no longer need this trip.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001138,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"conference got moved to June\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001148,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001173,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001208,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June so I no longer need this trip\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001218,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June so I no longer need this trip.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001123,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-05",
+   "cost_usd": 0.0001153,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"changed_plans\", \"evidence\": \"My conference got moved to June\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-07",
+   "cost_usd": 4.76e-05,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"refund pls\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-10",
+   "cost_usd": 5.85e-05,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"carrier_canceled\", \"evidence\": \"Our flight was canceled by the airline.\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001438,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001253,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001368,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001668,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001428,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001578,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001453,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001473,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001378,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the seat I paid extra legroom for was the same as a normal seat\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-12",
+   "cost_usd": 0.0001398,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"service_not_received\", \"evidence\": \"the airline swapped the aircraft\", \"needs_person\": false}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  },
+  {
+   "case": "rr-16",
+   "cost_usd": 5.56e-05,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"reason_code\": \"unclear\", \"evidence\": \"Something went wrong with my booking, not sure what\", \"needs_person\": true}"
+  }
+ ]
+}

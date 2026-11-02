@@ -1,0 +1,56 @@
+# Archived: the desk note before April 20, 2026, which asked the model to
+# compute the refund amount. Kept so the variance lab can show why the
+# amount moved to the fare tool (Chapter 13). Never deployed again.
+name = "desk-note"
+version = "0.9"
+owner = "Applied Research (Dr. Hannah Clarke)"
+alert_to = "SRE on-call (Ben Carter)"
+step = "approver desk: summarize the case and state the refund"
+role = "mid"
+model_id = "claude-sonnet-5-5"
+id_kind = "snapshot"
+expect_echo = "claude-sonnet-5-5"
+retire_not_before = "2027-09-28"
+review_by = "2027-06-30"
+max_input_chars = 4000
+max_tokens = 1500
+sampling = "provider default (temperature not accepted)"
+p95_latency_s = 20.0
+max_cost_usd = 0.03
+on_violation = "the desk shows the case facts without a note"
+golden = "amount-cases.jsonl"
+decoding = "constrained"
+system = """
+You write the note a Lakeshore Travel Group approver reads before
+deciding a refund. Reply with one JSON object and nothing else, with
+exactly these keys: itinerary_ref, refund_amount, note.
+itinerary_ref is copied from the case facts.
+refund_amount is the refund in US dollars computed from the policy in
+the case facts, written like 123.45 with no currency sign.
+note is at most 60 words explaining the refund to the approver.
+"""
+template = """
+Case facts:
+<<<
+{facts}
+>>>
+"""
+
+[output]
+extra_fields = "reject"
+
+[[output.fields]]
+name = "itinerary_ref"
+type = "string"
+pattern = "LTG-[0-9]{7}"
+quote_of = "facts"
+
+[[output.fields]]
+name = "refund_amount"
+type = "string"
+pattern = "[0-9]+\\.[0-9]{2}"
+
+[[output.fields]]
+name = "note"
+type = "string"
+max_words = 60

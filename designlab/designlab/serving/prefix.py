@@ -27,10 +27,14 @@ TTL_S = 300.0
 MIN_TOKENS = 512
 
 
-def chain(segs, salt: str = "") -> list[str]:
-    out, h = [], hashlib.sha256(salt.encode()).hexdigest()
-    for s in segs:
-        h = hashlib.sha256(f"{h}|{s.key}".encode()).hexdigest()
+def chain(segs, salt: str = "", salt_at: int = 0) -> list[str]:
+    """Hash chain over segment keys. The salt enters at segment
+    `salt_at`: 0 salts the first block, as an engine's per-request
+    cache salt does; a later index leaves the public prefix shared."""
+    out, h = [], hashlib.sha256(b"").hexdigest()
+    for i, s in enumerate(segs):
+        mix = f"{salt}|" if salt and i == salt_at else ""
+        h = hashlib.sha256(f"{h}|{mix}{s.key}".encode()).hexdigest()
         out.append(h)
     return out
 
@@ -102,8 +106,8 @@ class EngineCache:
         self.held = 0
 
     def call(self, r: Rendered, now: float, output: int,
-             salt: str = "") -> Bill:
-        hs, cum = chain(r.segs, salt), cumulative(r.segs)
+             salt: str = "", salt_at: int = 0) -> Bill:
+        hs, cum = chain(r.segs, salt, salt_at), cumulative(r.segs)
         matched = 0
         for i, h in enumerate(hs):
             if h not in self.lru:
@@ -120,5 +124,6 @@ class EngineCache:
         while self.held > self.cap and self.lru:
             _, n = self.lru.popitem(last=False)
             self.held -= n
+        self.last_matched = matched
         return Bill(uncached=r.tokens - matched, read=matched,
                     output=output)

@@ -1,0 +1,80 @@
+{
+  "request": {
+    "max_tokens": 1200,
+    "messages": [
+      {
+        "content": "Case facts:\n<<<\nitinerary LTG-3087754; change cancel-with-refund; customer message 'I was told USD 1,240.00 back, please confirm'; policy refunds-v3 covers it; amount above agent limit.\n>>>",
+        "role": "user"
+      }
+    ],
+    "model": "claude-sonnet-5-5",
+    "output_config": {
+      "format": {
+        "schema": {
+          "additionalProperties": false,
+          "properties": {
+            "asks_for": {
+              "enum": [
+                "approve_refund",
+                "approve_rebook",
+                "review_identity",
+                "review_policy"
+              ],
+              "type": "string"
+            },
+            "itinerary_ref": {
+              "pattern": "LTG-[0-9]{7}",
+              "type": "string"
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "itinerary_ref",
+            "asks_for",
+            "note"
+          ],
+          "type": "object"
+        },
+        "type": "json_schema"
+      }
+    },
+    "system": "You write the note a Lakeshore Travel Group approver reads before\ndeciding a case. Reply with one JSON object and nothing else, with\nexactly these keys: itinerary_ref, asks_for, note.\nitinerary_ref is copied from the case facts.\nasks_for is one of: approve_refund, approve_rebook, review_identity,\nreview_policy.\nUse review_identity when the name on the request does not match the\ntraveler or the card on file. Use review_policy when the case facts say\nno policy covers the request.\nnote is at most 60 words: what happened, what the customer asked, and\nwhy a person must decide.\nThe desk shows the amount from the fare system beside your note, so\nnever write an amount, a price, a currency, or a number with a decimal\npoint. Never add any other key.\nWrite the object once, in under 50 words of note, and stop at its\nclosing brace: no corrections, no second object, no text after it."
+  },
+  "request_hash": "09b59a14b636ccc9",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "{\"itinerary_ref\":\"LTG-3087754\",\"asks_for\":\"approve_refund\",\"note\":\"Customer wants to cancel this itinerary and receive a refund, saying an agent already quoted a refund figure and asking us to confirm it. Policy refunds-v3 covers the cancellation, but the refund exceeds the agent's approval limit, so an approver must decide.\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeBWA8smrNnYyaFkTCcp",
+    "model": "claude-sonnet-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 692,
+      "output_tokens": 125,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 1767
+  }
+}

@@ -1,0 +1,171 @@
+{
+ "meta": {
+  "contract": "desk-note",
+  "model": "claude-haiku-5-5",
+  "n": 10,
+  "temperature": null,
+  "version": "0.9"
+ },
+ "samples": [
+  {
+   "case": "am-01",
+   "cost_usd": 0.0003128,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Outbound flown, so refund covers the unflown return. Base fare is 971.82 (1,184.30 minus 212.48 taxes). Unflown share by miles is 1,021 of 2,409 total, giving 411.88. Adding the return leg's taxes of 97.15 gives 509.03 under refunds-v3.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0002883,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (total 1,184.30 minus 212.48 taxes). The unflown return is 1,021 of 2,409 total miles, so its base-fare share is 411.88. Adding the return leg's taxes of 97.15 gives 509.03, per policy refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0002958,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (1,184.30 total less 212.48 taxes). The unflown return is 1,021 of 2,409 total miles, so its base-fare share is 411.88. Adding the return leg's taxes of 97.15 gives a refund of 509.03 under refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0003833,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (1,184.30 paid minus 212.48 taxes). Under refunds-v3, the unflown return share is 1,021 of 2,409 total miles, so 971.82 \u00d7 1021/2409 = 411.88. Adding the unflown return leg's taxes of 97.15 gives 509.03. The flown outbound leg is not refunded.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0003518,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Round trip LTG-6012284 paid 1,184.30 including 212.48 taxes, leaving a 971.82 base fare. Under refunds-v3, the unflown return is 1,021 of 2,409 total miles, so the base refund is 411.88. Add the return leg's 97.15 taxes for a total refund of 509.03. The outbound flight was flown and is not refunded.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0002948,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (1,184.30 total minus 212.48 taxes). The unflown return is 1,021 of 2,409 total miles, so its base-fare share is 411.88. Adding the return leg's taxes of 97.15 gives 509.03 under policy refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0003548,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (1,184.30 total minus 212.48 taxes). Unflown return is 1,021 of 2,409 total miles, so its base-fare share is 411.88. Adding the return leg's taxes of 97.15 gives 509.03 under refunds-v3. The outbound leg was flown and is not refunded.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0003188,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Base fare is 971.82 (total 1,184.30 minus 212.48 taxes). The unflown return is 1,021 of 2,409 total miles, so its base-fare share is 411.88. Adding the return leg's taxes of 97.15 gives a refund of 509.03 under refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0003638,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Under refunds-v3, the unflown return is 1,021 of 2,409 total miles. Base fare is 971.82 (1,184.30 paid minus 212.48 taxes), so the unflown share is 411.88. Adding the 97.15 return-leg taxes gives a refund of 509.03.\"}"
+  },
+  {
+   "case": "am-01",
+   "cost_usd": 0.0003008,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-6012284\",\"refund_amount\":\"509.03\",\"note\":\"Outbound flown, so only the return is refunded. Base fare is 971.82 (1,184.30 paid minus 212.48 taxes). Unflown share by miles is 1,021 of 2,409 total, giving 411.88. Add the return leg's taxes of 97.15 for a total of 509.03, per policy refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0003401,
+   "i": 0,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 paid minus 341.62 taxes). Unflown miles are 2904 of 3616 total, so the unflown base share is 1586.34. Adding the unflown legs' taxes of 228.40 gives 1814.74 under refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0003266,
+   "i": 1,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 paid minus 341.62 taxes). Unflown legs are 2904 of 3616 total miles, so the unflown base-fare share is 1586.34. Adding the unflown legs' taxes of 228.40 gives 1814.74 under refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0003281,
+   "i": 2,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 paid minus 341.62 taxes). Unflown miles are 2904 of 3616 total, so the unflown base share is 1586.34. Adding the unflown legs' taxes of 228.40 gives a refund of 1814.74 under refunds-v3, rounded to the cent. The flown first leg (712 miles) is not refunded.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0004361,
+   "i": 3,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 paid minus 341.62 taxes). Unflown share by miles is 2904 of 3616, giving 1586.34. Adding the unflown legs' taxes of 228.40 gives a total refund of 1814.74 under refunds-v3. The flown first leg is not refunded.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0004226,
+   "i": 4,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 paid minus 341.62 taxes). Unflown share by miles is 2904 of 3616, giving 1586.34. Add unflown-leg taxes of 228.40 for a total refund of 1814.74 under refunds-v3. The first leg, 712 miles, was flown and is not refunded.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0004356,
+   "i": 5,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 total minus 341.62 taxes). Unflown legs are 2904 of 3616 miles, so the unflown base share is 1586.34. Adding the unflown legs' taxes of 228.40 gives a refund of 1814.74 under refunds-v3. The flown first leg (712 miles) is not refunded.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0003346,
+   "i": 6,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 paid minus 341.62 taxes). Unflown share is 2904 of 3616 miles, so 1975.28 x 2904/3616 = 1586.34. Adding the unflown legs' taxes of 228.40 gives 1814.74 under refunds-v3. The flown first leg (712 miles) and its taxes are not refunded.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0003586,
+   "i": 7,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.52\",\"note\":\"Base fare is 1975.28 (2316.90 paid minus 341.62 taxes). Unflown legs are 2904 of 3616 total miles, so the unflown base share is 1586.12. Adding the unflown legs' taxes of 228.40 gives a refund of 1814.52 under refunds-v3, rounded to the cent.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0004576,
+   "i": 8,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 total minus 341.62 taxes). Unflown legs are 2904 of 3616 total miles, so the unflown base fare share is 1586.34. Adding the unflown legs' taxes of 228.40 gives 1814.74 under refunds-v3, rounded to the cent. The flown first leg (712 miles) is not refunded.\"}"
+  },
+  {
+   "case": "am-02",
+   "cost_usd": 0.0004226,
+   "i": 9,
+   "model": "claude-haiku-5-5",
+   "stop": "end_turn",
+   "text": "{\"itinerary_ref\":\"LTG-3087754\",\"refund_amount\":\"1814.74\",\"note\":\"Base fare is 1975.28 (2316.90 minus 341.62 taxes). Unflown share is 2904 of 3616 total miles, so 1586.34 of base fare. Adding the unflown legs' taxes of 228.40 gives a refund of 1814.74 under refunds-v3, rounded to the cent. The flown first leg (712 miles) is not refunded.\"}"
+  }
+ ]
+}
