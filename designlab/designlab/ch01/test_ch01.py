@@ -165,5 +165,26 @@ class DemoTests(unittest.TestCase):
         self.assertEqual(too_long(out), [])
 
 
+class ClockTests(unittest.TestCase):
+    def test_lab_clocks_carry_the_chicago_offset_for_the_day(self):
+        from datetime import datetime
+        try:
+            from zoneinfo import ZoneInfo
+            chicago = ZoneInfo("America/Chicago")
+        except Exception:  # no time-zone database on this machine
+            self.skipTest("time-zone database not available")
+        for start in (demo.INCIDENT_START, demo.OCTOBER_START):
+            with self.subTest(start=start):
+                t = datetime.fromisoformat(start)
+                wall = t.replace(tzinfo=None).replace(tzinfo=chicago)
+                self.assertEqual(t.utcoffset(), wall.utcoffset())
+
+    def test_trail_lines_carry_the_offset(self):
+        t, world = demo.trail(), Network(slow_calls={1})
+        V0Loop(world, t).run("req-1", demo.REFUND)
+        self.assertTrue(all(json.loads(x)["at"].endswith("-06:00")
+                            for x in t.lines))
+
+
 if __name__ == "__main__":
     unittest.main()

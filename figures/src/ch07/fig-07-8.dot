@@ -1,0 +1,25 @@
+// Figure 7.8  The transaction boundary, drawn
+// Reading order: left is Lakeshore's side, where one database
+// transaction writes the ledger entry and the trail line together.
+// Right is three suppliers, each with its own boundary. Only keyed
+// requests and lookups cross the line.
+digraph boundary {
+#include "book.gv"
+  rankdir=LR;
+  subgraph cluster_ours { label="One Lakeshore transaction"; class="plane-evidence";
+    led [label="Effect ledger", class="evidence store"];
+    trl [label="Trail line", class="evidence store"];
+  }
+  ex [label="Executor", class="ops"];
+  subgraph cluster_air { label="Airline"; class="plane-ops";
+    air [label="Ticketing", class="ops external"]; }
+  subgraph cluster_htl { label="Hotel"; class="plane-ops";
+    htl [label="Reservations", class="ops external"]; }
+  subgraph cluster_pay { label="Processor"; class="plane-ops";
+    pay [label="Refunds", class="ops external"]; }
+  led -> ex [class="control", dir=back];
+  trl -> ex [class="trail", dir=back];
+  ex -> air [label=" lookup", class="data"];
+  ex -> htl [label=" no key", class="fail"];
+  ex -> pay [label=" keyed", class="verified"];
+}

@@ -39,8 +39,8 @@ class Report:
                 f"{self.effects:,}",
                 f"duplicates {self.duplicates}, unbacked "
                 f"{self.unbacked}, orphans {self.orphans}",
-                f"escalated to a person {self.for_people} "
-                f"({self.people_find_applied} applied at supplier)",
+                f"to a person {self.for_people}, of which applied "
+                f"{self.people_find_applied}",
                 "checker: " + ("PASS" if self.ok else "FAIL")]
 
 

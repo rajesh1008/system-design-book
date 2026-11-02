@@ -45,13 +45,16 @@ class Result:
             "unkeyed, framework retry"
         out = [f"{shape}: {self.runs:,} runs, timeout rate "
                f"{self.rate:.0%}", f"tool calls {self.calls:,}"]
+        if not self.keyed:
+            out.append("keyed share 0.0%")
         if self.keyed:
             share = self.keyed_effects / self.runs
             out.append(f"keyed share {share:.1%}")
             out.append(f"unknowns {self.unknowns}, longest open "
                        f"{self.max_resolve_s:.0f} s")
-            out.append("left unknown by: " + ", ".join(
-                f"{k} {v}" for k, v in sorted(self.resolved.items())))
+            out.append("left the unknown state by:")
+            out += [f"  {k:<16}{v:>5}"
+                    for k, v in sorted(self.resolved.items())]
         return out + self.report.lines()
 
 

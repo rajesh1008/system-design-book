@@ -1,0 +1,22 @@
+@startuml
+' Figure 7.2  Where the key is minted
+' Reading order: top to bottom. The control plane mints the key with
+' the permission, before the first attempt. The executor reserves it in
+' the ledger and sends the same key on every attempt.
+!include plantuml-theme.puml
+participant "Agent loop" as A <<model>>
+participant "Control plane" as C <<policy>>
+participant "Executor" as X <<ops>>
+database "Effect ledger" as L <<evidence>>
+participant "Processor" as N <<ops>>
+A -> C : proposal
+C -[$POLICY]-> X : permission + key
+X -> L : reserve(key)
+X -> N : refund(key)
+N -[$FAIL]-> X : timeout
+X -> L : unknown
+X -> N : refund(key)
+N --> X : stored receipt
+X -[$VERIFIED]-> L : committed
+note over X : never mint a key\ninside the retry loop
+@enduml

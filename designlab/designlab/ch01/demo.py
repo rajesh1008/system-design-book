@@ -28,7 +28,14 @@ REBOOK = ('{"action": "rebook", "itinerary": "LTG-4380117", '
 ANSWER = "Your new flight leaves at 6:40 p.m. from gate B7."
 
 
-def trail(start: str = "2025-12-04T14:32:07+00:00") -> TrailWriter:
+# Lab clocks run in Lakeshore's local time, America/Chicago, with the
+# offset that applied on the day: CST (-06:00) in December, CDT (-05:00)
+# on October 6. test_ch01 checks both against the time-zone database.
+INCIDENT_START = "2025-12-04T14:32:07-06:00"
+OCTOBER_START = "2025-10-06T15:12:40-05:00"
+
+
+def trail(start: str = INCIDENT_START) -> TrailWriter:
     return TrailWriter(clock=FixedClock(start, step_seconds=1.0))
 
 
@@ -68,7 +75,7 @@ def show(line: str) -> None:
 
 def october_demo() -> None:
     emit("1. The October 6 demo, replayed (one rebooking)")
-    t, world = trail("2025-10-06T15:12:40+00:00"), Network()
+    t, world = trail(OCTOBER_START), Network()
     demo_shape(world, t, "demo-1", REBOOK)
     for line in t.lines:
         show(line)

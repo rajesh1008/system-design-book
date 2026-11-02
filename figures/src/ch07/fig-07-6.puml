@@ -1,0 +1,23 @@
+@startuml
+' Figure 7.6  Rebooking saga with compensations
+' Reading order: top to bottom. Each step is its own keyed effect. A
+' failure before the pivot runs the compensations in reverse; after
+' the pivot nothing is undone, so the pivot comes last but one.
+!include plantuml-theme.puml
+start
+:Hold new seat;
+note right: undo: release hold
+:Charge fare difference;
+note right: undo: refund
+:Issue new ticket;
+note right: undo: void same day
+if (all three committed?) then (yes)
+  :Cancel old segment (pivot);
+  :Notify traveler;
+  stop
+else (no)
+  :Run undo steps in reverse;
+  :Traveler keeps old seat;
+  stop
+endif
+@enduml

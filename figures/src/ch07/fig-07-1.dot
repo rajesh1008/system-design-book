@@ -1,0 +1,24 @@
+// Figure 7.1  An effect is not a call
+// Reading order: top row without a key, bottom row with one. Left
+// column is the calls the executor made, right column is what the
+// hotel's own record shows. Two calls make two effects unless the
+// tool can tell the second call is the first one again.
+digraph effect_not_call {
+#include "book.gv"
+  rankdir=LR;
+  subgraph cluster_calls { label="Calls"; class="plane-ops";
+    a1 [label="Attempt 1\ntimeout at 8.0 s", class="ops"];
+    a2 [label="Attempt 2\nok", class="ops"];
+    b1 [label="Attempt 1\ntimeout at 8.0 s", class="ops"];
+    b2 [label="No attempt 2\nunknown, to a person", class="ops note"];
+  }
+  subgraph cluster_world { label="Hotel record"; class="plane-evidence";
+    r1 [label="Room 1 canceled", class="evidence store"];
+    r2 [label="Room 2 canceled", class="fail store"];
+    r3 [label="Room 1 canceled", class="evidence store"];
+  }
+  a1 -> r1 [class="data", label=" no key"];
+  a2 -> r2 [class="fail"];
+  b1 -> r3 [class="data", label=" ledger entry"];
+  b1 -> b2 [class="control"];
+}

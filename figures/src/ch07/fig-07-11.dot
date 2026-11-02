@@ -1,0 +1,21 @@
+// Figure 7.11  Two witnesses
+// Reading order: top is the two records, ours and the supplier's. The
+// checker reads both and sorts every effect into one of four verdicts
+// along the bottom. Only the first verdict needs no person.
+digraph witnesses {
+#include "book.gv"
+  rankdir=TB;
+  led [label="Effect ledger\nwhat we believe", class="evidence store"];
+  sup [label="Supplier record\nwhat happened", class="ops store external"];
+  chk [label="Checker", class="evidence gate"];
+  ok  [label="Match", class="verified"];
+  dup [label="Duplicate", class="fail"];
+  unb [label="Unbacked", class="fail"];
+  orp [label="Orphan", class="fail"];
+  led -> chk [class="trail"];
+  sup -> chk [class="trail"];
+  chk -> ok [class="verified"];
+  chk -> dup [class="fail"];
+  chk -> unb [class="fail"];
+  chk -> orp [class="fail"];
+}

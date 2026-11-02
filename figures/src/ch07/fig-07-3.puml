@@ -1,0 +1,19 @@
+@startuml
+' Figure 7.3  Effect ledger states
+' Reading order: left to right from reserved. The unknown state has
+' four exits, chosen by the tool's contract. Final states are on the
+' right.
+!include plantuml-theme.puml
+hide empty description
+[*] --> reserved
+reserved --> attempting
+attempting --> committed : receipt
+attempting --> failed : refused
+attempting -[$FAIL]-> unknown : timeout
+unknown --> committed : lookup found
+unknown --> attempting : same key, or absent
+unknown --> escalated : no key, no lookup
+unknown --> abandoned : message
+committed --> compensating
+compensating --> compensated
+@enduml

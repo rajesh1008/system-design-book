@@ -119,6 +119,7 @@ class SupplierSim:
     records: list[dict] = field(default_factory=list)
     _by_key: dict[str, tuple[str, dict]] = field(default_factory=dict)
     _items: dict[str, int] = field(default_factory=dict)  # relative ops
+    _stock: dict[str, int] = field(default_factory=dict)
     calls: int = 0
 
     @property
@@ -130,6 +131,7 @@ class SupplierSim:
     def stock(self, target: str, items: int) -> None:
         """Give a target several items, e.g. two rooms on one booking."""
         self._items[target] = items
+        self._stock[target] = items
 
     def call(self, request: dict, key: Optional[str] = None,
              ref: Optional[str] = None, at: float = 0.0,
@@ -170,7 +172,7 @@ class SupplierSim:
             if left <= 0:
                 return {"effect_id": None, "target": target,
                         "status": "nothing left"}
-            item = self._items.get(target, 1) - left + 1
+            item = self._stock.get(target, 1) - left + 1
             self._items[target] = left - 1
         effect_id = f"{self.tool.supplier[:3].upper()}-" \
                     f"{len(self.records) + 1:05d}"
