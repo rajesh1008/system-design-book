@@ -35,7 +35,7 @@ class Limits:
     alert: float = 0.80                 # page the operator at 80%
 
 
-def derive_task_usd(lv: Levers = APRIL_LEVERS, margin: float = 1.3,
+def derive_task_usd(lv: Levers = APRIL_LEVERS, margin: float = 1.1,
                     step: float = 0.25) -> tuple[float, float]:
     """Task budget from the recorded tasks: the costliest task under
     the April design, plus a margin, rounded up to the next quarter."""

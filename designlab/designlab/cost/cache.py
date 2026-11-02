@@ -33,7 +33,7 @@ TEMPLATES = (
 
 
 def eligible(fare: str, reason: str) -> str:
-    """The refund rule in force (policy version refunds-v4)."""
+    """The refund rule in force (policy version refunds-v3)."""
     if reason.startswith(("the airline", "my flight")):
         return "full refund"
     if fare in ("flexible", "premium"):

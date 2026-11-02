@@ -119,7 +119,7 @@ def part_budget(no_budget: bool, task_usd: float) -> None:
     worst, derived = B.derive_task_usd()
     emit(f"task budget: costliest recorded task under April design"
          f" ${worst:.2f}")
-    emit(f"  x 1.3, up to the next quarter: ${derived:.2f}")
+    emit(f"  plus 10%, up to the next quarter: ${derived:.2f}")
     r = B.replay_runaway()
     emit("April 18 runaway, as run (step cap in the loop's memory)")
     emit(f"  {r.wakes_run} wakes, {r.calls} calls, ${r.spent:.2f}")

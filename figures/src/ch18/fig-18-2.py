@@ -30,6 +30,6 @@ ax.set_yticks(range(len(rows)))
 ax.set_yticklabels([r[0] for r in reversed(rows)], fontsize=9.5)
 ax.set_xlim(0, 1.2)
 ax.set_xlabel(f"Dollars per verified outcome, total ${c['per_outcome']:.2f}")
-ax.text(0.15, -0.05, f"{ln['model tokens'] / c['total']:.1%} of the total",
+ax.text(0.30, 0.0, f"{ln['model tokens'] / c['total']:.1%} of the total",
         va="center", fontsize=9.5, color=fl.INK, style="italic")
 fl.save(fig)

@@ -58,6 +58,7 @@ class Gate:
     ok: bool
     escalated: int = 0
     failures: tuple[str, ...] = ()
+    escalations: tuple[str, ...] = ()     # case: reasons
 
 
 def gate(step: Step, cand: Candidate, res: SuiteResult) -> Gate:
@@ -75,7 +76,7 @@ def cascade_gate(step: Step, first: SuiteResult, then: SuiteResult,
                  facts: dict[str, dict]) -> Gate:
     """Gate the cascade from the two candidates' recorded answers."""
     by_then = {r.case_id: r for r in then.cases}
-    right, esc, cost, lat, fails = 0, 0, 0.0, [], []
+    right, esc, cost, lat, fails, why = 0, 0, 0.0, [], [], []
     for r in first.cases:
         contract_v = [x for x in r.violations if x.code != "wrong-answer"]
         reasons = verify(step.name, r.output, contract_v,
@@ -83,6 +84,7 @@ def cascade_gate(step: Step, first: SuiteResult, then: SuiteResult,
         cost += r.cost_usd
         if reasons:
             esc += 1
+            why.append(f"{r.case_id}: {', '.join(reasons)}")
             t = by_then[r.case_id]
             cost += t.cost_usd
             lat.append(r.latency_s + t.latency_s)
@@ -101,4 +103,5 @@ def cascade_gate(step: Step, first: SuiteResult, then: SuiteResult,
           and mean <= step.contract.max_cost_usd)
     a, b = step.cascade
     return Gate(step.name, f"{a}>{b}", Candidate(a).tier, right, n, p95,
-                mean, ok, escalated=esc, failures=tuple(fails))
+                mean, ok, escalated=esc, failures=tuple(fails),
+                escalations=tuple(why))

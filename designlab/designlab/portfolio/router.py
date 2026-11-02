@@ -44,7 +44,8 @@ def _ev(g: Gate) -> str:
 
 
 def decide(steps: dict[str, Step], gates: dict[str, list[Gate]],
-           rule: str = "gated", max_effort: str = "high"
+           rule: str = "gated", max_effort: str = "high",
+           verify_below_mid: tuple[str, ...] = ("medium",)
            ) -> dict[str, Route]:
     if rule not in RULES:
         raise ValueError(rule)
@@ -65,6 +66,9 @@ def decide(steps: dict[str, Step], gates: dict[str, list[Gate]],
         ok = []
         for g in gs:
             if not g.ok or g.tier < floor:
+                continue
+            if step.risk in verify_below_mid and ">" not in g.label \
+                    and g.tier < TIERS.index("mid"):
                 continue
             first = g.label.split(">")[0]
             try:

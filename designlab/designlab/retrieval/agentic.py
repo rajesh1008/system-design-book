@@ -70,8 +70,12 @@ class ScriptedPlanner:
             name = dict(CARRIERS)[slot.carrier]
             names = [name, slot.carrier, name.split()[0]]
             options = [f"{n} {p}" for n in names for p in _phrases(slot)]
+            # A model also drops the carrier now and then.
+            options += list(_phrases(slot)) * 2
             options += [f"{o} {slot.product}" for o in options]
-            fresh = [o for o in options if o not in tried]
+            fresh = sorted({o for o in options if o not in tried},
+                           key=options.index)
+            fresh = [o for o in options if o in set(fresh)]
             if not fresh:
                 return
             q = rng.choice(fresh)

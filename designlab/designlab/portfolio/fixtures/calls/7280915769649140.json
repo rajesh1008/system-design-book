@@ -1,0 +1,53 @@
+{
+  "request": {
+    "max_tokens": 4000,
+    "messages": [
+      {
+        "content": "Trip: Flight 2824, Denver (DEN) to Toronto (YYZ), May 13, 2026\nCarrier notice: none\nFare: refundable economy\nFacts: The customer asks to cancel 6 hours before departure. The customer has not accepted any new schedule.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You decide which Lakeshore Travel Group refund rule applies to one\nsegment. Apply the rules in order and stop at the first that applies.\n1. The carrier canceled the segment, or moved its departure or its\narrival by more than 3 hours on a domestic trip or more than 5 hours\non an international trip (use whichever of the two moved more, and an\nearlier time counts as a move): involuntary-cash. If the customer\naccepted the new schedule in writing, skip this rule.\n2. The fare is refundable: fare-rule-cash.\n3. The fare is nonrefundable and the customer cancels at least 24\nhours before departure: credit-only.\n4. Otherwise: no-refund.\nIf the facts are missing or contradict each other: needs-person.\nA trip is domestic when both airports are in the same country. Times\nare local to each airport.\nReply with one JSON object and nothing else, with exactly one key,\nrule. Never include an amount."
+  },
+  "request_hash": "7280915769649140",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSwAYKEAgTGAI4AUIIdGhpbmtpbmcSDK9idhBVQZUyKf6smhoMbEQPHDORzUoUikI3IjBFgUl++DuGlKBs/FKpL/Dn7muZNmGkZ5KVbQsFIdpWNWXvXKOYIJNKc1BTogLoMtsq3QUTJgmhLEhkROp+KxMjXhUnKxU3DT6mIt8yP+kmfTtO5MjmZ3/zsyJkLKsQple2/NlHFy1UE88fZiQ9bVs2EoZj7tavbRBWYj4jAjziivDjGNDtCi++GovmQgwx1u4K6dtQ4zIfT++6rOmmqLPPZMyZGUKZqbwaYP2t/qq/Io+RCO4Mu1nBSIrDHhAH7Nl/hXW+vqty4qSbApgodIXsyfoorZAoQgmc+PeNrqbWvzbeEG5jO5e+dOClSQrA3fTk6Q++pUGNyeCxeiPGKoEnRggPrFK2O70NEhMhelZ0Y0PUzhv0ZhlH/c3R0JGXyxn5LMlYA/rfO9gDr+RVEs+uChPV4uM6KH02yfX8hpl9E1NzIGDzPxXo0bweIq38Gz/KnQOkSyELSeFHxPL8osoqTU6TCOcjXgSXIN2Uc3/EVMa8AAjMzulJgiBd9frsyh+Gk6zQWAZEfg4e5yx/VWfqe3Ppln+Q/WH0XpQw1nxhenK7gUyctow0xQOEXnuyBu1T3CR7yMmY4wpxgjmdN5Ktb2TFedpEGqT0oT1J5A3nVm48TBebNh5iItSVaTfiCG07Vh/LHurQTE0kEoviI+KNkkZe4J68BEgNU/N5/Ma3L1PjbEQ6f6Se7pcTOJVQutF4tRcy47M/MmZEG0xjGpoNX1QBFk49C/O8Rxq3zjFX6qlxMVeWrELRDvrrHhYSOXbl+vwhGnyXka5A4XVJhaSQb1YZenW0Pddka/uuuxPh3N4qg1gcBolz/Wo4kxkoX8muh11BA2znAgLhInuFwUYIbI3WUAeUXwi6s8AHCQEENM4DMOQbQf2PDS2gnuBm1HNpMN2u1Aqtdc+3vNBCwnS2bDvySFPUUb0zwn52rBx9DOa0XxFoJlOkovaF0NaQqKW54+2KEPsakStfDelDyfcAful2ujb7qRDpoDXACYWdkOApK1ZxQPnnhB0ro5eQ+oGw3BP1qqYUbrd4kGdQ6YqhGAE=",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"rule\": \"fare-rule-cash\"}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeGGkiw4MapkC34M8xE3",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 410,
+      "output_tokens": 111,
+      "output_tokens_details": {
+        "thinking_tokens": 93
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    },
+    "x_latency_ms": 1029
+  }
+}

@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "design
 import figlib as fl  # noqa: E402
 from matplotlib.patches import Rectangle  # noqa: E402
 
-rows = (("Cost per verified\noutcome", "$1.84 against $37.94", "Daniel Price;\nfinance checks", "verified"),
+rows = (("Cost per verified\noutcome", r"\$1.84 against \$37.94", "Daniel Price;\nfinance checks", "verified"),
         ("Budgets enforced", "Task, traveler-day,\nfleet-day", "Ben Carter", "ops"),
         ("Runs over budget", "0 in May", "Enforcer log", "verified"))
 cols = (0.0, 1.55, 3.2)

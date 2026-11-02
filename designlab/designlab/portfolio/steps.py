@@ -31,7 +31,6 @@ class Step:
     contract: ModelContract
     candidates: tuple[Candidate, ...]
     cascade: tuple[str, str] | None = None   # (first, then)
-    measure: str = "all"                   # or "ladder"
 
     def cases(self) -> list[dict]:
         if self.contract.golden == "change-intent.jsonl":
@@ -56,8 +55,7 @@ def load_steps(path: Path = POLICY) -> dict[str, Step]:
         out[name] = Step(name, d["kind"], d["risk"],
                          pol["floors"][d["risk"]], c,
                          tuple(Candidate.parse(x) for x in d["candidates"]),
-                         tuple(cas) if cas else None,
-                         d.get("measure", "all"))
+                         tuple(cas) if cas else None)
     return out
 
 

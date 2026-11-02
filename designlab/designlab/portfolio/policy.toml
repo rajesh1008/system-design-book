@@ -13,6 +13,11 @@ high = "mid"
 # The control plane's ceiling on reasoning budgets, and the cascade
 # alarm: a cascade escalating more often than this is paged, because
 # its savings case has failed.
+# Risk classes where a model below the mid tier may serve only as the
+# first stage of a cascade, with a verifier behind it.
+[verifier]
+required_below_mid = ["medium"]
+
 [limits]
 max_effort = "high"
 escalation_alert = 0.20
@@ -39,6 +44,5 @@ candidates = ["small", "mid", "mid@high", "frontier"]
 [steps.offer-choice]
 contract = "portfolio"
 kind = "judge"
-risk = "medium"
+risk = "low"                  # the customer confirms; the fare tool prices
 candidates = ["small", "mid", "frontier"]
-measure = "ladder"            # stop at the first passing candidate

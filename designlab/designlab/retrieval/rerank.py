@@ -11,9 +11,8 @@ from corpus.docs import CARRIERS, NOTICE_EVENTS, PRODUCTS, TOPICS
 
 from .text import tokens
 
-_NAMES = {code: set(tokens(name)) - {"air", "airway", "airline", "jet",
-                                      "wing", "express"}
-          for code, name in CARRIERS}
+_COMMON = set(tokens("air airways airlines jet wings express"))
+_NAMES = {code: set(tokens(name)) - _COMMON for code, name in CARRIERS}
 _TOPIC_WORDS = {}
 for _t, (_title, _words, _says) in TOPICS.items():
     _TOPIC_WORDS[_t] = set(tokens(_title))

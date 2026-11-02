@@ -47,10 +47,11 @@ class Levers:
 
 
 MAY_LEVERS = Levers()
-# April: every step on the frontier model; the re-layout went in on
-# April 20, so 19 days at 9.2% hit and 11 days at 78.43%.
+# April: every step on the frontier model; the re-layout was adopted on
+# April 28 (Chapter 14) and served from April 29, so 28 days at 9.2%
+# hit and 2 days at 78.43%.
 APRIL_LEVERS = Levers(small=0.0, mid=0.0,
-                      hit=round((19 * 0.092 + 11 * 0.7843) / 30, 4))
+                      hit=round((28 * 0.092 + 2 * 0.7843) / 30, 4))
 PILOT_LEVERS = Levers(small=0.0, mid=0.0, hit=0.092)
 
 
@@ -147,7 +148,7 @@ class Month:
 
 MAY = Month("May 2026")
 APRIL = Month("April 2026", agent=0.025, assisted=0.09,
-              verified_rate=0.981, handoff=0.22, platform=3_740.0,
+              verified_rate=0.981, handoff=0.22, platform=3_580.0,
               levers=APRIL_LEVERS)
 
 LINES = ("model tokens", "tools and fees", "platform", "verification",

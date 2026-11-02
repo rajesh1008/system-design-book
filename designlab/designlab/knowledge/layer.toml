@@ -1,0 +1,499 @@
+# Lakeshore semantic layer, version 1.0 (Chapter 20). Illustrative.
+# Each metric names one table, one aggregate, and who may ask for it.
+# Changed only by pull request; the layer version is in every trail line.
+version = "1.0"
+k_min_rows = 3
+
+[dimension.change_type]
+column = "change_type"
+needs = []
+
+[dimension.handled_by]
+column = "handled_by"
+needs = []
+
+[dimension.channel]
+column = "channel"
+needs = []
+
+[dimension.desk]
+column = "desk"
+needs = []
+
+[dimension.carrier]
+column = "carrier"
+needs = []
+
+[dimension.decision]
+column = "decision"
+needs = []
+
+[dimension.kind]
+column = "kind"
+needs = []
+
+[dimension.customer_id]
+column = "customer_id"
+needs = ["risk"]
+
+[dimension.approver_id]
+column = "approver_id"
+needs = ["hr"]
+
+[[metric]]
+name = "changes_count"
+label = "Itinerary changes handled"
+table = "changes"
+kind = "count"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "changes_agent"
+label = "Changes handled by the agent"
+table = "changes"
+kind = "count"
+where = "handled_by = 'agent'"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "changes_assisted"
+label = "Changes handled by the agent with a person"
+table = "changes"
+kind = "count"
+where = "handled_by = 'assisted'"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "changes_self_service"
+label = "Changes handled by self-service"
+table = "changes"
+kind = "count"
+where = "handled_by = 'self_service'"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "changes_person"
+label = "Changes handled by a person"
+table = "changes"
+kind = "count"
+where = "handled_by = 'person'"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "agent_share"
+label = "Share of changes, agent"
+table = "changes"
+kind = "ratio"
+num = "changes_agent"
+den = "changes_count"
+dims = ["change_type", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "assisted_share"
+label = "Share of changes, assisted"
+table = "changes"
+kind = "ratio"
+num = "changes_assisted"
+den = "changes_count"
+dims = ["change_type", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "self_service_share"
+label = "Share of changes, self-service"
+table = "changes"
+kind = "ratio"
+num = "changes_self_service"
+den = "changes_count"
+dims = ["change_type", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "person_share"
+label = "Share of changes, person"
+table = "changes"
+kind = "ratio"
+num = "changes_person"
+den = "changes_count"
+dims = ["change_type", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "handle_minutes_median"
+label = "Median handle time, minutes"
+table = "changes"
+kind = "median"
+expr = "handle_minutes"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "repeats_7d"
+label = "Changes with a repeat contact within 7 days"
+table = "changes"
+kind = "count"
+where = "repeat_7d = 1"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "repeat_contact_7d_rate"
+label = "Repeat-contact rate, 7 days"
+table = "changes"
+kind = "ratio"
+num = "repeats_7d"
+den = "changes_count"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "change_cost_usd"
+label = "Cost of handling changes, USD"
+table = "changes"
+kind = "sum"
+expr = "cost_usd"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["finance"]
+max_window_days = 400
+owner = "Finance"
+
+[[metric]]
+name = "cost_per_change_usd"
+label = "Blended cost per change, USD"
+table = "changes"
+kind = "ratio"
+num = "change_cost_usd"
+den = "changes_count"
+dims = ["change_type", "handled_by", "channel", "desk", "carrier"]
+entitle = ["finance"]
+max_window_days = 400
+owner = "Finance"
+
+[[metric]]
+name = "contacts_count"
+label = "Customer contacts"
+table = "contacts"
+kind = "count"
+dims = ["channel", "desk"]
+entitle = ["ops"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "refunds_count"
+label = "Refunds issued"
+table = "refunds"
+kind = "count"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "refunds_amount_usd"
+label = "Refund value issued, USD"
+table = "refunds"
+kind = "sum"
+expr = "amount_usd"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["finance", "risk"]
+max_window_days = 400
+owner = "Finance"
+
+[[metric]]
+name = "refund_avg_usd"
+label = "Average refund, USD"
+table = "refunds"
+kind = "ratio"
+num = "refunds_amount_usd"
+den = "refunds_count"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["finance", "risk"]
+max_window_days = 400
+owner = "Finance"
+
+[[metric]]
+name = "refunds_clock_met"
+label = "Refunds inside the DOT refund clock"
+table = "refunds"
+kind = "count"
+where = "clock_met = 1"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["ops", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "refunds_late_dot"
+label = "Refunds outside the DOT refund clock"
+table = "refunds"
+kind = "count"
+where = "clock_met = 0"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["ops", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "refund_clock_met_rate"
+label = "Share of refunds inside the refund clock"
+table = "refunds"
+kind = "ratio"
+num = "refunds_clock_met"
+den = "refunds_count"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["ops", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "refunds_matured"
+label = "Refunds at least 120 days old"
+table = "refunds"
+kind = "count"
+where = "matured = 1"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["risk"]
+max_window_days = 400
+owner = "Risk and Compliance (Rachel Morgan)"
+
+[[metric]]
+name = "refund_errors"
+label = "Matured refunds found in error"
+table = "refunds"
+kind = "count"
+where = "matured = 1 AND error = 1"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["risk"]
+max_window_days = 400
+owner = "Risk and Compliance (Rachel Morgan)"
+
+[[metric]]
+name = "refund_error_rate"
+label = "Refund error rate, matured cohorts"
+table = "refunds"
+kind = "ratio"
+num = "refund_errors"
+den = "refunds_matured"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["risk"]
+max_window_days = 400
+owner = "Risk and Compliance (Rachel Morgan)"
+
+[[metric]]
+name = "refunds_unverified"
+label = "Refunds executed, not yet verified"
+table = "refunds"
+kind = "count"
+where = "verified = 0"
+dims = ["change_type", "carrier", "desk", "handled_by", "customer_id"]
+entitle = ["ops", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "approvals_count"
+label = "Approvals filed"
+table = "approvals"
+kind = "count"
+dims = ["desk", "decision", "approver_id"]
+entitle = ["ops"]
+max_window_days = 400
+desk_scoped = true
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "approvals_over_hour"
+label = "Approvals that waited over an hour"
+table = "approvals"
+kind = "count"
+where = "wait_minutes > 60"
+dims = ["desk", "decision", "approver_id"]
+entitle = ["ops"]
+max_window_days = 400
+desk_scoped = true
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "approval_wait_p95_minutes"
+label = "Approval wait, p95, minutes"
+table = "approvals"
+kind = "p95"
+expr = "wait_minutes"
+dims = ["desk", "decision", "approver_id"]
+entitle = ["ops"]
+max_window_days = 400
+desk_scoped = true
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "effects_executed"
+label = "Agent effects executed"
+table = "effects"
+kind = "count"
+dims = ["change_type"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "effects_verified"
+label = "Agent effects verified"
+table = "effects"
+kind = "count"
+where = "verified = 1"
+dims = ["change_type"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "verified_outcome_rate"
+label = "Verified-outcome rate"
+table = "effects"
+kind = "ratio"
+num = "effects_verified"
+den = "effects_executed"
+dims = ["change_type"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "duplicate_effects"
+label = "Duplicate effects"
+table = "effects"
+kind = "count"
+where = "duplicate = 1"
+dims = ["change_type"]
+entitle = ["ops", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "tasks_count"
+label = "Agent tasks"
+table = "tasks"
+kind = "count"
+dims = ["change_type"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "task_latency_p95_s"
+label = "Agent task latency, p95, seconds"
+table = "tasks"
+kind = "p95"
+expr = "latency_s"
+dims = ["change_type"]
+entitle = ["ops", "finance", "risk"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "model_spend_usd"
+label = "Model spend, USD"
+table = "tasks"
+kind = "sum"
+expr = "model_usd"
+dims = ["change_type"]
+entitle = ["finance"]
+max_window_days = 400
+owner = "Finance"
+
+[[metric]]
+name = "queue_depth_peak"
+label = "Peak queue depth"
+table = "queue_snapshots"
+kind = "max"
+expr = "depth"
+dims = ["desk"]
+entitle = ["ops"]
+max_window_days = 400
+desk_scoped = true
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "bookings_count"
+label = "Bookings made"
+table = "bookings"
+kind = "count"
+dims = ["carrier", "channel"]
+entitle = ["ops", "finance"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "gross_bookings_usd"
+label = "Gross bookings, USD"
+table = "bookings"
+kind = "sum"
+expr = "gross_usd"
+dims = ["carrier", "channel"]
+entitle = ["finance"]
+max_window_days = 400
+owner = "Finance"
+
+[[metric]]
+name = "schedule_notices"
+label = "Carrier schedule-change notices"
+table = "carrier_notices"
+kind = "count"
+where = "kind = 'schedule_change'"
+dims = ["carrier"]
+entitle = ["ops"]
+max_window_days = 400
+owner = "Operations (Marcus Bell)"
+
+[[metric]]
+name = "status_polls"
+label = "Carrier status polls"
+table = "booking_events"
+kind = "count"
+where = "event_type = 'status_poll'"
+dims = ["carrier"]
+entitle = ["ops"]
+max_window_days = 31
+owner = "Platform (Daniel Price)"
+
+[[metric]]
+name = "itinerary_views"
+label = "Itinerary page views"
+table = "booking_events"
+kind = "count"
+where = "event_type = 'view'"
+dims = ["carrier"]
+entitle = ["ops"]
+max_window_days = 31
+owner = "Platform (Daniel Price)"

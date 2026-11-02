@@ -47,13 +47,13 @@ def tasks(seed: int = DEFAULT_SEED, n: int = 40) -> list[Task]:
         if shape < 0.40:
             t = rng.choice(topics)
             q = (f"{name}, {prod} fare: "
-                 f"{rng.choice(TOPICS[t][2]).lower()}?")
+                 f"{rng.choice(TOPICS[t][2])}. What applies?")
             slots = (Slot(code, t, prod),)
         elif shape < 0.75:
             t1, t2 = rng.sample(topics, 2)
-            q = (f"{name} {prod} customer wants to "
-                 f"{rng.choice(TOPICS[t1][2]).lower()}, and asks what "
-                 f"happens if they {rng.choice(TOPICS[t2][2]).lower()}")
+            q = (f"{name}, {prod} fare. Customer says: "
+                 f"{rng.choice(TOPICS[t1][2])}; also, "
+                 f"{rng.choice(TOPICS[t2][2]).lower()}. What applies?")
             slots = (Slot(code, t1, prod), Slot(code, t2, prod))
         else:
             apt = rng.choice([e[0] for e in NOTICE_EVENTS[:3]])
@@ -70,7 +70,7 @@ def tasks(seed: int = DEFAULT_SEED, n: int = 40) -> list[Task]:
 
 # The shadow question from April 30, 2026, in the lab's corpus: a
 # waiver that does not exist for this carrier, asked about partners.
-RUNAWAY = Task("T00", "Does the Prairie Airways waiver for BOS cover "
+RUNAWAY = Task("T00", "Does the Prairie Airways waiver for ORD cover "
                "Basic fares booked through a partner airline?",
-               date(2026, 4, 30), (Slot("XPA", "waiver-BOS", "Basic"),),
+               date(2026, 4, 30), (Slot("XPA", "waiver-ORD", "Basic"),),
                False)

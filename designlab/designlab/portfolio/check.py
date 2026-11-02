@@ -118,6 +118,8 @@ def run_check(tasks: list[dict], steps: dict[str, Step],
                     cost, lat, model = cost + c2, lat + l2, then.role
             if v:
                 outcome, model = "person", "person"
+            elif expectation(case, obj) and obj.get("needs_person"):
+                outcome, model = "person", "person"
             elif expectation(case, obj):
                 outcome = "wrong"
             else:
