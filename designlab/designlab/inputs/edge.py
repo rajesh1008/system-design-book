@@ -163,7 +163,7 @@ def for_context(item) -> str:
 
 
 def to_context_item(env: Envelope):
-    """A context.slots Item for the task slot, if Chapter 14's package
+    """A context.slots Item for the task slot, if Chapter 21's package
     is installed. The item carries the envelope's rendering, never the
     raw text."""
     from context.slots import Item      # soft: optional package

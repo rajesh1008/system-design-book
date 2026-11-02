@@ -31,7 +31,7 @@ states.intake = ["model:small", "gather", "handed_off"]
 states.gather = ["tools", "assess", "handed_off"]
 states.assess = ["model:mid", "propose", "handed_off"]
 states.propose = ["fare_calc", "permit", "handed_off"]
-states.permit = ["control_plane", "execute", "declined", "handed_off"]
+states.permit = ["control_plane", "execute", "declined"]
 states.execute = ["gateway", "verify", "handed_off"]
 states.verify = ["verifier", "done", "handed_off"]
 

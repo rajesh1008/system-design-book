@@ -28,11 +28,14 @@ ax.plot(range(len(t)), [r["err"] * 100 for r in rows], color=fl.C["fail"],
 ax.plot(range(len(t)), [r["err_chk"] * 100 for r in rows],
         color=fl.C["verified"], marker=fl.MARKERS[1], ls=fl.LINESTYLES[1])
 ax.set_xticks(range(len(t)))
-ax.set_xticklabels([f"{x:.2f}" for x in t], fontsize=8.5, rotation=45)
+ax.set_xticklabels([f"{x:.2f}" for x in t], fontsize=9, rotation=45)
 ax.set_xlabel("Accept threshold on extractor confidence")
 ax.set_ylabel("Error among accepted, %")
 ax.set_ylim(0, 14)
 fl.label_line(ax, 0.2, rows[0]["err"] * 100 + 0.6, "threshold only",
               color=fl.LABEL["fail"])
-fl.label_line(ax, 0.2, 1.2, "with record check", color=fl.LABEL["verified"])
+ax.annotate("with record check", xy=(1, 0.06), xytext=(1.6, 2.9),
+            fontsize=9.5, color=fl.LABEL["verified"],
+            bbox=dict(boxstyle="square,pad=0.2", fc="white", ec="none"),
+            arrowprops=dict(arrowstyle="-", color=fl.C["verified"], lw=0.75))
 fl.save(fig)

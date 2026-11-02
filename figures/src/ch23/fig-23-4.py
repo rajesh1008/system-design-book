@@ -25,7 +25,7 @@ tok = {"endpoint": "ops", "asr": "ops", "model": "model", "tool": "ops",
 bars = [("Batch", [b[k] for k in stages]),
         ("Streaming,\nno hold", [s[k] for k in stages]),
         ("Streaming,\nheld", [hold_ep, 0, 0, 0, voice.HOLD_AT_S])]
-fig, ax = fl.figure(4.5, 3.4)
+fig, ax = fl.figure(4.5, 3.6)
 for i, (label, vals) in enumerate(bars):
     y = len(bars) - 1 - i
     left = 0.0
@@ -36,18 +36,21 @@ for i, (label, vals) in enumerate(bars):
             else names[k]
         ax.barh(y, v, left=left, height=0.55, color=fl.FILL[tok[k]],
                 edgecolor=fl.C[tok[k]], lw=0.75, hatch=fl.HATCH[j])
-        if v > 0.45:
-            ax.text(left + v / 2, y, name, ha="center", va="center",
-                    fontsize=7.5, color=fl.INK, rotation=90 if v < 0.8 else 0)
+        if i == 0:
+            ax.text(left + v / 2, y + 0.42, name, ha="center",
+                    va="bottom", fontsize=9, color=fl.INK, rotation=60)
+        elif i == 2 and k == "tts":
+            ax.text(left + v / 2, y - 0.32, name, ha="center",
+                    va="top", fontsize=9, color=fl.INK)
         left += v
-    ax.text(left + 0.08, y, f"{left:.2f} s", va="center", fontsize=9,
+    ax.text(max(left + 0.08, voice.BUDGET_S + 0.1), y, f"{left:.2f} s", va="center", fontsize=9,
             color=fl.INK)
 ax.axvline(voice.BUDGET_S, color=fl.C["policy"], ls="--", lw=1.2)
-ax.text(voice.BUDGET_S + 0.05, 2.45, "2 s budget", fontsize=9,
+ax.text(voice.BUDGET_S + 0.1, 0.62, "2 s budget", fontsize=9,
         color=fl.LABEL["policy"])
 ax.set_yticks(range(len(bars)))
 ax.set_yticklabels([x[0] for x in reversed(bars)], fontsize=9.5)
 ax.set_xlim(0, 6.2)
-ax.set_ylim(-0.5, 2.7)
+ax.set_ylim(-0.75, 3.6)
 ax.set_xlabel("Mean seconds from last word to first audio")
 fl.save(fig)

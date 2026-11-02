@@ -1,0 +1,21 @@
+@startuml
+' Figure 26.3  Client, server and transport in the tool protocol
+' Reading order: top to bottom. The client discovers the server, lists
+' tools, and calls one over the transport; authorization covers who
+' may call. The gateway sits in the path and checks each call against
+' the registry; the protocol itself does not.
+!include plantuml-theme.puml
+participant "Client\n(harness)" as C <<model>>
+participant "Gateway" as G <<policy>>
+participant "Server" as S <<ops>>
+C -> G : Discover, token
+G -> S : Discover
+S --> C : Capabilities
+C -> G : List tools
+G -> G : Hash vs registry
+G --> C : Reviewed tools only
+C -> G : Call tool, arguments
+G -> G : Scope, schema, policy
+G -> S : Call
+S --> C : Result, capped
+@enduml

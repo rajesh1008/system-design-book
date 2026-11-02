@@ -1,0 +1,17 @@
+@startuml
+' Figure 25.10  The unversioned change that shipped
+' Reading order: top to bottom, Wednesday night to Thursday afternoon.
+' A settings edit changed the context policy; the version string and the
+' golden run did not move, so nothing said the harness had changed.
+!include plantuml-theme.puml
+participant "Settings\nfile" as S <<fail>>
+participant "Harness\n2026.05.26-1" as H <<ops>>
+participant "Golden\nrun" as G <<ops>>
+participant "Desk" as K <<ops>>
+S -> H : 9:40 p.m. keep 3 turns
+G -> G : 2:00 a.m. 42 of 42
+H -> K : booking asked again
+K -> H : hand-offs 3.9%
+H -> H : 1:30 p.m. diff
+S -> H : 1:52 p.m. rollback
+@enduml

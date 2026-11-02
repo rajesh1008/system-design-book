@@ -10,7 +10,7 @@ date = "2026-06-08"
 signed = "Sarah Whitfield"
 
 [release."1.1.0"]
-hash = "47fff92f371b21b6c7a6fd0fe5621e2961b17cdbee434072ecfb8adb098d20c8"
+hash = "a905acf1f5329e5fce722c97877670d758b78a29ef7e35374078f2187a9ed03f"
 status = "candidate"          # waits for the release gate, Chapter 34
 date = ""
 signed = ""

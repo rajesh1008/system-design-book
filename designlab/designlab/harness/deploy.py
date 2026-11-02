@@ -42,6 +42,6 @@ def check(raw: dict, overrides: dict | None = None,
     if rel.get("status") != "released":
         return Verdict(False, v, h, f"{v} is {rel.get('status')}")
     if rel["hash"] != h:
-        return Verdict(False, v, h, f"hash {short(h)} is not {v} "
-                                    f"({short(rel['hash'])})")
+        return Verdict(False, v, h, f"hash {short(h)}, {v} is "
+                                    f"{short(rel['hash'])}")
     return Verdict(True, v, h, "registered")

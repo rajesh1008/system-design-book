@@ -1,0 +1,24 @@
+// Figure 26.1  Tools are the action plane's interface
+// Reading order: top to bottom. The agent loop proposes a tool call;
+// the tool gateway checks it against the registry and the policy
+// engine; approved calls reach tool servers, which alone hold the
+// system-of-record credentials. Every call writes one trail line.
+// From gateway.core.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  loop [label="Agent loop\nproposes calls", class="model"];
+  gw [label="Tool gateway\none path", class="policy gate"];
+  reg [label="Registry\nreviewed tools", class="knowledge store"];
+  pol [label="Policy\npermission", class="policy"];
+  srv [label="Tool servers\nnine", class="ops"];
+  sor [label="Systems of\nrecord", class="ops store external"];
+  trail [label="Trail\none line per call", class="knowledge store note"];
+  loop -> gw [class="data"];
+  reg -> gw [class="control"];
+  pol -> gw [class="control"];
+  gw -> srv [class="emphasis", label=" checked"];
+  srv -> sor [class="data", label=" credentials"];
+  gw -> trail [class="trail"];
+  { rank=same; reg; pol; }
+}

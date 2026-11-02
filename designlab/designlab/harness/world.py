@@ -64,6 +64,10 @@ class World:
             self.faults[tool] -= 1
             raise ToolTimeout(tool)
 
+    def booking_read(self, case: Case) -> str:
+        self._maybe_fail("booking_read")
+        return case.booking_ref
+
     def fare_calc(self, case: Case) -> Decimal:
         self._maybe_fail("fare_calc")
         return case.fare_left if case.eligible else Decimal("0.00")
@@ -83,6 +87,10 @@ class World:
 
     def reconcile(self, case: Case) -> Decimal:
         """What the processor holds for this case, read by a component
-        that took no part in the run."""
+        that took no part in the run. A `reconcile` fault is a
+        processor that has not posted the refund yet."""
+        if self.faults.get("reconcile", 0) > 0:
+            self.faults["reconcile"] -= 1
+            return Decimal("0.00")
         return sum((a for k, a in self.refunds.items()
                     if k.startswith(case.cid)), Decimal("0.00"))

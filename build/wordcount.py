@@ -13,6 +13,8 @@ Part pages and appendices are excluded):
     end of the chapter. Box text, captions and table cells count as words.
   - Code blocks are not prose: counted separately as "code lines" and excluded from both word counts.
   - A word is a whitespace-separated token containing a letter or a digit ("p95", "$3,280", "re-read" = 1).
+05-build/lint_manuscript.py prints body= and interview= from chapter_counts() below, so the lint and this
+table always agree; keep the split rule here and only here.
 """
 import json, re, subprocess, sys
 from pathlib import Path

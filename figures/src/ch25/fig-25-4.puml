@@ -1,0 +1,17 @@
+@startuml
+' Figure 25.4  Manifest hash in the trail
+' Reading order: top to bottom. The deploy check hashes the effective
+' harness and asks the registry; only a registered hash starts. Every
+' step then writes the version and hash into the trail.
+!include plantuml-theme.puml
+participant "Deploy" as D <<ops>>
+participant "Registry" as R <<evidence>>
+participant "Harness" as H <<ops>>
+participant "Trail" as T <<evidence>>
+D -> R : registered?
+R --> D : yes, 1.0.0
+D -> H : start
+H -> T : step + hash
+H -> T : step + hash
+H -> T : stop + hash
+@enduml

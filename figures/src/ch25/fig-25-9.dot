@@ -1,0 +1,20 @@
+// Figure 25.9  Testing a harness
+// Reading order: top to bottom. The suite is generated from the manifest,
+// so every declared stop, budget, tool, pinned field, and transition has
+// a test. A failure goes back as a fix under a new version; only a
+// passing build has its hash registered.
+digraph tests {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  man  [label="Harness Manifest,\ncandidate", class="ops"];
+  ste  [label="Suite from the manifest:\nstops, budgets, tool errors,\ncontext, transitions", class="ops"];
+  ok   [label="All pass?", class="ops gate"];
+  fix  [label="Fix, new version", class="ops"];
+  reg  [label="Register the hash", class="verified"];
+  man -> ste [class="data"];
+  ste -> ok [class="data"];
+  ok -> reg [class="emphasis", xlabel="yes "];
+  ok -> fix [xlabel=" no"];
+  fix -> man [style="dashed", constraint="false"];
+  {rank=same; reg; fix;}
+}

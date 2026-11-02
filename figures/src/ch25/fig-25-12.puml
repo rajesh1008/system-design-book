@@ -1,0 +1,26 @@
+@startuml
+' Figure 25.12  The refund loop as an explicit state machine
+' Reading order: follow the arrows from intake, snaking down two
+' columns through seven states to done; intake and assess are the only states
+' that call a model. Permit may decline. Every state but permit may hand
+' off to a person. Any transition not drawn is refused.
+!include plantuml-theme.puml
+hide empty description
+state "Intake (model)" as intake <<ops>>
+state "Gather" as gather <<ops>>
+state "Assess (model)" as assess <<ops>>
+state "Propose" as propose <<ops>>
+state "Permit" as permit <<policy>>
+state "Execute" as execute <<ops>>
+state "Verify" as verify <<verified>>
+state "Declined" as declined <<policy>>
+state "Done" as done <<verified>>
+intake -right-> gather
+gather -down-> assess
+assess -left-> propose
+propose -down-> permit
+permit -right-> execute
+execute -down-> verify
+verify -left-> done
+permit -down-> declined
+@enduml

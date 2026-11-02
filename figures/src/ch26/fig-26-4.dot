@@ -1,0 +1,19 @@
+// Figure 26.4  Agent-to-agent protocol at Lakeshore's edge
+// Reading order: top to bottom. A partner's agent publishes an agent
+// card; Lakeshore's client agent sends a task; the remote agent
+// returns status and artifacts. The task result is treated as the
+// partner's claim and verified against Lakeshore's own systems.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  ours [label="Lakeshore agent\nclient", class="model"];
+  card [label="Agent card\nskills, auth", class="knowledge note"];
+  theirs [label="Partner agent\nremote", class="org external"];
+  task [label="Task\nstatus, artifacts", class="knowledge"];
+  verify [label="Verify against\nown records", class="verified gate"];
+  card -> ours [class="control", label=" read"];
+  ours -> theirs [class="data", label=" send task"];
+  theirs -> task [class="async"];
+  task -> verify [class="emphasis", label=" a claim"];
+  { rank=same; card; theirs; }
+}

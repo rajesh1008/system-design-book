@@ -1,0 +1,33 @@
+@startuml
+' Figure 26.2  A tool an agent can use well (class diagram)
+' Reading order: the tool definition in the middle; its typed input
+' above, its bounded result to the left, its error shape to the right,
+' its registry entry below. Fields from gateway.design and
+' gateway.servers.
+!include plantuml-theme.puml
+class Tool <<ops>> {
+  +name
+  +description
+  +kind
+}
+class Input <<policy>> {
+  +typed ids
+  +no free text
+}
+class Result <<knowledge>> {
+  +summary first
+  +token cap
+}
+class Error <<evidence>> {
+  +field
+  +fix
+}
+class Entry <<knowledge>> {
+  +owner, scopes
+  +hash
+}
+Tool -up-> Input
+Tool -left-> Result
+Tool -right-> Error
+Tool .down.> Entry
+@enduml

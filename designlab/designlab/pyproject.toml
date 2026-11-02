@@ -11,7 +11,10 @@ dependencies = []
 
 [tool.setuptools]
 packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
-            "method", "planes", "effects", "spine", "isolation"]
+            "method", "planes", "effects", "spine", "durable", "capacity",
+            "isolation", "failure", "models", "serving", "portfolio",
+            "toolargs", "adapt", "cost", "knowledge", "retrieval", "memory",
+            "gateway"]
 
 [tool.setuptools.package-data]
 common = ["models.toml", "fixtures/*.json"]
@@ -20,3 +23,10 @@ isolation = ["egress.toml"]
 map = ["map.yaml"]
 method = ["designs/*.toml"]
 planes = ["*.toml"]
+models = ["contracts/*.toml", "contracts/archive/*.toml", "fixtures/*.json",
+          "fixtures/*/*.json", "golden/*.jsonl"]
+serving = ["fixtures/*.json"]
+portfolio = ["policy.toml", "contracts/*.toml", "fixtures/calls/*.json",
+             "golden/*.json", "golden/*.jsonl"]
+adapt = ["fixtures/*.json"]
+knowledge = ["layer.toml", "contracts/*.toml", "fixtures/*.json"]

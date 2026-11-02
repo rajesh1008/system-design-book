@@ -2,7 +2,7 @@
 
 Reading order: one row per input concern, top to bottom: what this
 chapter decides at the edge, and which sibling volume owns the
-concern at depth.
+concern at depth. Siblings are named by subject (blueprint 1.1).
 """
 import sys
 from pathlib import Path
@@ -11,14 +11,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "design
 import figlib as fl  # noqa: E402
 from matplotlib.patches import Rectangle  # noqa: E402
 
-rows = (("Document parsing\nand OCR", "Contract fields,\nconfidence, route", "Document AI\nvolume"),
-        ("Speech recognition\nand synthesis", "Turn budget,\nread-back", "Voice agents\nvolume"),
-        ("Injection attacks\nand red teaming", "Tag at the edge,\nno free text", "Security\nvolume"),
-        ("Retrieval over\ndocuments", "Admitted fields\nonly", "Retrieval\nvolume"),
-        ("Personal data\nin scans", "What is kept,\nfor how long", "Privacy\nvolume"))
-cols = (0.0, 1.6, 3.15)
-heads = ("Concern", "Decided here", "Owned at depth")
-fig, ax = fl.figure(4.5, 3.6)
+rows = (("Injection attacks,\nred-teaming", "Tag at the edge,\nno free text", "Agent\nsecurity"),
+        ("Personal data\nin scans", "Which fields\nare kept", "Agent\nsecurity"),
+        ("Extraction\naccuracy", "Thresholds,\nrecord check", "Model\nevaluation"),
+        ("Documents in\nan index", "Admitted fields\nonly", "Retrieval\nsystems"),
+        ("Training OCR\nand speech models", "Pin, contract,\nreplay", "ML infra-\nstructure"),
+        ("Extraction\nprompt craft", "Schema, no\nfree text", "Context\nengineering"))
+cols = (0.0, 1.5, 2.95)
+heads = ("Concern", "Decided here", "Sibling volume")
+fig, ax = fl.figure(4.5, 4.0)
 n = len(rows)
 ax.set_xlim(0, 4.6)
 ax.set_ylim(-0.1, n + 0.9)
