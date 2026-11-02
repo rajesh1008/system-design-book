@@ -1,0 +1,25 @@
+// Figure 12.3  The batch path that bypassed the gateway
+// Reading order: top to bottom. The agent's refunds pass key, ledger,
+// and the gateway's credential. The involuntary-refund batch called the
+// processor through the framework adapter under its own integration
+// account, outside the ledger, the trail, and the kill switch.
+digraph bypass {
+#include "book.gv"
+  rankdir=TB; nodesep=0.45; ranksep=0.42;
+  agent [label="Agent loop\nproposes refunds", class="model"];
+  batch [label="Involuntary-refund batch\nCXL-0414, 4,960 refunds", class="ops"];
+  ctl [label="Policy engine\none permission per refund", class="policy gate"];
+  gw [label="Gateway\nkey issuer, ledger, trail\ncredential gw-effects", class="ops gate"];
+  fw [label="Framework adapter\n8.0 s timeout, 3 tries\nnew key per attempt", class="fail"];
+  proc [label="Payment processor\nrefund API", class="ops external"];
+  net [label="Card network\nslow 15:08 to 15:50", class="ops external"];
+  file [label="Settlement file\nnext morning", class="evidence store"];
+  agent -> ctl [class="control"];
+  batch -> ctl [class="control"];
+  ctl -> gw [label=" permission", class="control"];
+  ctl -> fw [label=" permission", class="control"];
+  gw -> proc [label=" one key per refund", class="data"];
+  fw -> proc [label=" int-fin-02,\n no ledger entry", class="fail"];
+  proc -> net [dir=both, class="data"];
+  proc -> file [class="data"];
+}

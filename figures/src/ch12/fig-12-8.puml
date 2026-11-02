@@ -1,0 +1,15 @@
+@startuml
+' Figure 12.8  Reconciliation against the settlement file
+' Reading order: top to bottom. The reconciler groups the processor's
+' credits by charge and compares them with the refunds owed, without
+' needing the ledger.
+!include plantuml-theme.puml
+skinparam defaultFontSize 14
+participant "Processor" as P <<ops>>
+participant "Reconciler" as R <<evidence>>
+participant "Risk" as T <<org>>
+P -> R : settlement file\n5,358 credits
+R -> R : refunds owed: 5,146\ngroup by charge
+R -> T : 212 extra\n$61,000.00
+R -> T : 0 owed, not paid
+@enduml

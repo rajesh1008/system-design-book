@@ -1,0 +1,29 @@
+// Figure 17.3  The distillation pipeline
+// Reading order: down the left column, then up the right. The frontier
+// teacher labels the training months; cases, not messages, are split
+// by month; the student trains; the overlap gate and the golden-set
+// parity check must both pass before the cascade, which escalates
+// low-confidence messages back to the teacher, goes behind the gate.
+digraph distill {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.25;
+  msgs [label="Dec to Mar\nmessages", class="evidence store"];
+  teach [label="Frontier\nteacher labels", class="model"];
+  split [label="Split by month,\ncases whole", class="ops"];
+  stu [label="Train the\nstudent", class="model"];
+  gate [label="Overlap gate:\n0 shared cases", class="ops gate"];
+  par [label="Parity on May\ngolden set", class="evidence gate"];
+  cas [label="Cascade:\nstudent first", class="model"];
+  esc [label="Escalate\nwhen p < 0.5", class="model"];
+  {rank=same; msgs; esc;} {rank=same; teach; cas;}
+  {rank=same; split; par;} {rank=same; stu; gate;}
+  msgs -> esc [style=invis]; teach -> cas [style=invis];
+  split -> par [style=invis]; stu -> gate [style=invis];
+  msgs -> teach [class="data"];
+  teach -> split [class="data"];
+  split -> stu [class="data"];
+  stu -> gate [class="control"];
+  gate -> par [class="control", constraint=false];
+  par -> cas [class="emphasis", label="pass", constraint=false];
+  cas -> esc [class="control", label="7%", constraint=false];
+}

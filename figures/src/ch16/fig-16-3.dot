@@ -1,0 +1,28 @@
+// Figure 16.3  Schema validation against world validation
+// Reading order: top to bottom. The schema check needs only the call.
+// The world check reads three stores to ask whether the identifiers
+// name things that belong together. A schema failure goes back the same
+// way as the world rejection drawn here; only
+// a call that passes both becomes a proposal.
+digraph worldcheck {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.4;
+  call [label="Tool call", class="model"];
+  sch [label="Schema check\nshape only", class="ops gate"];
+  it [label="Itineraries\nand tickets", class="knowledge store"];
+  fl [label="Flights", class="knowledge store"];
+  fq [label="Fare quotes", class="knowledge store"];
+  wld [label="World check\nrelationships", class="ops gate"];
+  ok [label="Proposal (C2)", class="verified"];
+  no [label="Reason back\nto the model", class="fail"];
+  {rank=same; it; fl; fq;}
+  {rank=same; ok; no;}
+  call -> sch [class="data"];
+  sch -> it [style=invis];
+  it -> wld [class="data"];
+  fl -> wld [class="data"];
+  fq -> wld [class="data"];
+  sch -> wld [class="data"];
+  wld -> ok [class="emphasis"];
+  wld -> no [class="fail"];
+}

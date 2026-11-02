@@ -1,0 +1,18 @@
+@startuml
+' Figure 12.7  Circuit breaker states
+' Reading order: left to right from closed. Effects start only while
+' closed; while open or half-open, refunds wait in the hold queue with
+' their keys, and the probe is a read.
+!include plantuml-theme.puml
+hide empty description
+skinparam defaultFontSize 14
+[*] --> Closed
+Closed : effects allowed
+Open : effects held
+state "Half-open" as HalfOpen
+HalfOpen : read probes only
+Closed --> Open : 40% of calls slow or failed\nin 20 s (at least six calls)
+Open --> HalfOpen : after 15 s
+HalfOpen --> Closed : two probes under 2 s
+HalfOpen --> Open : a slow probe
+@enduml

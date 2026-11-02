@@ -12,6 +12,7 @@ echo "== the serving lab, seed 14 =="
 echo
 echo "== the timestamp moved to the top =="
 "$PY" -m serving.demo --seed 14 --part bakeoff --layout clock-first
+"$PY" -m serving.demo --seed 14 --part layout --layout clock-first
 echo
 echo "== double the batch =="
 "$PY" -m serving.demo --seed 14 --part batching --batch 128

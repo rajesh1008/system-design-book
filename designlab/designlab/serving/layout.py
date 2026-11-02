@@ -89,6 +89,6 @@ def lint(r: Rendered) -> list[str]:
                      f" {ahead:,} stable tokens")
     for b in r.breakpoints:
         if any(s.key.startswith("ts:") for s in r.segs[:b + 1]):
-            found.append(f"breakpoint at segment {b} covers a"
-                         " timestamp: every call writes, none reads")
+            found.append(f"breakpoint {b} covers a clock:"
+                         " all write, none read")
     return found

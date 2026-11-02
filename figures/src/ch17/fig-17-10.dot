@@ -1,0 +1,29 @@
+// Figure 17.10  Preference pairs enter the decision tree
+// Reading order: top to bottom. Approved refund cards become pairs only
+// when the approver changed the wording and not the effect. Pairs are
+// split by month, then walked through the cheaper fixes first: context,
+// then a rule that rewrites to the house format, and only the residual
+// goes to preference tuning, which ships only through the golden set.
+digraph prefs {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.28;
+  cards [label="14,400 cards", class="evidence store"];
+  drop1 [label="Unedited\n12,592", class="note"];
+  drop2 [label="Effect\nchanged 77", class="fail"];
+  pairs [label="1,731 pairs", class="evidence"];
+  split [label="May held out", class="ops"];
+  ctx [label="Context", class="ops"];
+  rule [label="House-format\nrule", class="policy"];
+  pt [label="Preference\ntuning", class="model"];
+  gate [label="Golden set", class="evidence gate"];
+  {rank=same; cards; drop1;}
+  {rank=same; pairs; drop2;}
+  cards -> drop1 [class="data"];
+  cards -> pairs [class="data"];
+  cards -> drop2 [class="fail"];
+  pairs -> split [class="control"];
+  split -> ctx [class="control"];
+  ctx -> rule [class="control"];
+  rule -> pt [class="control", label="45% left"];
+  pt -> gate [class="emphasis"];
+}

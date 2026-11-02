@@ -1,0 +1,19 @@
+@startuml
+' Figure 16.2  Constrained decoding and schema validation
+' Reading order: top to bottom. The decoder can only emit tokens that
+' fit the schema, so the shape arrives right. The gateway still runs the
+' full schema, because the decoder skips bounds and a cut-off response
+' is not covered.
+!include plantuml-theme.puml
+participant "Agent\nloop" as A <<model>>
+participant "Model and\ndecoder" as M <<model>>
+participant "Gateway\nintake" as G <<ops>>
+A -> M : tools, strict schema
+M -> M : sample only tokens\nthe schema allows
+M --> A : tool call
+note right of M : skipped: min,\nmax, lengths
+A -> G : arguments
+G -> G : full schema check
+G -[$FAIL]-> A : cut off: fields missing
+G --> A : passes, on to\nworld checks
+@enduml

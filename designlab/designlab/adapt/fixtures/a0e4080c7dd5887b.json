@@ -1,0 +1,47 @@
+{
+  "request": {
+    "max_tokens": 1000,
+    "messages": [
+      {
+        "content": "1. quick one, i paid for a seat i never got, refund the seat fee, booking ltg3600987 to phoenix. appreciate it\n2. hi, take the flex add-on off and give that back, booking ltg7131060 to seattle. thank you\n3. hello, please switch me to the evening flight, booking ltg8943867 to atlanta. thank you\n4. hi, please switch me to the evening flight, booking ltg6382594 to dallas. appreciate it\n5. please upgrade my seat to premium economy, booking ltg6869548 to atlanta. appreciate it\n6. nm on bkg does not match my passport, bkg ltg2274522 to atlanta. appreciate it\n7. nm on bkg does not match my passport, bkg ltg7641669 to boston. appreciate it\n8. good morning, my flight was canceled, i do not want another, refund me, booking ltg3053027 to chicago. appreciate it\n9. pls cxl my trip + keep value as cr, bkg ltg8170595 to denver. appreciate it\n10. my flight was moved by hours and i cannot make it, find me another, booking ltg4758226 to dallas. appreciate it",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "a0e4080c7dd5887b",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "1. ancillary_refund\n2. ancillary_refund\n3. voluntary_rebook\n4. voluntary_rebook\n5. upgrade\n6. name_correction\n7. name_correction\n8. involuntary_refund\n9. cancel_credit\n10. involuntary_rebook",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDYva7xTjkoUzUsZ2gX",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 686,
+      "output_tokens": 94,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

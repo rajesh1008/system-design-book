@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 1000,
+    "messages": [
+      {
+        "content": "1. hello, my connection no longer works after the schedule change, get me a new itinerary, booking ltg9107631 to miami. asap please\n2. good morning, cancel the flight, i will use the credit later, booking ltg6690281 to miami. thank you\n3. hello, my last name is misspelled on the ticket, booking ltg6377751 to portland. appreciate it\n4. good morning, cancel everything and refund me, booking ltg3940203 to seattle. thanks\n5. hello, please cancel my trip and keep the value as credit, booking ltg3433952 to atlanta.\n6. hi, i need to fly out a day earlier, please change it, booking ltg8595021 to orlando. appreciate it\n7. the new departure time is fine, i accept it, booking ltg3757281 to orlando. thanks\n8. hey, i would like to buy an upgrade for the long leg, booking ltg2581705 to atlanta. asap please\n9. hello, ok with the new flight time, please confirm, booking ltg5935437 to miami. thx\n10. quick one, please fix the spelling of my first name, booking ltg1194387 to seattle.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "4e7beeee86823508",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSigsKEAgTGAI4AUIIdGhpbmtpbmcSDPqDuucTCa4cG6dXnBoMzBpuSnLpBFVvdmxrIjBpKImVrb9NogU1aFV6bqHGv6drfoCEAaAODcjsAW6fmNxd5D8uyIbS99Kegzn3VdsqpwqOLQaLAZ1J+3yW7zeanyMzOeKWJc/Zrc0ozQFXIh8Ukzagz++ZhzJhDO1WUHyaIGabEzmuQRv/bHvv16DJAgYe4zAt8r7lsiCIANKyN+Hp7FFoE/Cc+v1V7OYW02xn+uWB7s4aWNP7x45uIlNFV9Vt8gjLIzeqWMhye8gk7FjZMfK/KrkbsJ6tErYnhGIXgAYQ8ebKPKs7GP1GmXtwFABnr72A+11ry9qOKtzT8PSikV9LK27S73QD2HCVGDYBimFaQWIXZL9WHUEVSuJD20qhd0aKSSuTsssSeL/dMqqGeW7bMmqs0P5ZgNv3v/xHufT0nWdNq9U26Rxh/1+vlZx9h/ENYX0kBbIBx7ATGbSt/8GHdYSc+9nZ7kKDYgZ+I3ziOqFdP9ANpusOJuGzo3rUuVSIqOYs+2lLUfbo1Hvw1mRuoDtGLcOqn4DMa+QqwKJZPy+HrMdZ57CoKwcZGj9Brpt0lEjrTo3BHhMJ4QEdDn4eViYIJ1IW4luPugZ0SgdwxabRUpHJZepJ6Y/TNLjIRLU4dH38T1tytPM+GtTPee4/4eGjoyZAzd0uVsAYI1ahDzOsm4GZBirC7W60U1zzHiDWcUINH/tzrwBxivIYv/Fu7eT7gHaoA0cOMa9i6ILWn/bh5JyZw1ltXBZC0kEcijP+Tng+/X4zBOFij4oxFDCOtnBUfwGQ3Slrx8LyMug+/xlSK39P/ImU7qm3XHGfpu+PrnSB5CX0lfrFqtTwiFcuvA5ugQyy1k8+LxUyZbRxkXMpx1ZVd1oBE0z2dHhG1TX710z00jm3Fd37SVhyXaMJZohFQoqKquu+89dKxSfRt6ZtZq2k/imjWXXRheLIQKMPi8UQphC8AwPxDALvN7Z53vhYbDhjAiFdadYZwKgIA4WwX3LGnLkdyyHPpFsylIV/Y/4HPuOeuiWfwwnKCPH/YpKLEbCIyq/MfqmbB5HoTzDThrFihgiOkFzFTxsd5ZzmNsDrN33co3KLlt+18f4/xa6JOAqQ9DJa2TwV6UDALqgfrMIAg7jdtMRl04U8NtlRdCcKIi5MN4ATkbrckSgNNRCf2eYFtz3Gr2qI0d2HLkvZE0glcp68xOgbNboY719soOOcQstmdT7lMKC6jX8zKhcviFz37b1K1YYrhg3nb1U+QKJX8hFt2XZ/jdui0OiMlBGvbLYrR+nWrmbX8JCr6NyC7AtRi7fJRB5sBjwRIB9MmmJRb7zhncxTaVqnPZOQhbRZ/RkAbrovWymOxhoZKZkJEI3x0IbPcz3FcGkwWYAjxBjZja9YIbT9Y9U16jVRGGjPUGGR8TGy3DAD8Zp+KgrXf0KyrzAcOVRI9AmK7DV/rGEbSpc9h/pSdYpnB6Fe4BAuq+8h5vpfPU9X13dWoj/86c8ZLltgXD8bAMc+q1/+/y/dWWDX0nf9r7HfOUb21CCIXNQNKmngJ26+sOb94kbVkiS86L5OJV9H/XCaW56GuLUYFn0XV10S9qxl4JqA28JtC4t1gJbmf/tOKSXuM3mlru3Vp8x2aZeuZKuWfZjK3YgsFQV9Liqxm5HFPuWFi8MVLxof60LaVGfp0ZO3V0NCnslD+MLW+rR8L3abRRRkpXmKtxLbsde7HtN72C9Sf5NQJSH1mPUkcZ7HttS39kwf/7lcoSOf0yyzEmeDDw2M6Uj2lB+JCHf+p7jyDsc9wyUAdgMpvRlUsObIQZ8W+SREm3mtqyY6yF3rKuH2oiDtLLT2AycVD4RrST7ufPtYD/i62RgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "1. involuntary_rebook\n2. cancel_credit\n3. name_correction\n4. cancel_refund\n5. cancel_credit\n6. voluntary_rebook\n7. accept_schedule\n8. upgrade\n9. accept_schedule\n10. name_correction",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDUgwDGUKANwhQFZk53",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 675,
+      "output_tokens": 409,
+      "output_tokens_details": {
+        "thinking_tokens": 320
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

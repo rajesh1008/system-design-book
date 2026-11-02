@@ -1,0 +1,47 @@
+{
+  "request": {
+    "max_tokens": 240,
+    "messages": [
+      {
+        "content": "1. hey, move the car pickup to the airport location, booking ltg6396096 to atlanta.\n2. good morning, i cannot go, put the money toward a future trip, booking ltg9550954 to seattle. thank you\n3. hi, i want to cancel and save the fare for next time, booking ltg3475612 to atlanta. thanks\n4. hey, can i upgrade to business on my flight, booking ltg7312559 to boston. asap please\n5. quick one, i need a bigger car on my rental, booking ltg5030026 to orlando. thank you\n6. hello, can i change my flight to the morning one, booking ltg5519638 to denver. thanks\n7. good morning, i no longer need the room, cancel the hotel, booking ltg5960372 to chicago. thx\n8. hi, i accept the changed itinerary, booking ltg3581495 to phoenix.\n9. hello, i want to cancel and save the fare for next time, booking ltg5053418 to portland. thank you\n10. hi, i accept the changed itinerary, booking ltg4527479 to boston. asap please",
+        "role": "user"
+      }
+    ],
+    "model": "claude-opus-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "66afffeb0150e0e4",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "1 car_change\n2 cancel_credit\n3 cancel_credit\n4 upgrade\n5 car_change\n6 voluntary_rebook\n7 hotel_cancel\n8 accept_schedule\n9 cancel_credit\n10 accept_schedule",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDRE9pCLArZUYC11Ltb",
+    "model": "claude-opus-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 657,
+      "output_tokens": 86,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

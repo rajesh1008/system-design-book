@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 240,
+    "messages": [
+      {
+        "content": "1. hi, can i upgrade to business on my flight, booking ltg4413958 to atlanta. appreciate it\n2. hello, i would like to buy an upgrade for the long leg, booking ltg5088129 to portland. thanks\n3. hey, i bought flex refund, so cancel and pay me back, booking ltg1138218 to denver. thx\n4. quick one, cancel the flight, i will use the credit later, booking ltg7966121 to boston. asap please\n5. quick one, cancel the rental car upgrade but keep the car, booking ltg6526251 to miami. appreciate it\n6. change my rental car pickup to the next day, booking ltg9650065 to miami. asap please\n7. good morning, you changed my departure and i missed the connection, rebook me, booking ltg2568572 to dallas. appreciate it\n8. hello, i nd htl from tuesday instead of monday, bkg ltg7502979 to boston. thanks\n9. quick one, my flight was moved by hours and i cannot make it, find me another, booking ltg1844507 to boston. thank you\n10. hey, cancel everything and refund me, booking ltg3531296 to seattle. appreciate it",
+        "role": "user"
+      }
+    ],
+    "model": "claude-opus-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "0a58ff877ebfbfa1",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSzAcKEAgTGAI4AUIIdGhpbmtpbmcSDIQKkyIHYuwlCAJI1BoMnfxO+b6ajp8csiMwIjBVrIGeWLOe6mvyMKB8JRh/NIGzeiIj0pljdCpTNWlksS537On4bpUP95jOsDP/oEYq6QaVZCWM8wkixho3J/wd4xXhifDkiChVX87IdagcGfXkcko5XRa6EMgtBA7F6Hv4muh6UzlvaR3G4jgoZrMvRD+w+xDAH89A6K4SQAxt7UEKX97ghbjOVW1spbKBwY1fNMh4476qh5RZwjNmvdwxmRSJ+pn4fnhHi69LZiGk8rkwcxuMOXVPLL21avCS92qMbTBRmk4UIQS9VW0ra2gHMq7TYWH8Id31MdOhYSr4b8sm2jH6Hgeay7so8thutx5qzpONB4cKlsXzbF0NT1gtx9TaGWewYAX5FplTMTpBqc8mqCXbzfB0UCmkrTs9Lql3wRlSmkBOsa6ZI4vmkIXcY1rabpePEN6/0Hur9cXzOvcl003lmugd7RCAtu/YbTYvrMUmXAzRBEu3OGFKQjkEnZTou+od8Nrfz5bg6WuLkLcocEprpGp2bnIoORizXmnpjXnNqeUnj+RBBOpsVm2cp354Qhlod1xMdaeUBs1LPrtlV+6+O5p/fzkT9YqiUnqDIhlfwTCOIzW5jONAcH0ulPi6KibMpImIzjvi8iUkszt7MGJacgAfmt8AVfSlAdO6cKOPHRm8GaVBajfESHNDKWX5jZl6JwscnuHvVP1WqtwnIy4rI8WRJ1wHstfhrVmd/ZQKxJarIQUqkjF0GOOM8e+FW8FAKXIDZ5iNy0yX3Ab12p8IGPdxeCRSK6hlSxS4eGVJViPJdz78Ti2aNzrEmt8v7e83oquRqyflEQ39GktRk6hcOzNy3moga2aSWwyhYOI6vX1VULk8vNyK7qPg2hOP0QIUX3I7RGYOWftdAalOYluqxxahDM/ufEx1SX55m2ObSYliTuOVVTSnNvJVUqhFAp51gmQb6uYRyWnvDaJommdLRX6FQsbsvgM+DEf49YuMAh95XLdl2B4gI+EbYGfUueNBeMSZF3HRsw+jIsaC9gVtUEEF8jdFuxz6qmWfAK+8wHDRxBl6QfrmgnYgMafSpMMsUK7KRj5VKFoYb6XaKbd5yer4nwofFeLUW5PmbOdygVo1eBA9KL6t5mWMF+ObQltmhXzVIowgR7NC/L9IyYP4clWDB4fGcEN952T8SDKocTUBaJ8d2H7aOgFLbQhnPPuMfZQhqVj4kzxs6/2Scim9SfQNlzUSGKQRsX7gplRwdg1Sk5MF4rQYAQ==",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "1 upgrade\n2 upgrade\n3 cancel_refund\n4 cancel_credit\n5 car_change\n6 car_change\n7 involuntary_rebook\n8 hotel_date_change\n9 involuntary_rebook\n10 cancel_refund",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDWudm4frs6rjimmXC2",
+    "model": "claude-opus-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 691,
+      "output_tokens": 230,
+      "output_tokens_details": {
+        "thinking_tokens": 144
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

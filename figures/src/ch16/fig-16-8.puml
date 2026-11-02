@@ -1,0 +1,19 @@
+@startuml
+' Figure 16.8  The argument that was almost right
+' Reading order: top to bottom. On May 7, 2026, every automated check
+' passed because each asked a narrower question than it seemed to. The
+' supervisor's hold stopped it; the replay shows what the carrier
+' would have done.
+!include plantuml-theme.puml
+participant "Model" as M <<model>>
+participant "Gateway" as G <<ops>>
+participant "Agent\ndesk" as D <<verified>>
+participant "Carrier\nsandbox" as C <<ops>>
+M -> G : rebook TKT-40219
+G -[$FAIL]> G : checks pass
+G -> D : above $250
+D -> D : hold: wrong ticket
+== replay, May 8 ==
+G -[$FAIL]> C : reissue TKT-40219
+C -[$FAIL]-> G : reissued
+@enduml

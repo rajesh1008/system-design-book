@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Chapter 13 lab: offline tests, the contract suites on recorded fixtures,
-# the variance and amount reports, the drift check, and two injected
-# model moves (which must fail the drift check), then the secret scan.
-# No live API is used here; `python3 -m models.record` re-records.
+# Chapter 13 lab: offline tests, the contract suites on recorded
+# fixtures, the variance and amount reports, the drift check, and two
+# injected model moves (which must fail the drift check), then the
+# secret scan. No live API is used here.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-DESIGNLAB_OFFLINE=1 python3 -m unittest models.test_models models.test_live
+DESIGNLAB_OFFLINE=1 python3 -m unittest \
+  models.test_models models.test_live
 python3 -m models.demo contracts
 python3 -m models.demo test
 python3 -m models.demo format

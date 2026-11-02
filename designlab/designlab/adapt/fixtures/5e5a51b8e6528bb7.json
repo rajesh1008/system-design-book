@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 240,
+    "messages": [
+      {
+        "content": "1. hi, i need to fly out a day earlier, please change it, booking ltg7257011 to miami. thanks\n2. quick one, cancel the hotel part of my booking, booking ltg5048102 to dallas. thanks\n3. quick one, i got the schedule change notice and the new time works, booking ltg7369434 to austin. thanks\n4. hi, cancel it and give me a travel credit, booking ltg7859835 to dallas. thx\n5. hello, the carrier canceled, please refund instead of rebooking, booking ltg4321211 to orlando. asap please\n6. hey, ok with the new flight time, please confirm, booking ltg7849897 to chicago. asap please\n7. good morning, how much to move up to first class, booking ltg9666010 to portland. asap please\n8. quick one, i cannot go, put the money toward a future trip, booking ltg1394272 to atlanta. appreciate it\n9. i no longer need the room, cancel the hotel, booking ltg6433214 to austin.\n10. good morning, cancel the hotel part of my booking, booking ltg3789579 to newark. asap please",
+        "role": "user"
+      }
+    ],
+    "model": "claude-opus-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "5e5a51b8e6528bb7",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSnAUKEAgTGAI4AUIIdGhpbmtpbmcSDPiohPHgRyC0UidI6RoM364qWk+p95mAGWdGIjCprph+M0NrqvktWTtHRL1wtMTDvgiq5O0PHAjYyE9s7xkJFcMLfwP0YF3OEWansQsquQTMLbEJcm1l4UugQAo/c5NfxKoo46O8oBgEx6c7lW0HcYgCpI0DqVfb0UZKqtKX6DqKGTTREYRlYaMkvuapkHwuwygNKH23WBPqbEP41l+kaFGEboVl4aYtukuvTWIYTwVdM1P5Bdv2hOZGdhoAe52wP8i2DYCGyTrvxpVQNYGdJ5OwkuqmvuFKeFXIjE3nKViOr+AyArq33cFvFG68q0ZYvj6kNYvfEG4ORdQBituLfOTQgiMsAepIN+kLYyXlNwYD8O6myO1vzBU39TavxAejGc5eXzXmBMZt3FsTiZoEsjiMyNqyBtaeN4VyByK6S+AUyN/ihRgFbJIpnQdzKzI9N97BwrskvrSc0EWA4YwlPdhMz1T+hHb4uMnwJE/S/5g/tLbE/oX1+CVbHe8I3OgBQXXotMZGtuk2cR7Kf1rjpBGzg+zpVNw5diTqVZPwm/KyX3vwVXmeMxP6BPU0XJ2WEt3MWioCFzkbM6Oj0fNAxL+soKl7jP9qRjt3pRPDcQyR13J3pizPAjPEmJXsSIQQfjFE0LUN3mQxobMNXZjv/oXswOjgiPNWqc2JhK5E5OcvrezS73d3r9A+nHiiIKLe2FZgJ/DHdUABEB5jESJh4K9Y7s9F2bYbBojWK19yK2AKYGcKf8O47Vgdcw1f7X86PTNPYBk6el2o9h9Y0bzqE1k7Xk1tc3z4YLj/s9f3C9TUOp/XpT/ir5i6vjoYo3bWkNOnf5/8rwCLo5eUKMHg5es0Kyx+T0P4nBgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "1 voluntary_rebook\n2 hotel_cancel\n3 accept_schedule\n4 cancel_credit\n5 involuntary_refund\n6 accept_schedule\n7 upgrade\n8 cancel_credit\n9 hotel_cancel\n10 hotel_cancel",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDR62RH3CiUfhqzUrfb",
+    "model": "claude-opus-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 669,
+      "output_tokens": 125,
+      "output_tokens_details": {
+        "thinking_tokens": 30
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

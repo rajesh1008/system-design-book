@@ -1,0 +1,47 @@
+{
+  "request": {
+    "max_tokens": 240,
+    "messages": [
+      {
+        "content": "1. hello, flex me onto the earlier one, booking ltg3545434 to portland. appreciate it\n2. hey, i paid for a seat i never got, refund the seat fee, booking ltg8275589 to phoenix. asap please\n3. please cancel my hotel reservation, booking ltg7941635 to orlando. thank you\n4. hello, carrier cxld my flt + i wnt a rfnd, bkg ltg2086911 to dallas. thank you\n5. good morning, the airline canceled my flight and i want a refund, booking ltg3491840 to orlando. thx\n6. quick one, i cannot go, put the money toward a future trip, booking ltg2686401 to seattle. thx\n7. hello, ok with new flt time, pls confirm, bkg ltg6655804 to portland. thanks\n8. carrier cxld my flt + i wnt a rfnd, bkg ltg1058090 to portland. asap pls\n9. hi, i paid for a seat i never got, refund the seat fee, booking ltg1024804 to seattle. thx\n10. quick one, please cancel my trip and keep the value as credit, booking ltg3562019 to dallas. thanks",
+        "role": "user"
+      }
+    ],
+    "model": "claude-opus-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "b231f40a62826259",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "1 voluntary_rebook\n2 ancillary_refund\n3 hotel_cancel\n4 involuntary_refund\n5 involuntary_refund\n6 cancel_credit\n7 accept_schedule\n8 involuntary_refund\n9 ancillary_refund\n10 cancel_credit",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDXcVR3zVe3p7Yav8u5",
+    "model": "claude-opus-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 690,
+      "output_tokens": 99,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

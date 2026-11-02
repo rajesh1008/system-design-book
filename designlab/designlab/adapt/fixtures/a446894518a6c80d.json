@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 240,
+    "messages": [
+      {
+        "content": "1. hi, can i upgrade to business on my flight, booking ltg8093702 to chicago. thank you\n2. good morning, can someone look at my reservation, booking ltg6326946 to chicago. thx\n3. good morning, i accept the changed itinerary, booking ltg3969311 to atlanta. thank you\n4. hi, the carrier canceled, please refund instead of rebooking, booking ltg5744491 to chicago. asap please\n5. hey, please cancel and send the refund to my original payment, booking ltg6007876 to austin. thanks\n6. hey, i need the hotel from tuesday instead of monday, booking ltg7119310 to newark. thank you\n7. good morning, can you change my hotel dates to match the new flight, booking ltg1433681 to portland.\n8. hello, use my flex chg for 6 pm departure, bkg ltg4549865 to portland. thanks\n9. quick one, cash out my flex fare to card, bkg ltg7596829 to dallas. asap pls\n10. quick one, cancel the flight, i will use the credit later, booking ltg4759857 to boston.",
+        "role": "user"
+      }
+    ],
+    "model": "claude-opus-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "a446894518a6c80d",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSuwYKEAgTGAI4AUIIdGhpbmtpbmcSDALzi/ldvbexgk5XmxoMHQ8l9g5XCrcULZoDIjBiDrgCnnY1EgKuKRN9DgaqpsEouYt/bKjKEbZK2UnDeIdMDpZtjYYN5mB4QfXou5Qq2AXSrTESmpmwCirntJnehZEmkbftfcTw08J2mvoCOkgew0Oh5vSMvlWG/nLHwov1yH5ElMes/q0L8Rp290TaZF/SIgWzgdDyBwwb5X+ToDDmbFKgLxtgaEhWttZ2bZkMYf24cYlibKKKfFr9sH1JUUTRUpvNW4sll1fl26YB2tViGHiqujQXfQ9sW+EJGwWxOT51j6ros8HbMLqTORBc8moixGHK2lEB7eEVuD7/E7YCdmIGtnaYYOP/Ia3CUC7ve+IKO7cwRYLCHHE4bYn3i0U8srKUM74IxmSiFP85YwJ1ea/zhhItDIOqe4MkOqBpiP8pEdDBA/bCKCDQ2jLnSPpRR1XsQUmaZZA4GVCMVfZkzAde5LMgx9givkZIzLiv6kjeZUYywyI/0+K/lIr9adu7LS/GWd7TQa2klzjkCTdxz3AlXLLIAtMVzv1OomF18w65Zn7LYlCFhEpVKbzRgIROEk/KdHm6VSev9NfLOkPz/OkVXhc1BZ4AQobgmqf3ljBdzV58tX0lGUOkGgtZf2sFKvm+fewPUvS4S0PdPNmBL2c1+fIy6lsE26SESeXlG1YMsCNDAi6vUl/XSs9WFTYIrsU91pwnRXT+n6zkFYAc2JmpD+AjfqazqmkB3CVksFBj3yQrRDluFVOqfomhaCIZzNIUfBxSL7IowH/IAvmhbmuu+pVJ3JTfGMo/gA8fLbGVXeZPczJOKarSwlAiy8Z5T6GSrugORlLhaMnuHWdoLgIJuwz2j7XyomVb6Fi0ZlRp+ns87N4Vn8QI9sDl1aH29ToqYkoC5tiQ9c7xPhzX0b5IZHq9RQvlZPY3i06RZoI8KUlsSo7LycUmI43h/pStlqsJCmWT5xpMpZx+HwiQ2fpytlX6XPbk6R5PU2RkWSvz/SK14Zw5cCmeSxW+GZBFJGPPh3qvgjFzTw0HNxD41g3znivG45z4xjKXFRu6igIyLIMRuYKaABgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "1 upgrade\n2 unclear\n3 accept_schedule\n4 involuntary_refund\n5 cancel_refund\n6 hotel_date_change\n7 hotel_date_change\n8 voluntary_rebook\n9 cancel_refund\n10 cancel_credit",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDYKAtxp8JQqshpHF6E",
+    "model": "claude-opus-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 668,
+      "output_tokens": 205,
+      "output_tokens_details": {
+        "thinking_tokens": 114
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

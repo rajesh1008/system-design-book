@@ -5,10 +5,13 @@
     python3 -m toolargs.demo --seed 16 --inject unbounded-repair
     python3 -m toolargs.demo --seed 16 --rule reason-in-record
     python3 -m toolargs.demo --case okafor
+    python3 -m toolargs.demo --case tools
+    python3 -m toolargs.demo --case verdict
 """
 from __future__ import annotations
 
 import argparse
+import textwrap
 from collections import Counter
 
 from common.clock import FixedClock
@@ -19,7 +22,7 @@ from . import schema, world
 from .cases import SimProposer, Stream
 from .layer import Intake, Tool, digest
 from .repair import run_call
-from .tools import TOOLS
+from .tools import TOOLS, api_tool
 
 START = "2026-05-18T09:00:00-05:00"     # Monday, May 18, 2026, CDT
 
@@ -145,6 +148,39 @@ def okafor() -> None:
     emit(f"digest a card must bind: {digest('rebook_ticket', args)}")
 
 
+def tools() -> None:
+    """Each effect tool as the API receives it, one field a line."""
+    for t in TOOLS.values():
+        d = api_tool(t)
+        s = d["input_schema"]
+        emit(f"{d['name']} {t['version']}  strict={d['strict']}  "
+             f"closed={not s['additionalProperties']}")
+        for k, v in s["properties"].items():
+            rule = (v.get("pattern") or "|".join(v.get("enum", []))
+                    or v["type"])
+            emit(f"  {k:20} {rule}"[:70])
+
+
+def verdict() -> None:
+    """What the model is sent for the opening call, then and now."""
+    w = world.build()
+    intake = Intake(w, TrailWriter(clock=FixedClock(start=START)))
+    args = {"itinerary_id": "LTG-5208841", "ticket_number": "TKT-40219",
+            "passenger_name": "OKAFOR/TUNDE",
+            "new_flight_id": "FLT-904452",
+            "fare_difference_usd": "318.40", "reason": "voluntary"}
+    v = intake.check("LTG-5208841", "rebook_ticket", args)
+    emit(f"May 12 to 18: {v.for_model(0, bare=True)}")
+    emit("since May 18:")
+    for k, val in v.for_model(1).items():
+        rows = ([f"  {ek}: {ev}" for e in val for ek, ev in e.items()]
+                if k == "errors" else [f"{k}: {val}"])
+        for row in rows:
+            for line in textwrap.wrap(row, 70,
+                                      subsequent_indent="      "):
+                emit(line)
+
+
 def main(argv=None) -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--seed", type=int, default=16)
@@ -152,10 +188,11 @@ def main(argv=None) -> None:
     ap.add_argument("--inject", choices=("schema-only",
                                          "unbounded-repair"))
     ap.add_argument("--rule", choices=tuple(world.RULES))
-    ap.add_argument("--case", choices=("okafor",))
+    ap.add_argument("--case", choices=("okafor", "tools",
+                                         "verdict"))
     a = ap.parse_args(argv)
     if a.case:
-        okafor()
+        {"okafor": okafor, "tools": tools, "verdict": verdict}[a.case]()
         return
     r = run(a.seed, a.calls, a.inject, a.rule)
     report(r, a.seed, a.inject, a.rule)

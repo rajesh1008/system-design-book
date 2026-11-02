@@ -1,0 +1,24 @@
+@startuml
+' Figure 12.4  Key per attempt against key per action
+' Reading order: top to bottom. Above, the adapter mints a new key for
+' each try, so a late credit and the retry are two refunds. Below, the
+' key is minted once at the grant, so the retry replays the first.
+!include plantuml-theme.puml
+skinparam defaultFontSize 14
+participant "Caller" as C <<ops>>
+participant "Processor" as P <<ops>>
+== Key per attempt (April 14 batch) ==
+C -> P : refund, key fw-1
+note right of C : 8.0 s, no answer
+C -> P : refund, key fw-2
+P --> C : credit 1 (late, for fw-1)
+P --> C : credit 2 (for fw-2)
+note over C, P #F8DDD9 : two credits, one refund owed
+== Key per action (April 28 path) ==
+C -> P : refund, key idem-7f3a
+note right of C : 8.0 s, no answer
+C -> P : refund, key idem-7f3a
+P --> C : credit 1
+P --> C : same result, replayed
+note over C, P #DCEEDD : one credit
+@enduml

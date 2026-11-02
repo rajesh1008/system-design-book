@@ -1,0 +1,23 @@
+// Figure 16.1  Free text against a typed interface
+// Reading order: top to bottom, two columns. Left: the model writes a
+// sentence and a parser guesses the fields, so a misread lands in the
+// tool. Right: the model fills a typed call and the gateway checks it
+// before anything moves. The emphasis path is the typed column.
+digraph freetext {
+#include "book.gv"
+  rankdir=TB; nodesep=0.5; ranksep=0.35;
+  m1 [label="Model", class="model"];
+  t1 [label="\"Move her to\nthe 4:10\"", class="org"];
+  p1 [label="Parser\nguesses", class="fail"];
+  x1 [label="Tool gets\na misread", class="fail"];
+  m2 [label="Model", class="model"];
+  t2 [label="Typed call", class="model code"];
+  g2 [label="Gateway\nchecks", class="ops gate"];
+  x2 [label="Proposal\nor reason", class="ops"];
+  m1 -> t1 [class="data"];
+  t1 -> p1 [class="data"];
+  p1 -> x1 [class="fail"];
+  m2 -> t2 [class="emphasis"];
+  t2 -> g2 [class="emphasis"];
+  g2 -> x2 [class="emphasis"];
+}

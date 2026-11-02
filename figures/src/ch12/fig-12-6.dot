@@ -1,0 +1,24 @@
+// Figure 12.6  Partial effects and their detection
+// Reading order: top to bottom. An effect call ends in one of three
+// answers; each answer sets a ledger state, and each state names the
+// record that settles it and what the record can find.
+digraph partial {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.35;
+  call [label="Effect call\nunder a key", class="ops"];
+  yes [label="Supplier says yes", class="ops"];
+  late [label="No answer\nbefore timeout", class="fail"];
+  no [label="Supplier says no", class="ops"];
+  c [label="committed", class="ops store"];
+  u [label="unknown", class="fail"];
+  f [label="failed", class="ops store"];
+  lk [label="Lookup or replay\nunder the same key", class="evidence"];
+  ver [label="Verifier per leg\nPNR, voucher,\nsettlement file", class="evidence store"];
+  dup [label="Found: duplicate,\nmissing, or one leg\nof two done", class="verified"];
+  call -> yes; call -> late; call -> no;
+  yes -> c [class="data"]; late -> u [class="fail"]; no -> f [class="data"];
+  u -> lk [class="data"];
+  lk -> c [label=" found", class="data"];
+  c -> ver [class="data"]; f -> ver [class="data"];
+  ver -> dup [class="data"];
+}

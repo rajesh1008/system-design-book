@@ -131,7 +131,7 @@ class World:
     # -- checking -----------------------------------------------------
     def check(self, tool: str, args: dict, session_itinerary: str,
               rules: tuple = ()) -> Rejection | None:
-        """Run the relationship checks in order; first failure wins."""
+        """Run the relationship checks in order; first failure wins"""
         def no(reason, fld):
             return Rejection(reason, fld, HINTS.get(reason, reason))
 
@@ -151,12 +151,14 @@ class World:
             if f is None:
                 return no("flight_unknown", "new_flight_id")
             old = self.flights[t.segments[0]]
-            if (f.origin, f.destination) != (old.origin, old.destination):
+            route = (old.origin, old.destination)
+            if (f.origin, f.destination) != route:
                 return no("flight_not_on_route", "new_flight_id")
             if f.status == "canceled":
                 return no("flight_canceled", "new_flight_id")
             if money(args["fare_difference_usd"]) != self.quote(t, f):
-                return no("fare_quote_mismatch", "fare_difference_usd")
+                return no("fare_quote_mismatch",
+                          "fare_difference_usd")
         elif tool == "refund_ticket":
             if money(args["amount_usd"]) > t.fare_left:
                 return no("amount_above_fare_left", "amount_usd")
@@ -169,11 +171,11 @@ class World:
 
 # -- an optional cross-field rule (Try It Yourself) -------------------
 def rule_reason_in_record(world, tool, args, ticket):
-    """A refund labeled cancelled_by_carrier is billed back to the
+    """A refund labeled canceled_by_carrier is billed back to the
     carrier, so the record must show the flight canceled. The reason and
     the ticket are each valid alone; together they can be false."""
     if tool != "refund_ticket" or \
-            args["reason"] != "cancelled_by_carrier":
+            args["reason"] != "canceled_by_carrier":
         return None
     if world.flights[ticket.segments[0]].status != "canceled":
         return Rejection("reason_not_in_record", "reason",

@@ -73,7 +73,7 @@ class Stream:
     def _refund(self, t):
         status = self.w.flights[t.segments[0]].status
         if status == "canceled":
-            amt, reason = t.fare_left, "cancelled_by_carrier"
+            amt, reason = t.fare_left, "canceled_by_carrier"
         else:
             share = self.rng.choice((0.10, 0.20, 0.25, 0.40))
             amt = money(t.fare_left * money(share))
@@ -157,7 +157,7 @@ class Stream:
             elif (tool == "refund_ticket" and truth["reason"] == "goodwill"
                   and r.random() < self.latent_rate / 0.3):
                 case.latent = "reason_not_in_record"
-                case.bad = dict(truth, reason="cancelled_by_carrier")
+                case.bad = dict(truth, reason="canceled_by_carrier")
             k += 1
             yield case
 

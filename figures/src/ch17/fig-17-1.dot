@@ -1,0 +1,38 @@
+// Figure 17.1  The adaptation decision tree
+// Reading order: top to bottom. A request starts at the top and meets
+// seven questions, cheapest fix first. Each "no" or "fixed" exits to the
+// right into the fix that ends the walk; only a narrow step that the
+// golden set measures and that has labels reaches adaptation at node 7.
+digraph tree {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.18;
+  req [label="Request", class="org"];
+  n1 [label="1 Failure\nmeasured?", class="ops"];
+  n2 [label="2 A policy?", class="policy"];
+  n3 [label="3 Context\nfixes it?", class="ops"];
+  n4 [label="4 Tools\nfix it?", class="ops"];
+  n5 [label="5 Narrow and\nmeasured?", class="evidence"];
+  n6 [label="6 Labels?", class="evidence"];
+  n7 [label="7 Adapt", class="model gate"];
+  s1 [label="Stop", class="note"];
+  s2 [label="Change rule", class="note"];
+  s3 [label="Fix context", class="note"];
+  s4 [label="Fix tool", class="note"];
+  s5 [label="Refuse", class="note"];
+  s6 [label="Collect", class="note"];
+  {rank=same; n1; s1;} {rank=same; n2; s2;} {rank=same; n3; s3;}
+  {rank=same; n4; s4;} {rank=same; n5; s5;} {rank=same; n6; s6;}
+  req -> n1 [class="control"];
+  n1 -> n2 [label="yes", class="control"];
+  n2 -> n3 [label="no", class="control"];
+  n3 -> n4 [label="no", class="control"];
+  n4 -> n5 [label="no", class="control"];
+  n5 -> n6 [label="yes", class="control"];
+  n6 -> n7 [label="yes", class="emphasis"];
+  n1 -> s1 [label="no", class="fail"];
+  n2 -> s2 [label="yes", class="policy"];
+  n3 -> s3 [label="yes", class="verified"];
+  n4 -> s4 [label="yes", class="verified"];
+  n5 -> s5 [label="no", class="fail"];
+  n6 -> s6 [label="no", class="data"];
+}

@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 # Chapter 16: the tool-argument validation layer.
-# Offline by default. The live lab (toolargs.live) runs only when
-# ANTHROPIC_API_KEY is set, and costs about one US cent.
+# Offline. The live lab is separate: python3 -m toolargs.live needs
+# ANTHROPIC_API_KEY in the environment and costs about one US cent.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PY=${PYTHON:-python3}
 
+echo "== the two effect tools as the API receives them =="
+"$PY" -m toolargs.demo --case tools
+echo
 echo "== the opening call, check by check =="
 "$PY" -m toolargs.demo --case okafor
+echo
+echo "== what the model is sent back for it =="
+"$PY" -m toolargs.demo --case verdict
 echo
 echo "== schema and world validation, repair budget 2 =="
 "$PY" -m toolargs.demo --seed 16

@@ -1,0 +1,19 @@
+@startuml
+' Figure 16.5  Repair loop with a budget
+' Reading order: top to bottom. A rejected call goes back with its
+' reason, at most twice. A repair that repeats the last arguments ends
+' the loop at once. Either way a person takes the case.
+!include plantuml-theme.puml
+
+:Model proposes; <<model>>
+while (Gateway rejects?) is (yes)
+  if (two repairs used\nor no change?) then (yes)
+    :Agent desk; <<fail>>
+    detach
+  endif
+  :Model repairs
+from the reason; <<model>>
+endwhile (no)
+:Proposal to control; <<ops>>
+detach
+@enduml

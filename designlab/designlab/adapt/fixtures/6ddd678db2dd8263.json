@@ -1,0 +1,52 @@
+{
+  "request": {
+    "max_tokens": 1000,
+    "messages": [
+      {
+        "content": "1. quick one, cancel everything and refund me, booking ltg3762588 to denver. appreciate it\n2. hello, i need a bigger car on my rental, booking ltg4485808 to orlando. thx\n3. cancel it and give me a travel credit, booking ltg5711499 to orlando. thanks\n4. drop the hotel, keep the flights, booking ltg6204373 to portland. asap please\n5. hey, the new departure time is fine, i accept it, booking ltg3706337 to portland. thanks\n6. hi, please cancel and send the refund to my original payment, booking ltg5873513 to portland.\n7. quick one, the name on the booking does not match my passport, booking ltg5682585 to miami. asap please\n8. good morning, can you change my hotel dates to match the new flight, booking ltg3951106 to portland. thx\n9. good morning, please cancel my hotel reservation, booking ltg8597821 to atlanta. appreciate it\n10. hey, i would like to rebook onto the friday flight, booking ltg6272860 to denver. asap please",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "system": "You classify Lakeshore Travel Group change requests. Labels:\nvoluntary_rebook: customer wants a different flight or date\ncancel_credit: customer cancels and keeps the value as credit\ninvoluntary_rebook: airline changed or canceled; customer wants another flight\nhotel_cancel: cancel the hotel only\ncancel_refund: customer cancels and wants money back\ninvoluntary_refund: airline changed or canceled; customer wants money back\nupgrade: buy a better cabin or seat class\naccept_schedule: customer accepts an airline schedule change\nhotel_date_change: change hotel nights\nancillary_refund: refund a seat, bag, or other extra\ncar_change: change a rental car\nname_correction: fix a passenger name\nIf a message does not say which change is wanted, answer unclear. Reply with one line per message: the number, a space, and the label. Nothing else."
+  },
+  "request_hash": "6ddd678db2dd8263",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "CAQSxAkKEAgTGAI4AUIIdGhpbmtpbmcSDDKKoRvVvic6R+rcyBoMRv2lgOgJsitkVlWUIjBXd5XmXNVj99v9KwZKGSgV/YmSBfbI32g8IxjhskouH3V0AhC66hcup1GvadoQPyYq4Qh02iXB90ivCPyPBM+Sq4ynVQZGPgSzQ+I6TMcWqdEhfH2BqBWuxVZJHhKfm5OuwE1WV+hbr8dBxuILZH/+GvUBB5E3+wzuiSbi7K5BP6cUtrvJmj7r0reLRARVr5vePEPuu1Y5H3tRlOQSoxTjO7GZq2QJmX6DBXm6lKl2bcEPmak7m250cD/8jpTW5acgvmX8DnxZ6xf0llqWs6Zymwko9JUKSU0YEKBBvhuQW4gNvYYNBQzU/Sh+rnUY9HBPd9Ng6V265ZvvYA17YZA80rILAlh1pJJ98KNVoO6QLE/igNv/yw4vLg1KpoOscyq9TO6iNoU0ubl/iFBz9DQux8NooUVjjEhvqtf9KlU/+5cwbEg5z8Lv7BaFzSm3Uo7a3/Wwb+tozroc5ca6rUgGLBhHYYQ2uUD47H6AGNhZa1XF8C6pburPTCAuI7H6qV6YuRSZP6GjStEzSRoiOiGuqPOlhcbGv+Wo/K/okPjh38F8L0wincf5L/tcOasAZzlWA0rWeLeckiRcEWn8fVmM02mHVijpzJ//qtdM9+KQb2jV6WK0UqYfRFciPtCZ/GmUiLIcWU07HRsoEorNVZQztlyV8HTIlrdVZ3HD+Ynp3kwiXvuS36dtSBsQke8EBZ1dMgNbXi0EOYUKg0TsAVie+ouMA9mqn64ap4Kjo5BFsEL8cZdRd+GCki67oWTaJq80ibjRBZOG8U+f2VA5FR/Fk70y6FiHsIXlNfTZ2UlWsk4VaVigitY+3qSZ4JnpNLm91YXHp56R4iiHXQEFEQRgiWqDSgXbbO9GtKdwKI7ptNlhT5ukRWnznJ490gyLT82UpP1/xZOJJ3TJUsoQ4ReVsoLoMmzLVNIBQ8T3yQ8dl6tCixUTI4SF3PkPrnLuuznB0hwhNWjv/Ld8aNls43MKXsdqTpIKAs/nKBEmqG9P/SIvSB0gcE3i+dhIaBLepSs6Jl1YRJKHzFJnZnXx5rZIh6zgU5p83S1irT0vD9KAby7goEYTOyARjnf1rqqPyc/tJ6XT6OLqJtnki1H7CKxJaz1ceeAa7OAghbmVxgq6jibTtqUwccWXu5v+yCu6P7ccJ7J4Y5qQYEAyv3sw2V7KkAXBvQ+79/rC5vUGcaSUlZ2oE/vgjcS/j4orvMS/xti0J9NB8nPAsV66dK6kJfuVjMDDXbryc7eC3cy/FyvUe09zpV3H2WLhDm+CiE53oV4jYmI4kQzdAzH89+7FjrCI9OmXX9yaYRozQYEhE4K9+PAxAAmexM/3GbIC0ePBWX341oNVB/q4fO9rcc9Y/ZfU8mrQv66kV1np1oQYvbe6VqMrsKbE0Ysu0Nhl3PMBD1M/6PU442cjoT7Ik6cvTCsqWCdy7ngea6vsBzBCNM7kuHGiLw4gNjkCVRgmPWhi7w13UEdyHcVLmifz6Sn/PCvYR82c/lZbt+FH+u+KiKs3rY/ecx8q6Bz+pAmmmJszbik1HoCnw71uuDai7oa2KS0tEN3UmBgB",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "1. cancel_refund\n2. car_change\n3. cancel_credit\n4. hotel_cancel\n5. accept_schedule\n6. cancel_refund\n7. name_correction\n8. hotel_date_change\n9. hotel_cancel\n10. voluntary_rebook",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgeDUv9hzpL7keQxJpcGg",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 653,
+      "output_tokens": 335,
+      "output_tokens_details": {
+        "thinking_tokens": 244
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

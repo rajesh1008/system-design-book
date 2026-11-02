@@ -117,7 +117,7 @@ class TestWorld(unittest.TestCase):
     def test_cross_field_rule(self):
         args = {"itinerary_id": "LTG-5208850",
                 "ticket_number": "TKT-40231", "amount_usd": "20.00",
-                "reason": "cancelled_by_carrier"}
+                "reason": "canceled_by_carrier"}
         self.assertIsNone(W.check("refund_ticket", args, "LTG-5208850"))
         r = W.check("refund_ticket", args, "LTG-5208850",
                     (world.rule_reason_in_record,))
@@ -212,7 +212,9 @@ class TestDemo(unittest.TestCase):
                 "full": ["--seed", "16"],
                 "schema": ["--seed", "16", "--inject", "schema-only"],
                 "loop": ["--seed", "16", "--inject", "unbounded-repair"],
-                "okafor": ["--case", "okafor"]}.items():
+                "okafor": ["--case", "okafor"],
+                "tools": ["--case", "tools"],
+                "verdict": ["--case", "verdict"]}.items():
             buf = io.StringIO()
             with redirect_stdout(buf):
                 demo.main(argv)
@@ -247,6 +249,14 @@ class TestDemo(unittest.TestCase):
         out = self.out["okafor"]
         self.assertIn("schema check      pass", out)
         self.assertIn("world check       ticket_not_on_itinerary", out)
+
+    def test_tools_and_verdict(self):
+        self.assertIn("rebook_ticket 2.1  strict=True  closed=True",
+                      self.out["tools"])
+        out = self.out["verdict"]
+        self.assertIn("{'error': 'invalid request'}", out)
+        self.assertIn("reason: ticket_not_on_itinerary", out)
+        self.assertNotIn("OKAFOR/TUNDE", out)
 
     def test_lines_fit(self):
         for text in self.out.values():

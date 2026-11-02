@@ -1,7 +1,7 @@
 """The two effect tools whose arguments the chapter checks.
 
 Each tool has a name, a version and an input schema. The version moves
-when the effect changes, not when the wording does (Section 4): rebook
+when the effect changes, not when the wording does (Section 2): rebook
 2.1 added `ticket_number` on April 20, 2026, for carriers that reissue
 by ticket, and the gateway kept accepting 2.0 calls for one release.
 """
@@ -27,13 +27,15 @@ REBOOK_V2_1 = {
             "passenger_name": {"type": "string"},
             "new_flight_id": {"type": "string",
                               "pattern": r"^FLT-[0-9]{6}$"},
-            "fare_difference_usd": {"type": "string", "pattern": MONEY},
+            "fare_difference_usd": {"type": "string",
+                                    "pattern": MONEY},
             "reason": {"type": "string",
                        "enum": ["voluntary", "schedule_change",
                                 "missed_connection"]},
         },
-        "required": ["itinerary_id", "ticket_number", "passenger_name",
-                     "new_flight_id", "fare_difference_usd", "reason"],
+        "required": ["itinerary_id", "ticket_number",
+                     "passenger_name", "new_flight_id",
+                     "fare_difference_usd", "reason"],
         "additionalProperties": False,
     },
 }
@@ -55,7 +57,7 @@ REFUND_V3 = {
             "amount_usd": {"type": "string",
                            "pattern": r"^[0-9]{1,5}\.[0-9]{2}$"},
             "reason": {"type": "string",
-                       "enum": ["cancelled_by_carrier", "schedule_change",
+                       "enum": ["canceled_by_carrier", "schedule_change",
                                 "goodwill"]},
         },
         "required": ["itinerary_id", "ticket_number", "amount_usd",

@@ -4,7 +4,10 @@ Each case is one customer asking for one change; about a third of cases
 send more than one message (a resend or a follow-up that repeats the
 booking reference). A small share of messages are vague: the text alone
 does not say which change is wanted, and only the system of record does.
-Times carry Chicago offsets (CST, -06:00, until March 8, 2026; CDT after).
+Lakeshore Flex, launched in April 2026, adds new words, and from April
+the app's chat window sends a growing share of messages in shorthand
+("cxl my flt, rfnd pls"), which the training months never saw. Times
+carry Chicago offsets (CST, -06:00, until March 8, 2026; CDT after).
 """
 from __future__ import annotations
 
@@ -108,15 +111,21 @@ PHRASES = {
     ],
 }
 
-# Product names that arrive with time: "flex credit" from April 2026.
+# Lakeshore Flex, a fare product launched in April 2026, brings words the
+# training months never used, and the same word in several types.
+FLEX_FROM = "2026-04"
+FLEX_SHARE = {"2026-04": 0.10, "2026-05": 0.22}
 LATE = {
-    "cancel_credit": ("2026-04", [
-        "cancel it and put the value on my flex credit",
-        "move the fare into flex credit please",
-    ]),
-    "voluntary_rebook": ("2026-04", [
-        "use my flex change to move the flight a day",
-    ]),
+    "cancel_credit": ["put the whole fare into flex",
+                      "flex it, i will travel later",
+                      "send the fare to my flex wallet"],
+    "voluntary_rebook": ["use my flex change for the 6 pm departure",
+                         "flex me onto the earlier one"],
+    "cancel_refund": ["i bought flex refund, so cancel and pay me back",
+                      "cash out my flex fare to the card"],
+    "ancillary_refund": ["the flex fee was charged but i never chose flex",
+                         "take the flex add-on off and give that back"],
+    "upgrade": ["can my flex fare move up a cabin"],
 }
 
 VAGUE = [
@@ -131,6 +140,17 @@ CLOSERS = ["", " thanks", " thank you", " asap please", " thx",
            " appreciate it"]
 CITIES = ["chicago", "denver", "boston", "austin", "seattle", "miami",
           "phoenix", "atlanta", "dallas", "newark", "orlando", "portland"]
+SHORT = {"cancel": "cxl", "canceled": "cxld", "flight": "flt",
+         "refund": "rfnd", "please": "pls", "hotel": "htl",
+         "reservation": "res", "change": "chg", "changed": "chgd",
+         "upgrade": "upg", "credit": "cr", "booking": "bkg",
+         "schedule": "sched", "rental": "rntl", "money": "$",
+         "tomorrow": "tmrw", "airline": "carrier", "want": "wnt",
+         "need": "nd", "my": "my", "the": "", "and": "+",
+         "name": "nm", "seat": "st", "date": "dt", "night": "nt"}
+SHORTHAND = {"2026-04": 0.12, "2026-05": 0.18}
+UNCLEAR = "unclear"
+
 FOLLOW = ["following up on my request", "sending this again",
           "any update on this", "still waiting on this"]
 
@@ -142,8 +162,10 @@ class Message:
     month: str
     at: str                 # ISO time with the Chicago offset
     text: str
-    label: str              # from the system of record
-    vague: bool
+    label: str              # the right answer for the step
+    vague: bool             # the text does not say; answer "unclear"
+    wanted: str             # what the system of record shows later
+    short: bool = False
 
 
 def _when(rng, month: str) -> str:
@@ -155,11 +177,14 @@ def _when(rng, month: str) -> str:
 
 
 def _phrase(rng, label: str, month: str) -> str:
-    pool = list(PHRASES[label])
-    late = LATE.get(label)
-    if late and month >= late[0]:
-        pool += late[1] * 2
-    return rng.choice(pool)
+    if label in LATE and rng.random() < FLEX_SHARE.get(month, 0.0):
+        return rng.choice(LATE[label])
+    return rng.choice(PHRASES[label])
+
+
+def shorthand(text: str) -> str:
+    words = [SHORT.get(w, w) for w in text.split(" ")]
+    return " ".join(w for w in words if w)
 
 
 def generate(seed: int = 17, per_month: int = 600,
@@ -196,8 +221,13 @@ def generate(seed: int = 17, per_month: int = 600,
                 body = rng.choice(phrases[label])
                 vague = False
             city = rng.choice(CITIES)
+            short = rng.random() < SHORTHAND.get(month, 0.0)
+            if short:
+                body = shorthand(body)
             texts = [f"{rng.choice(OPENERS)}{body}, booking {ref} "
                      f"to {city}.{rng.choice(CLOSERS)}"]
+            if short:
+                texts = [shorthand(texts[0])]
             k = rng.random()
             if k < 0.22:
                 texts.append(texts[0])                 # a resend
@@ -206,8 +236,9 @@ def generate(seed: int = 17, per_month: int = 600,
                              f"{body}")
             for i, text in enumerate(texts):
                 out.append(Message(f"{case}-{i + 1}", case, month,
-                                   _when(rng, month), text, label,
-                                   vague))
+                                   _when(rng, month), text,
+                                   UNCLEAR if vague else label, vague,
+                                   label, short))
     return out
 
 

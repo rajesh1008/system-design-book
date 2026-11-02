@@ -1,0 +1,23 @@
+// Figure 17.2  What supervised fine-tuning can and cannot change
+// Reading order: left to right. Labeled examples train the weights. The
+// top branch shows what moves into the weights: output format and one
+// narrow skill. The bottom branch shows what stays outside them and must
+// live in context, tools, and policy: facts that change, rules, and
+// permissions.
+digraph sft {
+#include "book.gv"
+  rankdir=LR; nodesep=0.3; ranksep=0.45;
+  ex [label="Labeled\nexamples", class="evidence store"];
+  w [label="Supervised\nfine-tune", class="model"];
+  f [label="Output format", class="verified"];
+  k [label="One narrow skill", class="verified"];
+  facts [label="Facts that change\n(fares, schedules)", class="knowledge external"];
+  rules [label="Rules (R-004)", class="policy external"];
+  perm [label="Permissions", class="policy external"];
+  ex -> w [class="data"];
+  w -> f [class="emphasis"];
+  w -> k [class="emphasis"];
+  w -> facts [class="fail", style=dashed, label="stale"];
+  w -> rules [class="fail", style=dashed, label="not\nenforced"];
+  w -> perm [class="fail", style=dashed, label="not\ngranted"];
+}

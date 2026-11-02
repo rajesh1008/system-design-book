@@ -163,6 +163,7 @@ class TestDemo(unittest.TestCase):
                  "disagg": demo.part_disagg,
                  "tco": lambda: demo.part_tco(14, 3.20),
                  "card": demo.part_card}[p]()
+            demo.part_layout(14, "clock-first")
         self.assertEqual(too_long(buf.getvalue()), [])
         self.assertIn("78.43%", buf.getvalue())
 
