@@ -144,21 +144,25 @@ SCENARIOS: tuple[Scenario, ...] = (
              D, "agent engineer 3", "platform",
              ("tool.register", "tool.scopes", "autonomy", "gate",
               "release")),
-    Scenario("incident-stop", "duplicate rebookings at 2 a.m.",
+    Scenario("incident-stop", "duplicate rebookings at 2:00 a.m.",
              D, "none (the system)", "none",
              ("stop", "message", "restore")),
     Scenario("budget-breach", "waiver watch at its loop day",
              D, BC, "platform", ("budget.loop", "budget.envelope")),
-    Scenario("new-use-case", "loyalty points transfer",
+    Scenario("new-use-case", "loyalty points assistant",
              D, "loyalty product owner", "loyalty",
              ("usecase.accept", "usecase.tier", "usecase.threat",
               "usecase.live")),
 )
 
-SEVENTH = Scenario("evidence-request",
-                   "a regulator asks for one refund's evidence",
-                   D, "regulator", "external",
-                   ("evidence.answer", "rules.refund"))
+# The seventh is loyalty's partner points transfer (Chapter 41's worked
+# example): it needs usecase.transfer, a key the August 21 matrix lacks.
+# Chapter 42's review board signs that key on September 4, 2026.
+SEVENTH = Scenario("partner-transfer",
+                   "points transfer to a partner",
+                   D, "loyalty product owner", "loyalty",
+                   ("usecase.transfer", "usecase.accept",
+                    "usecase.tier", "usecase.live"))
 
 
 def check(s: Scenario, matrix=SIGNED, signers=SIGNERS["2026-08-21"],

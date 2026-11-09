@@ -24,7 +24,8 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "org",
             "designs",
             "review",
-            "tracing"]
+            "tracing",
+            "golive"]
 
 [tool.setuptools.package-data]
 evals = ["fixtures/live/*.json"]

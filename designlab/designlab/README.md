@@ -19,7 +19,7 @@ the key is read from the environment only.
 | `effects/` | 7 | The Effect Ledger: nine states, tool contracts (native, lookup, none), the reconciler sweep and replay with a no-key injection |
 | `spine/` | 8 | The asynchronous spine: per-itinerary ordering, the talking stick, backpressure on approvals, dead letters and an airline-cancellation fan-out |
 | `durable/` | 9 | The run store: checkpoints, the journal, strict and what-if replay, the kill suite and durable timers |
-| `capacity/` | 10 | The Capacity Model on 90 days of pilot traces: task p95 against per-call p95, the latency budget and the model check |
+| `capacity/` | 10 | The Capacity Model on 90 days of pilot traces: task p95 against per-call p95, the latency budget and the model check; Chapter 44 adds `approvals`, the approval desk sized for a surge (seats for a promised wait, drain time, backlog by hour) |
 | `isolation/` | 11 | Sessions, the sandbox runner, egress allow-lists (`isolation/egress.toml`) and the blast-radius probe |
 | `failure/` | 12 | Fall 1 at scale: the key-per-attempt batch path, the ratio check, settlement, the fixed path and the breaker |
 | `models/` | 13 | Model Contracts, golden sets, variance and amount reports, the drift check and recorded fixtures |
@@ -50,8 +50,10 @@ the key is read from the environment only.
 | `economics/` | 38 | The economics in operation: the July invoice by identity and the storm inside it, cost per verified outcome by kind of change, the worst case before the first call, spend policies at the model gateway with unknown usage settled at its worst case, the July 25 storm replayed in dollars, chargeback by identity, and the economics card |
 | `release/` | 39 | Change and release: the six-kind bundle and hash, the rebuilt log (23 releases, two rolled back), regression as a gate with the split-payment adapter, what-if over recorded runs, canaries by task type on verified outcomes, rollback with runs in flight, shadow and fixed-horizon A/B, and the change card |
 | `agentplatform/` | 40 | The agent platform: the project control plane of August 10 and why loyalty could not join it, the manifest template and its twelve problems, servicing and the desk extracted onto manifests, loyalty on the golden path, six conformance tests (K1 to K6) with the old ledger key failing K2, evidence-chain coverage, the two onboarding logs, platform economics and the charge table, and the platform card (named `agentplatform` because `platform` is a standard-library module) |
+| `org/` | 41 | The team and its decision rights: the charter, seats and partners, the skills-to-planes gap analysis, the decision-rights matrix and six scenarios walked against three dated matrices (a seventh, the partner points transfer, fails until `usecase.transfer` is signed), the cost of a policy change nobody can approve, the operating rhythm, and the team card |
 | `review/` | 42 | Architecture reviews: the production checklist by plane (sixteen items, executable over a design submission), the five gap questions, the verdict rule (a failing shape item declines, a failing value item changes), the decision record and its validator, the record store with its revisit queue, the review log, and the review card |
 | `designs/` | 43 | Worked architectures: six customer-facing designs as data (telecom care, Lakeshore rebooking and refunds, bank payments, insurer claims, lender collections), templates that expand a design into Chapter 5's eight artifacts, a linter that runs `method.lint` plus eight worked rules (independent verifier, tier by amount, person gate, customer states, hand-off, obligations, economics), economics in seven lines with payback, the pattern table, faults for failure injection, and the worked card; extensible with `register` and `register_rule` |
+| `golive/` | 44 | Go-live and the fall: the pilot and its numbers, the ramp by task type gated on verified outcomes against a ramp by traffic share, the storm day of September 10, 2026 as seeded records (41,000 changes in six hours), the approval queue replayed minute by minute with its order, seats, budget, kill-switch tier, and surge rule, named scenarios (as run, no prioritization, fare order, no emergency budget, autonomy widened, redesigned), the incident record as a trace, recovery measured, and the fall card with three changed designs |
 
 ## Install
 
@@ -116,8 +118,10 @@ From this directory:
     bash ch38/run.sh               # Chapter 38: unit cost, budgets, spend policies, the bill
     bash ch39/run.sh               # Chapter 39: release bundle, canary, rollback, change card
     bash ch40/run.sh               # Chapter 40: the platform, paved road, conformance
+    bash ch41/run.sh               # Chapter 41: roster, skills gap, decision rights, rhythm
     bash ch42/run.sh               # Chapter 42: checklist, verdict, decision records
     bash ch43/run.sh               # Chapter 43: six worked designs, linted, priced
+    bash ch44/run.sh               # Chapter 44: the storm day replayed
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

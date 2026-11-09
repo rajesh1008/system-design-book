@@ -1,0 +1,21 @@
+@startuml
+' Figure 44.7  Temporary autonomy widening as a signed change
+' Reading order: top to bottom, Thursday, September 10, 2026 (CDT).
+' The operations duty manager asks for the rule through Rachel's
+' deputy; Rachel signs the rule's digest from Washington at 2:52 p.m.
+' with a 12-hour expiry; the policy engine runs the bundle in shadow
+' at 2:55 and active at 3:05; the reconciler samples refund error
+' under the rule; the rule expires at 3:05 a.m. on its own.
+' From golive.record.
+!include plantuml-theme.puml
+participant "Ops" as K <<org>>
+participant "Rachel" as R <<policy>>
+participant "Engine" as P <<policy>>
+participant "Check" as V <<verified>>
+K -> R : Ask, via deputy
+R -> P : Sign, 12 h
+P -> P : Shadow 2:55
+P -> P : Active 3:05
+V -> P : Error sample
+P -> P : Expires 3:05 a.m.
+@enduml

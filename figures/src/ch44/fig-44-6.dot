@@ -1,0 +1,27 @@
+// Figure 44.6  Prioritization by departure time
+// Reading order: top to bottom. Every card entering the approval queue
+// is sorted by consequence before it is sorted by time: a rebooking
+// whose new flight leaves within six hours goes first, earliest
+// departure first; an involuntary refund up to $500 goes to the signed
+// surge rule when it is on; voluntary refunds and travel credits wait
+// under the second kill-switch tier in a declared incident; everything
+// else is worked newest first. From golive.desk and golive.replay.
+digraph priority {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  c [label="Card arrives", class="ops"];
+  q1 [label="Flight within\n6 hours?", class="policy gate"];
+  q2 [label="Refund to $500,\nrule on?", class="policy gate"];
+  q3 [label="Low urgency,\nincident?", class="policy gate"];
+  a [label="First, by\ndeparture", class="verified"];
+  s [label="Surge rule\ndecides", class="policy"];
+  h [label="Held at\ntier two", class="ops store"];
+  n [label="Newest first", class="ops"];
+  c -> q1;
+  q1 -> a [class="control", label="yes"];
+  q1 -> q2 [label="no"];
+  q2 -> s [class="control", label="yes"];
+  q2 -> q3 [label="no"];
+  q3 -> h [class="control", label="yes"];
+  q3 -> n [label="no"];
+}
