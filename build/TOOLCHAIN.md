@@ -48,3 +48,26 @@ All are SIL OFL, so embedding them in the EPUB is allowed (`--embed-fonts`).
 - **Chromium wrapper warning.** `/usr/bin/chromium` prints `[: ... unexpected operator`. This is harmless.
 - **apt.** Early installs needed the box's proxy settings and some package version adjustments. Pandoc
   and EPUBCheck are upstream releases rather than Debian's older packages.
+
+## Restore of November 9, 2026 (IST)
+
+A box image refresh removed every apt-installed tool (make, rsync, Graphviz, OpenJDK, librsvg2-bin,
+ImageMagick, Chromium, Calibre) along with the Debian package lists and `/opt/plantuml`. Pandoc,
+EPUBCheck (`/opt/epubcheck`), Node, mmdc, the pip packages, and the fonts survived.
+
+- **Why apt failed.** Direct HTTP and HTTPS to deb.debian.org through the transparent egress gateway
+  (198.18.0.1) returned `500 Internal Server Error` and TLS EOFs to apt, so `apt-get update` fetched no
+  Debian lists and every install said "Unable to locate package". The box's egress proxy at
+  `127.0.0.1:8791` (`SAND_EGRESS_TUNNEL_PROXY_ADDR`) works. The fix is
+  `/etc/apt/apt.conf.d/80box-egress-proxy`:
+  `Acquire::http::Proxy "http://127.0.0.1:8791";` and the same for `Acquire::https::Proxy`.
+  If the image refresh wipes that file again, recreate it, then `sudo apt-get update`.
+- **apt packages.** `sudo apt-get install -y --no-install-recommends make rsync graphviz librsvg2-bin
+  openjdk-21-jre-headless imagemagick chromium fontconfig`, then `sudo apt-get install -y calibre`.
+  The versions match the table above.
+- **PlantUML.** The official release jar, from
+  `https://github.com/plantuml/plantuml/releases/download/v1.2026.9/plantuml-1.2026.9.jar`, is installed
+  as `/opt/plantuml/plantuml.jar`. A wrapper at `/usr/local/bin/plantuml` runs
+  `java -Djava.awt.headless=true -jar ${PLANTUML_JAR:-/opt/plantuml/plantuml.jar}`.
+- **Check.** Run `which make rsync dot gvpr plantuml java rsvg-convert ebook-convert` and `make versions`,
+  then build one chapter with `make chapter CH=NN`. It should report 0 failed figures and 0 epubcheck errors.

@@ -49,6 +49,7 @@ the key is read from the environment only.
 | `reliability/` | 37 | Reliability on outcomes: five service objectives read from records the agent does not write, multiwindow burn-rate alerts on the rebooking slice, the error budget and freeze rule, the July 8 model update and the July 25 retry storm replayed, time to stop by kill-switch tier, the game day with one falsified hypothesis, runbooks, and reviews |
 | `economics/` | 38 | The economics in operation: the July invoice by identity and the storm inside it, cost per verified outcome by kind of change, the worst case before the first call, spend policies at the model gateway with unknown usage settled at its worst case, the July 25 storm replayed in dollars, chargeback by identity, and the economics card |
 | `agentplatform/` | 40 | The agent platform: the project control plane of August 10 and why loyalty could not join it, the manifest template and its twelve problems, servicing and the desk extracted onto manifests, loyalty on the golden path, six conformance tests (K1 to K6) with the old ledger key failing K2, evidence-chain coverage, the two onboarding logs, platform economics and the charge table, and the platform card (named `agentplatform` because `platform` is a standard-library module) |
+| `release/` | 39 | Change and release: the six-kind bundle and hash, the rebuilt log (23 releases, two rolled back), regression as a gate with the split-payment adapter, what-if over recorded runs, canaries by task type on verified outcomes, rollback with runs in flight, shadow and fixed-horizon A/B, and the change card |
 
 ## Install
 
@@ -111,6 +112,7 @@ From this directory:
     bash ch36/run.sh               # Chapter 36: evidence pack, injection, finding
     bash ch37/run.sh               # Chapter 37: objectives, budgets, incidents, runbooks
     bash ch38/run.sh               # Chapter 38: unit cost, budgets, spend policies, the bill
+    bash ch39/run.sh               # Chapter 39: release bundle, canary, rollback, change card
     bash ch40/run.sh               # Chapter 40: the platform, paved road, conformance
 
 Each chapter also has a script that runs its tests and demos, for example
