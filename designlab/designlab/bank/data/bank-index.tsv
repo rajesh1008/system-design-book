@@ -1,0 +1,703 @@
+qid	chapter	type	round	level	loop_round	rule	hiring_side	answer_words	weak_line
+Q1.1	1	concept	system-design	senior	bar-raiser	a person to convince	0	354	1
+Q1.2	1	concept	system-design	senior	system-design	whiteboard design	0	360	1
+Q1.3	1	scenario	system-design	staff	system-design	whiteboard design	0	349	1
+Q1.4	1	design	system-design	senior	system-design	whiteboard design	0	349	1
+Q1.5	1	concept	system-design	senior	evaluation-operations	names an operation	0	323	1
+Q1.6	1	stakeholder	hiring-manager	staff	hiring-manager	declared	1	335	1
+Q1.7	1	scenario	system-design	senior	system-design	whiteboard design	0	320	1
+Q1.8	1	design	system-design	staff	system-design	whiteboard design	0	336	1
+Q1.9	1	concept	system-design	senior	control-plane-security	names a control	0	347	1
+Q1.10	1	stakeholder	hiring-manager	staff	hiring-manager	declared	1	324	1
+Q1.11	1	scenario	system-design	senior	agent-runtime	names the runtime	0	319	1
+Q1.12	1	concept	system-design	principal	bar-raiser	a person to convince	0	341	1
+Q1.13	1	stakeholder	hiring-manager	principal	hiring-manager	declared	1	322	1
+Q1.14	1	scenario	hiring-manager	staff	hiring-manager	declared	1	322	1
+Q2.1	2	concept	system-design	senior	control-plane-security	names a control	0	349	1
+Q2.2	2	scenario	system-design	senior	agent-runtime	names the runtime	0	348	1
+Q2.3	2	stakeholder	hiring-manager	senior	hiring-manager	declared	1	320	1
+Q2.4	2	concept	system-design	senior	system-design	whiteboard design	0	355	1
+Q2.5	2	concept	system-design	staff	distributed-systems	names a distributed fault	0	316	1
+Q2.6	2	design	system-design	staff	evaluation-operations	names an operation	0	358	1
+Q2.7	2	design	system-design	senior	control-plane-security	names a control	0	359	1
+Q2.8	2	scenario	system-design	staff	distributed-systems	names a distributed fault	0	399	1
+Q2.9	2	scenario	system-design	staff	control-plane-security	names a control	0	375	1
+Q2.10	2	concept	system-design	principal	control-plane-security	names a control	0	375	1
+Q2.11	2	design	system-design	principal	evaluation-operations	names an operation	0	337	1
+Q2.12	2	stakeholder	system-design	staff	bar-raiser	a person to convince	0	366	1
+Q2.13	2	stakeholder	hiring-manager	principal	hiring-manager	declared	1	356	1
+Q2.14	2	scenario	hiring-manager	principal	hiring-manager	declared	1	355	1
+Q3.1	3	concept	system-design	mid	phone-screen	concept at mid	0	342	1
+Q3.2	3	concept	system-design	senior	system-design	whiteboard design	0	360	1
+Q3.3	3	design	system-design	senior	agent-runtime	names the runtime	0	357	1
+Q3.4	3	design	system-design	staff	control-plane-security	names a control	0	374	1
+Q3.5	3	scenario	system-design	senior	agent-runtime	names the runtime	0	353	1
+Q3.6	3	scenario	system-design	staff	control-plane-security	names a control	0	370	1
+Q3.7	3	concept	system-design	senior	agent-runtime	names the runtime	0	328	1
+Q3.8	3	concept	system-design	staff	system-design	whiteboard design	0	354	1
+Q3.9	3	design	system-design	staff	evaluation-operations	names an operation	0	406	1
+Q3.10	3	stakeholder	hiring-manager	staff	hiring-manager	declared	1	372	1
+Q3.11	3	scenario	system-design	principal	control-plane-security	names a control	0	378	1
+Q3.12	3	concept	system-design	senior	system-design	whiteboard design	0	345	1
+Q3.13	3	stakeholder	hiring-manager	principal	hiring-manager	declared	1	416	1
+Q3.14	3	stakeholder	hiring-manager	staff	hiring-manager	declared	1	377	1
+Q3.15	3	scenario	hiring-manager	principal	hiring-manager	declared	1	387	1
+Q4.1	4	concept	system-design	mid	phone-screen	concept at mid	0	362	1
+Q4.2	4	concept	system-design	senior	system-design	whiteboard design	0	371	1
+Q4.3	4	design	system-design	senior	evaluation-operations	names an operation	0	400	1
+Q4.4	4	scenario	system-design	staff	system-design	whiteboard design	0	412	1
+Q4.5	4	concept	system-design	senior	system-design	whiteboard design	0	369	1
+Q4.6	4	scenario	system-design	senior	system-design	whiteboard design	0	363	1
+Q4.7	4	design	system-design	staff	evaluation-operations	names an operation	0	386	1
+Q4.8	4	scenario	system-design	senior	evaluation-operations	names an operation	0	377	1
+Q4.9	4	stakeholder	hiring-manager	senior	hiring-manager	declared	1	375	1
+Q4.10	4	stakeholder	hiring-manager	staff	hiring-manager	declared	1	420	1
+Q4.11	4	concept	system-design	principal	system-design	whiteboard design	0	363	1
+Q4.12	4	design	system-design	senior	evaluation-operations	names an operation	0	405	1
+Q4.13	4	concept	system-design	staff	evaluation-operations	names an operation	0	393	1
+Q4.14	4	stakeholder	hiring-manager	staff	hiring-manager	declared	1	387	1
+Q4.15	4	scenario	hiring-manager	principal	hiring-manager	declared	1	385	1
+Q5.1	5	concept	system-design	senior	system-design	whiteboard design	0	350	1
+Q5.2	5	concept	system-design	senior	system-design	whiteboard design	0	315	1
+Q5.3	5	design	system-design	staff	system-design	whiteboard design	0	325	1
+Q5.4	5	design	system-design	senior	system-design	whiteboard design	0	313	1
+Q5.5	5	scenario	system-design	staff	system-design	whiteboard design	0	327	1
+Q5.6	5	concept	system-design	staff	system-design	whiteboard design	0	349	1
+Q5.7	5	design	system-design	staff	system-design	whiteboard design	0	340	1
+Q5.8	5	design	system-design	principal	system-design	whiteboard design	0	326	1
+Q5.9	5	scenario	system-design	staff	control-plane-security	names a control	0	331	1
+Q5.10	5	concept	system-design	staff	take-home	writes a document	0	350	1
+Q5.11	5	scenario	system-design	principal	distributed-systems	names a distributed fault	0	333	1
+Q5.12	5	design	system-design	principal	evaluation-operations	names an operation	0	338	1
+Q5.13	5	stakeholder	hiring-manager	staff	hiring-manager	declared	1	333	1
+Q5.14	5	stakeholder	hiring-manager	principal	hiring-manager	declared	1	344	1
+Q6.1	6	concept	system-design	senior	system-design	whiteboard design	0	338	1
+Q6.2	6	concept	system-design	senior	agent-runtime	names the runtime	0	332	1
+Q6.3	6	design	system-design	staff	take-home	writes a document	0	345	1
+Q6.4	6	scenario	system-design	senior	agent-runtime	names the runtime	0	333	1
+Q6.5	6	design	system-design	staff	system-design	whiteboard design	0	356	1
+Q6.6	6	design	system-design	staff	system-design	whiteboard design	0	360	1
+Q6.7	6	concept	system-design	principal	bar-raiser	a person to convince	0	348	1
+Q6.8	6	scenario	system-design	staff	system-design	whiteboard design	0	349	1
+Q6.9	6	stakeholder	system-design	staff	bar-raiser	a person to convince	0	325	1
+Q6.10	6	design	system-design	senior	system-design	whiteboard design	0	333	1
+Q6.11	6	scenario	system-design	principal	evaluation-operations	names an operation	0	351	1
+Q6.12	6	stakeholder	system-design	principal	bar-raiser	a person to convince	0	337	1
+Q6.13	6	stakeholder	hiring-manager	staff	hiring-manager	declared	1	348	1
+Q6.14	6	scenario	hiring-manager	principal	hiring-manager	declared	1	334	1
+Q7.1	7	concept	system-design	senior	agent-runtime	names the runtime	0	334	1
+Q7.2	7	design	system-design	senior	distributed-systems	names a distributed fault	0	350	1
+Q7.3	7	design	system-design	staff	distributed-systems	the chapter's Part	0	343	1
+Q7.4	7	scenario	system-design	senior	distributed-systems	names a distributed fault	0	317	1
+Q7.5	7	design	system-design	staff	distributed-systems	names a distributed fault	0	346	1
+Q7.6	7	scenario	system-design	senior	evaluation-operations	names an operation	0	323	1
+Q7.7	7	design	system-design	staff	distributed-systems	the chapter's Part	0	339	1
+Q7.8	7	concept	system-design	staff	distributed-systems	the chapter's Part	0	331	1
+Q7.9	7	design	system-design	principal	distributed-systems	the chapter's Part	0	346	1
+Q7.10	7	scenario	system-design	staff	distributed-systems	the chapter's Part	0	347	1
+Q7.11	7	concept	system-design	staff	distributed-systems	the chapter's Part	0	360	1
+Q7.12	7	stakeholder	hiring-manager	senior	hiring-manager	declared	1	354	1
+Q7.13	7	stakeholder	hiring-manager	staff	hiring-manager	declared	1	345	1
+Q7.14	7	scenario	system-design	principal	distributed-systems	names a distributed fault	0	366	1
+Q7.15	7	design	system-design	senior	distributed-systems	the chapter's Part	0	331	1
+Q7.16	7	concept	system-design	principal	distributed-systems	the chapter's Part	0	347	1
+Q7.17	7	stakeholder	hiring-manager	principal	hiring-manager	declared	1	351	1
+Q7.18	7	scenario	hiring-manager	staff	hiring-manager	declared	1	351	1
+Q8.1	8	concept	system-design	senior	distributed-systems	the chapter's Part	0	340	1
+Q8.2	8	concept	system-design	senior	distributed-systems	names a distributed fault	0	325	1
+Q8.3	8	concept	system-design	staff	distributed-systems	the chapter's Part	0	338	1
+Q8.4	8	scenario	system-design	staff	distributed-systems	the chapter's Part	0	345	1
+Q8.5	8	design	system-design	staff	control-plane-security	names a control	0	363	1
+Q8.6	8	concept	system-design	staff	distributed-systems	names a distributed fault	0	370	1
+Q8.7	8	scenario	system-design	senior	evaluation-operations	names an operation	0	335	1
+Q8.8	8	design	system-design	staff	distributed-systems	names a distributed fault	0	357	1
+Q8.9	8	scenario	system-design	senior	distributed-systems	names a distributed fault	0	348	1
+Q8.10	8	scenario	system-design	staff	distributed-systems	the chapter's Part	0	357	1
+Q8.11	8	concept	system-design	senior	evaluation-operations	names an operation	0	359	1
+Q8.12	8	design	system-design	principal	agent-runtime	names the runtime	0	341	1
+Q8.13	8	stakeholder	system-design	staff	bar-raiser	a person to convince	0	351	1
+Q8.14	8	stakeholder	hiring-manager	principal	hiring-manager	declared	1	346	1
+Q8.15	8	stakeholder	hiring-manager	principal	hiring-manager	declared	1	359	1
+Q9.1	9	concept	system-design	mid	phone-screen	concept at mid	0	345	1
+Q9.2	9	design	system-design	senior	distributed-systems	names a distributed fault	0	356	1
+Q9.3	9	scenario	system-design	senior	control-plane-security	names a control	0	338	1
+Q9.4	9	design	system-design	staff	distributed-systems	names a distributed fault	0	339	1
+Q9.5	9	scenario	system-design	staff	control-plane-security	names a control	0	341	1
+Q9.6	9	concept	system-design	staff	bar-raiser	a person to convince	0	332	1
+Q9.7	9	design	system-design	senior	control-plane-security	names a control	0	339	1
+Q9.8	9	design	system-design	principal	evaluation-operations	names an operation	0	347	1
+Q9.9	9	stakeholder	system-design	senior	bar-raiser	a person to convince	0	376	1
+Q9.10	9	stakeholder	system-design	staff	bar-raiser	a person to convince	0	351	1
+Q9.11	9	concept	system-design	mid	phone-screen	concept at mid	0	342	1
+Q9.12	9	design	system-design	staff	distributed-systems	names a distributed fault	0	358	1
+Q9.13	9	scenario	system-design	senior	control-plane-security	names a control	0	343	1
+Q9.14	9	stakeholder	hiring-manager	principal	hiring-manager	declared	1	337	1
+Q9.15	9	scenario	hiring-manager	staff	hiring-manager	declared	1	357	1
+Q10.1	10	concept	system-design	mid	phone-screen	concept at mid	0	275	1
+Q10.2	10	concept	system-design	mid	phone-screen	concept at mid	0	305	1
+Q10.3	10	concept	system-design	senior	distributed-systems	names a distributed fault	0	301	1
+Q10.4	10	scenario	system-design	senior	distributed-systems	the chapter's Part	0	291	1
+Q10.5	10	design	system-design	senior	distributed-systems	the chapter's Part	0	291	1
+Q10.6	10	scenario	system-design	staff	distributed-systems	the chapter's Part	0	307	1
+Q10.7	10	concept	system-design	staff	distributed-systems	names a distributed fault	0	301	1
+Q10.8	10	concept	system-design	mid	phone-screen	concept at mid	0	299	1
+Q10.9	10	design	system-design	senior	distributed-systems	names a distributed fault	0	301	1
+Q10.10	10	stakeholder	system-design	staff	bar-raiser	a person to convince	0	307	1
+Q10.11	10	stakeholder	system-design	senior	bar-raiser	a person to convince	0	300	1
+Q10.12	10	concept	system-design	staff	distributed-systems	the chapter's Part	0	308	1
+Q10.13	10	scenario	system-design	staff	distributed-systems	the chapter's Part	0	287	1
+Q10.14	10	concept	system-design	senior	distributed-systems	names a distributed fault	0	292	1
+Q10.15	10	design	system-design	principal	evaluation-operations	names an operation	0	319	1
+Q10.16	10	stakeholder	hiring-manager	staff	hiring-manager	declared	1	310	1
+Q10.17	10	scenario	hiring-manager	principal	hiring-manager	declared	1	321	1
+Q11.1	11	concept	system-design	senior	control-plane-security	names a control	0	332	1
+Q11.2	11	scenario	system-design	senior	take-home	writes a document	0	334	1
+Q11.3	11	design	system-design	staff	agent-runtime	names the runtime	0	353	1
+Q11.4	11	concept	system-design	senior	control-plane-security	names a control	0	338	1
+Q11.5	11	design	system-design	staff	evaluation-operations	names an operation	0	343	1
+Q11.6	11	design	system-design	principal	distributed-systems	the chapter's Part	0	356	1
+Q11.7	11	scenario	system-design	senior	control-plane-security	names a control	0	345	1
+Q11.8	11	design	system-design	staff	distributed-systems	the chapter's Part	0	335	1
+Q11.9	11	stakeholder	system-design	staff	bar-raiser	a person to convince	0	337	1
+Q11.10	11	stakeholder	system-design	principal	bar-raiser	a person to convince	0	333	1
+Q11.11	11	scenario	system-design	staff	control-plane-security	names a control	0	337	1
+Q11.12	11	concept	system-design	senior	control-plane-security	names a control	0	318	1
+Q11.13	11	stakeholder	hiring-manager	staff	hiring-manager	declared	1	322	1
+Q11.14	11	scenario	hiring-manager	principal	hiring-manager	declared	1	336	1
+Q12.1	12	concept	system-design	senior	distributed-systems	the chapter's Part	0	334	1
+Q12.2	12	design	system-design	staff	distributed-systems	names a distributed fault	0	345	1
+Q12.3	12	scenario	system-design	staff	distributed-systems	the chapter's Part	0	367	1
+Q12.4	12	design	system-design	senior	distributed-systems	the chapter's Part	0	319	1
+Q12.5	12	scenario	system-design	principal	distributed-systems	names a distributed fault	0	329	1
+Q12.6	12	concept	system-design	staff	distributed-systems	the chapter's Part	0	322	1
+Q12.7	12	design	system-design	staff	evaluation-operations	names an operation	0	348	1
+Q12.8	12	design	system-design	senior	evaluation-operations	names an operation	0	325	1
+Q12.9	12	scenario	system-design	senior	distributed-systems	names a distributed fault	0	415	1
+Q12.10	12	stakeholder	system-design	principal	bar-raiser	a person to convince	0	336	1
+Q12.11	12	stakeholder	system-design	principal	bar-raiser	a person to convince	0	372	1
+Q12.12	12	concept	system-design	staff	bar-raiser	a person to convince	0	326	1
+Q12.13	12	design	system-design	staff	agent-runtime	names the runtime	0	325	1
+Q12.14	12	stakeholder	hiring-manager	staff	hiring-manager	declared	1	316	1
+Q12.15	12	scenario	hiring-manager	principal	hiring-manager	declared	1	348	1
+Q13.1	13	concept	system-design	senior	system-design	whiteboard design	0	314	1
+Q13.2	13	concept	system-design	senior	system-design	whiteboard design	0	372	1
+Q13.3	13	design	system-design	staff	take-home	writes a document	0	329	1
+Q13.4	13	design	system-design	staff	system-design	whiteboard design	0	335	1
+Q13.5	13	scenario	system-design	senior	evaluation-operations	names an operation	0	313	1
+Q13.6	13	design	system-design	staff	system-design	whiteboard design	0	333	1
+Q13.7	13	scenario	system-design	principal	system-design	whiteboard design	0	335	1
+Q13.8	13	concept	system-design	staff	evaluation-operations	names an operation	0	324	1
+Q13.9	13	stakeholder	system-design	staff	bar-raiser	a person to convince	0	313	1
+Q13.10	13	stakeholder	system-design	principal	bar-raiser	a person to convince	0	317	1
+Q13.11	13	concept	system-design	senior	system-design	whiteboard design	0	366	1
+Q13.12	13	scenario	system-design	staff	control-plane-security	names a control	0	317	1
+Q13.13	13	stakeholder	hiring-manager	staff	hiring-manager	declared	1	322	1
+Q13.14	13	scenario	hiring-manager	principal	hiring-manager	declared	1	334	1
+Q14.1	14	concept	system-design	mid	phone-screen	concept at mid	0	346	1
+Q14.2	14	concept	system-design	mid	phone-screen	concept at mid	0	324	1
+Q14.3	14	concept	system-design	senior	distributed-systems	names a distributed fault	0	310	1
+Q14.4	14	concept	system-design	senior	system-design	whiteboard design	0	323	1
+Q14.5	14	scenario	system-design	senior	system-design	whiteboard design	0	315	1
+Q14.6	14	design	system-design	staff	control-plane-security	names a control	0	334	1
+Q14.7	14	scenario	system-design	senior	evaluation-operations	names an operation	0	324	1
+Q14.8	14	design	system-design	staff	system-design	whiteboard design	0	381	1
+Q14.9	14	design	system-design	staff	system-design	whiteboard design	0	304	1
+Q14.10	14	scenario	system-design	senior	agent-runtime	names the runtime	0	310	1
+Q14.11	14	design	system-design	principal	system-design	whiteboard design	0	331	1
+Q14.12	14	stakeholder	hiring-manager	staff	hiring-manager	declared	1	342	1
+Q14.13	14	stakeholder	hiring-manager	principal	hiring-manager	declared	1	313	1
+Q14.14	14	stakeholder	hiring-manager	senior	hiring-manager	declared	1	341	1
+Q15.1	15	concept	system-design	mid	phone-screen	concept at mid	0	398	1
+Q15.2	15	design	system-design	senior	system-design	whiteboard design	0	410	1
+Q15.3	15	design	system-design	senior	agent-runtime	names the runtime	0	370	1
+Q15.4	15	scenario	system-design	staff	evaluation-operations	names an operation	0	399	1
+Q15.5	15	concept	system-design	mid	phone-screen	concept at mid	0	383	1
+Q15.6	15	design	system-design	staff	system-design	whiteboard design	0	362	1
+Q15.7	15	concept	system-design	staff	system-design	whiteboard design	0	368	1
+Q15.8	15	scenario	system-design	staff	system-design	whiteboard design	0	391	1
+Q15.9	15	stakeholder	system-design	senior	bar-raiser	a person to convince	0	350	1
+Q15.10	15	stakeholder	system-design	staff	bar-raiser	a person to convince	0	361	1
+Q15.11	15	design	system-design	senior	evaluation-operations	names an operation	0	390	1
+Q15.12	15	concept	system-design	staff	system-design	whiteboard design	0	393	1
+Q15.13	15	scenario	system-design	principal	evaluation-operations	names an operation	0	379	1
+Q15.14	15	stakeholder	hiring-manager	staff	hiring-manager	declared	1	365	1
+Q15.15	15	scenario	hiring-manager	principal	hiring-manager	declared	1	376	1
+Q16.1	16	concept	system-design	senior	agent-runtime	names the runtime	0	337	1
+Q16.2	16	design	system-design	senior	take-home	writes a document	0	347	1
+Q16.3	16	design	system-design	staff	agent-runtime	names the runtime	0	369	1
+Q16.4	16	scenario	system-design	senior	control-plane-security	names a control	0	344	1
+Q16.5	16	concept	system-design	senior	system-design	whiteboard design	0	337	1
+Q16.6	16	design	system-design	staff	agent-runtime	names the runtime	0	349	1
+Q16.7	16	scenario	system-design	staff	agent-runtime	names the runtime	0	335	1
+Q16.8	16	design	system-design	staff	agent-runtime	names the runtime	0	376	1
+Q16.9	16	stakeholder	system-design	staff	bar-raiser	a person to convince	0	366	1
+Q16.10	16	stakeholder	system-design	principal	bar-raiser	a person to convince	0	358	1
+Q16.11	16	concept	system-design	senior	agent-runtime	names the runtime	0	358	1
+Q16.12	16	scenario	system-design	staff	system-design	whiteboard design	0	358	1
+Q16.13	16	design	system-design	staff	agent-runtime	names the runtime	0	370	1
+Q16.14	16	stakeholder	hiring-manager	staff	hiring-manager	declared	1	376	1
+Q16.15	16	scenario	hiring-manager	principal	hiring-manager	declared	1	363	1
+Q17.1	17	concept	system-design	mid	phone-screen	concept at mid	0	317	1
+Q17.2	17	design	system-design	senior	system-design	whiteboard design	0	333	1
+Q17.3	17	design	system-design	senior	system-design	whiteboard design	0	320	1
+Q17.4	17	concept	system-design	senior	agent-runtime	names the runtime	0	312	1
+Q17.5	17	scenario	system-design	mid	system-design	whiteboard design	0	302	1
+Q17.6	17	concept	system-design	senior	system-design	whiteboard design	0	312	1
+Q17.7	17	design	system-design	senior	system-design	whiteboard design	0	313	1
+Q17.8	17	stakeholder	system-design	staff	bar-raiser	a person to convince	0	318	1
+Q17.9	17	stakeholder	system-design	staff	bar-raiser	a person to convince	0	318	1
+Q17.10	17	scenario	system-design	senior	system-design	whiteboard design	0	334	1
+Q17.11	17	concept	system-design	senior	control-plane-security	names a control	0	338	1
+Q17.12	17	design	system-design	staff	system-design	whiteboard design	0	328	1
+Q17.13	17	scenario	system-design	staff	system-design	whiteboard design	0	338	1
+Q17.14	17	stakeholder	system-design	principal	bar-raiser	a person to convince	0	324	1
+Q17.15	17	scenario	system-design	principal	system-design	whiteboard design	0	327	1
+Q18.1	18	concept	system-design	mid	phone-screen	concept at mid	0	308	1
+Q18.2	18	design	system-design	senior	evaluation-operations	names an operation	0	341	1
+Q18.3	18	concept	system-design	senior	evaluation-operations	names an operation	0	305	1
+Q18.4	18	design	system-design	senior	system-design	whiteboard design	0	314	1
+Q18.5	18	scenario	system-design	mid	evaluation-operations	names an operation	0	310	1
+Q18.6	18	design	system-design	senior	control-plane-security	names a control	0	338	1
+Q18.7	18	scenario	system-design	mid	evaluation-operations	names an operation	0	311	1
+Q18.8	18	stakeholder	system-design	staff	bar-raiser	a person to convince	0	325	1
+Q18.9	18	stakeholder	system-design	staff	bar-raiser	a person to convince	0	307	1
+Q18.10	18	concept	system-design	senior	agent-runtime	names the runtime	0	311	1
+Q18.11	18	scenario	system-design	senior	system-design	whiteboard design	0	330	1
+Q18.12	18	design	system-design	staff	control-plane-security	names a control	0	320	1
+Q18.13	18	concept	system-design	staff	system-design	whiteboard design	0	332	1
+Q18.14	18	stakeholder	hiring-manager	staff	hiring-manager	declared	1	312	1
+Q18.15	18	scenario	hiring-manager	principal	hiring-manager	declared	1	316	1
+Q19.1	19	concept	system-design	mid	phone-screen	concept at mid	0	322	1
+Q19.2	19	design	system-design	senior	system-design	whiteboard design	0	340	1
+Q19.3	19	scenario	system-design	senior	system-design	whiteboard design	0	354	1
+Q19.4	19	design	system-design	staff	evaluation-operations	names an operation	0	355	1
+Q19.5	19	design	system-design	senior	evaluation-operations	names an operation	0	323	1
+Q19.6	19	concept	system-design	staff	bar-raiser	a person to convince	0	330	1
+Q19.7	19	design	system-design	senior	agent-runtime	names the runtime	0	329	1
+Q19.8	19	scenario	system-design	staff	agent-runtime	names the runtime	0	335	1
+Q19.9	19	design	system-design	senior	evaluation-operations	names an operation	0	324	1
+Q19.10	19	stakeholder	system-design	staff	bar-raiser	a person to convince	0	333	1
+Q19.11	19	stakeholder	hiring-manager	principal	hiring-manager	declared	1	342	1
+Q19.12	19	concept	system-design	mid	phone-screen	concept at mid	0	327	1
+Q19.13	19	stakeholder	hiring-manager	staff	hiring-manager	declared	1	307	1
+Q19.14	19	scenario	hiring-manager	senior	hiring-manager	declared	1	316	1
+Q20.1	20	concept	system-design	mid	phone-screen	concept at mid	0	330	1
+Q20.2	20	design	system-design	mid	system-design	whiteboard design	0	324	1
+Q20.3	20	design	system-design	senior	system-design	whiteboard design	0	324	1
+Q20.4	20	scenario	system-design	senior	evaluation-operations	names an operation	0	309	1
+Q20.5	20	design	system-design	staff	evaluation-operations	names an operation	0	307	1
+Q20.6	20	design	system-design	staff	system-design	whiteboard design	0	314	1
+Q20.7	20	scenario	system-design	principal	system-design	whiteboard design	0	319	1
+Q20.8	20	concept	system-design	senior	system-design	whiteboard design	0	317	1
+Q20.9	20	stakeholder	system-design	senior	bar-raiser	a person to convince	0	321	1
+Q20.10	20	stakeholder	system-design	principal	bar-raiser	a person to convince	0	338	1
+Q20.11	20	design	system-design	staff	system-design	whiteboard design	0	322	1
+Q20.12	20	scenario	system-design	mid	system-design	whiteboard design	0	342	1
+Q20.13	20	concept	system-design	staff	evaluation-operations	names an operation	0	321	1
+Q20.14	20	stakeholder	system-design	principal	bar-raiser	a person to convince	0	320	1
+Q20.15	20	scenario	system-design	staff	system-design	whiteboard design	0	316	1
+Q21.1	21	concept	system-design	mid	phone-screen	concept at mid	0	309	1
+Q21.2	21	design	system-design	senior	agent-runtime	names the runtime	0	310	1
+Q21.3	21	design	system-design	senior	evaluation-operations	names an operation	0	320	1
+Q21.4	21	scenario	system-design	mid	evaluation-operations	names an operation	0	354	1
+Q21.5	21	design	system-design	senior	agent-runtime	names the runtime	0	333	1
+Q21.6	21	scenario	system-design	staff	control-plane-security	names a control	0	309	1
+Q21.7	21	concept	system-design	senior	agent-runtime	names the runtime	0	298	1
+Q21.8	21	design	system-design	staff	control-plane-security	names a control	0	295	1
+Q21.9	21	concept	system-design	senior	bar-raiser	a person to convince	0	331	1
+Q21.10	21	design	system-design	senior	evaluation-operations	names an operation	0	300	1
+Q21.11	21	scenario	system-design	senior	distributed-systems	names a distributed fault	0	311	1
+Q21.12	21	design	system-design	staff	evaluation-operations	names an operation	0	302	1
+Q21.13	21	stakeholder	system-design	staff	bar-raiser	a person to convince	0	273	1
+Q21.14	21	stakeholder	system-design	principal	bar-raiser	a person to convince	0	267	1
+Q21.15	21	concept	system-design	senior	agent-runtime	names the runtime	0	275	1
+Q21.16	21	stakeholder	system-design	staff	bar-raiser	a person to convince	0	277	1
+Q21.17	21	scenario	system-design	principal	system-design	whiteboard design	0	292	1
+Q22.1	22	concept	system-design	mid	phone-screen	concept at mid	0	339	1
+Q22.2	22	design	system-design	senior	system-design	whiteboard design	0	356	1
+Q22.3	22	design	system-design	senior	agent-runtime	names the runtime	0	347	1
+Q22.4	22	scenario	system-design	mid	system-design	whiteboard design	0	335	1
+Q22.5	22	design	system-design	senior	control-plane-security	names a control	0	333	1
+Q22.6	22	design	system-design	senior	system-design	whiteboard design	0	311	1
+Q22.7	22	concept	system-design	senior	control-plane-security	names a control	0	337	1
+Q22.8	22	scenario	system-design	senior	system-design	whiteboard design	0	330	1
+Q22.9	22	stakeholder	system-design	staff	bar-raiser	a person to convince	0	338	1
+Q22.10	22	stakeholder	system-design	staff	bar-raiser	a person to convince	0	322	1
+Q22.11	22	concept	system-design	senior	system-design	whiteboard design	0	332	1
+Q22.12	22	design	system-design	staff	system-design	whiteboard design	0	357	1
+Q22.13	22	stakeholder	hiring-manager	staff	hiring-manager	declared	1	320	1
+Q22.14	22	scenario	hiring-manager	principal	hiring-manager	declared	1	350	1
+Q23.1	23	concept	system-design	mid	phone-screen	concept at mid	0	310	1
+Q23.2	23	concept	system-design	senior	control-plane-security	names a control	0	301	1
+Q23.3	23	design	system-design	senior	system-design	whiteboard design	0	323	1
+Q23.4	23	design	system-design	senior	system-design	whiteboard design	0	307	1
+Q23.5	23	scenario	system-design	senior	control-plane-security	names a control	0	321	1
+Q23.6	23	design	system-design	staff	system-design	whiteboard design	0	330	1
+Q23.7	23	design	system-design	senior	distributed-systems	names a distributed fault	0	317	1
+Q23.8	23	scenario	system-design	staff	system-design	whiteboard design	0	326	1
+Q23.9	23	stakeholder	system-design	staff	bar-raiser	a person to convince	0	323	1
+Q23.10	23	stakeholder	system-design	staff	bar-raiser	a person to convince	0	306	1
+Q23.11	23	scenario	system-design	principal	bar-raiser	a person to convince	0	323	1
+Q23.12	23	concept	system-design	staff	control-plane-security	names a control	0	328	1
+Q23.13	23	design	system-design	staff	system-design	whiteboard design	0	310	1
+Q23.14	23	stakeholder	hiring-manager	staff	hiring-manager	declared	1	316	1
+Q23.15	23	scenario	hiring-manager	principal	hiring-manager	declared	1	316	1
+Q24.1	24	concept	system-design	mid	phone-screen	concept at mid	0	339	1
+Q24.2	24	concept	system-design	senior	evaluation-operations	names an operation	0	356	1
+Q24.3	24	design	system-design	senior	evaluation-operations	names an operation	0	356	1
+Q24.4	24	scenario	system-design	staff	system-design	whiteboard design	0	343	1
+Q24.5	24	scenario	system-design	staff	agent-runtime	names the runtime	0	358	1
+Q24.6	24	design	system-design	principal	bar-raiser	a person to convince	0	360	1
+Q24.7	24	scenario	system-design	senior	evaluation-operations	names an operation	0	351	1
+Q24.8	24	design	system-design	mid	agent-runtime	names the runtime	0	341	1
+Q24.9	24	design	system-design	staff	system-design	whiteboard design	0	343	1
+Q24.10	24	stakeholder	system-design	staff	bar-raiser	a person to convince	0	322	1
+Q24.11	24	stakeholder	system-design	principal	bar-raiser	a person to convince	0	350	1
+Q24.12	24	scenario	system-design	senior	control-plane-security	names a control	0	346	1
+Q24.13	24	design	system-design	staff	control-plane-security	names a control	0	352	1
+Q24.14	24	scenario	hiring-manager	principal	hiring-manager	declared	1	336	1
+Q24.15	24	scenario	hiring-manager	principal	hiring-manager	declared	1	364	1
+Q25.1	25	concept	system-design	mid	phone-screen	concept at mid	0	297	1
+Q25.2	25	concept	system-design	mid	phone-screen	concept at mid	0	272	1
+Q25.3	25	design	system-design	senior	take-home	writes a document	0	310	1
+Q25.4	25	scenario	system-design	senior	agent-runtime	the chapter's Part	0	270	1
+Q25.5	25	design	system-design	senior	agent-runtime	names the runtime	0	284	1
+Q25.6	25	concept	system-design	mid	phone-screen	concept at mid	0	281	1
+Q25.7	25	design	system-design	staff	agent-runtime	the chapter's Part	0	293	1
+Q25.8	25	scenario	system-design	staff	agent-runtime	the chapter's Part	0	292	1
+Q25.9	25	design	system-design	staff	agent-runtime	names the runtime	0	312	1
+Q25.10	25	stakeholder	system-design	principal	bar-raiser	a person to convince	0	288	1
+Q25.11	25	stakeholder	system-design	senior	bar-raiser	a person to convince	0	302	1
+Q25.12	25	scenario	system-design	staff	evaluation-operations	names an operation	0	297	1
+Q25.13	25	stakeholder	hiring-manager	principal	hiring-manager	declared	1	281	1
+Q25.14	25	scenario	hiring-manager	staff	hiring-manager	declared	1	314	1
+Q26.1	26	concept	system-design	mid	phone-screen	concept at mid	0	378	1
+Q26.2	26	design	system-design	senior	agent-runtime	names the runtime	0	356	1
+Q26.3	26	design	system-design	senior	agent-runtime	names the runtime	0	345	1
+Q26.4	26	concept	system-design	senior	agent-runtime	the chapter's Part	0	354	1
+Q26.5	26	design	system-design	senior	agent-runtime	names the runtime	0	348	1
+Q26.6	26	scenario	system-design	senior	agent-runtime	names the runtime	0	357	1
+Q26.7	26	design	system-design	senior	agent-runtime	names the runtime	0	348	1
+Q26.8	26	concept	system-design	senior	bar-raiser	a person to convince	0	365	1
+Q26.9	26	design	system-design	staff	agent-runtime	names the runtime	0	349	1
+Q26.10	26	scenario	system-design	mid	agent-runtime	names the runtime	0	335	1
+Q26.11	26	stakeholder	system-design	staff	bar-raiser	a person to convince	0	362	1
+Q26.12	26	stakeholder	hiring-manager	staff	hiring-manager	declared	1	339	1
+Q26.13	26	concept	system-design	mid	phone-screen	concept at mid	0	337	1
+Q26.14	26	stakeholder	hiring-manager	principal	hiring-manager	declared	1	346	1
+Q26.15	26	scenario	hiring-manager	principal	hiring-manager	declared	1	334	1
+Q27.1	27	concept	system-design	mid	phone-screen	concept at mid	0	298	1
+Q27.2	27	design	system-design	senior	agent-runtime	names the runtime	0	310	1
+Q27.3	27	design	system-design	senior	agent-runtime	the chapter's Part	0	305	1
+Q27.4	27	concept	system-design	senior	agent-runtime	the chapter's Part	0	304	1
+Q27.5	27	scenario	system-design	staff	agent-runtime	the chapter's Part	0	317	1
+Q27.6	27	design	system-design	senior	evaluation-operations	names an operation	0	298	1
+Q27.7	27	concept	system-design	senior	bar-raiser	a person to convince	0	301	1
+Q27.8	27	design	system-design	staff	agent-runtime	the chapter's Part	0	325	1
+Q27.9	27	scenario	system-design	senior	agent-runtime	the chapter's Part	0	326	1
+Q27.10	27	stakeholder	hiring-manager	staff	hiring-manager	declared	1	302	1
+Q27.11	27	stakeholder	hiring-manager	senior	hiring-manager	declared	1	315	1
+Q27.12	27	concept	system-design	staff	agent-runtime	the chapter's Part	0	303	1
+Q27.13	27	scenario	system-design	staff	agent-runtime	names the runtime	0	300	1
+Q27.14	27	stakeholder	hiring-manager	staff	hiring-manager	declared	1	308	1
+Q27.15	27	scenario	hiring-manager	principal	hiring-manager	declared	1	301	1
+Q28.1	28	concept	system-design	mid	phone-screen	concept at mid	0	341	1
+Q28.2	28	concept	system-design	senior	agent-runtime	names the runtime	0	351	1
+Q28.3	28	design	system-design	senior	agent-runtime	names the runtime	0	357	1
+Q28.4	28	design	system-design	staff	agent-runtime	names the runtime	0	355	1
+Q28.5	28	scenario	system-design	senior	agent-runtime	names the runtime	0	355	1
+Q28.6	28	design	system-design	senior	agent-runtime	names the runtime	0	358	1
+Q28.7	28	design	system-design	staff	agent-runtime	names the runtime	0	353	1
+Q28.8	28	concept	system-design	mid	phone-screen	concept at mid	0	343	1
+Q28.9	28	stakeholder	system-design	staff	bar-raiser	a person to convince	0	347	1
+Q28.10	28	stakeholder	system-design	principal	bar-raiser	a person to convince	0	335	1
+Q28.11	28	scenario	system-design	staff	agent-runtime	names the runtime	0	334	1
+Q28.12	28	concept	system-design	principal	agent-runtime	names the runtime	0	340	1
+Q28.13	28	stakeholder	hiring-manager	staff	hiring-manager	declared	1	330	1
+Q28.14	28	scenario	hiring-manager	senior	hiring-manager	declared	1	341	1
+Q29.1	29	concept	system-design	mid	phone-screen	concept at mid	0	358	1
+Q29.2	29	design	system-design	senior	agent-runtime	names the runtime	0	359	1
+Q29.3	29	design	system-design	senior	agent-runtime	the chapter's Part	0	345	1
+Q29.4	29	scenario	system-design	senior	agent-runtime	names the runtime	0	350	1
+Q29.5	29	design	system-design	staff	agent-runtime	names the runtime	0	369	1
+Q29.6	29	scenario	system-design	senior	agent-runtime	names the runtime	0	356	1
+Q29.7	29	concept	system-design	mid	phone-screen	concept at mid	0	341	1
+Q29.8	29	design	system-design	senior	agent-runtime	names the runtime	0	332	1
+Q29.9	29	stakeholder	system-design	staff	bar-raiser	a person to convince	0	365	1
+Q29.10	29	stakeholder	system-design	staff	bar-raiser	a person to convince	0	344	1
+Q29.11	29	concept	system-design	mid	phone-screen	concept at mid	0	313	1
+Q29.12	29	design	system-design	senior	agent-runtime	names the runtime	0	349	1
+Q29.13	29	scenario	system-design	senior	agent-runtime	the chapter's Part	0	330	1
+Q29.14	29	stakeholder	hiring-manager	staff	hiring-manager	declared	1	331	1
+Q29.15	29	scenario	hiring-manager	principal	hiring-manager	declared	1	315	1
+Q30.1	30	concept	system-design	mid	phone-screen	concept at mid	0	344	1
+Q30.2	30	design	system-design	senior	agent-runtime	names the runtime	0	341	1
+Q30.3	30	concept	system-design	mid	phone-screen	concept at mid	0	346	1
+Q30.4	30	design	system-design	senior	agent-runtime	names the runtime	0	324	1
+Q30.5	30	scenario	system-design	staff	agent-runtime	names the runtime	0	341	1
+Q30.6	30	concept	system-design	senior	bar-raiser	a person to convince	0	320	1
+Q30.7	30	scenario	system-design	staff	agent-runtime	names the runtime	0	322	1
+Q30.8	30	design	system-design	senior	agent-runtime	names the runtime	0	310	1
+Q30.9	30	stakeholder	system-design	staff	bar-raiser	a person to convince	0	323	1
+Q30.10	30	stakeholder	system-design	senior	bar-raiser	a person to convince	0	321	1
+Q30.11	30	concept	system-design	mid	phone-screen	concept at mid	0	340	1
+Q30.12	30	scenario	system-design	staff	agent-runtime	names the runtime	0	327	1
+Q30.13	30	stakeholder	hiring-manager	staff	hiring-manager	declared	1	319	1
+Q30.14	30	scenario	hiring-manager	principal	hiring-manager	declared	1	326	1
+Q31.1	31	concept	system-design	mid	phone-screen	concept at mid	0	341	1
+Q31.2	31	design	system-design	senior	take-home	writes a document	0	339	1
+Q31.3	31	design	system-design	senior	control-plane-security	names a control	0	353	1
+Q31.4	31	scenario	system-design	senior	control-plane-security	names a control	0	341	1
+Q31.5	31	design	system-design	staff	agent-runtime	names the runtime	0	360	1
+Q31.6	31	design	system-design	senior	take-home	writes a document	0	351	1
+Q31.7	31	concept	system-design	mid	phone-screen	concept at mid	0	331	1
+Q31.8	31	design	system-design	staff	control-plane-security	names a control	0	349	1
+Q31.9	31	scenario	system-design	staff	control-plane-security	the chapter's Part	0	346	1
+Q31.10	31	stakeholder	system-design	principal	bar-raiser	a person to convince	0	310	1
+Q31.11	31	stakeholder	system-design	staff	bar-raiser	a person to convince	0	325	1
+Q31.12	31	concept	system-design	senior	control-plane-security	names a control	0	331	1
+Q31.13	31	stakeholder	system-design	staff	bar-raiser	a person to convince	0	336	1
+Q31.14	31	scenario	system-design	senior	control-plane-security	the chapter's Part	0	328	1
+Q32.1	32	concept	system-design	mid	phone-screen	concept at mid	0	343	1
+Q32.2	32	design	system-design	senior	control-plane-security	the chapter's Part	0	337	1
+Q32.3	32	design	system-design	senior	control-plane-security	the chapter's Part	0	338	1
+Q32.4	32	design	system-design	staff	control-plane-security	names a control	0	342	1
+Q32.5	32	scenario	system-design	senior	agent-runtime	names the runtime	0	328	1
+Q32.6	32	design	system-design	staff	control-plane-security	names a control	0	342	1
+Q32.7	32	concept	system-design	mid	phone-screen	concept at mid	0	334	1
+Q32.8	32	scenario	system-design	staff	control-plane-security	names a control	0	340	1
+Q32.9	32	stakeholder	system-design	principal	bar-raiser	a person to convince	0	331	1
+Q32.10	32	stakeholder	system-design	senior	bar-raiser	a person to convince	0	318	1
+Q32.11	32	concept	system-design	mid	phone-screen	concept at mid	0	331	1
+Q32.12	32	design	system-design	staff	take-home	writes a document	0	353	1
+Q32.13	32	concept	hiring-manager	senior	hiring-manager	declared	1	353	1
+Q32.14	32	scenario	hiring-manager	staff	hiring-manager	declared	1	342	1
+Q33.1	33	concept	system-design	mid	phone-screen	concept at mid	0	330	1
+Q33.2	33	design	system-design	senior	control-plane-security	names a control	0	344	1
+Q33.3	33	concept	system-design	mid	phone-screen	concept at mid	0	336	1
+Q33.4	33	design	system-design	senior	bar-raiser	a person to convince	0	333	1
+Q33.5	33	scenario	system-design	senior	control-plane-security	the chapter's Part	0	338	1
+Q33.6	33	design	system-design	senior	control-plane-security	names a control	0	328	1
+Q33.7	33	scenario	system-design	senior	control-plane-security	the chapter's Part	0	338	1
+Q33.8	33	concept	system-design	mid	phone-screen	concept at mid	0	323	1
+Q33.9	33	design	system-design	staff	control-plane-security	names a control	0	334	1
+Q33.10	33	stakeholder	system-design	staff	bar-raiser	a person to convince	0	318	1
+Q33.11	33	stakeholder	system-design	staff	bar-raiser	a person to convince	0	330	1
+Q33.12	33	scenario	system-design	senior	control-plane-security	names a control	0	353	1
+Q33.13	33	stakeholder	hiring-manager	staff	hiring-manager	declared	1	303	1
+Q33.14	33	scenario	hiring-manager	principal	hiring-manager	declared	1	333	1
+Q34.1	34	concept	system-design	mid	phone-screen	concept at mid	0	309	1
+Q34.2	34	concept	system-design	mid	phone-screen	concept at mid	0	328	1
+Q34.3	34	design	system-design	senior	evaluation-operations	the chapter's Part	0	352	1
+Q34.4	34	concept	system-design	mid	phone-screen	concept at mid	0	337	1
+Q34.5	34	design	system-design	senior	evaluation-operations	names an operation	0	323	1
+Q34.6	34	scenario	system-design	senior	evaluation-operations	names an operation	0	341	1
+Q34.7	34	design	system-design	senior	evaluation-operations	names an operation	0	354	1
+Q34.8	34	design	system-design	staff	evaluation-operations	names an operation	0	330	1
+Q34.9	34	scenario	system-design	senior	agent-runtime	names the runtime	0	316	1
+Q34.10	34	design	system-design	staff	evaluation-operations	names an operation	0	341	1
+Q34.11	34	stakeholder	system-design	staff	bar-raiser	a person to convince	0	320	1
+Q34.12	34	stakeholder	system-design	staff	bar-raiser	a person to convince	0	340	1
+Q34.13	34	stakeholder	hiring-manager	staff	hiring-manager	declared	1	320	1
+Q34.14	34	scenario	hiring-manager	principal	hiring-manager	declared	1	353	1
+Q35.1	35	concept	system-design	mid	phone-screen	concept at mid	0	316	1
+Q35.2	35	design	system-design	senior	evaluation-operations	names an operation	0	318	1
+Q35.3	35	concept	system-design	mid	phone-screen	concept at mid	0	337	1
+Q35.4	35	design	system-design	staff	evaluation-operations	the chapter's Part	0	335	1
+Q35.5	35	design	system-design	senior	evaluation-operations	names an operation	0	328	1
+Q35.6	35	concept	system-design	mid	phone-screen	concept at mid	0	318	1
+Q35.7	35	scenario	system-design	senior	evaluation-operations	names an operation	0	327	1
+Q35.8	35	scenario	system-design	staff	evaluation-operations	names an operation	0	316	1
+Q35.9	35	concept	system-design	senior	distributed-systems	names a distributed fault	0	333	1
+Q35.10	35	design	system-design	staff	evaluation-operations	names an operation	0	330	1
+Q35.11	35	design	system-design	senior	evaluation-operations	names an operation	0	337	1
+Q35.12	35	stakeholder	system-design	principal	bar-raiser	a person to convince	0	320	1
+Q35.13	35	stakeholder	system-design	senior	bar-raiser	a person to convince	0	337	1
+Q35.14	35	concept	hiring-manager	senior	hiring-manager	declared	1	318	1
+Q35.15	35	scenario	hiring-manager	staff	hiring-manager	declared	1	321	1
+Q36.1	36	concept	system-design	mid	phone-screen	concept at mid	0	342	1
+Q36.2	36	concept	system-design	senior	control-plane-security	names a control	0	354	1
+Q36.3	36	design	system-design	senior	evaluation-operations	the chapter's Part	0	332	1
+Q36.4	36	scenario	system-design	staff	control-plane-security	names a control	0	349	1
+Q36.5	36	design	system-design	senior	control-plane-security	names a control	0	341	1
+Q36.6	36	scenario	system-design	senior	control-plane-security	names a control	0	335	1
+Q36.7	36	design	system-design	staff	control-plane-security	names a control	0	321	1
+Q36.8	36	concept	hiring-manager	mid	hiring-manager	declared	1	323	1
+Q36.9	36	stakeholder	system-design	staff	bar-raiser	a person to convince	0	329	1
+Q36.10	36	stakeholder	system-design	senior	bar-raiser	a person to convince	0	320	1
+Q36.11	36	design	system-design	senior	evaluation-operations	names an operation	0	328	1
+Q36.12	36	scenario	system-design	staff	control-plane-security	names a control	0	340	1
+Q36.13	36	concept	system-design	mid	phone-screen	concept at mid	0	334	1
+Q36.14	36	stakeholder	hiring-manager	principal	hiring-manager	declared	1	319	1
+Q36.15	36	scenario	hiring-manager	principal	hiring-manager	declared	1	339	1
+Q37.1	37	concept	system-design	mid	phone-screen	concept at mid	0	284	1
+Q37.2	37	design	system-design	senior	evaluation-operations	names an operation	0	304	1
+Q37.3	37	concept	system-design	mid	phone-screen	concept at mid	0	306	1
+Q37.4	37	scenario	system-design	senior	evaluation-operations	the chapter's Part	0	304	1
+Q37.5	37	design	system-design	staff	evaluation-operations	names an operation	0	327	1
+Q37.6	37	scenario	system-design	staff	evaluation-operations	names an operation	0	311	1
+Q37.7	37	design	system-design	senior	control-plane-security	names a control	0	306	1
+Q37.8	37	design	system-design	senior	take-home	writes a document	0	335	1
+Q37.9	37	stakeholder	system-design	staff	bar-raiser	a person to convince	0	324	1
+Q37.10	37	stakeholder	system-design	principal	bar-raiser	a person to convince	0	323	1
+Q37.11	37	concept	system-design	senior	evaluation-operations	names an operation	0	306	1
+Q37.12	37	scenario	system-design	staff	evaluation-operations	the chapter's Part	0	306	1
+Q37.13	37	stakeholder	hiring-manager	principal	hiring-manager	declared	1	305	1
+Q37.14	37	scenario	hiring-manager	staff	hiring-manager	declared	1	310	1
+Q38.1	38	concept	system-design	mid	phone-screen	concept at mid	0	311	1
+Q38.2	38	design	system-design	senior	evaluation-operations	names an operation	0	312	1
+Q38.3	38	concept	system-design	mid	phone-screen	concept at mid	0	313	1
+Q38.4	38	scenario	system-design	senior	evaluation-operations	the chapter's Part	0	310	1
+Q38.5	38	design	system-design	senior	control-plane-security	names a control	0	329	1
+Q38.6	38	concept	system-design	mid	phone-screen	concept at mid	0	310	1
+Q38.7	38	scenario	system-design	staff	evaluation-operations	the chapter's Part	0	328	1
+Q38.8	38	concept	system-design	mid	phone-screen	concept at mid	0	325	1
+Q38.9	38	design	system-design	staff	evaluation-operations	names an operation	0	352	1
+Q38.10	38	stakeholder	system-design	senior	bar-raiser	a person to convince	0	307	1
+Q38.11	38	design	system-design	senior	evaluation-operations	the chapter's Part	0	332	1
+Q38.12	38	stakeholder	system-design	staff	bar-raiser	a person to convince	0	325	1
+Q38.13	38	scenario	system-design	staff	control-plane-security	names a control	0	316	1
+Q38.14	38	concept	system-design	senior	evaluation-operations	names an operation	0	338	1
+Q38.15	38	stakeholder	system-design	staff	bar-raiser	a person to convince	0	349	1
+Q39.1	39	concept	system-design	mid	phone-screen	concept at mid	0	344	1
+Q39.2	39	design	system-design	senior	agent-runtime	names the runtime	0	321	1
+Q39.3	39	concept	system-design	mid	bar-raiser	a person to convince	0	324	1
+Q39.4	39	design	system-design	senior	evaluation-operations	names an operation	0	310	1
+Q39.5	39	scenario	system-design	staff	evaluation-operations	names an operation	0	292	1
+Q39.6	39	design	system-design	senior	control-plane-security	names a control	0	309	1
+Q39.7	39	scenario	system-design	senior	evaluation-operations	the chapter's Part	0	278	1
+Q39.8	39	stakeholder	system-design	staff	bar-raiser	a person to convince	0	287	1
+Q39.9	39	stakeholder	system-design	senior	bar-raiser	a person to convince	0	259	1
+Q39.10	39	concept	system-design	mid	phone-screen	concept at mid	0	234	1
+Q39.11	39	scenario	system-design	staff	evaluation-operations	names an operation	0	322	1
+Q39.12	39	design	system-design	senior	evaluation-operations	names an operation	0	253	1
+Q39.13	39	stakeholder	system-design	staff	hiring-manager	hiring side	1	244	1
+Q39.14	39	scenario	system-design	staff	hiring-manager	hiring side	1	289	1
+Q40.1	40	concept	system-design	mid	phone-screen	concept at mid	0	310	1
+Q40.2	40	design	system-design	senior	system-design	whiteboard design	0	312	1
+Q40.3	40	concept	system-design	mid	phone-screen	concept at mid	0	322	1
+Q40.4	40	scenario	system-design	senior	system-design	whiteboard design	0	325	1
+Q40.5	40	design	system-design	senior	system-design	whiteboard design	0	329	1
+Q40.6	40	design	system-design	staff	system-design	whiteboard design	0	337	1
+Q40.7	40	stakeholder	system-design	staff	bar-raiser	a person to convince	0	313	1
+Q40.8	40	stakeholder	system-design	senior	bar-raiser	a person to convince	0	308	1
+Q40.9	40	scenario	system-design	mid	system-design	whiteboard design	0	307	1
+Q40.10	40	concept	system-design	senior	system-design	whiteboard design	0	293	1
+Q40.11	40	scenario	system-design	staff	system-design	whiteboard design	0	298	1
+Q40.12	40	design	system-design	principal	system-design	whiteboard design	0	334	1
+Q40.13	40	concept	system-design	staff	evaluation-operations	names an operation	0	317	1
+Q40.14	40	stakeholder	system-design	senior	bar-raiser	a person to convince	0	300	1
+Q40.15	40	scenario	system-design	principal	evaluation-operations	names an operation	0	309	1
+Q41.1	41	concept	system-design	mid	phone-screen	concept at mid	0	293	1
+Q41.2	41	concept	system-design	mid	phone-screen	concept at mid	0	289	1
+Q41.3	41	design	system-design	senior	system-design	whiteboard design	0	298	1
+Q41.4	41	concept	system-design	senior	bar-raiser	a person to convince	0	311	1
+Q41.5	41	design	system-design	staff	control-plane-security	names a control	0	289	1
+Q41.6	41	scenario	system-design	senior	control-plane-security	names a control	0	291	1
+Q41.7	41	design	system-design	senior	system-design	whiteboard design	0	268	1
+Q41.8	41	scenario	system-design	staff	agent-runtime	names the runtime	0	288	1
+Q41.9	41	stakeholder	system-design	staff	bar-raiser	a person to convince	0	292	1
+Q41.10	41	stakeholder	system-design	senior	bar-raiser	a person to convince	0	284	1
+Q41.11	41	concept	system-design	mid	phone-screen	concept at mid	0	256	1
+Q41.12	41	scenario	system-design	staff	system-design	whiteboard design	0	277	1
+Q41.13	41	design	system-design	principal	agent-runtime	names the runtime	0	271	1
+Q41.14	41	stakeholder	hiring-manager	principal	hiring-manager	declared	1	275	1
+Q41.15	41	scenario	hiring-manager	staff	hiring-manager	declared	1	302	1
+Q42.1	42	concept	system-design	mid	phone-screen	concept at mid	0	303	1
+Q42.2	42	design	system-design	senior	take-home	writes a document	0	307	1
+Q42.3	42	design	system-design	senior	system-design	whiteboard design	0	316	1
+Q42.4	42	scenario	system-design	senior	system-design	whiteboard design	0	309	1
+Q42.5	42	design	system-design	staff	system-design	whiteboard design	0	309	1
+Q42.6	42	scenario	system-design	staff	bar-raiser	a person to convince	0	315	1
+Q42.7	42	stakeholder	system-design	staff	bar-raiser	a person to convince	0	316	1
+Q42.8	42	stakeholder	system-design	principal	bar-raiser	a person to convince	0	299	1
+Q42.9	42	concept	system-design	senior	system-design	whiteboard design	0	311	1
+Q42.10	42	scenario	system-design	mid	system-design	whiteboard design	0	312	1
+Q42.11	42	design	system-design	staff	system-design	whiteboard design	0	304	1
+Q42.12	42	concept	system-design	principal	system-design	whiteboard design	0	302	1
+Q42.13	42	stakeholder	system-design	principal	hiring-manager	hiring side	1	289	1
+Q42.14	42	scenario	system-design	principal	hiring-manager	hiring side	1	322	1
+Q43.1	43	concept	system-design	senior	system-design	whiteboard design	0	303	1
+Q43.2	43	scenario	system-design	mid	system-design	whiteboard design	0	302	1
+Q43.3	43	scenario	system-design	staff	system-design	whiteboard design	0	315	1
+Q43.4	43	scenario	system-design	staff	system-design	whiteboard design	0	312	1
+Q43.5	43	scenario	system-design	senior	system-design	whiteboard design	0	319	1
+Q43.6	43	scenario	system-design	staff	system-design	whiteboard design	0	303	1
+Q43.7	43	design	system-design	senior	system-design	whiteboard design	0	294	1
+Q43.8	43	concept	system-design	senior	system-design	whiteboard design	0	303	1
+Q43.9	43	stakeholder	system-design	staff	bar-raiser	a person to convince	0	303	1
+Q43.10	43	stakeholder	system-design	principal	bar-raiser	a person to convince	0	278	1
+Q43.11	43	stakeholder	hiring-manager	staff	hiring-manager	declared	1	281	1
+Q43.12	43	scenario	hiring-manager	principal	hiring-manager	declared	1	298	1
+Q44.1	44	concept	system-design	mid	phone-screen	concept at mid	0	383	1
+Q44.2	44	design	system-design	senior	system-design	whiteboard design	0	297	1
+Q44.3	44	scenario	system-design	staff	system-design	whiteboard design	0	297	1
+Q44.4	44	design	system-design	senior	control-plane-security	names a control	0	279	1
+Q44.5	44	scenario	system-design	staff	evaluation-operations	names an operation	0	288	1
+Q44.6	44	design	system-design	staff	control-plane-security	names a control	0	291	1
+Q44.7	44	concept	system-design	mid	phone-screen	concept at mid	0	273	1
+Q44.8	44	scenario	system-design	senior	system-design	whiteboard design	0	318	1
+Q44.9	44	stakeholder	system-design	staff	bar-raiser	a person to convince	0	272	1
+Q44.10	44	stakeholder	system-design	principal	bar-raiser	a person to convince	0	282	1
+Q44.11	44	design	system-design	senior	evaluation-operations	names an operation	0	305	1
+Q44.12	44	scenario	system-design	staff	take-home	writes a document	0	359	1
+Q44.13	44	concept	system-design	principal	system-design	whiteboard design	0	275	1
+Q44.14	44	stakeholder	hiring-manager	staff	hiring-manager	declared	1	270	1
+Q44.15	44	scenario	hiring-manager	principal	hiring-manager	declared	1	278	1
+Q45.1	45	scenario	system-design	senior	system-design	whiteboard design	0	330	1
+Q45.2	45	scenario	system-design	staff	system-design	whiteboard design	0	324	1
+Q45.3	45	scenario	system-design	senior	system-design	whiteboard design	0	312	1
+Q45.4	45	design	system-design	mid	system-design	whiteboard design	0	302	1
+Q45.5	45	scenario	system-design	staff	evaluation-operations	names an operation	0	314	1
+Q45.6	45	scenario	system-design	senior	evaluation-operations	names an operation	0	310	1
+Q45.7	45	scenario	system-design	senior	system-design	whiteboard design	0	294	1
+Q45.8	45	concept	system-design	staff	bar-raiser	a person to convince	0	329	1
+Q45.9	45	design	system-design	senior	system-design	whiteboard design	0	318	1
+Q45.10	45	concept	system-design	mid	phone-screen	concept at mid	0	283	1
+Q45.11	45	stakeholder	system-design	principal	bar-raiser	a person to convince	0	331	1
+Q45.12	45	stakeholder	system-design	staff	bar-raiser	a person to convince	0	293	1
+Q45.13	45	scenario	system-design	senior	evaluation-operations	names an operation	0	306	1
+Q45.14	45	stakeholder	hiring-manager	staff	hiring-manager	declared	1	302	1
+Q45.15	45	scenario	hiring-manager	principal	hiring-manager	declared	1	297	1
+Q46.1	46	concept	system-design	mid	phone-screen	concept at mid	0	340	1
+Q46.2	46	design	system-design	senior	evaluation-operations	names an operation	0	334	1
+Q46.3	46	scenario	system-design	mid	agent-runtime	names the runtime	0	320	1
+Q46.4	46	scenario	system-design	senior	evaluation-operations	names an operation	0	315	1
+Q46.5	46	scenario	system-design	senior	distributed-systems	names a distributed fault	0	315	1
+Q46.6	46	scenario	system-design	staff	system-design	whiteboard design	0	318	1
+Q46.7	46	scenario	system-design	staff	evaluation-operations	names an operation	0	304	1
+Q46.8	46	scenario	system-design	principal	system-design	whiteboard design	0	323	1
+Q46.9	46	concept	system-design	senior	system-design	whiteboard design	0	321	1
+Q46.10	46	design	system-design	staff	agent-runtime	names the runtime	0	334	1
+Q46.11	46	stakeholder	system-design	senior	bar-raiser	a person to convince	0	295	1
+Q46.12	46	stakeholder	system-design	principal	bar-raiser	a person to convince	0	286	1
+Q46.13	46	scenario	system-design	senior	system-design	whiteboard design	0	321	1
+Q46.14	46	stakeholder	hiring-manager	staff	hiring-manager	declared	1	342	1
+Q46.15	46	scenario	hiring-manager	principal	hiring-manager	declared	1	315	1
+Q47.1	47	concept	phone-screen	mid	phone-screen	declared	0	322	1
+Q47.2	47	scenario	system-design	senior	system-design	whiteboard design	0	322	1
+Q47.3	47	design	distributed-systems	staff	distributed-systems	declared	0	327	1
+Q47.4	47	design	agent-runtime	senior	agent-runtime	declared	0	351	1
+Q47.5	47	design	control-plane-security	staff	control-plane-security	declared	0	315	1
+Q47.6	47	scenario	evaluation-operations	staff	evaluation-operations	declared	0	332	1
+Q47.7	47	design	take-home	staff	take-home	declared	0	322	1
+Q47.8	47	stakeholder	bar-raiser	principal	bar-raiser	declared	0	330	1
+Q47.9	47	stakeholder	hiring-manager	senior	hiring-manager	declared	1	326	1
+Q47.10	47	concept	control-plane-security	mid	control-plane-security	declared	0	307	1
+Q47.11	47	concept	phone-screen	mid	phone-screen	declared	0	315	1
+Q47.12	47	scenario	system-design	senior	system-design	whiteboard design	0	310	1
+Q47.13	47	stakeholder	hiring-manager	principal	hiring-manager	declared	1	358	1
+Q47.14	47	scenario	hiring-manager	staff	hiring-manager	declared	1	322	1
+Q47.15	47	stakeholder	hiring-manager	staff	hiring-manager	declared	1	315	1
+Q48.1	48	concept	system-design	mid	bar-raiser	a person to convince	0	322	1
+Q48.2	48	concept	system-design	senior	system-design	whiteboard design	0	321	1
+Q48.3	48	scenario	system-design	senior	control-plane-security	names a control	0	362	1
+Q48.4	48	design	system-design	staff	system-design	whiteboard design	0	359	1
+Q48.5	48	concept	system-design	senior	system-design	whiteboard design	0	319	1
+Q48.6	48	scenario	system-design	staff	control-plane-security	names a control	0	363	1
+Q48.7	48	stakeholder	system-design	principal	bar-raiser	a person to convince	0	352	1
+Q48.8	48	stakeholder	system-design	staff	bar-raiser	a person to convince	0	350	1
+Q48.9	48	concept	system-design	staff	bar-raiser	a person to convince	0	337	1
+Q48.10	48	scenario	system-design	senior	system-design	whiteboard design	0	364	1
+Q48.11	48	stakeholder	hiring-manager	principal	hiring-manager	declared	1	328	1
+Q48.12	48	scenario	hiring-manager	principal	hiring-manager	declared	1	331	1

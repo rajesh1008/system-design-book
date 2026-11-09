@@ -1,0 +1,17 @@
+@startuml
+' Figure 47.3  The control round from both sides
+' Reading order: top to bottom. The interviewer gives the card; the
+' candidate puts permission outside the model at minute three; the
+' one probe comes at minute sixteen; the answer that closes the gap
+' is amber, the policy's color; the interviewer writes six items
+' with minutes, and the judgment line last.
+!include plantuml-theme.puml
+participant "Interviewer" as I <<org>>
+participant "Candidate" as C <<org>>
+participant "Policy" as P <<policy>>
+I -> C : $640, new card
+C -[$POLICY]> P : Min 3: policy decides
+I -> C : Min 16: model fooled?
+C -[$POLICY]> I : Engine still says no
+I -> I : Six items, minutes
+@enduml

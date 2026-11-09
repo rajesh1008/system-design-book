@@ -9,7 +9,7 @@ the key is read from the environment only.
 |---|---|---|
 | `common/` | all | Run ids, a fixed clock, seeded randomness, the hash-linked trail, redaction, the spend meter, pinned model IDs (`common/models.toml`) and the model client |
 | `corpus/` | 4, 7, 10, 19, 34, 44 | The synthetic Lakeshore Travel Group data, v0, generated from a seed |
-| `bank/` | 41, 47 | The interview-bank schema, loader and index generator, v0 |
+| `bank/` | 41, 47 | The interview-bank schema, loader and index generator, v0; Chapter 47 adds the whole-manuscript reader, the round router, the Appendix J generator, a metadata-only index snapshot, the loop builder, and the control-round notes |
 | `ch01/` | 1 | designlab v0: one action end to end, with a policy check outside the loop, an idempotency key, a reconciler that did not act, and the trail checker |
 | `chain/` | 2 | The chain record and a loop that refuses an effect without its evidence |
 | `map/` | 3 | The map of the agent field as dated data (`map/map.yaml`) and the shortlist scorer |
@@ -126,6 +126,7 @@ From this directory:
     bash ch44/run.sh               # Chapter 44: the storm day replayed
     bash ch45/run.sh               # Chapter 45: six internal designs, linted
     bash ch46/run.sh               # Chapter 46: the interview ladder, drilled
+    bash ch47/run.sh               # Chapter 47: the interview bank and the loop
     bash ch48/run.sh               # Chapter 48: final card, year-two plan, linted
 
 Each chapter also has a script that runs its tests and demos, for example

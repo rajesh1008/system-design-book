@@ -1,0 +1,17 @@
+@startuml
+' Figure 47.4  The evaluation scenario from both sides
+' Reading order: top to bottom. The interviewer brings a new model;
+' the candidate measures in shadow; the interviewer asks what blocks
+' the move; the green arrow is the release with its blocking
+' condition, signed by its owner; the interviewer writes the check.
+!include plantuml-theme.puml
+participant "Interviewer" as I <<org>>
+participant "Candidate" as C <<org>>
+participant "Release" as R <<verified>>
+I -> C : New model arrives
+C -> C : Golden set, shadow
+I -> C : What blocks it?
+C -[$VERIFIED]> R : Block on regression
+R -> R : Owner signs
+I -> I : Writes first check
+@enduml

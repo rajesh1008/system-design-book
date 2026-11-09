@@ -1,0 +1,35 @@
+// Figure 47.6  The interview loop
+// Reading order: top to bottom. The phone screen sorts on one
+// question; the design round sets a provisional level; five rounds
+// each listen for one thing; the bar-raiser and the hiring manager
+// read judgment; every note goes to the note store before the
+// debrief, which decides. The bold path is the control round's:
+// screen, design, control, debrief.
+digraph loop {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.3;
+  s [label="Phone screen", class="org"];
+  d [label="Design:\nsets level", class="org"];
+  ds [label="Distributed", class="ops"];
+  h [label="Harness", class="ops"];
+  c [label="Control:\nsix items", class="policy gate"];
+  e [label="Eval, ops", class="verified"];
+  t [label="Take-home", class="org"];
+  b [label="Bar-raiser", class="org"];
+  m [label="Hiring\nmanager", class="org"];
+  n [label="Notes", class="evidence store"];
+  q [label="Debrief", class="verified gate"];
+  s -> d [class="emphasis"];
+  d -> ds; d -> h;
+  d -> c [class="emphasis"];
+  ds -> e; h -> t;
+  c -> n [class="trail"];
+  e -> b; t -> b;
+  b -> m;
+  e -> n [class="trail"]; t -> n [class="trail"];
+  m -> q; n -> q [class="trail"];
+  c -> q [class="emphasis"];
+  { rank=same; ds; h; c; }
+  { rank=same; e; t; }
+  { rank=same; b; n; }
+}

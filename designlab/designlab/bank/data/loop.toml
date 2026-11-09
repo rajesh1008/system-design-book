@@ -1,0 +1,98 @@
+# Lakeshore's interview loop for the January 2027 requisitions
+# (Chapter 47, DR-47.1). Minutes are per round. "evidence" says
+# whether the format is publicly evidenced in the job-market matrix
+# ("public") or is this book's recommendation ("recommended").
+
+[[round]]
+tag = "phone-screen"
+minutes = 30
+who = "an agent engineer"
+tier = "mid"
+evidence = "public"
+probe = "Where in the system does the agent's permission live?"
+writes = "the one sentence the candidate used for permission"
+
+[[round]]
+tag = "system-design"
+minutes = 45
+who = "a calibrated design interviewer"
+evidence = "public"
+probe = "Which number did you estimate first, and why that one?"
+writes = "the 14-point rubric, scored before the debrief"
+
+[[round]]
+tag = "distributed-systems"
+minutes = 45
+who = "Ben Carter"
+evidence = "public"
+probe = "The tool call timed out. Did the refund happen?"
+writes = "the recovery time, the arithmetic, and the dedupe key"
+
+[[round]]
+tag = "agent-runtime"
+minutes = 45
+who = "the agent systems architect"
+evidence = "recommended"
+probe = "What stops the loop, and who reads that stop?"
+writes = "the stop conditions and where state survives a crash"
+
+[[round]]
+tag = "control-plane-security"
+minutes = 45
+who = "Owen Fletcher"
+evidence = "recommended"
+probe = "Where does permission live if the model is wrong?"
+writes = "the six listen-for items, each with its minute"
+
+[[round]]
+tag = "evaluation-operations"
+minutes = 45
+who = "Dr. Hannah Clarke"
+evidence = "public"
+probe = "The provider changed the model. What do you run first?"
+writes = "the first check named and the release it would block"
+
+[[round]]
+tag = "take-home"
+minutes = 45
+who = "Daniel Price"
+evidence = "public"
+probe = "Which of your decision records would you reverse?"
+writes = "the decision records, read before the defense"
+
+[[round]]
+tag = "bar-raiser"
+minutes = 45
+who = "Rachel Morgan"
+evidence = "recommended"
+probe = "Convince me the agent should not get this tier yet."
+writes = "a hire or no-hire with the single strongest evidence"
+
+[[round]]
+tag = "hiring-manager"
+minutes = 30
+who = "Daniel Price"
+evidence = "public"
+probe = "Tell me about a design of yours that was overruled."
+writes = "the team gap the candidate fills, by skill grid row"
+
+[[role]]
+id = "agent-engineer"
+title = "Agent engineer"
+tier = "senior"
+openings = 2
+take_home_hours = 0
+rounds = ["phone-screen", "system-design", "agent-runtime",
+          "control-plane-security", "evaluation-operations",
+          "hiring-manager"]
+
+[[role]]
+id = "staff"
+title = "Staff engineer, agent platform"
+tier = "staff"
+openings = 1
+take_home_hours = 3
+rounds = ["phone-screen", "system-design", "distributed-systems",
+          "agent-runtime", "control-plane-security",
+          "evaluation-operations", "take-home", "bar-raiser",
+          "hiring-manager"]

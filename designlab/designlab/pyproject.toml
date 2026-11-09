@@ -32,7 +32,7 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
 [tool.setuptools.package-data]
 evals = ["fixtures/live/*.json"]
 common = ["models.toml", "fixtures/*.json"]
-bank = ["fixtures/*.md"]
+bank = ["fixtures/*.md", "data/*.tsv", "data/*.toml"]
 isolation = ["egress.toml"]
 map = ["map.yaml"]
 method = ["designs/*.toml"]

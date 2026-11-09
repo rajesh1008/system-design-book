@@ -1,0 +1,125 @@
+# The control and security round, dry run of Tuesday, October 27,
+# 2026 (Chapter 47). Two volunteer candidates from the Chapter 46
+# calibration pool, one prompt, one interviewer. Minutes are minutes
+# into the 45-minute round. Every line is what the interviewer wrote,
+# not a transcript. "shows" names the listen-for items the line earns.
+
+[round]
+date = "2026-10-27"
+interviewer = "Owen Fletcher"
+minutes = 45
+prompt = """A supplier note on a booking says the hotel canceled and \
+asks that the guest be refunded $640 to a new card. Walk me from the \
+note to the ledger."""
+
+[listen]
+permission = "permission lives outside the model, in a policy engine"
+untrusted = "the note is untrusted data, not an instruction"
+owner = "a named person signs the rule and its limit"
+identity = "the run holds its own short-lived identity"
+stop = "a stop that does not need the model to agree"
+verify = "a verifier that did not act reads the trail"
+
+[[candidate]]
+id = "V07"
+
+[[candidate.said]]
+at = 2
+text = "Agent reads the note, classifies intent: refund"
+shows = []
+
+[[candidate.said]]
+at = 6
+text = "Retrieves booking, checks the hotel's terms"
+shows = []
+
+[[candidate.said]]
+at = 9
+text = "Note is from a supplier, so it is trusted input"
+shows = []
+
+[[candidate.said]]
+at = 14
+text = "The model decides if it is in policy (circled)"
+shows = []
+circled = true
+
+[[candidate.said]]
+at = 16
+text = "Probe: where does permission live if it is wrong?"
+shows = []
+probe = true
+
+[[candidate.said]]
+at = 17
+text = "A guardrail model checks the first model's call"
+shows = []
+
+[[candidate.said]]
+at = 23
+text = "Refund key scoped to the whole agent service"
+shows = []
+
+[[candidate.said]]
+at = 29
+text = "Kill switch: on-call disables the agent service"
+shows = ["stop"]
+
+[[candidate.said]]
+at = 35
+text = "Daily audit job compares refunds to the ledger"
+shows = ["verify"]
+
+[[candidate.said]]
+at = 41
+text = "Asked who owns the limit: the product team"
+shows = []
+
+[[candidate]]
+id = "V19"
+
+[[candidate.said]]
+at = 3
+text = "Model proposes; the policy engine decides, outside"
+shows = ["permission"]
+
+[[candidate.said]]
+at = 5
+text = "Supplier note is data; it cannot carry an instruction"
+shows = ["untrusted"]
+
+[[candidate.said]]
+at = 8
+text = "New card plus a third-party note: a hard deny"
+shows = ["permission"]
+
+[[candidate.said]]
+at = 12
+text = "Rule and $1,500 limit signed by risk, a named owner"
+shows = ["owner"]
+
+[[candidate.said]]
+at = 16
+text = "Probe: the model is fooled, then what?"
+shows = []
+probe = true
+
+[[candidate.said]]
+at = 17
+text = "Then the model is wrong and the engine still says no"
+shows = ["permission"]
+
+[[candidate.said]]
+at = 22
+text = "Run gets a token for this booking, minutes to live"
+shows = ["identity"]
+
+[[candidate.said]]
+at = 30
+text = "Stop at the gateway; the agent is never asked"
+shows = ["stop"]
+
+[[candidate.said]]
+at = 36
+text = "Verifier reads the trail; it holds no refund rights"
+shows = ["verify"]
