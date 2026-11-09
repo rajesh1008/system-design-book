@@ -1,0 +1,260 @@
+# Lakeshore rebooking agent, the November 2, 2026 version: rebook-v2
+# and rebook-v3, vouchers-v1, hotel-cancel-v1, and the desk queue
+# ordered by departure time from September 21, 2026. Lakeshore figures
+# are illustrative; inputs are stated assumptions with named sources.
+
+[design]
+id = "lakeshore-rebooking"
+version = "v3.1"
+as_of = "2026-11-02"
+industry = "travel"
+org = "Lakeshore Travel Group, Chicago"
+author = "Daniel Price"
+owner = "Marcus Bell"
+title = "Rebooking agent: same-carrier rebooking, vouchers, and hotels"
+summary = "Rebooks disrupted and changed trips; issues vouchers"
+out_of_scope = "other carriers, group bookings, name changes, corporate accounts"
+customer = "traveler"
+knowledge = "itineraries, fare rules, seat inventory"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter"]
+
+[executor]
+label = "rebook executor"
+writes = ["execution log"]
+
+[[effects]]
+name = "rebook"
+label = "rebook on the same carrier (rebook-v2)"
+system = "airline booking systems"
+limit_usd = 250
+ladder = [[250, "notify"], [1500, "approve"]]
+tier = "notify"
+undo = "traveler may refuse within 24 hours; refusals queued, 30 minutes"
+verifier = "pnr-reconciler"
+
+[[effects]]
+name = "rebook_weather"
+label = "rebook after a weather cancellation (rebook-v3)"
+system = "airline booking systems"
+limit_usd = 400
+ladder = [[400, "notify"], [1500, "approve"]]
+tier = "notify"
+undo = "traveler may refuse within 24 hours; refusals queued, 30 minutes"
+verifier = "pnr-reconciler"
+
+[[effects]]
+name = "voucher"
+label = "meal or hotel voucher (vouchers-v1)"
+system = "voucher platform"
+limit_usd = 100
+ladder = [[100, "act"]]
+tier = "act"
+undo = "void before redemption; $5,000 a day; 5% sampled next day"
+verifier = "voucher-reconciler"
+
+[[effects]]
+name = "hotel_cancel"
+label = "hotel cancellation (hotel-cancel-v1)"
+system = "hotel partners"
+tier = "suggest"
+undo = "partner terms; often none after the deadline"
+
+[[verifiers]]
+id = "pnr-reconciler"
+reads = "airline booking record"
+written_by = "airline booking systems"
+
+[[verifiers]]
+id = "voucher-reconciler"
+reads = "voucher redemption file"
+written_by = "voucher platform"
+
+[human_gate]
+label = "agent desk"
+promise_minutes = 30
+cases = ["fare difference above the ceiling", "refusal within 24 hours",
+         "hotel cancellation (240-minute promise)"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+order = "departure time"
+
+[surge]
+effect = "rebook_weather"
+rule = "weather cancellations raise the unattended ceiling to $400"
+signer = "Marcus Bell"
+expires_hours = 0
+budget_owner = "Sarah Whitfield"
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "fare-rules"
+rule = "the operating carrier's fare rules for the new ticket"
+plane = "control"
+enforced_by = "fare-rule check in the policy engine"
+
+[[obligations]]
+id = "notice"
+rule = "the traveler hears the fare difference and the refusal window"
+plane = "control"
+enforced_by = "notify template bound to the proposal"
+
+[[obligations]]
+id = "evidence"
+rule = "money evidence kept seven years"
+plane = "trail"
+enforced_by = "trail retention"
+
+[requirements]
+A5 = { answer = "two airline systems reject a repeat by record locator; the rest take a key", source = "doc:integration-list" }
+A6 = { answer = "search, fare lookup, itinerary read, policy read", source = "doc:tool-list" }
+C4 = { answer = "12 steps, $2 of model spend, 10 minutes, or the desk", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one a tool, tier two all effects, tier three off", source = "doc:runbook" }
+C6 = { answer = "fare rules, notice of fare difference, money evidence", source = "doc:obligations" }
+K1 = { answer = "itinerary, disruption code, fare rules, seat inventory", source = "doc:context-plan" }
+K2 = { answer = "15 minutes; a stale fact sends the proposal to a person", source = "doc:context-plan" }
+K3 = { answer = "traveler messages, airline notices, partner emails", source = "doc:threat-list" }
+K4 = { answer = "scoped traveler memory; the desk corrects it", source = "doc:context-plan" }
+T1 = { answer = "who asked, who permitted, which ticket, what the airline holds", source = "doc:obligations" }
+T4 = { answer = "seven years for money evidence; risk and audit read it", source = "doc:obligations" }
+O1 = { answer = "cost per verified outcome, Marcus Bell", source = "doc:baseline-2025-10-14" }
+O2 = { answer = "about 2,300 rebookings a day; a storm moves a week into six hours", source = "doc:ops-queue-reports-2024" }
+O3 = { answer = "$54.90 by a person, $6.20 assisted, about $1.61 on the agent path", source = "doc:economics-card" }
+O4 = { answer = "a wrong rebooking costs a reissue, a credit, and a missed trip", source = "doc:inc-5" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 840000
+low = 760000
+high = 920000
+unit = "rebookings a year"
+assumption = "the program year matches the baseline year's rebookings"
+source = "doc:change-type-mix (Chapter 4)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 7
+low = 3
+high = 10
+unit = "average days"
+assumption = "a hub closure moves a week of changes into one window"
+source = "doc:storm-2026-09-10 (41,000 changes in six hours)"
+
+[[estimate]]
+name = "window_hours"
+value = 6
+low = 4
+high = 12
+unit = "hours"
+assumption = "the closure window lasts about six hours"
+source = "doc:storm-2026-09-10 (Marcus Bell)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 6
+low = 4
+high = 12
+unit = "model calls"
+assumption = "about six model calls per rebooking"
+source = "doc:pilot-traces-week-1 (Ben Carter)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 4
+low = 3
+high = 6
+unit = "tool calls"
+assumption = "about four tool reads and writes per rebooking"
+source = "doc:pilot-traces-week-1 (Ben Carter)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.12
+low = 0.06
+high = 0.25
+unit = "of rebookings"
+assumption = "above-ceiling fares and refusals reach the desk"
+source = "doc:desk-reports-2026 (Marcus Bell)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 30
+low = 20
+high = 40
+unit = "per person-hour"
+assumption = "a desk agent clears one item every two minutes"
+source = "doc:supervisor-approvals-2025 (Marcus Bell)"
+
+[decision]
+id = "weather-ceiling"
+question = "How does a weather cancellation raise the unattended ceiling?"
+criteria = ["evidence of the cancellation", "fare risk on ordinary changes",
+            "one owner signs it", "ready this quarter"]
+chosen = "signed rule bundle rebook-v3"
+owner = "Marcus Bell"
+options = [
+  { name = "signed rule bundle rebook-v3", scores = [2, 2, 2, 1], why_not = "" },
+  { name = "agent judges the weather", scores = [0, 1, 0, 2], why_not = "a weather claim in a conversation is not evidence" },
+  { name = "raise the ceiling for all", scores = [1, 0, 2, 2], why_not = "fare risk on every ordinary change" },
+]
+
+[deep_dive]
+id = "desk-queue"
+component = "agent desk queue"
+owner = "Marcus Bell"
+contract = "every refusal and above-ceiling item reaches a person in 30 minutes"
+numbers = ["est:gate_items_per_hour", "est:reviewers_needed"]
+test = "replay September 10 into a test desk ordered by departure time"
+failure_modes = [
+  { mode = "storm backlog", detect = "oldest item age, every 5 minutes", contain = "order by departure time; tier two holds new effects", recover = "reserve desk; drain the soonest departures first" },
+  { mode = "refusal lost", detect = "refusal in the message log with no queue item", contain = "nightly join of messages to queue", recover = "call the traveler; reverse the rebooking" },
+  { mode = "rebooked twice", detect = "pnr-reconciler sees two tickets for one trip", contain = "airline refuses a repeat locator", recover = "void the second ticket; credit the traveler" },
+]
+
+[record]
+id = "R-RBK-1"
+title = "Order the desk queue by departure time"
+context = "on September 10, 2026 the queue served in arrival order"
+options = ["departure time", "arrival order", "fare difference"]
+decision = "the desk queue is ordered by departure time from September 21, 2026"
+consequences = "late-departing travelers wait longer on a storm day"
+reverse_if = "a traveler misses a flight while an older item waits"
+evidence = ["dive:desk-queue", "est:reviewers_needed", "node:desk"]
+owner = "Marcus Bell"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits a typed rebooking or voucher proposal, or refuses", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "the policy engine grants by rule bundle and fare difference", owner = "Owen Fletcher", evidence = ["node:policy", "dec:weather-ceiling"] }
+G3 = { answer = "one key per proposal; locator check where airlines take no key", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "pnr-reconciler and voucher-reconciler read records the agent cannot write", owner = "Rachel Morgan", evidence = ["node:pnr-reconciler", "node:voucher-reconciler"] }
+G5 = { answer = "cost per verified outcome, monthly, on the scoreboard", owner = "Marcus Bell", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 840000
+agent_share = 0.55
+calls_per_case = 6
+in_tokens = 7000
+out_tokens = 400
+cached_share = 0.65
+fees_per_case = 0.40
+platform_month = 12000
+verify_per_case = 0.03
+approval_share = 0.04
+approval_min = 2.0
+handoff_share = 0.10
+pickup_min = 3.0
+error_rate = 0.003
+rework_min = 24.0
+repeat_share = 0.03
+repeat_min = 6.0
+verified_rate = 0.995
+person_cost = 54.90
+build_usd = 1400000

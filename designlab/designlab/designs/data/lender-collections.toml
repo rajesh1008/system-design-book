@@ -1,0 +1,266 @@
+# Collections agent for a consumer lender's late accounts. An
+# illustrative composite: a consumer lender in Louisville. The lender
+# applies Regulation F's call-frequency and time-of-day limits (12 CFR
+# 1006.14 and 1006.6, verified 2026-11-09) as policy. Inputs are stated
+# assumptions with named sources, not measurements.
+
+[design]
+id = "lender-collections"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "lending"
+org = "a consumer lender in Louisville"
+author = "collections architect"
+owner = "head of collections"
+title = "Collections agent: reminders, payment plans, and the human gate"
+summary = "Reminds late borrowers; sets plans inside a signed matrix"
+out_of_scope = "lawsuits, repossession, debt sale, credit reporting changes"
+customer = "borrower"
+knowledge = "loans, balances, contact log, plan matrix"
+people = ["head of collections", "collections architect",
+          "compliance officer", "hardship team lead", "contact center lead",
+          "credit risk lead"]
+
+[executor]
+label = "collections executor"
+writes = ["execution log"]
+
+[[effects]]
+name = "reminder"
+label = "reminder by text, email, or call"
+system = "message platform"
+tier = "act"
+undo = "none; a message sent stays sent"
+verifier = "contact-reconciler"
+
+[[effects]]
+name = "payment_plan"
+label = "payment plan inside the signed matrix"
+system = "loan servicing"
+limit_usd = 3000
+ladder = [[3000, "notify"], [10000, "approve"]]
+tier = "notify"
+undo = "borrower may cancel within 7 days"
+verifier = "payment-reconciler"
+
+[[effects]]
+name = "settlement"
+label = "settle for less than the balance"
+system = "loan servicing"
+tier = "suggest"
+undo = "none once accepted"
+reserved = "credit risk signs any balance forgiven"
+verifier = "payment-reconciler"
+
+[[effects]]
+name = "hardship"
+label = "hardship, dispute, cease, bankruptcy, deceased, attorney"
+system = "loan servicing"
+tier = "suggest"
+undo = "not applicable; the agent stops"
+reserved = "a person handles every protected case"
+verifier = "payment-reconciler"
+
+[[effects]]
+name = "credit_report"
+label = "change what is reported to credit bureaus"
+system = "bureau reporting"
+tier = "never"
+undo = "correction cycle"
+reserved = "reporting accuracy duties"
+
+[[verifiers]]
+id = "contact-reconciler"
+reads = "message platform delivery log"
+written_by = "message platform"
+
+[[verifiers]]
+id = "payment-reconciler"
+reads = "payment processor file"
+written_by = "loan servicing"
+
+[human_gate]
+label = "hardship team"
+promise_minutes = 240
+cases = ["hardship", "dispute", "cease communication", "bankruptcy",
+         "deceased", "attorney", "settlement"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "frequency"
+rule = "no more than seven calls in seven days per debt; none for seven days after a conversation"
+plane = "control"
+enforced_by = "contact counter read from the message platform"
+
+[[obligations]]
+id = "time-of-day"
+rule = "no contact before 8 a.m. or after 9 p.m. at the borrower's location"
+plane = "control"
+enforced_by = "send window in the policy engine, all locations on file"
+
+[[obligations]]
+id = "medium"
+rule = "a medium the borrower declined is not used; opt-out in every electronic message"
+plane = "control"
+enforced_by = "channel preferences checked before each send"
+
+[[obligations]]
+id = "protected"
+rule = "protected cases stop the agent and reach a person"
+plane = "control"
+enforced_by = "classifier flag routes to the hardship team; never clears it"
+
+[requirements]
+A5 = { answer = "the message platform takes a send id; servicing rejects a repeat plan id", source = "doc:integration-list" }
+A6 = { answer = "balance, history, plan matrix, contact count", source = "doc:tool-list" }
+C4 = { answer = "8 steps, $0.40 of model spend, 5 minutes, or the hardship team", source = "doc:loop-limits" }
+C5 = { answer = "contact center on-call; tier two stops all sends in 60 seconds", source = "doc:runbook" }
+C6 = { answer = "call frequency, time of day, medium, protected cases", source = "doc:obligations" }
+K1 = { answer = "balance, days late, plan history, contact count, preferences", source = "doc:context-plan" }
+K2 = { answer = "contact count live; balance at proposal time", source = "doc:context-plan" }
+K3 = { answer = "borrower replies, uploaded letters, attorney emails", source = "doc:threat-list" }
+K4 = { answer = "preferences and protected flags; only a person clears a flag", source = "doc:context-plan" }
+T1 = { answer = "every contact attempt, its time, its medium, and the count", source = "doc:obligations" }
+T4 = { answer = "per the lender's record schedule; compliance reads it", source = "doc:obligations" }
+O1 = { answer = "cost per verified plan or payment; cures within 60 days", source = "doc:collections-baseline" }
+O2 = { answer = "about 3,300 contacts a day; January brings 2.5 days in ten hours", source = "doc:collections-baseline" }
+O3 = { answer = "$14.50 a contact by a person; about $2 on the agent path", source = "doc:collections-baseline" }
+O4 = { answer = "one contact over the limit is a violation; a missed hardship flag is harm", source = "doc:collections-baseline" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 1200000
+low = 1000000
+high = 1400000
+unit = "contacts a year"
+assumption = "late-account contacts at last year's rate"
+source = "doc:collections-baseline (head of collections)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 2.5
+low = 1.5
+high = 4
+unit = "average days"
+assumption = "the first business day after the holidays"
+source = "doc:collections-baseline (contact center lead)"
+
+[[estimate]]
+name = "window_hours"
+value = 10
+low = 8
+high = 13
+unit = "hours"
+assumption = "contacts fall inside the permitted hours"
+source = "doc:collections-baseline (contact center lead)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 6
+low = 4
+high = 9
+unit = "model calls"
+assumption = "about six model calls per conversation"
+source = "doc:shadow-traces (collections architect)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 4
+low = 3
+high = 6
+unit = "tool calls"
+assumption = "balance, count, matrix, and one write"
+source = "doc:shadow-traces (collections architect)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.18
+low = 0.10
+high = 0.30
+unit = "of contacts"
+assumption = "protected cases and settlements reach the hardship team"
+source = "doc:collections-baseline (hardship team lead)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 10
+low = 6
+high = 14
+unit = "per person-hour"
+assumption = "a hardship specialist picks up a summarized case in six minutes"
+source = "doc:collections-baseline (hardship team lead)"
+
+[decision]
+id = "contact-count"
+question = "Where does the contact count come from?"
+criteria = ["counts every attempt", "the agent cannot undercount",
+            "survives a restart", "build time"]
+chosen = "message platform delivery log"
+owner = "compliance officer"
+options = [
+  { name = "message platform delivery log", scores = [2, 2, 2, 1], why_not = "" },
+  { name = "the agent's own counter", scores = [1, 0, 0, 2], why_not = "the actor counting its own contacts is the actor verifying" },
+  { name = "nightly batch count", scores = [2, 2, 2, 2], why_not = "a count a day late lets the eighth call through" },
+]
+
+[deep_dive]
+id = "human-gate"
+component = "protected-case gate"
+owner = "hardship team lead"
+contract = "a protected case stops every send and reaches a person in 4 hours"
+numbers = ["est:gate_items_per_hour", "est:reviewers_needed"]
+test = "replay a month of replies with hardship words; count sends after"
+failure_modes = [
+  { mode = "hardship missed", detect = "nightly sample of replies read by a person", contain = "any doubt flags; flags only a person clears", recover = "apology, stop, refund of fees" },
+  { mode = "send after a flag", detect = "delivery log shows a send after the flag time", contain = "policy engine checks the flag at every send", recover = "compliance review; report the breach" },
+  { mode = "attorney letter in an upload", detect = "document classifier and keyword list", contain = "route to a person; stop direct contact", recover = "contact the attorney instead" },
+]
+
+[record]
+id = "R-COL-1"
+title = "Protected cases stop the agent; only a person clears the flag"
+context = "hardship, dispute, cease, bankruptcy, death, and attorney need people"
+options = ["flag stops the agent", "agent continues with care"]
+decision = "a protected flag stops every send; only the hardship team clears it"
+consequences = "some ordinary borrowers wait four hours after a stray word"
+reverse_if = "false flags pass 15% of flagged cases for a quarter"
+evidence = ["dive:human-gate", "dec:contact-count", "node:desk"]
+owner = "compliance officer"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits a typed send or plan, or refuses", owner = "collections architect", evidence = ["node:loop"] }
+G2 = { answer = "the policy engine checks count, hour, medium, flag, and matrix", owner = "compliance officer", evidence = ["node:policy", "dec:contact-count"] }
+G3 = { answer = "one send id per message; one plan id per plan", owner = "collections architect", evidence = ["req:A5"] }
+G4 = { answer = "reconcilers read the delivery log and the payment file", owner = "credit risk lead", evidence = ["node:contact-reconciler", "node:payment-reconciler"] }
+G5 = { answer = "cost per verified outcome and cures within 60 days", owner = "head of collections", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 1200000
+agent_share = 0.45
+calls_per_case = 6
+in_tokens = 5000
+out_tokens = 350
+cached_share = 0.6
+fees_per_case = 0.05
+platform_month = 26000
+verify_per_case = 0.02
+approval_share = 0.03
+approval_min = 3.0
+handoff_share = 0.18
+pickup_min = 6.0
+error_rate = 0.002
+rework_min = 20.0
+repeat_share = 0.10
+repeat_min = 5.0
+verified_rate = 0.995
+person_cost = 14.50
+build_usd = 1900000

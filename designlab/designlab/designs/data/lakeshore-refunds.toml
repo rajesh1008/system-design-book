@@ -1,0 +1,255 @@
+# Lakeshore refunds agent, the November 2, 2026 version: refunds-v3,
+# credits-v1, and the two September 21, 2026 changes: a surge rule for
+# involuntary refunds that only Rachel Morgan's signature switches on
+# and that switches itself off, and an emergency budget above the
+# day's budget that Sarah Whitfield owns. Lakeshore figures are
+# illustrative; inputs are stated assumptions with named sources.
+
+[design]
+id = "lakeshore-refunds"
+version = "v3.2"
+as_of = "2026-11-02"
+industry = "travel"
+org = "Lakeshore Travel Group, Chicago"
+author = "Daniel Price"
+owner = "Rachel Morgan"
+title = "Refunds agent: refunds to the original card and travel credits"
+summary = "Refunds cancelled and changed trips; offers travel credit"
+out_of_scope = "refunds to a new card, cash, chargebacks already filed"
+customer = "traveler"
+knowledge = "itineraries, fare rules, refund policy"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter"]
+
+[executor]
+label = "refund executor"
+writes = ["execution log"]
+
+[[effects]]
+name = "refund"
+label = "refund to the original payment method (refunds-v3)"
+system = "payment processor"
+limit_usd = 1500
+ladder = [[1500, "approve"]]
+tier = "approve"
+undo = "only by a second, opposite transaction"
+verifier = "settlement-reconciler"
+
+[[effects]]
+name = "travel_credit"
+label = "travel credit in Lakeshore's ledger (credits-v1)"
+system = "credit ledger"
+limit_usd = 500
+ladder = [[500, "approve"]]
+tier = "approve"
+undo = "void before use; reverses the refundable balance"
+verifier = "credit-reconciler"
+
+[[effects]]
+name = "refund_new_card"
+label = "refund to a card other than the original"
+system = "payment processor"
+tier = "never"
+undo = "none once settled"
+reserved = "payee change; a person with out-of-band identity"
+
+[[verifiers]]
+id = "settlement-reconciler"
+reads = "processor settlement file"
+written_by = "payment processor"
+
+[[verifiers]]
+id = "credit-reconciler"
+reads = "credit ledger statement"
+written_by = "credit ledger"
+
+[human_gate]
+label = "refund approver desk"
+promise_minutes = 60
+sync_seconds = 120
+cases = ["every refund: agent role to $750, team lead to $5,000",
+         "travel credit", "refund to another card"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+order = "departure time"
+
+[surge]
+effect = "refund"
+rule = "involuntary refunds up to $500 approved without a person"
+signer = "Rachel Morgan"
+expires_hours = 12
+budget_owner = "Sarah Whitfield"
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "refund-rules"
+rule = "refund to the original form of payment, per the fare rules"
+plane = "control"
+enforced_by = "policy engine; destination taken from the booking"
+
+[[obligations]]
+id = "dispute-window"
+rule = "a traveler's card dispute rights run in parallel"
+plane = "trail"
+enforced_by = "chain record answers a dispute within the window"
+
+[[obligations]]
+id = "evidence"
+rule = "money evidence kept seven years"
+plane = "trail"
+enforced_by = "trail retention"
+
+[requirements]
+A5 = { answer = "the processor accepts an idempotency key", source = "doc:integration-list" }
+A6 = { answer = "itinerary read, fare rules, refund policy, payment lookup", source = "doc:tool-list" }
+C4 = { answer = "12 steps, $2 of model spend, 10 minutes; day budget, then Sarah's emergency budget", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one a tool, tier two all effects, tier three off", source = "doc:runbook" }
+C6 = { answer = "refund to the original card, dispute rights, money evidence", source = "doc:obligations" }
+K1 = { answer = "booking, payment, fare rules, refund policy, prior credits", source = "doc:context-plan" }
+K2 = { answer = "15 minutes; payment record read at proposal time", source = "doc:context-plan" }
+K3 = { answer = "traveler messages and uploaded receipts", source = "doc:threat-list" }
+K4 = { answer = "nothing about money is remembered; the chain is read", source = "doc:context-plan" }
+T1 = { answer = "who asked, who approved at which limit, what settled", source = "doc:obligations" }
+T4 = { answer = "seven years; risk and audit read it", source = "doc:obligations" }
+O1 = { answer = "cost per verified outcome and refund error, Rachel Morgan", source = "doc:economics-card" }
+O2 = { answer = "about 1,900 refunds a day; a storm moves a week into six hours", source = "doc:ops-queue-reports-2024" }
+O3 = { answer = "$54.90 by a person; about $1.61 on the agent path", source = "doc:economics-card" }
+O4 = { answer = "a wrong refund costs its amount plus a dispute", source = "doc:incident-ch02" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 700000
+low = 600000
+high = 800000
+unit = "refunds a year"
+assumption = "one change in three moves money"
+source = "doc:change-type-mix (Chapter 4)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 7
+low = 3
+high = 10
+unit = "average days"
+assumption = "a hub closure moves a week of changes into one window"
+source = "doc:storm-2026-09-10 (41,000 changes in six hours)"
+
+[[estimate]]
+name = "window_hours"
+value = 6
+low = 4
+high = 12
+unit = "hours"
+assumption = "the closure window lasts about six hours"
+source = "doc:storm-2026-09-10 (Marcus Bell)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 5
+low = 4
+high = 10
+unit = "model calls"
+assumption = "about five model calls per refund"
+source = "doc:pilot-traces-week-1 (Ben Carter)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 4
+low = 3
+high = 6
+unit = "tool calls"
+assumption = "booking, payment, policy, and the refund"
+source = "doc:pilot-traces-week-1 (Ben Carter)"
+
+[[estimate]]
+name = "gate_share"
+value = 1.0
+low = 0.6
+high = 1.0
+unit = "of refunds"
+assumption = "every refund under refunds-v3 waits for an approver"
+source = "doc:refunds-v3 (Rachel Morgan)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 30
+low = 20
+high = 40
+unit = "per person-hour"
+assumption = "an approver clears one refund every two minutes"
+source = "doc:supervisor-approvals-2025 (Marcus Bell)"
+
+[decision]
+id = "surge-rule"
+question = "How does the approval gate survive a storm hour?"
+criteria = ["no refund without a permission", "one owner signs it",
+            "it switches itself off", "queue under an hour"]
+chosen = "signed surge rule, self-expiring"
+owner = "Rachel Morgan"
+options = [
+  { name = "signed surge rule, self-expiring", scores = [2, 2, 2, 2], why_not = "" },
+  { name = "more approvers on call", scores = [2, 2, 2, 0], why_not = "75 approvers in an hour is not a roster" },
+  { name = "auto-approve on queue age", scores = [0, 0, 1, 2], why_not = "yes by timeout is not a permission" },
+]
+
+[deep_dive]
+id = "approval-gate"
+component = "refund approver desk"
+owner = "Marcus Bell"
+contract = "every refund proposal gets a decision within 60 minutes, or none"
+numbers = ["est:gate_items_per_hour", "est:reviewers_needed"]
+test = "replay September 10 at 2,237 approvals an hour with the surge rule"
+failure_modes = [
+  { mode = "storm backlog", detect = "oldest item age, every 5 minutes", contain = "order by departure time; surge rule on Rachel's signature", recover = "rule expires in 12 hours; drain the rest" },
+  { mode = "approval by habit", detect = "an approver passes 99% in a shift", contain = "second review on a 5% sample", recover = "change what the approval card shows" },
+  { mode = "approver above their limit", detect = "role checked against amount", contain = "policy engine refuses", recover = "route to a team lead" },
+  { mode = "budget spent mid-storm", detect = "day budget alarm", contain = "tier two holds effects", recover = "Sarah releases the emergency budget" },
+]
+
+[record]
+id = "R-RFD-1"
+title = "A surge rule that only a signature switches on"
+context = "on September 10, 2026 the approval queue peaked at 9,000"
+options = ["signed surge rule, self-expiring", "more approvers on call", "auto-approve on queue age"]
+decision = "involuntary refunds up to $500 skip the desk only under a signed, expiring rule"
+consequences = "a storm needs Rachel or her deputy reachable within the hour"
+reverse_if = "refund error under the rule passes 0.5%, or it runs past expiry"
+evidence = ["dec:surge-rule", "dive:approval-gate", "est:reviewers_needed"]
+owner = "Rachel Morgan"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits a typed refund; the parser computes the amount", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "the policy engine grants; approvers hold role limits", owner = "Owen Fletcher", evidence = ["node:policy", "node:desk"] }
+G3 = { answer = "one processor key per permission; a second effect is refused", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "the settlement reconciler reads the processor's file", owner = "Rachel Morgan", evidence = ["node:settlement-reconciler"] }
+G5 = { answer = "cost per verified outcome and refund error, monthly", owner = "Rachel Morgan", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 700000
+agent_share = 0.40
+calls_per_case = 5
+in_tokens = 7000
+out_tokens = 400
+cached_share = 0.65
+fees_per_case = 0.22
+platform_month = 10000
+verify_per_case = 0.03
+approval_share = 1.0
+approval_min = 2.0
+handoff_share = 0.08
+pickup_min = 3.0
+error_rate = 0.003
+rework_min = 20.0
+repeat_share = 0.03
+repeat_min = 6.0
+verified_rate = 0.995
+person_cost = 54.90
+build_usd = 1600000

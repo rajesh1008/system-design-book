@@ -1,0 +1,22 @@
+// Figure 42.6  The declined design: points transfer v1
+// Reading order: top to bottom. The member asks the points assistant,
+// which the gateway permits under the August bundle. The assistant
+// debits the ledger and calls the partner itself, then polls the
+// partner's status with no stop, and calls its own read of that status
+// the verification. The two failing shape items are marked. From
+// review/designs/points-transfer-v1.toml.
+digraph declined {
+#include "book.gv"
+  rankdir=TB; nodesep=0.4; ranksep=0.35;
+  m [label="Member", class="org human"];
+  g [label="Gateway\nAugust bundle", class="policy gate"];
+  a [label="Points assistant\nlimits in prompt", class="ops"];
+  l [label="Points ledger", class="ops store"];
+  p [label="Partner\ntransfer API", class="ops external"];
+  m -> a [class="data", label="transfer"];
+  g -> a [class="control", label="permit"];
+  a -> l [class="control", label="debit"];
+  a -> p [class="control", label="transfer,\nnew reference"];
+  p -> a [class="fail", label="poll until posted:\nno stop (A2)"];
+  a -> a [class="fail", label="verifies itself (T1)"];
+}

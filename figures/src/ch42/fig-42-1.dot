@@ -1,0 +1,26 @@
+// Figure 42.1  The review as a design instrument
+// Reading order: top to bottom. A submission file goes through the
+// five gap questions and the checklist by plane to a verdict. Approve
+// and change both write a decision record into the store; decline
+// sends the team back to draw again. The store's revisit queue brings
+// a record back when its date or trigger arrives. From review.board,
+// review.record, and review.store.
+digraph instrument {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  sub [label="Submission\nthe design file", class="org"];
+  gq [label="Five gap questions", class="evidence"];
+  ck [label="Checklist by plane\nsixteen items", class="evidence"];
+  vd [label="Verdict\napprove, change, decline", class="org gate"];
+  rec [label="Decision record\nsigned, with a revisit", class="evidence"];
+  st [label="Record store", class="evidence store"];
+  rq [label="Revisit queue\ndate or trigger", class="org"];
+  sub -> gq [class="control"];
+  gq -> ck [class="control"];
+  ck -> vd [class="control"];
+  vd -> rec [class="emphasis", label="approve or change"];
+  rec -> st [class="trail"];
+  st -> rq [class="data"];
+  vd -> sub [class="control", label="decline:\nnew drawing", constraint=false];
+  rq -> sub [class="async", label="reopen", constraint=false];
+}

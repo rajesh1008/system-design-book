@@ -1,0 +1,41 @@
+// Figure 43.2  Telecom care: the high-level design
+// Reading order: top to bottom, one plane per cluster. The caller's
+// request reaches the harness with the account facts; the typed
+// proposal goes to the policy engine, which checks the line scope and
+// the amount; the executor writes to billing or provisioning; two
+// reconcilers read the ledger export and the provisioning record, which
+// the executor does not write. Composite carrier, Kansas City. From
+// designs/data/telecom-care.toml.
+digraph telecom {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.32; newrank=true;
+  caller [label="Account holder\nor line user", class="ops external"];
+  subgraph cluster_k { label="Knowledge plane"; class="plane-knowledge";
+    facts [label="Accounts, plans,\noutage record", class="knowledge store"];
+  }
+  subgraph cluster_a { label="Action plane"; class="plane-ops";
+    loop [label="Agent harness", class="model"];
+    ex [label="Care executor", class="ops"];
+  }
+  subgraph cluster_c { label="Control plane"; class="plane-policy";
+    pol [label="Policy engine\nline scope, amount", class="policy gate"];
+    desk [label="Care desk\n30 minutes", class="policy human"];
+  }
+  bill [label="Billing", class="ops external store"];
+  prov [label="Provisioning", class="ops external store"];
+  subgraph cluster_t { label="Trail"; class="plane-evidence";
+    rec [label="Two reconcilers", class="verified gate"];
+    st [label="Status from\nthe chain", class="evidence"];
+  }
+  caller -> loop [class="control"];
+  facts -> loop [class="data"];
+  loop -> pol [label=" proposal", class="control"];
+  pol -> desk [class="async"];
+  pol -> ex [label=" permission", class="emphasis"];
+  ex -> bill [class="control"];
+  ex -> prov [class="control"];
+  bill -> rec [class="data"];
+  prov -> rec [class="data"];
+  rec -> st [class="trail"];
+  st -> caller [class="data", constraint=false];
+}

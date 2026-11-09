@@ -1,0 +1,62 @@
+# Exercise, not a design: a seventh industry, half written. A
+# retailer's returns agent, drafted the way a first draft usually is.
+# Lint it, then fix it until it passes (Chapter 43, Try It Yourself).
+
+[design]
+id = "retail-returns"
+version = "v0.1"
+as_of = "2026-11-02"
+industry = "retail"
+org = "an illustrative online retailer"
+author = "returns architect"
+owner = "head of returns"
+title = "Returns agent: labels, refunds, and exchanges"
+summary = "Issues return labels and refunds for online orders"
+out_of_scope = "marketplace sellers, gift cards"
+customer = "shopper"
+knowledge = "orders, return policy"
+people = ["head of returns", "returns architect"]
+
+[executor]
+label = "returns executor"
+writes = ["execution log"]
+
+[[effects]]
+name = "refund"
+label = "refund on a returned order"
+system = "payment processor"
+limit_usd = 800
+ladder = [[150, "act"], [800, "approve"]]
+tier = "act"
+undo = "only by a second, opposite transaction"
+verifier = "returns-checker"
+
+[[effects]]
+name = "refund_elsewhere"
+label = "refund to a different card"
+system = "payment processor"
+tier = "notify"
+reserved = "payee change"
+verifier = "returns-checker"
+
+[[verifiers]]
+id = "returns-checker"
+reads = "execution log"
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "model confidence above 0.9"
+declined = "permission store"
+
+[[obligations]]
+id = "policy"
+rule = "30-day return window"
+plane = "prompt"
+
+[gaps]
+G1 = { answer = "typed refund proposal", owner = "returns architect" }
+G2 = { answer = "the prompt says ask first above $150", owner = "returns architect" }
+G4 = { answer = "the checker reads the log", owner = "returns architect" }

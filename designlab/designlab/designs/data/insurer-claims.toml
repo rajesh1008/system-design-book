@@ -1,0 +1,265 @@
+# Claims agent for personal auto and home. An illustrative composite:
+# a personal-lines insurer in Hartford. Inputs are stated assumptions
+# with named sources, not measurements.
+
+[design]
+id = "insurer-claims"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "insurance"
+org = "a personal-lines insurer in Hartford"
+author = "claims architect"
+owner = "head of claims"
+title = "Claims agent: first notice, small payments, and the adjuster"
+summary = "Takes first notice of loss; pays small covered claims by rule"
+out_of_scope = "injury claims, total losses, litigation, subrogation"
+customer = "policyholder or claimant"
+knowledge = "policies, coverages, claim files, repair estimates"
+people = ["head of claims", "claims architect", "adjuster lead",
+          "special investigations lead", "claims counsel",
+          "finance controller"]
+
+[executor]
+label = "claims executor"
+writes = ["execution log"]
+
+[[effects]]
+name = "fnol"
+label = "first notice of loss opened"
+system = "claims system"
+tier = "act"
+undo = "closed as a duplicate by an adjuster"
+verifier = "claims-reconciler"
+
+[[effects]]
+name = "small_payment"
+label = "payment computed by the waterfall"
+system = "payments bank"
+limit_usd = 2500
+ladder = [[2500, "act"], [25000, "approve"]]
+tier = "act"
+undo = "stop payment before it clears; recovery after"
+verifier = "payment-reconciler"
+
+[[effects]]
+name = "rental"
+label = "rental car authorization"
+system = "rental partner"
+limit_usd = 600
+ladder = [[600, "act"], [2500, "approve"]]
+tier = "act"
+undo = "cancel before pickup"
+verifier = "claims-reconciler"
+
+[[effects]]
+name = "denial"
+label = "deny or reduce a claim"
+system = "claims system"
+tier = "suggest"
+undo = "reopened on appeal"
+reserved = "a denial is an adjuster's, with written reasons"
+verifier = "claims-reconciler"
+
+[[effects]]
+name = "payee_change"
+label = "change where a claim payment goes"
+system = "payments bank"
+tier = "never"
+undo = "none once paid"
+reserved = "payee-change fraud; call-back and a cooling period"
+
+[[verifiers]]
+id = "claims-reconciler"
+reads = "claims system journal"
+written_by = "claims system"
+
+[[verifiers]]
+id = "payment-reconciler"
+reads = "bank payment and return file"
+written_by = "payments bank"
+
+[human_gate]
+label = "adjuster desk"
+promise_minutes = 120
+cases = ["payment above $2,500", "any denial or reduction",
+         "fraud signal", "payee change (72-hour cooling period)"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "denial-reasons"
+rule = "a denial carries a person's written reasons"
+plane = "control"
+enforced_by = "policy engine refuses a model-issued denial"
+
+[[obligations]]
+id = "fraud-signal"
+rule = "a fraud signal is evidence for a person, not a reason to deny"
+plane = "control"
+enforced_by = "signal routes to the adjuster desk only"
+
+[[obligations]]
+id = "payee"
+rule = "payee change: call-back to the number on file, 72-hour hold"
+plane = "control"
+enforced_by = "executor pays only the payee of record"
+
+[[obligations]]
+id = "file"
+rule = "claim file kept complete for the regulator's market review"
+plane = "trail"
+enforced_by = "trail retention"
+
+[requirements]
+A5 = { answer = "the payments bank takes a key; the claims system rejects a repeat claim id", source = "doc:integration-list" }
+A6 = { answer = "policy read, coverage read, estimate read, photo store", source = "doc:tool-list" }
+C4 = { answer = "14 steps, $1.50 of model spend, 15 minutes, or the desk", source = "doc:loop-limits" }
+C5 = { answer = "claims on-call, three tiers, under 2 minutes", source = "doc:runbook" }
+C6 = { answer = "written reasons for denial, payee controls, claim file rules", source = "doc:obligations" }
+K1 = { answer = "policy in force on the loss date, coverages, deductible, estimate", source = "doc:context-plan" }
+K2 = { answer = "policy status at proposal time; estimate at most 7 days old", source = "doc:context-plan" }
+K3 = { answer = "claimant messages, photos, repair shop emails", source = "doc:threat-list" }
+K4 = { answer = "claim history; the adjuster corrects it", source = "doc:context-plan" }
+T1 = { answer = "who reported, what the waterfall computed, who paid, what cleared", source = "doc:obligations" }
+T4 = { answer = "per the claims record schedule; audit and examiners read it", source = "doc:obligations" }
+O1 = { answer = "cost per verified claim action; cycle time to payment", source = "doc:claims-baseline" }
+O2 = { answer = "about 700 claims a day; a hail day brings two weeks in 12 hours", source = "doc:claims-baseline" }
+O3 = { answer = "$68 per claim handled by an adjuster; about $10 on the agent path", source = "doc:claims-baseline" }
+O4 = { answer = "a wrong payment costs its amount; a wrong denial costs a complaint", source = "doc:claims-baseline" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 260000
+low = 220000
+high = 300000
+unit = "claims a year"
+assumption = "auto and home claims at last year's rate"
+source = "doc:claims-baseline (head of claims)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 15
+low = 6
+high = 30
+unit = "average days"
+assumption = "a hail or wind event brings two weeks of claims in one day"
+source = "doc:cat-events-2025 (adjuster lead)"
+
+[[estimate]]
+name = "window_hours"
+value = 12
+low = 8
+high = 24
+unit = "hours"
+assumption = "first notices arrive over the twelve hours after the event"
+source = "doc:cat-events-2025 (adjuster lead)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 9
+low = 6
+high = 14
+unit = "model calls"
+assumption = "intake, coverage, photos, waterfall, and the message"
+source = "doc:shadow-traces (claims architect)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 7
+low = 5
+high = 10
+unit = "tool calls"
+assumption = "policy, coverage, estimate, photos, and writes"
+source = "doc:shadow-traces (claims architect)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.45
+low = 0.30
+high = 0.60
+unit = "of claims"
+assumption = "large payments, denials, and fraud signals reach an adjuster"
+source = "doc:claims-baseline (adjuster lead)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 6
+low = 4
+high = 10
+unit = "per person-hour"
+assumption = "an adjuster clears a summarized claim in about ten minutes"
+source = "doc:claims-baseline (adjuster lead)"
+
+[decision]
+id = "payment-amount"
+question = "Who computes the payment amount?"
+criteria = ["same claim, same amount", "explainable to the claimant",
+            "the model never sets money", "build time"]
+chosen = "deterministic waterfall"
+owner = "finance controller"
+options = [
+  { name = "deterministic waterfall", scores = [2, 2, 2, 1], why_not = "" },
+  { name = "model proposes the amount", scores = [0, 1, 0, 2], why_not = "two runs, two amounts" },
+  { name = "adjuster for every payment", scores = [1, 2, 2, 2], why_not = "a hail day waits a week for a windshield" },
+]
+
+[deep_dive]
+id = "payee-change"
+component = "payee of record"
+owner = "special investigations lead"
+contract = "a payment goes only to the payee of record a cooling period old"
+numbers = ["est:gate_items_per_hour"]
+test = "send a new bank account in the newest email; count payments that move"
+failure_modes = [
+  { mode = "new account in an email", detect = "account differs from the record", contain = "executor pays the record only", recover = "call-back to the number on file" },
+  { mode = "call-back to the attacker", detect = "number changed in the last 30 days", contain = "hold 72 hours; second channel", recover = "adjuster verifies in person or by mail" },
+  { mode = "photo reused from another claim", detect = "similarity above threshold", contain = "evidence to the adjuster; no denial", recover = "special investigations review" },
+]
+
+[record]
+id = "R-CLM-1"
+title = "The waterfall computes the money; the model explains it"
+context = "a hail day brings two weeks of claims and a queue of small payments"
+options = ["deterministic waterfall", "model proposes the amount", "adjuster for every payment"]
+decision = "payments up to $2,500 are computed by the waterfall and paid alone"
+consequences = "a claim the waterfall cannot place goes to an adjuster"
+reverse_if = "payment error passes 0.5% or complaints on paid claims double"
+evidence = ["dec:payment-amount", "dive:payee-change", "est:gate_items_per_hour"]
+owner = "head of claims"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits a typed claim action; the waterfall sets amounts", owner = "claims architect", evidence = ["node:loop", "dec:payment-amount"] }
+G2 = { answer = "the policy engine grants by amount, coverage, and payee age", owner = "claims counsel", evidence = ["node:policy"] }
+G3 = { answer = "one key per payment; one claim id per loss", owner = "claims architect", evidence = ["req:A5"] }
+G4 = { answer = "reconcilers read the claims journal and the bank's return file", owner = "finance controller", evidence = ["node:payment-reconciler", "node:claims-reconciler"] }
+G5 = { answer = "cost per verified action and days to payment", owner = "head of claims", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 260000
+agent_share = 0.30
+calls_per_case = 9
+in_tokens = 9000
+out_tokens = 600
+cached_share = 0.5
+fees_per_case = 0.35
+platform_month = 30000
+verify_per_case = 0.05
+approval_share = 0.10
+approval_min = 10.0
+handoff_share = 0.35
+pickup_min = 8.0
+error_rate = 0.004
+rework_min = 45.0
+repeat_share = 0.08
+repeat_min = 8.0
+verified_rate = 0.99
+person_cost = 68.00
+build_usd = 2800000

@@ -1,0 +1,269 @@
+# Bank payments and card-dispute agent. An illustrative composite: a
+# regional bank in Richmond, as card issuer and account holder's bank.
+# Card-network rules as of the research note verified 2026-11-02;
+# Regulation E 1005.11 verified 2026-11-09. Inputs are stated
+# assumptions with named sources, not measurements.
+
+[design]
+id = "bank-payments"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "bank"
+org = "a regional bank in Richmond"
+author = "payments architect"
+owner = "head of payments operations"
+title = "Payments agent: transfers, payees, and card disputes"
+summary = "Moves money between known accounts; files card disputes"
+out_of_scope = "wires abroad, business accounts, loans, account opening"
+customer = "account holder"
+knowledge = "accounts, payees, card transactions, network rules table"
+people = ["head of payments operations", "payments architect",
+          "disputes lead", "fraud lead", "compliance officer",
+          "core banking lead"]
+
+[executor]
+label = "payment executor"
+writes = ["execution log"]
+
+[[effects]]
+name = "transfer"
+label = "transfer to an existing payee"
+system = "core banking"
+limit_usd = 1000
+ladder = [[1000, "notify"], [10000, "approve"]]
+tier = "notify"
+undo = "recall request; not guaranteed once the payment settles"
+verifier = "ledger-reconciler"
+
+[[effects]]
+name = "dispute"
+label = "card dispute filed with the network"
+system = "card network gateway"
+limit_usd = 500
+ladder = [[500, "act"], [5000, "approve"]]
+tier = "act"
+undo = "withdrawn before the merchant responds"
+verifier = "dispute-reconciler"
+
+[[effects]]
+name = "provisional_credit"
+label = "provisional credit while a dispute is open"
+system = "core banking"
+limit_usd = 500
+ladder = [[500, "act"], [5000, "approve"]]
+tier = "act"
+undo = "reversed with notice if the dispute fails"
+verifier = "ledger-reconciler"
+
+[[effects]]
+name = "new_payee"
+label = "add a new payee or change a payee's account"
+system = "core banking"
+tier = "never"
+undo = "none once money leaves"
+reserved = "payee-change fraud; added by the customer in the app"
+
+[[effects]]
+name = "dispute_denial"
+label = "deny a customer's error claim"
+system = "core banking"
+tier = "suggest"
+undo = "reopened on appeal"
+reserved = "an error claim's result is a person's, with reasons"
+verifier = "ledger-reconciler"
+
+[[verifiers]]
+id = "ledger-reconciler"
+reads = "core ledger posting file"
+written_by = "core banking"
+
+[[verifiers]]
+id = "dispute-reconciler"
+reads = "network case status file"
+written_by = "card network gateway"
+
+[human_gate]
+label = "disputes desk"
+promise_minutes = 240
+cases = ["transfer above $1,000", "dispute above $500",
+         "a claim the rules table cannot place", "any denial"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "reg-e"
+rule = "error claim: 10 business days, or 45 days with provisional credit"
+plane = "control"
+enforced_by = "dispute clock in the policy engine"
+
+[[obligations]]
+id = "network-rules"
+rule = "reason code, time limit, waiting period, and evidence per network"
+plane = "control"
+enforced_by = "rules table checked before a filing permission"
+
+[[obligations]]
+id = "payee"
+rule = "a new payee is authenticated out of band, by the customer"
+plane = "control"
+enforced_by = "executor refuses any payee not on file a day"
+
+[[obligations]]
+id = "evidence"
+rule = "dispute and transfer evidence kept for examiners"
+plane = "trail"
+enforced_by = "trail retention"
+
+[requirements]
+A5 = { answer = "core banking takes a key; the network gateway rejects a repeat case id", source = "doc:integration-list" }
+A6 = { answer = "balances, transactions, payees, rules table, case status", source = "doc:tool-list" }
+C4 = { answer = "10 steps, $0.75 of model spend, 6 minutes, or the desk", source = "doc:loop-limits" }
+C5 = { answer = "payments on-call, three tiers, under 90 seconds", source = "doc:runbook" }
+C6 = { answer = "Regulation E error resolution, card-network rules, payee fraud controls", source = "doc:obligations" }
+K1 = { answer = "the transaction, its dates, the credit receipt, prior disputes", source = "doc:context-plan" }
+K2 = { answer = "balance at proposal time; rules table on version", source = "doc:context-plan" }
+K3 = { answer = "customer messages, merchant emails, uploaded receipts", source = "doc:threat-list" }
+K4 = { answer = "dispute history only; the disputes desk corrects it", source = "doc:context-plan" }
+T1 = { answer = "who asked, which rule allowed it, what posted, what the network holds", source = "doc:obligations" }
+T4 = { answer = "per the bank's record schedule; examiners and audit read it", source = "doc:obligations" }
+O1 = { answer = "cost per verified payment or dispute; disputes won on time", source = "doc:payments-baseline" }
+O2 = { answer = "about 8,200 contacts a day; a merchant breach brings four days in ten hours", source = "doc:payments-baseline" }
+O3 = { answer = "$11.20 a contact by a person; about $2 on the agent path", source = "doc:payments-baseline" }
+O4 = { answer = "a wrong transfer costs its amount; a late dispute costs the claim", source = "doc:payments-baseline" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 3000000
+low = 2600000
+high = 3400000
+unit = "contacts a year"
+assumption = "payment and dispute contacts at last year's rate"
+source = "doc:payments-baseline (head of payments operations)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 4
+low = 2
+high = 8
+unit = "average days"
+assumption = "a merchant breach brings four days of disputes in one window"
+source = "doc:disputes-2025 (disputes lead)"
+
+[[estimate]]
+name = "window_hours"
+value = 10
+low = 6
+high = 14
+unit = "hours"
+assumption = "a breach day's contacts arrive over a working day"
+source = "doc:disputes-2025 (disputes lead)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 6
+low = 4
+high = 10
+unit = "model calls"
+assumption = "about six model calls per contact in shadow traces"
+source = "doc:shadow-traces (payments architect)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 6
+low = 4
+high = 9
+unit = "tool calls"
+assumption = "transactions, payee, rules table, and one write"
+source = "doc:shadow-traces (payments architect)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.15
+low = 0.08
+high = 0.30
+unit = "of contacts"
+assumption = "large transfers, large disputes, unplaced claims, denials"
+source = "doc:disputes-2025 (disputes lead)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 12
+low = 8
+high = 20
+unit = "per person-hour"
+assumption = "a dispute analyst clears one case in about five minutes"
+source = "doc:disputes-2025 (disputes lead)"
+
+[decision]
+id = "rules-placement"
+question = "Where do the card-network rules sit?"
+criteria = ["a late filing is impossible", "rules change without a release",
+            "the model never decides eligibility", "build time"]
+chosen = "rules table in the permission step"
+owner = "compliance officer"
+options = [
+  { name = "rules table in the permission step", scores = [2, 2, 2, 1], why_not = "" },
+  { name = "rules in the prompt", scores = [0, 1, 0, 2], why_not = "a time limit in a prompt is a suggestion" },
+  { name = "analyst files every dispute", scores = [1, 2, 2, 2], why_not = "the queue misses the deadlines it exists for" },
+]
+
+[deep_dive]
+id = "dispute-filing"
+component = "dispute filing permission"
+owner = "disputes lead"
+contract = "no filing outside the network's limit, waiting period, or evidence rule"
+numbers = ["est:gate_items_per_hour", "est:reviewers_needed"]
+test = "file the year's disputes through the table; count late or early"
+failure_modes = [
+  { mode = "filed too early", detect = "credit-not-processed claim before the waiting period", contain = "table refuses; clock shows the date", recover = "file on the first allowed day" },
+  { mode = "filed too late", detect = "days since the transaction past the limit", contain = "table refuses; desk tells the customer why", recover = "goodwill decision by a person" },
+  { mode = "double credit", detect = "merchant credit and dispute credit both post", contain = "ledger reconciler flags the pair", recover = "reverse one with notice" },
+]
+
+[record]
+id = "R-BNK-1"
+title = "Card-network rules are a table in the permission step"
+context = "a late or early filing loses the claim and the customer's money"
+options = ["rules table in the permission step", "rules in the prompt", "analyst files every dispute"]
+decision = "the policy engine grants a filing only when the rules table passes"
+consequences = "a rules change is a signed table change, not a prompt edit"
+reverse_if = "the table refuses over 3% of filings the desk later files"
+evidence = ["dec:rules-placement", "dive:dispute-filing", "node:policy"]
+owner = "compliance officer"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits a typed transfer or dispute, or refuses", owner = "payments architect", evidence = ["node:loop"] }
+G2 = { answer = "the policy engine grants by amount, payee age, and rules table", owner = "compliance officer", evidence = ["node:policy", "dec:rules-placement"] }
+G3 = { answer = "a key per transfer; one case id per dispute", owner = "core banking lead", evidence = ["req:A5"] }
+G4 = { answer = "reconcilers read the posting file and the network's case file", owner = "disputes lead", evidence = ["node:ledger-reconciler", "node:dispute-reconciler"] }
+G5 = { answer = "cost per verified outcome and disputes filed on time", owner = "head of payments operations", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 3000000
+agent_share = 0.35
+calls_per_case = 6
+in_tokens = 6500
+out_tokens = 400
+cached_share = 0.6
+fees_per_case = 0.08
+platform_month = 42000
+verify_per_case = 0.03
+approval_share = 0.05
+approval_min = 5.0
+handoff_share = 0.18
+pickup_min = 4.0
+error_rate = 0.002
+rework_min = 30.0
+repeat_share = 0.05
+repeat_min = 7.0
+verified_rate = 0.994
+person_cost = 11.20
+build_usd = 3200000

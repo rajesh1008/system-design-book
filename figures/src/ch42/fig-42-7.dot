@@ -1,0 +1,28 @@
+// Figure 42.7  The design after review: points transfer v2
+// Reading order: top to bottom. The desk approves; the gateway permits
+// under transfers-v1. The assistant proposes once, with the permit id
+// as the key, and stops. The ledger service holds points and posts to
+// the partner. A reconciler that did not act matches the partner's
+// daily statement to the permission log, and sends anything unposted
+// at 72 hours to the desk. From review/designs/points-transfer-v2.toml.
+digraph after {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  d [label="Loyalty desk", class="org human"];
+  g [label="Gateway\ntransfers-v1", class="policy gate"];
+  a [label="Points assistant\nstops at submitted", class="ops"];
+  l [label="Ledger transfer\nservice", class="ops"];
+  p [label="Partner", class="ops external"];
+  s [label="Daily statement", class="ops external"];
+  pl [label="Permission log", class="verified store"];
+  r [label="Transfer\nreconciler", class="verified"];
+  d -> g [class="control", label="approve"];
+  g -> a [class="control", label="permit"];
+  a -> l [class="emphasis", label="key = permit id"];
+  l -> p [class="async"];
+  p -> s [class="data"];
+  g -> pl [class="trail"];
+  s -> r [class="verified", label="posted"];
+  pl -> r [class="data"];
+  r -> d [class="async", label="unposted\nat 72 h", constraint=false];
+}

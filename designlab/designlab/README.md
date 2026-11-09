@@ -50,6 +50,8 @@ the key is read from the environment only.
 | `economics/` | 38 | The economics in operation: the July invoice by identity and the storm inside it, cost per verified outcome by kind of change, the worst case before the first call, spend policies at the model gateway with unknown usage settled at its worst case, the July 25 storm replayed in dollars, chargeback by identity, and the economics card |
 | `release/` | 39 | Change and release: the six-kind bundle and hash, the rebuilt log (23 releases, two rolled back), regression as a gate with the split-payment adapter, what-if over recorded runs, canaries by task type on verified outcomes, rollback with runs in flight, shadow and fixed-horizon A/B, and the change card |
 | `agentplatform/` | 40 | The agent platform: the project control plane of August 10 and why loyalty could not join it, the manifest template and its twelve problems, servicing and the desk extracted onto manifests, loyalty on the golden path, six conformance tests (K1 to K6) with the old ledger key failing K2, evidence-chain coverage, the two onboarding logs, platform economics and the charge table, and the platform card (named `agentplatform` because `platform` is a standard-library module) |
+| `review/` | 42 | Architecture reviews: the production checklist by plane (sixteen items, executable over a design submission), the five gap questions, the verdict rule (a failing shape item declines, a failing value item changes), the decision record and its validator, the record store with its revisit queue, the review log, and the review card |
+| `designs/` | 43 | Worked architectures: six customer-facing designs as data (telecom care, Lakeshore rebooking and refunds, bank payments, insurer claims, lender collections), templates that expand a design into Chapter 5's eight artifacts, a linter that runs `method.lint` plus eight worked rules (independent verifier, tier by amount, person gate, customer states, hand-off, obligations, economics), economics in seven lines with payback, the pattern table, faults for failure injection, and the worked card; extensible with `register` and `register_rule` |
 
 ## Install
 
@@ -114,6 +116,8 @@ From this directory:
     bash ch38/run.sh               # Chapter 38: unit cost, budgets, spend policies, the bill
     bash ch39/run.sh               # Chapter 39: release bundle, canary, rollback, change card
     bash ch40/run.sh               # Chapter 40: the platform, paved road, conformance
+    bash ch42/run.sh               # Chapter 42: checklist, verdict, decision records
+    bash ch43/run.sh               # Chapter 43: six worked designs, linted, priced
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

@@ -1,0 +1,208 @@
+# Loyalty's points-transfer design as resubmitted for the review of
+# Tuesday, September 8, 2026. Lakeshore figures are illustrative.
+
+[design]
+name = "points-transfer-v2"
+title = "Transfer member points to a partner airline program"
+use_case = "loyalty"
+owner = "Arjun Mehta"
+submitted = "2026-09-04"
+review = "2026-09-08"
+decision_key = "usecase.transfer"
+model = "claude-sonnet-5-5"
+autonomy = "act with approval"
+
+[[diagram.nodes]]
+id = "member"
+kind = "person"
+plane = "action"
+label = "member"
+
+[[diagram.nodes]]
+id = "agent"
+kind = "loop"
+plane = "action"
+label = "points assistant"
+
+[[diagram.nodes]]
+id = "model"
+kind = "model"
+plane = "action"
+label = "model"
+
+[[diagram.nodes]]
+id = "gateway"
+kind = "gate"
+plane = "control"
+label = "gateway, transfers-v1"
+
+[[diagram.nodes]]
+id = "desk"
+kind = "person"
+plane = "control"
+label = "loyalty desk"
+
+[[diagram.nodes]]
+id = "ledger"
+kind = "tool"
+plane = "action"
+label = "ledger transfer service"
+
+[[diagram.nodes]]
+id = "partner"
+kind = "external"
+plane = "action"
+label = "partner transfer API"
+
+[[diagram.nodes]]
+id = "statement"
+kind = "external"
+plane = "trail"
+label = "partner daily statement"
+
+[[diagram.nodes]]
+id = "permlog"
+kind = "store"
+plane = "trail"
+label = "permission log"
+
+[[diagram.nodes]]
+id = "recon"
+kind = "verifier"
+plane = "trail"
+label = "transfer reconciler"
+
+[[diagram.edges]]
+from = "member"
+to = "agent"
+kind = "data"
+label = "transfer request"
+
+[[diagram.edges]]
+from = "agent"
+to = "model"
+kind = "control"
+label = "plan"
+
+[[diagram.edges]]
+from = "gateway"
+to = "agent"
+kind = "control"
+label = "permit after desk approval"
+
+[[diagram.edges]]
+from = "desk"
+to = "gateway"
+kind = "control"
+label = "approve"
+
+[[diagram.edges]]
+from = "agent"
+to = "ledger"
+kind = "effect"
+label = "transfer, key = permit id"
+
+[[diagram.edges]]
+from = "ledger"
+to = "partner"
+kind = "async"
+label = "hold points, post miles"
+
+[[diagram.edges]]
+from = "partner"
+to = "statement"
+kind = "data"
+label = "daily file"
+
+[[diagram.edges]]
+from = "gateway"
+to = "permlog"
+kind = "trail"
+label = "permits"
+
+[[diagram.edges]]
+from = "statement"
+to = "recon"
+kind = "data"
+label = "posted lines"
+
+[[diagram.edges]]
+from = "permlog"
+to = "recon"
+kind = "data"
+label = "permits"
+
+[[diagram.edges]]
+from = "recon"
+to = "permlog"
+kind = "trail"
+label = "verified"
+
+[[diagram.edges]]
+from = "recon"
+to = "desk"
+kind = "async"
+label = "unposted at 72 h"
+
+[[loops]]
+name = "run"
+max_steps = 6
+max_minutes = 3
+max_usd = 0.10
+done = "permit and partner reference recorded"
+on_stop = "loyalty desk"
+
+[[loops]]
+name = "reconcile"
+model = false
+max_steps = 3
+max_minutes = 4320
+done = "posted line matched"
+on_stop = "loyalty desk, points held"
+
+[[effects]]
+name = "partner_transfer"
+via_gateway = true
+permit = "bundle:pb-2026.09.08"
+idempotency = "permission id"
+retry = "same key"
+limits_in = "policy"
+kill_tier_one = true
+verifier = "recon"
+
+[[facts]]
+name = "conversion_ratio"
+source = "partner rates endpoint"
+max_age_hours = 0
+stale_to_person = true
+owner = "Sofia Lindqvist"
+
+[[facts]]
+name = "member_balance"
+source = "points ledger"
+max_age_hours = 0.25
+stale_to_person = true
+owner = "ledger team"
+
+[memory]
+writes = false
+
+[outcome]
+metric = "miles posted and verified"
+counts = "verified"
+owner = ""
+
+[records]
+ids = ["RR-13"]
+
+# Conditions the board set on September 8, 2026 (DR-42.1).
+[[conditions]]
+item = "K1"
+fact = "conversion_ratio"
+max_age_hours = 24
+owner = "Sofia Lindqvist"
+
+[[conditions]]
+item = "T3"
+outcome_owner = "Sofia Lindqvist"
+owner = "Sofia Lindqvist"

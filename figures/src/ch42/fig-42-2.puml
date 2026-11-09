@@ -1,0 +1,31 @@
+@startuml
+' Figure 42.2  The decision record
+' Reading order: the review writes exactly one record. The record's
+' six parts run in order: context, options, decision, evidence,
+' consequences, revisit. At least two options, one chosen, each loser
+' with its reason. The record names an owner and a signer who is not
+' the owner, and lives in the store. From review.record.
+!include plantuml-theme.puml
+class Review <<org>>
+class Record <<evidence>> {
+  context
+  decision
+  consequences
+  revisit: date, trigger
+  owner, signer
+}
+class Option <<evidence>> {
+  chosen
+  why_not
+}
+class Evidence <<evidence>> {
+  link
+}
+class Store <<org>> {
+  due()
+}
+Review -down-> "1" Record : writes
+Record *-right-> "2..*" Option
+Record *-left-> "1..*" Evidence
+Store o-down-> "*" Record
+@enduml

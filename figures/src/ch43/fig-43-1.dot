@@ -1,0 +1,29 @@
+// Figure 43.1  The method applied six times
+// Reading order: the left column, then the right, top to bottom. Six
+// worked designs enter Chapter 5's method; each is framed, estimated,
+// and drawn (left), then gap-checked, costed, and recorded (right); the
+// book's own linter reads all six and produces the worked card. From
+// designs.demo --part method and --part card.
+digraph method {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  designs [label="Six worked designs", class="ops store"];
+  s1 [label="1 Frame the effect", class="org"];
+  s2 [label="2 Estimate", class="org"];
+  s3 [label="3 Draw the chain", class="org"];
+  s4 [label="4 Close five gaps", class="org gate"];
+  s5 [label="5 Cost it", class="org"];
+  s6 [label="6 Record the decision", class="org"];
+  lint [label="designs.lint", class="verified gate"];
+  card [label="6 designs, 6 records,\n30 gaps closed", class="evidence"];
+  designs -> s1 [class="data"];
+  designs -> s4 [class="data"];
+  s1 -> s2 -> s3 [class="control"];
+  s4 -> s5 -> s6 [class="control"];
+  s3 -> lint [class="data"];
+  s6 -> lint [class="data"];
+  lint -> card [class="verified"];
+  { rank=same; s1; s4; }
+  { rank=same; s2; s5; }
+  { rank=same; s3; s6; }
+}

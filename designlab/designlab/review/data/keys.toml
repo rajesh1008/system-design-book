@@ -1,0 +1,11 @@
+# Decision keys added to the decision-rights matrix after the signed
+# matrix of August 21, 2026 (Chapter 41). Lakeshore is illustrative.
+
+[[keys]]
+key = "usecase.transfer"
+owner = "Rachel Morgan"
+deputy = "Elena Vasquez"
+consulted = ["Owen Fletcher"]
+informed = ["Ben Carter"]
+signed = "2026-09-04"
+note = "who may authorize points leaving the ledger for a partner"

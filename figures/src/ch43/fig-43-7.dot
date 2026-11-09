@@ -1,0 +1,33 @@
+// Figure 43.7  Insurer claims: the high-level design
+// Reading order: top to bottom. The harness opens the first notice and
+// gathers the facts; a deterministic waterfall, not the model, computes
+// the amount; the policy engine pays up to $2,500 alone and sends
+// larger payments, every denial, fraud signals, and payee changes to
+// the adjuster desk; payments go only to the payee of record; two
+// reconcilers read the claims journal and the bank's return file.
+// Composite insurer, Hartford. From designs/data/insurer-claims.toml.
+digraph claims {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  cl [label="Policyholder\nor claimant", class="ops external"];
+  subgraph cluster_a { label="Action plane"; class="plane-ops";
+    loop [label="Agent harness", class="model"];
+    wf [label="Waterfall", class="ops code"];
+    ex [label="Claims executor", class="ops"];
+  }
+  subgraph cluster_c { label="Control plane"; class="plane-policy";
+    pol [label="Policy engine", class="policy gate"];
+    adj [label="Adjuster desk: over\n$2,500, denials, fraud,\npayee changes", class="policy human"];
+  }
+  bank [label="Payments bank\npayee of record", class="ops external store"];
+  subgraph cluster_t { label="Trail"; class="plane-evidence";
+    rec [label="Claims and payment\nreconcilers", class="verified gate"];
+  }
+  cl -> loop [class="control"];
+  loop -> wf [class="data"];
+  wf -> pol [label=" amount", class="control"];
+  pol -> adj [class="async"];
+  pol -> ex [label=" permission", class="emphasis"];
+  ex -> bank [class="control"];
+  bank -> rec [class="data"];
+}

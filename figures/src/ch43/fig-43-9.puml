@@ -1,0 +1,20 @@
+@startuml
+' Figure 43.9  Collections: the human gate
+' Reading order: top to bottom. A borrower's reply carries a hardship
+' signal; the agent's proposal arrives flagged; the policy engine
+' refuses it, holds every send, and hands the case summary to the
+' hardship team with a four-hour promise; only a person clears the
+' flag; the reconciler reads the delivery log and finds no send after
+' the flag. From designs/data/lender-collections.toml.
+!include plantuml-theme.puml
+participant "Agent" as A <<model>>
+participant "Policy" as P <<policy>>
+participant "Hardship" as H <<org>>
+participant "Reconciler" as R <<verified>>
+note over A $F_OPS : Reply: lost my job
+A -> P : Plan, flagged
+P -[$POLICY]> A : Refused
+P -> H : Summary, 4 hours
+H -> P : Person clears flag
+R -> P : No send after flag
+@enduml

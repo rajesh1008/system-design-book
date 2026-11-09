@@ -1,0 +1,277 @@
+# The record store: one record per review, November 2025 to
+# September 2026. Numbered DRs are summarized from their chapters;
+# RR records exist only here. Lakeshore figures are illustrative.
+
+[[records]]
+id = "R-001"
+review = "REV-01"
+title = "framework loop for the pilot only"
+date = "2025-11-14"
+owner = "Daniel Price"
+signer = "Sarah Whitfield"
+context = "design v0.1 needs a loop before durable execution exists"
+options = [
+  {name = "framework loop", chosen = true},
+  {name = "workflow engine", why_not = "eight weeks to adopt"},
+  {name = "queue and own ledger", why_not = "most build, pilot ends"},
+]
+decision = "keep the vendor framework's loop for the pilot only"
+evidence = ["designs/v0_1.toml", "decision table v0.1"]
+consequences = ["a restart can lose a pending permission"]
+revisit_date = "2026-05-14"
+revisit_trigger = "a restart loses a pending permission, or 5% share"
+status = "revisited"
+revisited_on = "2026-03-16"
+revisited_by = "Chapter 9 run store: loop reversed"
+
+[[records]]
+id = "RR-02"
+review = "REV-02"
+title = "control outside the loop on four planes"
+date = "2026-01-06"
+owner = "Daniel Price"
+signer = "Sarah Whitfield"
+context = "the December fast refund tool skipped policy"
+options = [
+  {name = "four planes, gateway holds credentials", chosen = true},
+  {name = "policy check inside each tool", why_not = "the December tool"},
+]
+decision = "every effect passes control; autonomy table in pencil"
+evidence = ["path test 2026-01-05: 0 paths skip the gateway"]
+consequences = ["one network call per action", "three engineer-weeks"]
+revisit_date = "2026-07-06"
+revisit_trigger = "a process holds its own system-of-record credential"
+status = "active"
+
+[[records]]
+id = "RR-03"
+review = "REV-03"
+title = "hotel_cancel stays with a person"
+date = "2026-01-29"
+owner = "Marcus Bell"
+signer = "Sarah Whitfield"
+context = "desk handles 41 hotel cancellations a week"
+options = [
+  {name = "keep hotel_cancel with a person", chosen = true},
+  {name = "act with approval", why_not = "verifiability zero"},
+]
+decision = "declined: no supplier record can confirm a cancel"
+evidence = ["autonomy scores 2026-01-29", "desk volume, January"]
+consequences = ["41 desk cancellations a week continue"]
+revisit_date = "2026-12-01"
+revisit_trigger = "a supplier reservation verifier and a timeout plan"
+status = "active"
+
+[[records]]
+id = "DR-22.1"
+review = "REV-04"
+title = "customer memory is governed state, never authority"
+date = "2026-05-18"
+owner = "Ben Carter"
+signer = "Sarah Whitfield"
+context = "35 sourceless notes found in customer memory"
+options = [
+  {name = "governed store with sources", chosen = true},
+  {name = "keep notes, add a filter", why_not = "a note without a source"},
+]
+decision = "memory is evidence; reads switch to the governed store"
+evidence = ["memory audit, May 2026"]
+consequences = ["rebooking reads switch in June"]
+revisit_date = "2026-11-18"
+revisit_trigger = "a memory read decides a rebooking"
+status = "revisited"
+revisited_on = "2026-06-02"
+revisited_by = "DR-24.1: supersession and retention"
+
+[[records]]
+id = "DR-25.1"
+review = "REV-05"
+title = "the harness is a versioned artifact"
+date = "2026-06-08"
+owner = "Ben Carter"
+signer = "Sarah Whitfield"
+context = "41 harness changes in five months never released"
+options = [
+  {name = "one manifest, hash at deploy", chosen = true},
+  {name = "settings outside the release", why_not = "the May 27 edit"},
+]
+decision = "harness 1.0.0 with manifest hash 6b225e5fa425"
+evidence = ["38 harness tests; rc1 failed four"]
+consequences = ["every edit goes through a release"]
+revisit_date = "2026-12-08"
+revisit_trigger = "refund state machine, second harness, or bake-off"
+status = "revisited"
+revisited_on = "2026-06-30"
+revisited_by = "DR-30.1 review: bake-off ended, kept"
+
+[[records]]
+id = "DR-26.1"
+review = "REV-06"
+title = "every tool call passes the gateway"
+date = "2026-06-15"
+owner = "Ben Carter"
+signer = "Sarah Whitfield"
+context = "loyalty's points_balance tool also wrote credits"
+options = [
+  {name = "registry and gateway for every tool", chosen = true},
+  {name = "trust each team's tools", why_not = "a read that writes"},
+]
+decision = "only reviewed tools exist; loyalty's tool split in two"
+evidence = ["registry review 2026-06-12"]
+consequences = ["one review per new tool"]
+revisit_date = "2026-12-15"
+revisit_trigger = "an agent-to-agent partner goes behind the gateway"
+status = "active"
+
+[[records]]
+id = "DR-27.1"
+review = "REV-07"
+title = "one agent by default"
+date = "2026-06-23"
+owner = "Ben Carter"
+signer = "Sarah Whitfield"
+context = "a five-agent diagram proposed for servicing"
+options = [
+  {name = "one agent; lead and leg workers by legs", chosen = true},
+  {name = "five agents", why_not = "four more handoffs to verify"},
+]
+decision = "one agent; three or more legs go to a lead with workers"
+evidence = ["topology eval, June 2026"]
+consequences = ["multi-leg routing by the booking record"]
+revisit_date = "2026-12-23"
+revisit_trigger = "single-agent verified rate falls below workers'"
+status = "active"
+
+[[records]]
+id = "DR-28.1"
+review = "REV-08"
+title = "unattended loops declare seven properties"
+date = "2026-06-29"
+owner = "Ben Carter"
+signer = "Sarah Whitfield"
+context = "fare watch and waiver watch run without a task"
+options = [
+  {name = "seven properties, linter before live", chosen = true},
+  {name = "treat loops as tasks", why_not = "no task to end them"},
+]
+decision = "loops linter passes before any loop goes live"
+evidence = ["loops linter run 2026-06-26"]
+consequences = ["two loops live; budgets per loop day"]
+revisit_date = "2026-12-29"
+revisit_trigger = "a loop spends past its day or stalls unseen"
+status = "active"
+
+[[records]]
+id = "DR-29.1"
+review = "REV-09"
+title = "the coding agent proposes, never merges"
+date = "2026-06-29"
+owner = "Ben Carter"
+signer = "Sarah Whitfield"
+context = "a coding agent asked for merge rights"
+options = [
+  {name = "propose only; sandbox per run", chosen = true},
+  {name = "auto-merge small changes", why_not = "no verifier for merge"},
+]
+decision = "code runs in a sandbox per run; a person merges"
+evidence = ["sandbox escape tests, June 2026"]
+consequences = ["review time per change stays"]
+revisit_date = "2026-12-29"
+revisit_trigger = "a class of change gets an independent verifier"
+status = "active"
+
+[[records]]
+id = "DR-30.1"
+review = "REV-10"
+title = "own the harness, rent the runtime"
+date = "2026-06-30"
+owner = "Ben Carter"
+signer = "Sarah Whitfield"
+context = "runtime bake-off, June 15 to 19, 2026"
+options = [
+  {name = "rent the session host only", chosen = true},
+  {name = "rent every provider service", why_not = "fails C1 and T2"},
+]
+decision = "runtime only; policy, memory, identity stay Lakeshore's"
+evidence = ["bake-off grid: 39 of 44", "migration test: 0 of 32 lost"]
+consequences = ["the threads adapter kept as the exit"]
+revisit_date = "2026-12-30"
+revisit_trigger = "contract renewal or a must criterion changes"
+status = "active"
+
+[[records]]
+id = "RR-11"
+review = "REV-11"
+title = "desk fare-lookup assistant goes live"
+date = "2026-07-23"
+owner = "Marcus Bell"
+signer = "Daniel Price"
+context = "desk agents look up fare rules by hand"
+options = [
+  {name = "read-only assistant, six tools", chosen = true},
+  {name = "assistant that drafts rebookings", why_not = "no verifier yet"},
+]
+decision = "approved as submitted after eleven meetings"
+evidence = ["golden set run 2026-07-21"]
+consequences = ["six tools in the registry"]
+revisit_date = "2027-01-23"
+revisit_trigger = "a desk tool asks to write"
+status = "active"
+
+[[records]]
+id = "RR-12"
+review = "REV-12"
+title = "loyalty points assistant on the golden path"
+date = "2026-08-24"
+owner = "Arjun Mehta"
+signer = "Daniel Price"
+context = "first use case onboarded by manifest"
+options = [
+  {name = "golden path, K1 to K6", chosen = true},
+  {name = "onboard by meetings", why_not = "31 days for the desk"},
+]
+decision = "approved; bundle pb-2026.08.24, credits to 5,000 points"
+evidence = ["registry findings", "golden set run", "pb-2026.08.24"]
+consequences = ["credits over 5,000 go to the loyalty desk"]
+revisit_date = "2026-11-24"
+revisit_trigger = "a credit over 5,000 points posts without the desk"
+status = "active"
+
+[[records]]
+id = "RR-13"
+review = "REV-13"
+title = "points transfer v1 declined"
+date = "2026-09-03"
+owner = "Daniel Price"
+signer = "Sarah Whitfield"
+context = "loyalty asks to transfer points to a partner program"
+options = [
+  {name = "decline; resubmit with a stop and a verifier", chosen = true},
+  {name = "approve with conditions", why_not = "the fix is a new drawing"},
+]
+decision = "declined: no stop condition, the actor verifies"
+evidence = ["checklist run 2026-09-03: 8 of 16"]
+consequences = ["partner launch date moves"]
+revisit_date = "2027-03-03"
+revisit_trigger = "partner terms change, or a v1-shaped resubmission"
+status = "active"
+
+[[records]]
+id = "DR-42.1"
+review = "REV-14"
+title = "points transfer v2, approved with changes"
+date = "2026-09-08"
+owner = "Daniel Price"
+signer = "Sarah Whitfield"
+context = "v1 declined September 3; v2 adds a stop and a reconciler"
+options = [
+  {name = "approve with two changes; shadow first", chosen = true},
+  {name = "approve as submitted", why_not = "K1 and T3 fail"},
+  {name = "decline again", why_not = "every shape item passes"},
+]
+decision = "approved with changes; act with approval, shadow first"
+evidence = ["checklist run 2026-09-08: 14 of 16", "keys.toml"]
+consequences = ["desk approves each transfer", "launch after shadow"]
+revisit_date = "2026-12-08"
+revisit_trigger = "1,000 verified transfers, or one unposted at 72 h"
+status = "active"

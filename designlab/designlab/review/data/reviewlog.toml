@@ -1,0 +1,158 @@
+# The review log, kept by Owen Fletcher's team. One row per design
+# that acts, reviewed November 2025 to September 2026. For the two
+# reviews before April, kill_switch counts the gateway's hold flag;
+# Chapter 12 split it into three tiers. Lakeshore is illustrative.
+
+[[reviews]]
+id = "REV-01"
+date = "2025-11-14"
+design = "itinerary change agent v0.1"
+team = "platform"
+outcome = "change"
+record = "R-001"
+shipped = true
+kill_switch = true
+minutes = 55
+
+[[reviews]]
+id = "REV-02"
+date = "2026-01-06"
+design = "four planes and autonomy table"
+team = "platform"
+outcome = "change"
+record = "RR-02"
+shipped = true
+kill_switch = true
+minutes = 60
+
+[[reviews]]
+id = "REV-03"
+date = "2026-01-29"
+design = "hotel_cancel to act with approval"
+team = "operations"
+outcome = "decline"
+record = "RR-03"
+shipped = false
+kill_switch = false
+minutes = 40
+
+[[reviews]]
+id = "REV-04"
+date = "2026-05-18"
+design = "governed customer memory"
+team = "platform"
+outcome = "change"
+record = "DR-22.1"
+shipped = true
+kill_switch = true
+minutes = 45
+
+[[reviews]]
+id = "REV-05"
+date = "2026-06-08"
+design = "servicing harness 1.0.0"
+team = "platform"
+outcome = "change"
+record = "DR-25.1"
+shipped = true
+kill_switch = true
+minutes = 50
+
+[[reviews]]
+id = "REV-06"
+date = "2026-06-15"
+design = "tool registry and gateway"
+team = "platform"
+outcome = "change"
+record = "DR-26.1"
+shipped = true
+kill_switch = true
+minutes = 45
+
+[[reviews]]
+id = "REV-07"
+date = "2026-06-23"
+design = "servicing topology"
+team = "platform"
+outcome = "change"
+record = "DR-27.1"
+shipped = true
+kill_switch = true
+minutes = 60
+
+[[reviews]]
+id = "REV-08"
+date = "2026-06-29"
+design = "unattended watch loops"
+team = "platform"
+outcome = "change"
+record = "DR-28.1"
+shipped = true
+kill_switch = true
+minutes = 50
+
+[[reviews]]
+id = "REV-09"
+date = "2026-06-29"
+design = "coding agent"
+team = "platform"
+outcome = "change"
+record = "DR-29.1"
+shipped = true
+kill_switch = true
+minutes = 40
+
+[[reviews]]
+id = "REV-10"
+date = "2026-06-30"
+design = "hosted runtime"
+team = "platform"
+outcome = "approve"
+record = "DR-30.1"
+shipped = true
+kill_switch = true
+minutes = 45
+
+[[reviews]]
+id = "REV-11"
+date = "2026-07-23"
+design = "desk fare-lookup assistant"
+team = "desk"
+outcome = "approve"
+record = "RR-11"
+shipped = true
+kill_switch = true
+minutes = 50
+
+[[reviews]]
+id = "REV-12"
+date = "2026-08-24"
+design = "loyalty points assistant"
+team = "loyalty"
+outcome = "approve"
+record = "RR-12"
+shipped = true
+kill_switch = true
+minutes = 40
+
+[[reviews]]
+id = "REV-13"
+date = "2026-09-03"
+design = "points transfer v1"
+team = "loyalty"
+outcome = "decline"
+record = "RR-13"
+shipped = false
+kill_switch = false
+minutes = 58
+
+[[reviews]]
+id = "REV-14"
+date = "2026-09-08"
+design = "points transfer v2"
+team = "loyalty"
+outcome = "change"
+record = "DR-42.1"
+shipped = false
+kill_switch = true
+minutes = 50

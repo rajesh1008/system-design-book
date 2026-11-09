@@ -1,0 +1,35 @@
+// Figure 43.8  Lender collections: the high-level design
+// Reading order: top to bottom. The harness drafts a reminder or a
+// plan; the policy engine checks the contact count read from the
+// message platform, the hour at the borrower's location, the medium,
+// the protected flag, and the signed plan matrix; protected cases go
+// to the hardship team; two reconcilers read the delivery log and the
+// payment file. Composite lender, Louisville. From
+// designs/data/lender-collections.toml.
+digraph collections {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  b [label="Borrower", class="ops external"];
+  subgraph cluster_a { label="Action plane"; class="plane-ops";
+    loop [label="Agent harness", class="model"];
+    ex [label="Collections executor", class="ops"];
+  }
+  subgraph cluster_c { label="Control plane"; class="plane-policy";
+    pol [label="Policy engine\ncount, hour, medium,\nflag, plan matrix", class="policy gate"];
+    hard [label="Hardship team\n4 hours", class="policy human"];
+  }
+  msg [label="Message platform", class="ops external store"];
+  svc [label="Loan servicing", class="ops external store"];
+  subgraph cluster_t { label="Trail"; class="plane-evidence";
+    rec [label="Contact and payment\nreconcilers", class="verified gate"];
+  }
+  b -> loop [class="control"];
+  loop -> pol [label=" proposal", class="control"];
+  msg -> pol [label=" count", class="data"];
+  pol -> hard [label=" protected", class="async"];
+  pol -> ex [label=" permission", class="emphasis"];
+  ex -> msg [class="control"];
+  ex -> svc [class="control"];
+  msg -> rec [class="data"];
+  svc -> rec [class="data"];
+}

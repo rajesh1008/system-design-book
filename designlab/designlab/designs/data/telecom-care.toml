@@ -1,0 +1,265 @@
+# Telecom customer care agent: bill credits, plan changes, outage
+# credits, and the household view. An illustrative composite: a
+# regional mobile and broadband carrier in Kansas City. Inputs are
+# stated assumptions with named sources, not measurements.
+
+[design]
+id = "telecom-care"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "telecom"
+org = "a regional carrier in Kansas City"
+author = "care architect"
+owner = "head of care"
+title = "Care agent: credits, plan changes, and the household view"
+summary = "Answers billing and plan contacts; credits, changes plans"
+out_of_scope = "SIM swaps, number ports, device financing, business lines"
+customer = "account holder or line user"
+knowledge = "accounts, lines, plans, outage records"
+people = ["head of care", "care architect", "billing operations lead",
+          "network operations lead", "privacy counsel", "fraud lead"]
+
+[executor]
+label = "care executor"
+writes = ["execution log"]
+
+[[effects]]
+name = "bill_credit"
+label = "bill credit"
+system = "billing system"
+limit_usd = 50
+ladder = [[50, "act"], [200, "approve"]]
+tier = "act"
+undo = "reversed on the next bill"
+verifier = "billing-reconciler"
+
+[[effects]]
+name = "outage_credit"
+label = "outage credit by rule"
+system = "billing system"
+limit_usd = 30
+ladder = [[30, "act"]]
+tier = "act"
+undo = "reversed on the next bill"
+verifier = "billing-reconciler"
+
+[[effects]]
+name = "plan_change"
+label = "plan change on the caller's own line"
+system = "provisioning"
+tier = "notify"
+undo = "revert within 14 days at no charge"
+verifier = "provisioning-reconciler"
+
+[[effects]]
+name = "other_line_change"
+label = "change to another member's line"
+system = "provisioning"
+tier = "suggest"
+undo = "revert within 14 days"
+reserved = "account holder consent"
+verifier = "provisioning-reconciler"
+
+[[effects]]
+name = "sim_swap"
+label = "SIM swap or number port"
+system = "provisioning"
+tier = "never"
+undo = "none once the number moves"
+reserved = "takeover risk; identity checked out of band"
+
+[[verifiers]]
+id = "billing-reconciler"
+reads = "billing ledger export"
+written_by = "billing system"
+
+[[verifiers]]
+id = "provisioning-reconciler"
+reads = "network provisioning record"
+written_by = "provisioning"
+
+[human_gate]
+label = "care desk"
+promise_minutes = 30
+cases = ["credit above $50", "another member's line", "SIM or port"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[surge]
+effect = "outage_credit"
+rule = "outage credits switch on from the outage record, per line, once"
+signer = "network operations lead"
+expires_hours = 24
+budget_owner = "head of care"
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "household"
+rule = "a line user sees their own line, not the account"
+plane = "control"
+enforced_by = "identity scoped to the line"
+
+[[obligations]]
+id = "price-notice"
+rule = "a plan's new price is shown before the change"
+plane = "control"
+enforced_by = "proposal schema requires the quote"
+
+[[obligations]]
+id = "credit-evidence"
+rule = "credit evidence kept through the billing dispute window"
+plane = "trail"
+enforced_by = "trail retention"
+
+[requirements]
+A5 = { answer = "billing takes a key; provisioning rejects a repeat order id", source = "doc:integration-list" }
+A6 = { answer = "account read, plan catalog, outage map, usage", source = "doc:tool-list" }
+C4 = { answer = "10 steps, $0.50 of model spend, 8 minutes, or the desk", source = "doc:loop-limits" }
+C5 = { answer = "network operations on-call, three tiers, under 2 minutes", source = "doc:runbook" }
+C6 = { answer = "household privacy, price notice, billing dispute rights", source = "doc:obligations" }
+K1 = { answer = "who is calling, which line, the plan, the bill, open outages", source = "doc:context-plan" }
+K2 = { answer = "outage record 5 minutes; balance 1 hour; plans on version", source = "doc:context-plan" }
+K3 = { answer = "chat text, email, uploaded bill photos", source = "doc:threat-list" }
+K4 = { answer = "contact history only; the desk corrects it", source = "doc:context-plan" }
+T1 = { answer = "who asked, for which line, who permitted, what billed", source = "doc:obligations" }
+T4 = { answer = "two years; care, billing, and privacy roles read it", source = "doc:obligations" }
+O1 = { answer = "cost per verified contact, owned by the head of care", source = "doc:care-baseline" }
+O2 = { answer = "about 12,000 contacts a day; an outage day is six days in 8 hours", source = "doc:care-baseline" }
+O3 = { answer = "$7.40 a contact by phone; under $2 on the agent path", source = "doc:care-baseline" }
+O4 = { answer = "a wrong credit costs its amount; a wrong line change costs a complaint", source = "doc:care-baseline" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 4400000
+low = 3800000
+high = 5000000
+unit = "contacts a year"
+assumption = "billing and plan contacts at last year's rate"
+source = "doc:care-baseline (billing operations lead)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 6
+low = 3
+high = 9
+unit = "average days"
+assumption = "a regional outage brings six days of contacts in one window"
+source = "doc:outage-reports-2025 (network operations lead)"
+
+[[estimate]]
+name = "window_hours"
+value = 8
+low = 4
+high = 12
+unit = "hours"
+assumption = "the outage window lasts a working day"
+source = "doc:outage-reports-2025 (network operations lead)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 7
+low = 5
+high = 12
+unit = "model calls"
+assumption = "about seven model calls per contact in shadow traces"
+source = "doc:shadow-traces (care architect)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 5
+low = 3
+high = 8
+unit = "tool calls"
+assumption = "account, line, plan, outage, and one write"
+source = "doc:shadow-traces (care architect)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.06
+low = 0.03
+high = 0.12
+unit = "of contacts"
+assumption = "credits above $50 and other members' lines"
+source = "doc:care-baseline (billing operations lead)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 25
+low = 15
+high = 35
+unit = "per person-hour"
+assumption = "a desk agent clears a credit or consent case in about 2.4 minutes"
+source = "doc:desk-times (head of care)"
+
+[decision]
+id = "household-view"
+question = "Where does the household view live?"
+criteria = ["a line user cannot see the account", "no rule in the prompt",
+            "one agent per contact", "build time"]
+chosen = "identity scoped to the line"
+owner = "privacy counsel"
+options = [
+  { name = "identity scoped to the line", scores = [2, 2, 2, 1], why_not = "" },
+  { name = "account identity, rule in prompt", scores = [0, 0, 2, 2], why_not = "a limit in the prompt is not a permission" },
+  { name = "one agent per line", scores = [2, 2, 0, 0], why_not = "two agents answer one bill two ways" },
+]
+
+[deep_dive]
+id = "outage-credits"
+component = "outage credit rule"
+owner = "network operations lead"
+contract = "each affected line gets one credit, computed from the outage record"
+numbers = ["est:peak_per_hour", "est:gate_items_per_hour"]
+test = "replay last year's largest outage; count credits per line"
+failure_modes = [
+  { mode = "credit asked for in chat", detect = "credit not tied to an outage id", contain = "policy engine refuses", recover = "send to the desk with the outage map" },
+  { mode = "two credits for one outage", detect = "line and outage id seen twice", contain = "billing key refuses the second", recover = "reverse on the next bill" },
+  { mode = "outage record late", detect = "record older than 5 minutes", contain = "say received, credit later", recover = "batch run when the record lands" },
+]
+
+[record]
+id = "R-TEL-1"
+title = "Outage credits come from the outage record, not the conversation"
+context = "an outage day brings six days of contacts in eight hours"
+options = ["rule over the outage record", "agent judgment per contact"]
+decision = "a deterministic rule credits each affected line once"
+consequences = "a caller cannot talk the credit up; some wait for the record"
+reverse_if = "over 2% of outage contacts end at the desk for credit disputes"
+evidence = ["dive:outage-credits", "est:peak_per_hour", "node:policy"]
+owner = "head of care"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits a typed credit or plan proposal, or refuses", owner = "care architect", evidence = ["node:loop"] }
+G2 = { answer = "the policy engine grants by amount and line scope", owner = "privacy counsel", evidence = ["node:policy", "dec:household-view"] }
+G3 = { answer = "billing key per proposal; provisioning order id per change", owner = "care architect", evidence = ["req:A5"] }
+G4 = { answer = "reconcilers read the ledger export and provisioning record", owner = "billing operations lead", evidence = ["node:billing-reconciler", "node:provisioning-reconciler"] }
+G5 = { answer = "cost per verified contact and repeat-contact rate, monthly", owner = "head of care", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 4400000
+agent_share = 0.40
+calls_per_case = 7
+in_tokens = 6000
+out_tokens = 350
+cached_share = 0.6
+fees_per_case = 0.03
+platform_month = 38000
+verify_per_case = 0.02
+approval_share = 0.05
+approval_min = 2.0
+handoff_share = 0.15
+pickup_min = 3.0
+error_rate = 0.004
+rework_min = 12.0
+repeat_share = 0.06
+repeat_min = 6.0
+verified_rate = 0.992
+person_cost = 7.40
+build_usd = 2600000

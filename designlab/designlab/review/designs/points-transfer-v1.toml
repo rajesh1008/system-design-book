@@ -1,0 +1,146 @@
+# Loyalty's points-transfer design as submitted for the review of
+# Thursday, September 3, 2026. Lakeshore figures are illustrative.
+
+[design]
+name = "points-transfer-v1"
+title = "Transfer member points to a partner airline program"
+use_case = "loyalty"
+owner = "Arjun Mehta"
+submitted = "2026-09-01"
+review = "2026-09-03"
+decision_key = "usecase.transfer"
+model = "claude-sonnet-5-5"
+autonomy = "act and notify"
+
+[[diagram.nodes]]
+id = "member"
+kind = "person"
+plane = "action"
+label = "member"
+
+[[diagram.nodes]]
+id = "agent"
+kind = "loop"
+plane = "action"
+label = "points assistant"
+
+[[diagram.nodes]]
+id = "model"
+kind = "model"
+plane = "action"
+label = "model"
+
+[[diagram.nodes]]
+id = "gateway"
+kind = "gate"
+plane = "control"
+label = "gateway, pb-2026.08.24"
+
+[[diagram.nodes]]
+id = "ledger"
+kind = "tool"
+plane = "action"
+label = "points ledger"
+
+[[diagram.nodes]]
+id = "partner"
+kind = "external"
+plane = "action"
+label = "partner transfer API"
+
+[[diagram.edges]]
+from = "member"
+to = "agent"
+kind = "data"
+label = "transfer request"
+
+[[diagram.edges]]
+from = "agent"
+to = "model"
+kind = "control"
+label = "plan"
+
+[[diagram.edges]]
+from = "gateway"
+to = "agent"
+kind = "control"
+label = "permit"
+
+[[diagram.edges]]
+from = "agent"
+to = "ledger"
+kind = "effect"
+label = "debit points"
+
+[[diagram.edges]]
+from = "agent"
+to = "partner"
+kind = "effect"
+label = "transfer"
+
+[[diagram.edges]]
+from = "partner"
+to = "agent"
+kind = "data"
+label = "status until posted"
+
+[[loops]]
+name = "run"
+max_steps = 12
+max_minutes = 5
+max_usd = 0.25
+done = "reply sent"
+on_stop = "loyalty desk"
+
+[[loops]]
+name = "poll"
+max_steps = 0
+max_minutes = 0
+max_usd = 0
+done = "posted"
+on_stop = ""
+
+[[effects]]
+name = "points_debit"
+via_gateway = true
+permit = "bundle:pb-2026.08.24"
+idempotency = "permission id"
+retry = "same key"
+limits_in = "prompt"
+kill_tier_one = true
+verifier = "agent"
+
+[[effects]]
+name = "partner_transfer"
+via_gateway = true
+permit = "bundle:pb-2026.08.24"
+idempotency = "none"
+retry = "new reference"
+limits_in = "prompt"
+kill_tier_one = true
+verifier = "agent"
+
+[[facts]]
+name = "conversion_ratio"
+source = "partner terms PDF, March 2026"
+max_age_hours = 0
+stale_to_person = true
+owner = "Sofia Lindqvist"
+
+[[facts]]
+name = "member_balance"
+source = "points ledger"
+max_age_hours = 0.25
+stale_to_person = true
+owner = "ledger team"
+
+[memory]
+writes = false
+
+[outcome]
+metric = "transfers requested"
+counts = "requested"
+owner = "Arjun Mehta"
+
+[records]
+ids = ["minutes-2026-07-16"]

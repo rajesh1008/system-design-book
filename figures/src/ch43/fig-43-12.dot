@@ -1,0 +1,22 @@
+// Figure 43.12  Six industries, one evidence chain (signature S10)
+// Reading order: top to bottom, the chain of Chapter 2. The links are
+// the same in every design; what changes is the policy, the person, and
+// the record each verifier reads, listed beside the two links that
+// carry them. From designs.patterns and the six design files.
+digraph chain {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.22;
+  o [label="Output", class="model"];
+  p [label="Proposal", class="model"];
+  m [label="Permission", class="policy gate"];
+  e [label="Execution", class="model"];
+  v [label="Verified outcome", class="verified gate"];
+  r [label="Business result", class="verified"];
+  who [label="Six policies,\nsix person gates", class="policy note"];
+  rec [label="Ledger, PNR, settlement,\nnetwork case, claims journal,\ndelivery log", class="verified note"];
+  o -> p -> m -> e -> v -> r [class="emphasis"];
+  who -> m [class="policy", constraint=false];
+  rec -> v [class="verified", constraint=false];
+  { rank=same; m; who; }
+  { rank=same; v; rec; }
+}

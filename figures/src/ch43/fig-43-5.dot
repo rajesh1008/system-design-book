@@ -1,0 +1,42 @@
+// Figure 43.5  Bank payments: the high-level design
+// Reading order: top to bottom. The harness proposes a transfer or a
+// dispute; the policy engine checks the amount, the payee's age, and
+// the card-network rules table; a new payee is refused and sent back to
+// the customer's own app; the executor posts to core banking or files
+// through the network gateway; two reconcilers read the posting file
+// and the network's case file. Composite bank, Richmond. From
+// designs/data/bank-payments.toml.
+digraph bank {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  cust [label="Account holder", class="ops external"];
+  subgraph cluster_k { label="Knowledge plane"; class="plane-knowledge";
+    facts [label="Accounts, payees,\ntransactions", class="knowledge store"];
+  }
+  subgraph cluster_a { label="Action plane"; class="plane-ops";
+    loop [label="Agent harness", class="model"];
+    ex [label="Payment executor", class="ops"];
+  }
+  subgraph cluster_c { label="Control plane"; class="plane-policy";
+    pol [label="Policy engine", class="policy gate"];
+    rules [label="Network rules\nand Reg E clock", class="policy store"];
+    desk [label="Disputes desk", class="policy human"];
+  }
+  app [label="Customer's app\nnew payee", class="ops external"];
+  core [label="Core banking", class="ops external store"];
+  net [label="Network gateway", class="ops external store"];
+  subgraph cluster_t { label="Trail"; class="plane-evidence";
+    rec [label="Two reconcilers", class="verified gate"];
+  }
+  cust -> loop [class="control"];
+  facts -> loop [class="data"];
+  loop -> pol [label=" proposal", class="control"];
+  rules -> pol [class="data"];
+  pol -> desk [class="async"];
+  pol -> app [label=" refused", class="fail"];
+  pol -> ex [label=" permission", class="emphasis"];
+  ex -> core [class="control"];
+  ex -> net [class="control"];
+  core -> rec [class="data"];
+  net -> rec [class="data"];
+}

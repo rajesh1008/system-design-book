@@ -1,0 +1,30 @@
+// Figure 43.4  Lakeshore rebooking and refunds, with autonomy and hand-off
+// Reading order: top to bottom. One harness proposes four kinds of
+// effect; the policy engine reads the autonomy table and sends each to
+// its tier: act alone, act and notify, approve, or suggest only; the
+// two desks carry promised times and a queue ordered by departure
+// time; three verifiers read records the agent does not write.
+// November 2, 2026 versions. From designs/data/lakeshore-*.toml.
+digraph lakeshore {
+#include "book.gv"
+  rankdir=TB; nodesep=0.22; ranksep=0.3;
+  loop [label="Agent harness", class="model"];
+  pol [label="Policy engine\nautonomy table", class="policy gate"];
+  act [label="Vouchers to $100\nact alone", class="ops"];
+  ntf [label="Rebook to $250\n($400 weather)\nact and notify", class="ops"];
+  apr [label="Refunds to $1,500\nwith approval", class="policy"];
+  sug [label="Hotel cancel\nsuggest only", class="policy human"];
+  desk [label="Desks: 30, 60, 240\nminutes, by departure", class="policy human"];
+  ver [label="Three reconcilers", class="verified gate"];
+  loop -> pol [class="control"];
+  pol -> act [class="control"];
+  pol -> ntf [class="control"];
+  pol -> apr [class="control"];
+  pol -> sug [class="control"];
+  ntf -> desk [label=" refusal", class="async"];
+  apr -> desk [class="async"];
+  sug -> desk [class="async"];
+  act -> ver [class="data"];
+  ntf -> ver [class="data"];
+  desk -> ver [label=" approved", class="emphasis"];
+}
