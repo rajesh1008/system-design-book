@@ -58,7 +58,7 @@ def part_card(rs, src):
     emit(f"  chapters            {c['chapters']:4} of {appendix.CHAPTERS}")
     emit(f"  round tags          {c['tags']:4} (formats {c['formats']} of 7)")
     emit(f"  questions indexed   {c['questions']:4} (floor "
-         f"{appendix.TARGET}; prompt {appendix.PROMPT_TARGET})")
+         f"{appendix.TARGET}; first plan {appendix.PROMPT_TARGET})")
     emit(f"  hiring side         {c['hiring_side']:4}")
     lv = c["levels"]
     emit("  levels              " + ", ".join(

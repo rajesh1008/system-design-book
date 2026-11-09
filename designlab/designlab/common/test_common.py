@@ -205,6 +205,17 @@ class TestClient(unittest.TestCase):
         with mock.patch.dict(os.environ, {KEY_ENV: "v", OFFLINE_ENV: "1"}):
             self.assertFalse(live_available())
 
+    def test_key_alone_never_enables_live_tests(self):
+        from common.live import live_tests_enabled
+        env = {k: v for k, v in os.environ.items()
+               if k not in ("RUN_LIVE", OFFLINE_ENV)}
+        env[KEY_ENV] = "v"
+        with mock.patch.dict(os.environ, env, clear=True):
+            self.assertFalse(live_tests_enabled())
+        env["RUN_LIVE"] = "1"
+        with mock.patch.dict(os.environ, env, clear=True):
+            self.assertTrue(live_tests_enabled())
+
     def test_key_never_reaches_repr_errors_or_records(self):
         with mock.patch.dict(os.environ, {KEY_ENV: FAKE_KEY}):
             def leaky(body):

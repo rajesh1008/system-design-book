@@ -136,10 +136,12 @@ Each chapter also has a script that runs its tests and demos, for example
 
     ./run_all.sh
 
-This runs the offline unit tests, then every live test if `ANTHROPIC_API_KEY`
-is set, then the Part I demos offline, then a secret scan of the whole tree. Without a key the live tests
-skip cleanly; set `DESIGNLAB_OFFLINE=1` to skip them even with a key. A full
-live run makes six short calls and costs well under one cent.
+This runs the offline unit tests, then the Part I demos offline, then a
+secret scan of the whole tree. Live tests are opt-in: they run only with
+`RUN_LIVE=1` and `ANTHROPIC_API_KEY` both set, so a key in the environment
+alone never starts a live call; `DESIGNLAB_OFFLINE=1` skips them even then.
+A full live run (`RUN_LIVE=1 ./run_all.sh`) makes a few dozen short calls
+and costs a few cents at most.
 
 ## Live calls
 

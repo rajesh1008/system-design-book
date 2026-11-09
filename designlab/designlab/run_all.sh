@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Run every designlab test from this directory.
 #   1. offline unit tests (live tests forced to skip)
-#   2. live tests (every test_live*.py), only when ANTHROPIC_API_KEY is set
-#      (a few cents at most)
+#   2. live tests (every test_live*.py), only when RUN_LIVE=1 and
+#      ANTHROPIC_API_KEY are both set (a few cents at most); a key in
+#      the environment alone never starts a live call
 #   3. the Part I demos, offline, as a smoke run
 #   4. the secret scan over the whole tree, fixtures included
 set -euo pipefail
@@ -13,10 +14,11 @@ echo "== offline unit tests"
 DESIGNLAB_OFFLINE=1 "$PY" -m unittest discover -s . -t . -p 'test_*.py' -v
 
 echo "== live tests"
-if [ -n "${ANTHROPIC_API_KEY:-}" ] && [ "${DESIGNLAB_OFFLINE:-0}" != "1" ]; then
+if [ "${RUN_LIVE:-0}" = "1" ] && [ -n "${ANTHROPIC_API_KEY:-}" ] \
+    && [ "${DESIGNLAB_OFFLINE:-0}" != "1" ]; then
   "$PY" -m unittest discover -s . -t . -p 'test_live*.py' -v
 else
-  echo "ANTHROPIC_API_KEY not set: live tests skipped"
+  echo "live tests skipped (set RUN_LIVE=1 and ANTHROPIC_API_KEY to run)"
 fi
 
 echo "== Part I demos (offline)"

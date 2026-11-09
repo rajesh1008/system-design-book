@@ -31,8 +31,8 @@ PARTS = (
     (7, range(37, 43), "Operations, cost, platform"),
     (8, range(43, 49), "Worked designs, interviews"),
 )
-TARGET = 702           # the Blueprint's floor (Chapter 47 resolution)
-PROMPT_TARGET = 290    # the book prompt's figure, revised
+TARGET = 702           # the book's floor: 12 to 20 per chapter (Ch 47)
+PROMPT_TARGET = 290    # the first plan's figure, revised to the floor
 CHAPTERS = 48
 HIRING_MIN = 2         # hiring-side questions per chapter
 
