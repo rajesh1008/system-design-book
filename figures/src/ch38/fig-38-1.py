@@ -1,9 +1,10 @@
-"""Figure 38.1  Cost per verified outcome by kind of change.
+"""Figure 38.2  Where the cost of a verified outcome goes, July.
 
-Reading order: one pair of bars per kind of change, top to bottom; the
-upper bar is July as closed, the lower is August. The shaded strip is
-August's forecast band. From economics.outcome (Lakeshore figures are
-illustrative).
+Reading order: Chapter 18's seven
+driver lines, then the storm pooled under finance's May rule, then
+INC-5's rework, one bar each, top to bottom. The model tokens are the
+smallest line of all. From economics.outcome (Lakeshore
+figures are illustrative).
 """
 import sys
 from pathlib import Path
@@ -12,24 +13,22 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "design
 import figlib as fl  # noqa: E402
 from economics import outcome  # noqa: E402
 
-jul, aug = outcome.kinds("July"), outcome.kinds("August")
-names = list(jul)
-lo, _mid, hi = outcome.BAND["August"]
-fig, ax = fl.figure(4.5, 3.0)
-ax.axvspan(lo, hi, color=fl.FILL["knowledge"], lw=0)
-ax.text(lo + 0.01, len(names) - 0.35, "August band", fontsize=9,
-        color=fl.INK)
-for i, n in enumerate(names):
-    y = len(names) - 1 - i
-    for dy, v, tok, hatch in ((0.18, jul[n], "fail", ""),
-                              (-0.18, aug[n], "verified", "///")):
-        ax.barh(y + dy, v, height=0.32, color=fl.FILL[tok],
-                edgecolor=fl.C[tok], lw=0.9, hatch=hatch)
-        ax.text(v + 0.02, y + dy, f"${v:.2f}", va="center", fontsize=9,
-                color=fl.INK)
-ax.set_yticks(range(len(names)))
-ax.set_yticklabels([n.capitalize() for n in reversed(names)])
-ax.set_xlim(0, 2.6)
-ax.set_ylim(-0.6, len(names) - 0.1)
-ax.set_xlabel("Dollars per verified outcome (upper July, lower August)")
+d = outcome.drivers("July")
+c = outcome.close("July")
+parts = [(k, v / d["verified"]) for k, v in d["lines"].items()]
+parts += [("storm (pooled)", c.pooled), ("INC-5 rework", c.rework)]
+toks = ["model", "ops", "ops", "evidence", "org", "org", "org",
+        "fail", "fail"]
+fig, ax = fl.figure(4.5, 3.4)
+n = len(parts)
+for i, ((name, v), tok) in enumerate(zip(parts, toks)):
+    y = n - 1 - i
+    ax.barh(y, v, height=0.62, color=fl.FILL[tok], edgecolor=fl.C[tok],
+            lw=0.9, hatch="///" if name.startswith("storm") else "")
+    ax.text(v + 0.01, y, f"${v:.3f}", va="center", fontsize=9,
+            color=fl.INK)
+ax.set_yticks(range(n))
+ax.set_yticklabels([p[0][0].upper() + p[0][1:] for p in reversed(parts)])
+ax.set_xlim(0, 0.8)
+ax.set_xlabel(f"Dollars per verified outcome; July total ${c.total:.2f}")
 fl.save(fig)

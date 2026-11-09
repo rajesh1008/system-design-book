@@ -1,4 +1,4 @@
-"""Single agent against orchestrator-worker on the golden set (Section 1).
+"""Single agent against orchestrator-worker on the golden set (Chapter 27).
 
 A seeded, mechanistic simulation, not a model run. Each case is run
 three times by each topology, paired by case and repeat. What drives

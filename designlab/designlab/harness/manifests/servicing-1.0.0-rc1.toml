@@ -1,5 +1,5 @@
 # Harness Manifest: harness v1 as it stood on the first test run.
-# Four defects the suite finds; see Section 6.
+# Four defects the suite finds; see Chapter 25.
 # Owned by Agent Platform. A change to anything in this file, or to a
 # tool description it resolves, is a new version and goes through the
 # release gate. The deploy check refuses a hash it has not registered.

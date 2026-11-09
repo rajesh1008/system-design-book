@@ -1,34 +1,17 @@
-// Figure 1.6  The four planes previewed
-// Reading order: top to bottom. Knowledge informs the loop and control
-// decides (top row), the action plane acts (middle), and the trail
-// records and checks (bottom). Chapter 6 builds these.
-digraph planes {
+// Figure 1.7  Book map: eight Parts and the gaps each closes
+// Reading order: top to bottom, Part I to Part VIII. Each box names a
+// Part and the gaps it works on; Part VIII puts all five together.
+digraph map {
 #include "book.gv"
-  rankdir=TB; ranksep="0.45";
-  subgraph cluster_kno { label="Knowledge plane"; class="plane-knowledge";
-    ret [label="Retrieval", class="knowledge"];
-  }
-  subgraph cluster_ctl { label="Control plane"; class="plane-policy";
-    pol [label="Policy engine", class="policy gate"];
-  }
-  subgraph cluster_act { label="Action plane"; class="plane-ops";
-    loop [label="Agent loop", class="ops"];
-    exe  [label="Executor", class="ops"];
-    tool [label="Suppliers", class="ops external"];
-    { rank=same; loop; exe; tool; }
-  }
-  subgraph cluster_trl { label="Trail plane"; class="plane-evidence";
-    trl [label="Trail", class="evidence store"];
-    rec [label="Reconciler", class="evidence gate"];
-    { rank=same; trl; rec; }
-  }
-  { rank=same; ret; pol; }
-  ret -> loop [label=" context", class="data"];
-  loop -> pol [label=" proposal", class="control"];
-  pol -> exe [label=" permission", class="policy"];
-  loop -> exe [style=invis];
-  exe -> tool [class="control"];
-  exe -> trl [class="trail"];
-  tool -> rec [label=" effect", class="trail"];
-  rec -> trl [class="trail"];
+  rankdir=TB; ranksep="0.16";
+  p1 [label="I  Systems that act: names all", class="org"];
+  p2 [label="II  Distributed foundations: G3 G4", class="ops"];
+  p3 [label="III  Models: G1 G5", class="model"];
+  p4 [label="IV  Knowledge: G1 G2", class="model"];
+  p5 [label="V  Runtime and loops: G3 G4", class="ops"];
+  p6 [label="VI  Control and assurance: G2 G4", class="policy"];
+  p7 [label="VII  Operations and cost: G4 G5", class="ops"];
+  p8 [label="VIII  Worked architectures: all", class="org store"];
+  p1 -> p2 -> p3 -> p4 -> p5 -> p6 -> p7 [class="data"];
+  p7 -> p8 [class="emphasis"];
 }

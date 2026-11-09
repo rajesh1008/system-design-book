@@ -1,0 +1,15 @@
+// Figure 2.8  Gap 3: permission to execution
+// Reading order: top to bottom. The record that closes the gap sits on
+// the main path; the failure when it is missing branches below.
+digraph gap3 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.45; ranksep=0.35;
+  a [label="Permission", class="policy gate"];
+  r [label="Key and scope", class="evidence store"];
+  b [label="Execution", class="ops"];
+  x [label="Second effect", class="fail"];
+  a -> r [class="control"];
+  r -> b [class="emphasis"];
+  a -> x [label=" No record", class="fail"];
+  { rank=same; r; x; }
+}

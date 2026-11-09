@@ -93,7 +93,7 @@ def owner_of(path: str, table: list[tuple[str, str]]) -> str | None:
     return best[1] if best else None
 
 
-def test_names(text: str | None) -> set[str]:
+def names_of_tests(text: str | None) -> set[str]:
     if not text:
         return set()
     try:
@@ -114,7 +114,7 @@ def analyze(p: Proposal) -> dict:
     for path in p.changed():
         old, new = p.before.get(path), p.after[path]
         if path.startswith("tests/"):
-            deleted += sorted(test_names(old) - test_names(new))
+            deleted += sorted(names_of_tests(old) - names_of_tests(new))
             skips += max(0, _skips(new) - _skips(old))
         who = owner_of(path, table)
         if who or path in INSTRUCTION_FILES:

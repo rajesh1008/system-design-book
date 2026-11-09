@@ -1,19 +1,18 @@
 @startuml
-' Figure 37.5  Incident response with the kill switch
-' Reading order: top to bottom. On call is paged on an outcome objective
-' and stops first with the tier the runbook names; the gateways read the
-' flag; the far end's own count proves the stop; then pin, replay, and a
-' fresh decision lowers the tier. From reliability.stop and runbook.
+' Figure 37.7  The model update that moved the outcome
+' Reading order: top to bottom, Wednesday, July 8, 2026, CDT. The
+' vendor moves the alias; a combined retime and renumber is coded as a
+' retime; the agent reissues on the old number; the reconciler cannot
+' verify it; the desk sees the rework at 2:41 p.m.
 !include plantuml-theme.puml
-participant "On call" as P <<ops>>
-participant "Kill switch" as K <<policy>>
-participant "Gateways" as G <<policy>>
-participant "Far end" as F <<ops>>
-P -> P : Paged
-P -> K : Pull tier
-K -> G : Read, 5 s
-G -> F : No new calls
-F -> P : Flat 20 s
-P -> P : Pin, replay
-P -[$POLICY]> K : Lower
+participant "Vendor" as V <<model>>
+participant "Classifier" as C <<model>>
+participant "Agent" as A <<model>>
+participant "Reconciler" as R <<fail>>
+V -> C : 1:15 alias
+note over V, C : No deploy
+C -> A : Retime only
+A -> R : Old number
+R -[$FAIL]> R : Not verified
+note over R : 40 by 2:41 p.m.
 @enduml

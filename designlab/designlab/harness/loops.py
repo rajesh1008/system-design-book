@@ -108,7 +108,7 @@ OPT_WEIGHTS = (20, 17, 14, 11, 9, 7, 6, 5, 4, 3, 2, 2)
 
 class ScriptedModel:
     """Stands in for the planner model offline: plausible, variable and
-    sometimes wrong in the ways the pilot was (Section 2)."""
+    sometimes wrong in the ways the pilot was (Chapter 25)."""
 
     def __init__(self, case: Case, rng: random.Random):
         self.case, self.rng = case, rng

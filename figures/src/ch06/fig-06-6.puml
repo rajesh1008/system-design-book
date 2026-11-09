@@ -1,17 +1,17 @@
 @startuml
-' Figure 6.6  The unattended fare-watch path (designed in January 2026)
-' Reading order: top to bottom. A schedule starts the loop, the policy
-' engine checks the cap and the daily budget, and a sample of the
-' issued vouchers goes to people the next day.
+' Figure 6.5  The asynchronous rebooking path
+' Reading order: top to bottom. The agent acts inside its limit and
+' tells the customer; a refusal within 24 hours goes to a queue that
+' a person works later.
 !include plantuml-theme.puml
-participant "Fare\nwatch" as L <<ops>>
+participant "Agent\nloop" as L <<ops>>
 participant "Policy\nengine" as P <<policy>>
 participant "Gateway" as G <<ops>>
-actor "Audit" as S <<org>>
-L -> P : Voucher
-P -> P : Cap, budget
+actor "Agent\ndesk" as D <<org>>
+L -> P : Rebook
 P -[#1A1A1A]> G : Permission
 G -> L : Effect record
-...next day...
-G -[$TRAIL]-> S : 5% sample
+L -> L : Notify
+...24 hours to refuse...
+L -[$TRAIL]-> D : Refusal queued
 @enduml

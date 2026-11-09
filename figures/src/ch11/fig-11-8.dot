@@ -1,0 +1,23 @@
+// Figure 11.7  Blast radius calculation
+// Reading order: left to right. One session holds four resources. Each
+// is probed against every itinerary, and the blast radius is the size
+// of the union of what the probes reached. The two injected faults are
+// shown beside the resource they widen.
+digraph blast {
+#include "book.gv"
+  rankdir=LR; nodesep=0.25; ranksep=0.55;
+  s [label="One session", class="ops"];
+  f [label="Session files\n1", class="ops store"];
+  k [label="Knowledge view\n1", class="ops"];
+  c [label="Summary cache\n1", class="ops store"];
+  g [label="Gateway token\n1", class="ops gate"];
+  u [label="Union\n1 itinerary", class="verified gate"];
+  fd [label="Shared dir\n106", class="fail note"];
+  fc [label="Locator key\n240", class="fail note"];
+  s -> f [class="data"]; s -> k [class="data"];
+  s -> c [class="data"]; s -> g [class="data"];
+  f -> u [class="verified"]; k -> u [class="verified"];
+  c -> u [class="verified"]; g -> u [class="verified"];
+  fd -> f [class="fail", arrowhead=none, style=dashed];
+  fc -> c [class="fail", arrowhead=none, style=dashed];
+}

@@ -1,4 +1,4 @@
-"""The knowledge operations scorecard (fig-24-9).
+"""The knowledge operations scorecard (fig-24-8).
 
 One row per question the knowledge plane must answer every week, each
 with its measure, its alert line, and the person who answers for it.

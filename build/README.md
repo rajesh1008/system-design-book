@@ -39,7 +39,7 @@ it reads on e-ink greyscale. The pieces:
 
 ## File layout
 
-    02-manuscript/front/      copyright.md, dedication.md, preface.md, how-to-read.md
+    02-manuscript/front/      copyright.md, preface.md (dedication.md.todo is held out of the build), how-to-read.md
     02-manuscript/parts/      part-NN.md   (Part opener text; its '# ' line is replaced by the manifest title)
     02-manuscript/chNN.md     one file per chapter, NN = 01..48
     02-manuscript/appendices/ app-X.md     (A..O)

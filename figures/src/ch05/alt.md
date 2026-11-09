@@ -8,5 +8,5 @@ fig-05-6: The durable-execution decision table with three options scored on five
 fig-05-7: The six deep-dive steps from top to bottom, with the failure list fanning out into detect, contain and recover before the numbers, owner and test are attached.
 fig-05-8: A decision record moves from proposed to accepted, is reopened when its reversal condition is met, and is then either reaffirmed or superseded by a new record.
 fig-05-9: The twelve checklist items, five gap items and seven method items, each with the linter rules that decide whether it passes.
-fig-05-10: Eight bars along a forty-five-minute axis, one per artifact in order, with the question bank, the diagram and the deep dive given the longest slices.
-fig-05-11: The three v0 linter findings, an unsourced peak, a deep dive with no owner and a one-option decision, each beside the v0.1 fix that made its method item pass.
+fig-05-11: Eight bars along a forty-five-minute axis, one per artifact in order, with the question bank, the diagram and the deep dive given the longest slices.
+fig-05-10: The three v0 linter findings, an unsourced peak, a deep dive with no owner and a one-option decision, each beside the v0.1 fix that made its method item pass.

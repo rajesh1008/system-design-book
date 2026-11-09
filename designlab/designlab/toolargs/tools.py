@@ -1,7 +1,7 @@
 """The two effect tools whose arguments the chapter checks.
 
 Each tool has a name, a version and an input schema. The version moves
-when the effect changes, not when the wording does (Section 2): rebook
+when the effect changes, not when the wording does (Chapter 16): rebook
 2.1 added `ticket_number` on April 20, 2026, for carriers that reissue
 by ticket, and the gateway kept accepting 2.0 calls for one release.
 """

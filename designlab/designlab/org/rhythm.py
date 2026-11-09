@@ -1,4 +1,4 @@
-"""The operating rhythm (section 6) and the cost of a stalled rule.
+"""The operating rhythm and the cost of a stalled rule.
 
 Each forum has one owner, a cadence, and the decisions it reviews.
 The rhythm check fails a decision that no forum reviews: a decision
@@ -57,7 +57,7 @@ def weekly_hours(forums=FORUMS) -> float:
     return mins / 60
 
 
-# rebook-v3 (section 5). Rebookings a day with a fare difference over
+# rebook-v3 (Chapter 41). Rebookings a day with a fare difference over
 # $250 and up to $400, same carrier: the work the agent would have
 # taken. Weekdays and weekends differ. Illustrative.
 WEEKDAY, WEEKEND = 121, 98

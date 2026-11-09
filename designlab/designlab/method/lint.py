@@ -2,7 +2,7 @@
 
 It checks that the design says something checkable and names who owns
 it. It cannot check that what the design says is right; that is what
-the review is for (Section 7).
+the review is for (Chapter 5).
 
 Rules, one finding per offending item:
     ART-1  an artifact is missing or empty

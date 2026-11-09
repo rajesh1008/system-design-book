@@ -1,29 +1,34 @@
-"""Figure 4.3  Change mix by type, 12 types.
+"""Figure 4.4  Cost per change decomposed.
 
-Reading order: one bar per change type, largest first; the solid part is
-done by a person, the hatched part by self-service. Thousands of changes
-in the 12 months to September 30, 2025. From baseline.volume.
+Reading order: two stacked bars, person and self-service, each split into
+its cost pools; the dashed line is the blended cost per change. USD per
+change, 12 months to September 30, 2025. From baseline.cost.
 """
 import figlib as fl
 
-data = [("Rebook", 330, .62), ("Credit", 300, .40),
-        ("Reprotect", 260, .85), ("Hotel cancel", 220, .52),
-        ("Refund", 210, .61), ("Forced refund", 190, .74),
-        ("Upgrade", 150, .50), ("Schedule", 130, .55),
-        ("Hotel dates", 120, .75), ("Extras refund", 80, .62),
-        ("Car", 60, .47), ("Name fix", 50, .76)]
-fig, ax = fl.figure(4.1, 5.0)
-y = list(range(len(data)))[::-1]
-for yi, (name, t, s) in zip(y, data):
-    ax.barh(yi, t * s, height=0.65, color=fl.C["ops"], edgecolor=fl.C["ops"])
-    ax.barh(yi, t * (1 - s), left=t * s, height=0.65, color=fl.FILL["org"],
-            edgecolor=fl.C["org"], hatch="///")
-    fl.label_line(ax, t, yi, f"{t}k")
-ax.set_yticks(y)
-ax.set_yticklabels([d[0] for d in data])
-ax.set_xlim(0, 400)
-ax.set_xlabel("Changes (thousands)")
-ax.grid(axis="x")
-ax.text(330 * .62 / 2, y[0], "Person", ha="center", va="center",
-        color="white", fontsize=9)
+person = [("Handle labor", 31.50), ("Repeat contacts", 8.40),
+          ("Supervision", 5.60), ("Seats", 4.80), ("Rework", 4.60)]
+selfs = [("Platform", 3.10), ("Fees", 2.90), ("Payments", 1.60),
+         ("Abandons", 1.90), ("Rework", 1.90)]
+toks = ["ops", "org", "evidence", "knowledge", "fail"]
+fig, ax = fl.figure(4.5, 4.4)
+for x, parts in ((0, person), (1, selfs)):
+    base = 0
+    for j, (name, v) in enumerate(parts):
+        tok = toks[j]
+        ax.bar(x, v, bottom=base, width=0.55, color=fl.FILL[tok],
+               edgecolor=fl.C[tok], hatch=fl.HATCH[j])
+        if x == 0:
+            ax.text(0.33, base + v / 2, f"{name} ${v:.2f}", va="center",
+                    fontsize=9)
+        base += v
+    fl.label_line(ax, x, base, f"${base:.2f}", dx=-14, dy=8)
+ax.axhline(37.94, color=fl.INK, ls="--", lw=1)
+ax.text(1.35, 39.2, "Blended $37.94", ha="right", fontsize=9)
+ax.set_xticks([0, 1])
+ax.set_xticklabels(["Person, 61%", "Self-service, 39%"])
+ax.set_xlim(-0.45, 1.45)
+ax.set_ylim(0, 62)
+ax.set_ylabel("USD per change")
+ax.grid(axis="y")
 fl.save(fig)

@@ -1,36 +1,27 @@
-"""Figure 16.7  Rejection reasons by type.
+"""Figure 16.6  Repairs needed per call.
 
-Reading order: top to bottom, most common first. Each bar counts first
-proposals the world check rejected from May 18 to 31, 2026, by reason
-code. Wrong-identifier reasons are solid; the rest are hatched
-(Lakeshore figures are illustrative).
+Reading order: left to right. Each bar is the rejected calls from May 18
+to 31, 2026, that ended a given way: repaired after one try, repaired
+after two, or handed to the agent desk. The share of all 807 rejected
+calls is printed on each bar (Lakeshore figures are illustrative).
 """
 import figlib as fl
 
-data = [("Ticket not on itinerary", 226, True),
-        ("Fare differs from quote", 178, False),
-        ("Amount above fare left", 137, False),
-        ("Passenger not on ticket", 113, True),
-        ("Flight not on route", 73, False),
-        ("Ticket unknown", 41, True),
-        ("Flight canceled", 39, False)]
+labels = ["Repaired\nafter 1", "Repaired\nafter 2", "Handed\noff"]
+counts = [702, 57, 48]
+total = sum(counts)
+toks = ["verified", "verified", "model"]
 
-fig, ax = fl.figure(4.2, 3.4)
-names = [d[0] for d in data][::-1]
-vals = [d[1] for d in data][::-1]
-ident = [d[2] for d in data][::-1]
-bars = ax.barh(names, vals, height=0.6,
-               color=[fl.FILL["fail"] if i else fl.FILL["ops"]
-                      for i in ident],
-               edgecolor=[fl.C["fail"] if i else fl.C["ops"]
-                          for i in ident], linewidth=1.0)
-for b, i in zip(bars, ident):
-    if not i:
-        b.set_hatch("///")
-for b, v in zip(bars, vals):
-    ax.text(v + 4, b.get_y() + b.get_height() / 2, str(v), va="center",
+fig, ax = fl.figure(4.5, 3.0)
+bars = ax.bar(labels, counts, width=0.6,
+              color=[fl.FILL[t] for t in toks],
+              edgecolor=[fl.C[t] for t in toks], linewidth=1.0)
+bars[2].set_hatch("///")
+for b, n in zip(bars, counts):
+    ax.text(b.get_x() + b.get_width() / 2, n + 12,
+            f"{n} ({100 * n / total:.0f}%)", ha="center", va="bottom",
             fontsize=9.5, color=fl.INK)
-ax.set_xlabel("Rejected first proposals")
-ax.set_xlim(0, 260)
+ax.set_ylabel("Rejected calls")
+ax.set_ylim(0, 820)
 ax.spines[["top", "right"]].set_visible(False)
 fl.save(fig)

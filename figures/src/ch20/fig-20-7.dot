@@ -1,0 +1,21 @@
+// Figure 20.7  The query that would have scanned a year
+// Reading order: top to bottom. On May 6, 2026, the shadow trial's raw
+// SQL joined refunds to booking events on a JSON field, with a LIKE
+// filter; neither prunes a partition, so the estimate covered all
+// thirteen retained months. The layer path read one table's months.
+digraph yearscan {
+#include "book.gv"
+  rankdir=TB; nodesep=0.4; ranksep=0.25;
+  q [label="How many refunds\nlast year?", class="human"];
+  raw [label="Raw SQL: JOIN on\njson_extract, LIKE", class="model"];
+  est [label="Estimate: 13 months,\n44.0 TB, $220.12", class="policy gate"];
+  no [label="Refused on cost\n(shadow: not run)", class="fail"];
+  lay [label="Layer: refunds_count,\ncalendar 2025", class="knowledge"];
+  ok [label="704,000\n10 MB, $0.0001", class="verified"];
+  {rank=same; raw; lay;}
+  q -> raw [class="control", label="shadow trial"];
+  q -> lay [class="control", label="May 21 on"];
+  raw -> est [class="control"];
+  est -> no [class="fail"];
+  lay -> ok [class="emphasis"];
+}

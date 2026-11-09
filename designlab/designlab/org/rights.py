@@ -1,4 +1,4 @@
-"""The decision-rights matrix and the scenario checker (section 5).
+"""The decision-rights matrix and the scenario checker (Chapter 41).
 
 A decision has exactly one owner, a deputy, people consulted, and
 people informed. A scenario names the decisions a real change needs.

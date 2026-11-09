@@ -1,4 +1,4 @@
-"""A circuit breaker for one provider (Section 4).
+"""A circuit breaker for one provider (Chapter 12).
 
 Closed: calls go through, and the breaker watches a sliding window.
 It opens when, among at least `min_calls` calls in the last `window_s`

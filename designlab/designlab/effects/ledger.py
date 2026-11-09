@@ -1,4 +1,4 @@
-"""The effect ledger: one entry per key, every attempt recorded (Section 3).
+"""The effect ledger: one entry per key, every attempt recorded (Chapter 7).
 
 States and the moves allowed between them:
 

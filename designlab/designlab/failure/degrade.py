@@ -1,4 +1,4 @@
-"""Degraded modes, a ladder (Section 4).
+"""Degraded modes, a ladder (Chapter 12).
 
 Each rung keeps what is still safe and stops what is not:
 

@@ -1,4 +1,4 @@
-"""Voting, debate, and one agent with a verifier (Section 5), offline.
+"""Voting, debate, and one agent with a verifier (Chapter 27), offline.
 
 Twenty-four eligibility tasks, each run 25 times per design: 600 runs
 a design. The voters are the same model reading the same rule card,

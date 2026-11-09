@@ -1,4 +1,4 @@
-"""The executor: one effect, every attempt through the ledger (Section 3).
+"""The executor: one effect, every attempt through the ledger (Chapter 7).
 
 On a timeout the outcome is unknown. What happens next depends on the
 tool's contract, never on the model:

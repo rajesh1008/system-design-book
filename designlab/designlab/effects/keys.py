@@ -1,4 +1,4 @@
-"""Idempotency keys, minted by the control plane (Chapter 7, Section 2).
+"""Idempotency keys, minted by the control plane (Chapter 7).
 
 A key names one permitted effect. It is derived from the permission id,
 the tool and the request's fingerprint, so:

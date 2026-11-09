@@ -1,35 +1,37 @@
-"""Figure 27.11  Debate, voting, and one agent with a verifier.
+"""Figure 27.11  The topology decision table.
 
-Reading order: left to right, tokens as a multiple of one agent;
-bottom to top, correct answers on the 24 eligibility tasks, 25 runs a
-task. Filled markers: the lab's correlated agents (correlation 0.65);
-hollow markers: the same designs with independent agents, the case
-the research assumes. From topology.vote. Lakeshore figures are
-illustrative.
+Reading order: one row per situation, top to bottom: the situation, the
+topology Lakeshore uses, and the evidence behind it. From DR-27.1 and
+the chapter's lab. Lakeshore figures are illustrative.
 """
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import figlib as fl  # noqa: E402
+from matplotlib.patches import Rectangle  # noqa: E402
 
-pts = (("One agent", 1.00, 89.5, "model", "o"),
-       ("Agent and verifier", 1.11, 95.7, "verified", "s"),
-       ("Vote of three", 3.00, 91.2, "ops", "^"),
-       ("Debate", 7.48, 90.8, "fail", "D"))
-ind = (("Vote, independent", 3.00, 96.2, "ops", "^"),
-       ("Debate, independent", 7.48, 94.7, "fail", "D"))
-fig, ax = fl.figure(4.5, 3.2)
-for name, x, yv, tok, m in pts:
-    ax.scatter(x, yv, s=46, color=fl.C[tok], marker=m, zorder=3)
-    fl.label_line(ax, x, yv, name, dx=6, dy=-2)
-for name, x, yv, tok, m in ind:
-    ax.scatter(x, yv, s=46, facecolor="white", edgecolor=fl.C[tok],
-               lw=1.5, marker=m, zorder=3)
-    fl.label_line(ax, x, yv, name, dx=6, dy=2)
-ax.set_xlim(0.5, 10.8)
-ax.set_ylim(87, 98)
-ax.set_xlabel("Tokens, multiple of one agent")
-ax.set_ylabel("Correct, %")
-ax.grid(True)
+rows = (("1 or 2 legs", "One agent", "96.3% vs 92.8%", "verified"),
+        ("3+ legs", "Lead, workers", "88.0% vs 64.2%", "evidence"),
+        ("Desk research", "Read-only\nworkers", "cited, checked", "knowledge"),
+        ("Eligibility", "Agent and\nverifier", "95.7% at 1.11x", "policy"),
+        ("Deeper levels", "Not used", "facts lost", "fail"))
+cols = (0.0, 1.45, 2.95)
+heads = ("Situation", "Topology", "Evidence")
+fig, ax = fl.figure(4.5, 3.4)
+n = len(rows)
+ax.set_xlim(0, 4.6)
+ax.set_ylim(-0.1, n + 0.8)
+ax.axis("off")
+for x, h in zip(cols, heads):
+    ax.text(x + 0.05, n + 0.4, h, va="center", fontsize=10,
+            fontweight="bold", color=fl.INK)
+for i, (sit, top, ev, tok) in enumerate(rows):
+    yy = n - 1 - i
+    ax.add_patch(Rectangle((0.0, yy + 0.05), 4.6, 0.9,
+                           facecolor=fl.FILL[tok], edgecolor=fl.C[tok],
+                           lw=0.75))
+    for x, t, size in zip(cols, (sit, top, ev), (10, 10, 10)):
+        ax.text(x + 0.05, yy + 0.5, t, va="center", fontsize=size,
+                color=fl.INK, fontweight="bold" if x == cols[1] else None)
 fl.save(fig)

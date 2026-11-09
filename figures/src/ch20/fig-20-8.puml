@@ -1,0 +1,19 @@
+@startuml
+' Figure 20.8  The grant travels with the question
+' Reading order: top to bottom. The caller's signed grant goes with the
+' question; the guard verifies it and filters to the caller's desks.
+' The agent's service account never widens what the caller may read.
+!include plantuml-theme.puml
+participant "Team\nlead" as U <<org>>
+participant "Agent" as A <<model>>
+participant "Guard" as G <<policy>>
+participant "Warehouse" as W <<ops>>
+U -> A : question,\ngrant
+A -> G : query,\nsame grant
+G -> G : verify;\ndesks CHI-2, CHI-3
+G -> W : desk IN\n(CHI-2, CHI-3)
+W --> G : two desks
+G --> A : rows
+A -> G : refund value
+G -[$FAIL]-> A : refused:\nneeds finance
+@enduml

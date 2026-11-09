@@ -1,0 +1,22 @@
+// Figure 27.7  Debate and when it helps
+// Reading order: top to bottom. Start from one agent with an
+// independent verifier. Vote only where errors are independent across
+// runs; debate only if it beats the vote at its cost. Agreement never
+// stands in for verifying an effect. From topology.vote.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  base [label="Agent and verifier", class="verified"];
+  q1 [label="Errors\nindependent?", class="policy gate"];
+  vote [label="Vote, 3x", class="model"];
+  q2 [label="Debate beats\nthe vote?", class="policy gate"];
+  deb [label="Debate, 7.5x", class="model"];
+  keep [label="Keep the\nbaseline", class="verified"];
+  usev [label="Use the\nvote", class="ops"];
+  base -> q1 [class="data"];
+  q1 -> keep [class="fail", label=" no"];
+  q1 -> vote [class="control", label=" yes"];
+  vote -> q2 [class="control"];
+  q2 -> deb [class="control", label=" yes"];
+  q2 -> usev [class="control", label=" no"];
+}

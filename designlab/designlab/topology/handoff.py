@@ -1,4 +1,4 @@
-"""The relay baton: a handoff is offered, accepted, or unknown (Section 3).
+"""The relay baton: a handoff is offered, accepted, or unknown (Chapter 27).
 
 A handoff moves a case, and with it the stick, from one owner to
 another. The lead offers it; the receiver accepts by taking the stick

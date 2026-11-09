@@ -1,44 +1,42 @@
-"""Figure 11.4  Egress allow-list by tool.
+"""Figure 11.8  Cost of isolation by level.
 
-Reading order: one row per tool, one column per host. A filled square is
-an allowed pair; every empty cell is a denial that the proxy writes to
-the trail. Most tools reach one host. The agent loop reaches three, and
-no tool reaches a host outside the eleven. Values from
-04-code/designlab/isolation/egress.toml (version 2026-03-16).
+Reading order: one row per level, start time on a log scale. Circles are
+cold starts; squares are starts from a warm pool. The two lowest levels
+were measured by the chapter's lab (median of 15 starts); the rest are
+Lakeshore's March 2026 bench (illustrative). The dotted line is the
+p95 task latency of 47 seconds, for scale.
 """
-import tomllib
-from pathlib import Path
-
 import figlib as fl
-from matplotlib.patches import Rectangle
 
-toml = (Path(fl.HERE).parent / "04-code" / "designlab" / "isolation"
-        / "egress.toml")
-pol = tomllib.loads(toml.read_text())
-hosts = [h["name"].split(".")[0] for h in pol["host"]]
-tools = []
-for h in pol["host"]:
-    for t in h["tools"]:
-        if t not in tools:
-            tools.append(t)
-allowed = {(t, h["name"].split(".")[0]) for h in pol["host"]
-           for t in h["tools"]}
+rows = [("Own process", 11.1, None),
+        ("OS sandbox", 17.1, None),
+        ("Container", 410, 60),
+        ("MicroVM", 780, 35),
+        ("Own VM", 21000, 900)]
 
-fig, ax = fl.figure(4.5, 3.6)
-n, m = len(tools), len(hosts)
-ax.set_xlim(-3.2, m)
-ax.set_ylim(-0.2, n + 2.6)
-ax.axis("off")
-for j, h in enumerate(hosts):
-    ax.text(j + 0.5, n + 0.2, h, rotation=60, ha="left", va="bottom",
-            fontsize=9)
-for i, t in enumerate(tools):
-    y = n - 1 - i
-    ax.text(-0.15, y + 0.5, t, ha="right", va="center", **fl.mono(t))
-    for j, h in enumerate(hosts):
-        on = (t, h) in allowed
-        ax.add_patch(Rectangle((j + 0.1, y + 0.1), 0.8, 0.8,
-                               facecolor=fl.C["policy"] if on else "white",
-                               edgecolor=fl.C["policy"] if on
-                               else fl.GREY_LIGHT, lw=0.6))
+fig, ax = fl.figure(4.5, 3.2)
+ys = list(range(len(rows)))[::-1]
+for y, (name, cold, warm) in zip(ys, rows):
+    ax.plot([cold], [y], marker=fl.MARKERS[0], color=fl.C["ops"], ms=7,
+            ls="none")
+    ax.text(cold * 1.25, y + 0.18, f"{cold:,.0f} ms" if cold >= 100
+            else f"{cold:.1f} ms", fontsize=9, va="bottom")
+    if warm:
+        ax.plot([warm], [y], marker=fl.MARKERS[1], color=fl.C["org"],
+                ms=6, ls="none", mfc="white")
+        ax.plot([warm, cold], [y, y], color=fl.GREY_LIGHT, lw=0.8,
+                zorder=0)
+ax.axvline(47000, color=fl.GREY_DARK, ls=":", lw=0.9)
+ax.text(40000, len(rows) - 0.55, "p95 task", ha="right", fontsize=9)
+ax.set_xscale("log")
+ax.set_xlim(5, 90000)
+ax.set_ylim(-0.7, len(rows) - 0.3)
+ax.set_yticks(ys)
+ax.set_yticklabels([r[0] for r in rows])
+ax.set_xlabel("Start time per session (ms, log scale)")
+ax.plot([], [], marker=fl.MARKERS[0], color=fl.C["ops"], ls="none",
+        label="cold")
+ax.plot([], [], marker=fl.MARKERS[1], color=fl.C["org"], mfc="white",
+        ls="none", label="warm pool")
+ax.legend(loc="center right", frameon=False, fontsize=9)
 fl.save(fig)

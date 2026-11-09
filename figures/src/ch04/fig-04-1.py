@@ -1,36 +1,24 @@
-"""Figure 4.1  The scoreboard at baseline.
+"""Figure 4.2  Contacts and changes: the funnel from 14 million to 2.1 million.
 
-Reading order: one row per scoreboard column, top to bottom, for the
-12 months to September 30, 2025. Measured values are solid; columns with
-nothing to measure yet are dashed and read n/a. Values from
-python3 -m baseline.demo (corpus ops-v1, seed 2026).
+Reading order: top to bottom, each bar a subset of the one above.
+Values from python3 -m baseline.demo (corpus ops-v1, seed 2026).
 """
 import figlib as fl
-from matplotlib.patches import Rectangle
 
-rows = [("Agent", "0%"), ("Assisted", "0%"), ("Self-service", "39%"),
-        ("Person", "61%"), ("Cost per verified outcome", "n/a"),
-        ("Blended cost per change", "$37.94"),
-        ("Verified-outcome rate", "n/a"), ("Duplicates", "n/a"),
-        ("Unauthorized", "0"), ("Incidents", "0"), ("p95 latency", "n/a"),
-        ("Use cases", "1")]
-fig, ax = fl.figure(4.5, 4.6)
-n = len(rows)
-ax.set_xlim(0, 10)
-ax.set_ylim(0, n + 1.0)
-ax.axis("off")
-ax.text(0.1, n + 0.5, "Baseline, 12 months to Sep. 30, 2025",
-        va="center", fontweight="bold", color=fl.LABEL["org"])
-for i, (name, val) in enumerate(rows):
-    y = n - i - 0.5
-    na = val == "n/a"
-    ax.text(0.1, y, name, va="center")
-    tok = "org" if na else ("evidence" if name.startswith("Blended") else "ops")
-    ax.add_patch(Rectangle((6.6, y - 0.36), 3.3, 0.72,
-                           facecolor="white" if na else fl.FILL[tok],
-                           edgecolor=fl.C[tok], lw=fl.STROKE["data"],
-                           linestyle="--" if na else "-"))
-    ax.text(8.25, y, val, va="center", ha="center",
-            color=fl.LABEL[tok] if na else fl.TEXT_ON[tok],
-            fontweight="normal" if na else "bold")
+steps = ["All contacts", "About a change", "Distinct changes",
+         "Done by a person"]
+vals = [14.00, 4.34, 2.10, 1.281]
+fig, ax = fl.figure(4.3, 3.3)
+y = list(range(len(steps)))[::-1]
+for i, (yi, v) in enumerate(zip(y, vals)):
+    tok = "org" if i < 2 else "ops"
+    ax.barh(yi, v, height=0.6, color=fl.FILL[tok] if i < 2 else fl.C[tok],
+            edgecolor=fl.C[tok], hatch="///" if i < 2 else "")
+    fl.label_line(ax, v, yi, f"{v:.2f}M")
+ax.set_yticks(y)
+ax.set_yticklabels(steps)
+ax.set_xlim(0, 17)
+ax.set_xlabel("Baseline year (millions)")
+ax.grid(axis="x")
+fl.note(ax, (1.2, y[2] + 0.3), (7.5, y[2] + 0.75), "15% of contacts")
 fl.save(fig)

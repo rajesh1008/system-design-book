@@ -1,8 +1,8 @@
-"""Figure 9.8  Resume rate by kill point.
+"""Figure 9.9  Replay time distribution.
 
-Reading order: left to right along the twelve steps; each line is one
-strategy's share of kill points (two per step) that resumed correctly.
-From durable.killsuite, run when the figure is built.
+Reading order: left to right from the median to the slowest replay in
+Ben Carter's March benchmark; the line is the three-second target.
+From durable.card.BEN_REPLAY_S.
 """
 import sys
 from pathlib import Path
@@ -10,25 +10,23 @@ from pathlib import Path
 import figlib as fl
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "designlab"))
-from durable.killsuite import suite  # noqa: E402
-from durable.workflow import STEPS  # noqa: E402
+from durable.card import BEN_REPLAY_S as B  # noqa: E402
 
-fig, ax = fl.figure(4.8, 3.4)
-x = list(range(1, len(STEPS) + 1))
-series = [("durable", "verified", "run store"), ("framework", "org", "February checkpointer"),
-          ("memory", "fail", "pilot loop")]
-for k, (s, tok, label) in enumerate(series):
-    rows = suite(s)
-    y = [100 * sum(r["correct"] for r in rows[2 * i:2 * i + 2]) / 2 for i in range(len(STEPS))]
-    off = (1 - k) * 2.0
-    ax.plot(x, [v + off for v in y], color=fl.C[tok], marker=fl.MARKERS[k], ls=fl.LINESTYLES[k], lw=1.6)
-    ax.text(12.3, y[-1] + off + (-5 if k == 1 else 6 if k == 0 else 0), label,
-            color=fl.LABEL[tok], fontsize=9.5, va="center")
-ax.set_xticks(x)
-ax.set_xlabel("Kill point (step number)")
-ax.set_ylabel("Kill points resumed correctly (%)")
-ax.set_ylim(-8, 112)
-ax.set_xlim(0.5, 16.2)
+fig, ax = fl.figure(4.5, 3.2)
+keys = ["p50", "p90", "p99", "max"]
+vals = [B[k] for k in keys]
+toks = ["ops", "ops", "verified", "ops"]
+for i, (k, v, t) in enumerate(zip(keys, vals, toks)):
+    ax.bar(i, v, width=0.6, color=fl.FILL[t], edgecolor=fl.C[t], lw=fl.STROKE["data"],
+           hatch=fl.HATCH[i])
+    ax.text(i, v + 0.08, f"{v:.1f} s" if k != "p50" else f"{v:.2f} s", ha="center", fontsize=9.5)
+ax.axhline(B["target"], color=fl.C["policy"], ls="--", lw=1.2)
+ax.text(3.45, B["target"] + 0.07, "target 3 s", color=fl.LABEL["policy"], fontsize=9.5, ha="right")
+ax.set_xticks(range(4))
+ax.set_xticklabels(keys)
+ax.set_ylabel("Replay time (s)")
+ax.set_ylim(0, 3.5)
+ax.set_xlabel(f"{B['runs']:,} trajectories, phase-2 journal")
 for sp in ("top", "right"):
     ax.spines[sp].set_visible(False)
 fl.save(fig)

@@ -1,19 +1,19 @@
 @startuml
-' Figure 7.4  Unknown outcome resolution by lookup
-' Reading order: top to bottom, times are seconds from the first
-' attempt. The ledger asks the airline at fixed offsets and stops at
-' the airline's documented visibility bound.
+' Figure 7.3  Effect ledger states
+' Reading order: left to right from reserved. The unknown state has
+' four exits, chosen by the tool's contract. Final states are on the
+' right.
 !include plantuml-theme.puml
-participant "Executor" as X <<ops>>
-database "Effect ledger" as L <<evidence>>
-participant "Airline" as A <<ops>>
-X -> A : reissue(ref) at 0 s
-A -[$FAIL]-> X : timeout at 8 s
-X -> L : unknown
-X -> A : lookup(ref) at 13 s
-A --> X : not found
-X -> A : lookup(ref) at 23 s
-A --> X : ticket found
-X -[$VERIFIED]-> L : committed
-note over X, A : absent at the 40 s bound means\nit never landed: attempt again
+hide empty description
+[*] --> reserved
+reserved --> attempting
+attempting --> committed : receipt
+attempting --> failed : refused
+attempting -[$FAIL]-> unknown : timeout
+unknown --> committed : lookup found
+unknown --> attempting : same key, or absent
+unknown --> escalated : no key, no lookup
+unknown --> abandoned : message
+committed --> compensating
+compensating --> compensated
 @enduml

@@ -5,7 +5,7 @@ The two effect tools whose arguments Chapter 16 checks come from
 `toolargs`, so there is one definition of each. The rebook description
 gained one sentence after May 7, 2026; the tool's version did not move,
 because the effect did not change, but the description is in the
-manifest, so the harness version did (Section 4).
+manifest, so the harness version did (Chapter 25).
 """
 from __future__ import annotations
 

@@ -67,7 +67,7 @@ SEATS: tuple[Seat, ...] = (
          (2, 0, 0, 1, 0, 3)),
 )
 
-# The June requisition the August review replaced (section 4).
+# The June requisition the August review replaced (Chapter 41).
 JUNE_REQ = Seat("architect", "ML engineer, agents",
                 "ML engineer, agents", "action", "platform",
                 date(2026, 9, 14), (1, 3, 2, 0, 1, 1))

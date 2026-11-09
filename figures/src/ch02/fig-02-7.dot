@@ -1,13 +1,13 @@
-// Figure 2.7  Gap 2: proposal to permission
+// Figure 2.9  Gap 4: execution to verified outcome
 // Reading order: top to bottom. The record that closes the gap sits on
 // the main path; the failure when it is missing branches below.
-digraph gap2 {
+digraph gap4 {
 #include "book.gv"
   rankdir=TB; nodesep=0.45; ranksep=0.35;
-  a [label="Proposal", class="model"];
-  r [label="Policy decision", class="evidence store"];
-  b [label="Permission", class="policy gate"];
-  x [label="Self-approval", class="fail"];
+  a [label="Execution", class="ops"];
+  r [label="Independent read", class="evidence store"];
+  b [label="Verified outcome", class="verified gate"];
+  x [label="Self-report", class="fail"];
   a -> r [class="control"];
   r -> b [class="emphasis"];
   a -> x [label=" No record", class="fail"];

@@ -1,8 +1,7 @@
 """What recurs across the worked designs, read from the specs.
 
 Each pattern is a predicate over a spec. A pattern that holds in every
-design is the method's; one that holds in some is the industry's. The
-chapter's Section 7 reads this table.
+design is the method's; one that holds in some is the industry's. Chapter 43 reads this table.
 """
 from __future__ import annotations
 

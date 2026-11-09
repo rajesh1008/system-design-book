@@ -1,4 +1,4 @@
-"""The talking stick across workers (Section 6).
+"""The talking stick across workers (Chapter 27).
 
 Chapter 8 gave each itinerary a single writer: a lease with a fencing
 token, the talking stick, and a gateway that refuses a lower token.

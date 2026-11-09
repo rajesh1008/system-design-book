@@ -1,22 +1,31 @@
 @startuml
-' Figure 23.7  The letter that tried to instruct
-' Reading order: top to bottom. The red-team letter rt-letter-07 asks
-' for a refund to a new card ending 7731. Through the edge, the
-' proposal carries the locator and amount only and the gateway takes
-' card 0952 from the record. With the edge skipped, the proposal
-' carries 7731 and no approval, and the gateway refuses it.
-' From inputs.demo --part letter, with and without the injection.
+' Figure 23.7  The input contract
+' Reading order: top to bottom. A Contract names a modality and an
+' owner, lists its fields, and has no free-text field. The edge admits
+' a RawInput against it and returns an Envelope; only an Envelope
+' renders into context. From inputs.contract and inputs.edge.
 !include plantuml-theme.puml
-participant "Letter" as L <<knowledge>>
-participant "Edge" as E <<policy>>
-participant "Agent" as A <<model>>
-participant "Gateway" as G <<policy>>
-L -> E : letter
-E -> A : fields, flag
-A -> G : refund 312.40
-G -> G : card 0952
-== edge skipped ==
-L -[$FAIL]> A : raw text
-A -> G : card 7731
-G -[$FAIL]> A : refused
+class Contract <<policy>> {
+  +modality
+  +owner
+  +free_text = False
+}
+class Field <<policy>> {
+  +pattern
+  +accept_at, review_at
+  +check
+}
+class RawInput <<knowledge>> {
+  +layers
+  +extracted
+}
+class Envelope <<evidence>> {
+  +trust = untrusted
+  +provenance
+  +fields, signals
+  +route()
+}
+Contract *-down- Field
+RawInput .right.> Contract : against
+RawInput -down-> Envelope : admit()
 @enduml

@@ -1,0 +1,22 @@
+@startuml
+' Figure 23.1  The letter that tried to instruct
+' Reading order: top to bottom. The red-team letter rt-letter-07 asks
+' for a refund to a new card ending 7731. Through the edge, the
+' proposal carries the locator and amount only and the gateway takes
+' card 0952 from the record. With the edge skipped, the proposal
+' carries 7731 and no approval, and the gateway refuses it.
+' From inputs.demo --part letter, with and without the injection.
+!include plantuml-theme.puml
+participant "Letter" as L <<knowledge>>
+participant "Edge" as E <<policy>>
+participant "Agent" as A <<model>>
+participant "Gateway" as G <<policy>>
+L -> E : letter
+E -> A : fields, flag
+A -> G : refund 312.40
+G -> G : card 0952
+== edge skipped ==
+L -[$FAIL]> A : raw text
+A -> G : card 7731
+G -[$FAIL]> A : refused
+@enduml

@@ -1,27 +1,23 @@
-// Figure 28.8  The loop with its seven properties (signature S7)
-// Reading order: the cycle from Trigger at the top, clockwise: a
-// trigger starts one run, a stop a machine can check ends it, the
-// state is saved, and a verifier that did not act checks it before
-// the next trigger. Budget and restricted change bound the run; the
-// human on the loop sits outside it. From loops.spec and loops.lint.
-digraph loop7 {
+// Figure 28.8  The human on the loop
+// Reading order: top to bottom. Signals from the loop split two
+// ways: a page when a person must act before morning, the morning
+// queue for the rest. The owner holds three kill-switch tiers and
+// reviews the loop card each Monday. From loops.demo --part human.
+digraph human {
 #include "book.gv"
   rankdir=TB; nodesep=0.3; ranksep=0.3;
-  trig [label="1 Trigger\nrun key", class="ops"];
-  run [label="Run", class="model"];
-  stop [label="2 Stop\nmachine checks", class="policy gate"];
-  state [label="3 State\nrun store", class="knowledge store"];
-  ver [label="4 Verify\ndid not act", class="verified"];
-  bud [label="5 Budget\nloop day", class="policy"];
-  chg [label="6 Change\nnamed scope", class="policy"];
-  hum [label="7 Human\non the loop", class="org human"];
-  trig -> run [class="emphasis"];
-  run -> stop [class="emphasis"];
-  stop -> state [class="emphasis"];
-  state -> ver [class="emphasis"];
-  ver -> trig [class="emphasis", constraint=false];
-  bud -> run [class="control"];
-  chg -> run [class="control"];
-  ver -> hum [class="async"];
-  { rank=same; bud; run; chg; }
+  loop [label="Fare watch\nsignals", class="model"];
+  page [label="Page\nunsafe if it waits", class="fail"];
+  queue [label="Morning queue\nstalls, hand-offs", class="knowledge store"];
+  owner [label="Owner\nBen Carter", class="org human"];
+  desk [label="Agent desk", class="org human"];
+  kill [label="Kill switch\nwatch, effects, loop", class="policy gate"];
+  review [label="Monday review\nloop card", class="evidence note"];
+  loop -> page [class="emphasis"];
+  loop -> queue [class="async"];
+  page -> owner [class="emphasis"];
+  queue -> desk [class="data"];
+  owner -> kill [class="control"];
+  owner -> review [class="trail"];
+  { rank=same; page; queue; }
 }

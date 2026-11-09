@@ -1,4 +1,4 @@
-"""Reconciliation against the processor's record (Sections 3 and 5).
+"""Reconciliation against the processor's record (Chapter 12).
 
 The ledger says what Lakeshore believes it paid. The processor's
 refund list (intraday) and settlement file (next morning) say what

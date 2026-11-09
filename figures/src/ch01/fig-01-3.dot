@@ -1,18 +1,24 @@
-// Figure 1.3  The six states as a strip with the five gaps marked
-// Reading order: top to bottom. Each arrow is a gap, labeled with the
-// question that must be answered before the next state exists.
-digraph strip {
+// Figure 1.2  Answering versus acting, side by side
+// Reading order: left column answers, top to bottom; right column acts,
+// top to bottom. On the left a person reads the words before anything
+// happens. On the right the world changes first.
+digraph answer_act {
 #include "book.gv"
-  rankdir=TB; ranksep="0.28";
-  o [label="Output", class="model"];
-  p [label="Proposal", class="model"];
-  q [label="Permission", class="policy gate"];
-  e [label="Execution", class="evidence"];
-  v [label="Verified outcome", class="verified"];
-  b [label="Business result", class="verified store"];
-  o -> p [label="  G1  an action?", class="data"];
-  p -> q [label="  G2  who allowed it?", class="policy"];
-  q -> e [label="  G3  exactly once?", class="control"];
-  e -> v [label="  G4  who checked?", class="trail"];
-  v -> b [label="  G5  did it help?", class="verified"];
+  rankdir=TB;
+  subgraph cluster_a { label="Answering"; class="plane-model";
+    a1 [label="Question", class="human"];
+    a2 [label="Model", class="model"];
+    a3 [label="Words on a screen", class="note"];
+    a4 [label="Person decides", class="human"];
+    a1 -> a2 [class="control"]; a2 -> a3 [class="data"];
+    a3 -> a4 [label=" read", class="data"];
+  }
+  subgraph cluster_b { label="Acting"; class="plane-ops";
+    b1 [label="Request", class="human"];
+    b2 [label="Model", class="model"];
+    b3 [label="Tool call", class="ops"];
+    b4 [label="World changed", class="fail store"];
+    b1 -> b2 [class="control"]; b2 -> b3 [class="control"];
+    b3 -> b4 [label=" effect", class="fail"];
+  }
 }

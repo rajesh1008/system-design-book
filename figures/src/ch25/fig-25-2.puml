@@ -1,0 +1,18 @@
+@startuml
+' Figure 25.2  The loop, step by step
+' Reading order: top to bottom, then back up the left side. The harness
+' assembles what the model sees, the model proposes one step, the
+' gateway runs or refuses it, the observation lands in the trail and the
+' next context, and the harness, not the model, checks the stops.
+!include plantuml-theme.puml
+start
+repeat
+  :Harness assembles context; <<ops>>
+  :Model proposes one step; <<model>>
+  :Gateway runs or refuses it; <<ops>>
+  :Observation to trail and context; <<ops>>
+repeat while (Harness: a stop met?) is (no)
+->yes;
+:Stop, with the reason; <<ops>>
+stop
+@enduml

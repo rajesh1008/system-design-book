@@ -13,7 +13,7 @@ from isolation.sandbox import runner_name
 
 from . import browser, demo, live, proposals, repo
 from .battery import CLASSES, PROBES, run_battery
-from .gate import AGENT, Approval, owner_of, owners, review, test_names
+from .gate import AGENT, Approval, owner_of, owners, review, names_of_tests
 from .profiles import RUNNER, SANDBOX
 
 BWRAP = runner_name() == "bwrap"
@@ -113,7 +113,7 @@ class Gate(unittest.TestCase):
         self.assertEqual(owner_of("tests/test_rules.py", t), "Tomás Ruiz")
         self.assertEqual(owner_of(".ci/pipeline.toml", t), "Daniel Price")
         self.assertIsNone(owner_of("rules.py", t))
-        names = test_names(self.base["tests/test_rules.py"])
+        names = names_of_tests(self.base["tests/test_rules.py"])
         self.assertIn(proposals.FAILING, names)
         self.assertEqual(len(names), 6)
 

@@ -1,4 +1,4 @@
-"""Hierarchies: what a fact survives on its way down (Section 4).
+"""Hierarchies: what a fact survives on its way down (Chapter 27).
 
 A case carries eight facts the final effect depends on (the traveler,
 the itinerary, the leg, the fare-difference limit, the refund limit,

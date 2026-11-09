@@ -1,23 +1,25 @@
-// Figure 28.7  The human on the loop
-// Reading order: top to bottom. Signals from the loop split two
-// ways: a page when a person must act before morning, the morning
-// queue for the rest. The owner holds three kill-switch tiers and
-// reviews the loop card each Monday. From loops.demo --part human.
-digraph human {
+// Figure 28.7  Bounded cost and restricted change
+// Reading order: top to bottom. A model call reserves its worst case
+// on three scopes before it runs; a voucher passes the control check
+// and a single-use permission before the gateway sends it. A refusal
+// on either path becomes a hand-off. From loops.budget and
+// loops.fare_watch.Control.
+digraph bounds {
 #include "book.gv"
   rankdir=TB; nodesep=0.3; ranksep=0.3;
-  loop [label="Fare watch\nsignals", class="model"];
-  page [label="Page\nunsafe if it waits", class="fail"];
-  queue [label="Morning queue\nstalls, hand-offs", class="knowledge store"];
-  owner [label="Owner\nBen Carter", class="org human"];
-  desk [label="Agent desk", class="org human"];
-  kill [label="Kill switch\nwatch, effects, loop", class="policy gate"];
-  review [label="Monday review\nloop card", class="evidence note"];
-  loop -> page [class="emphasis"];
-  loop -> queue [class="async"];
-  page -> owner [class="emphasis"];
-  queue -> desk [class="data"];
-  owner -> kill [class="control"];
-  owner -> review [class="trail"];
-  { rank=same; page; queue; }
+  call [label="Model call\nworst case", class="model"];
+  enf [label="Budget enforcer\nrun, loop day,\nloops day", class="policy gate"];
+  vou [label="Voucher\nproposed", class="model"];
+  ctl [label="Control\n$100, $5,000 a day", class="policy gate"];
+  gw [label="Gateway\npermission", class="policy gate"];
+  pay [label="Payments", class="ops external"];
+  desk [label="Hand-off\nagent desk", class="org human"];
+  call -> enf [class="data"];
+  vou -> ctl [class="data"];
+  ctl -> gw [class="emphasis"];
+  gw -> pay [class="emphasis"];
+  enf -> desk [class="fail", label=" refused"];
+  ctl -> desk [class="fail", label=" over"];
+  { rank=same; call; vou; }
+  { rank=same; enf; ctl; }
 }

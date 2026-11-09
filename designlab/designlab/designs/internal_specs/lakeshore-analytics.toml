@@ -16,7 +16,7 @@ author = "Daniel Price"
 owner = "Sarah Whitfield"
 title = "Analytics agent: answers from certified metrics"
 summary = "Answers metric questions through the semantic layer"
-out_of_scope = "raw SQL, new metric definitions, board and filing figures"
+out_of_scope = "raw SQL, new metric definitions, and board and filing figures"
 customer = "analyst or manager"
 knowledge = "semantic layer: certified metrics and dimensions"
 people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
@@ -126,7 +126,7 @@ K1 = { answer = "the question, the metric catalog, the requester's role", source
 K2 = { answer = "metrics refresh hourly; the answer states its as-of time", source = "doc:context-plan" }
 K3 = { answer = "column comments and dashboard titles", source = "doc:threat-list" }
 K4 = { answer = "nothing persists; the catalog is read each time", source = "doc:context-plan" }
-T1 = { answer = "who asked, which metric and version, which rows", source = "doc:obligations" }
+T1 = { answer = "who asked, which metric and version, and which rows", source = "doc:obligations" }
 T4 = { answer = "one year; finance and audit read it", source = "doc:obligations" }
 O1 = { answer = "cost per answered question, Sarah Whitfield", source = "doc:economics-card" }
 O2 = { answer = "about 40,000 questions a year; month close is four days", source = "doc:analyst-tickets-2026" }

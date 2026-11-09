@@ -1,18 +1,20 @@
-// Figure 30.8  The harness on two adapters
-// Reading order: top to bottom. One manifest, one hash, one harness;
-// either adapter runs it; the gateway, the run store, and the trail
-// stay Lakeshore's whichever adapter runs. From runtimes.portability.
+// Figure 30.8  Build, buy or rent: the decision
+// Reading order: top to bottom, one question per part of the system.
+// A part that holds a record Lakeshore must produce is owned; a part
+// a second provider can replace with no manifest change is rented;
+// the rest is bought only with a tested exit.
 digraph hld {
 #include "book.gv"
-  rankdir=TB; nodesep=0.35; ranksep=0.3;
-  man [label="Manifest\n6b225e5fa425", class="ops"];
-  h [label="Harness\nLangGraph loop", class="model"];
-  t [label="Adapter:\nthreads", class="ops external"];
-  s [label="Adapter:\nsessions", class="ops external"];
-  own [label="Gateway, run store,\ntrail: Lakeshore's", class="verified store"];
-  man -> h [class="data"];
-  h -> t [class="emphasis"];
-  h -> s [class="emphasis"];
-  t -> own [class="control"];
-  s -> own [class="control"];
+  rankdir=TB; nodesep=0.3; ranksep=0.26;
+  part [label="A part of\nthe system", class="ops"];
+  q1 [label="Holds a record\nwe must produce?", class="org gate"];
+  q2 [label="Replaceable, 0\nmanifest changes?", class="org gate"];
+  own [label="Own it", class="verified"];
+  rent [label="Rent it", class="ops"];
+  buy [label="Buy with a\ntested exit", class="org"];
+  part -> q1 [class="control"];
+  q1 -> own [class="emphasis", label=" yes"];
+  q1 -> q2 [class="control", label=" no"];
+  q2 -> rent [class="data", label=" yes"];
+  q2 -> buy [class="data", label=" no"];
 }

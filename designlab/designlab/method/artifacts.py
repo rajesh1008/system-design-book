@@ -51,7 +51,7 @@ QUESTIONS = {
 GROUP_OF = {"A": "action", "C": "control", "K": "knowledge",
             "T": "trail", "O": "outcome"}
 
-# The first ten, asked in this order when time is short (Section 8).
+# The first ten, asked in this order when time is short (Chapter 5).
 FIRST_TEN = ["A1", "A2", "A3", "C1", "C2", "C3", "T2", "T3", "O1", "O2"]
 
 # Diagram grammar: node kinds and edge kinds a design may use.

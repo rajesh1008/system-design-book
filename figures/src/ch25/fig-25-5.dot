@@ -1,0 +1,32 @@
+// Figure 25.5  The harness and the model inside it (signature figure S6)
+// Reading order: top to bottom. The customer meets the harness, not the
+// model. Inside it the loop runs under the Stop Conditions and Budgets,
+// calls the model through the Gateway, reads context under the context
+// policy, and acts through the tool gateway. The Harness Manifest names
+// every part, and its hash rides on every trail line.
+digraph harness {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; compound=true;
+  cust [label="Customer or desk", class="ops"];
+  subgraph cluster_h {
+    label="The harness, servicing 1.0.0"; fontname="Source Sans 3 Semibold";
+    style="rounded"; color="#1F2A44"; penwidth=1.6;
+    stops [label="Stop Conditions\nand Budgets", class="policy gate"];
+    loop  [label="Loop", class="ops"];
+    ctx   [label="Context policy", class="knowledge"];
+    model [label="Model, via\nthe Gateway", class="model"];
+    man   [label="Harness Manifest\n6b225e5fa425", class="policy"];
+    tools [label="14 tools", class="ops"];
+  }
+  cust -> loop [class="data", lhead=cluster_h];
+  stops -> loop [style="dashed", arrowhead="none"];
+  loop -> model [class="emphasis"];
+  loop -> ctx [class="data", dir="back"];
+  model -> tools [style="invis"];
+  ctx -> man [style="dotted", arrowhead="none"];
+  man -> tools [style="dotted", arrowhead="none"];
+  loop -> tools [class="data"];
+  {rank=same; stops; loop;}
+  {rank=same; ctx; model;}
+  {rank=same; man; tools;}
+}

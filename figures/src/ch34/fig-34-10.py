@@ -1,43 +1,32 @@
-"""Figure 34.10  Releases blocked and why.
+"""Figure 34.9  pass at k against pass^k.
 
-Reading order: one row per June release, top to bottom by date
-(the release number carries the date): the release, the kind of change, the gate's verdict and
-the reason. From evals.demo --part gate. Lakeshore figures are
-illustrative.
+Reading order: left to right, k from 1 to 8 trials per task on
+R-0617, 640 tasks. pass@k rises toward 1; pass^k falls. Values from
+evals.demo --part passk. Lakeshore figures are illustrative.
 """
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "designlab"))
 import figlib as fl  # noqa: E402
-from matplotlib.patches import Rectangle  # noqa: E402
 
-rows = (("R-0602", "Memory", "Pass", ""),
-        ("R-0603", "Model", "Pass", ""),
-        ("R-0605", "Context", "Pass", ""),
-        ("R-0609", "Tool server", "Blocked", "Wrong card"),
-        ("R-0612", "Tool server", "Pass", ""),
-        ("R-0617", "Model", "Blocked", "Reason flips"),
-        ("R-0619", "Tool server", "Pass", ""),
-        ("R-0621", "Identity", "Pass", ""),
-        ("R-0623", "Knowledge", "Pass", ""))
-cols = (0.0, 0.95, 2.15, 3.15)
-heads = ("Release", "Change", "Gate", "Why")
-fig, ax = fl.figure(4.5, 3.4)
-n = len(rows)
-ax.set_xlim(0, 4.6)
-ax.set_ylim(-0.1, n + 0.9)
-ax.axis("off")
-for x, h in zip(cols, heads):
-    ax.text(x + 0.05, n + 0.45, h, va="center", fontsize=9.5,
-            fontweight="bold", color=fl.INK)
-for i, r in enumerate(rows):
-    y = n - 1 - i
-    tok = "fail" if r[2] == "Blocked" else "verified"
-    ax.add_patch(Rectangle((0.0, y + 0.06), 4.6, 0.88,
-                           facecolor=fl.FILL[tok], edgecolor=fl.C[tok],
-                           lw=1.5 if tok == "fail" else 0.75))
-    for j, (x, v) in enumerate(zip(cols, r)):
-        ax.text(x + 0.05, y + 0.5, v, va="center", fontsize=9,
-                color=fl.INK, fontweight="bold" if j == 2 else None)
+ks = [1, 2, 3, 5, 8]
+at = [0.9936, 0.9999, 1.0, 1.0, 1.0]
+hat = [0.9936, 0.9872, 0.9810, 0.9689, 0.9516]
+fig, ax = fl.figure(4.5, 3.0)
+ax.plot(ks, at, color=fl.C["verified"], ls=fl.LINESTYLES[0], lw=1.5,
+        marker=fl.MARKERS[0])
+ax.plot(ks, hat, color=fl.C["fail"], ls=fl.LINESTYLES[1], lw=2.5,
+        marker=fl.MARKERS[1])
+fl.label_line(ax, 8, 1.0, "pass@k", dy=-6)
+fl.label_line(ax, 8, 0.9516, "pass^k")
+ax.axhline(1.0, color=fl.GREY_LIGHT, lw=0.75)
+ax.annotate("Gate reads k = 3: 0.981", xy=(3, 0.981), xytext=(1.0, 0.955),
+            fontsize=9, color=fl.INK,
+            arrowprops={"arrowstyle": "-", "color": fl.GREY_DARK, "lw": 0.75})
+ax.set_xlim(0.6, 9.6)
+ax.set_ylim(0.94, 1.006)
+ax.set_xticks(ks)
+ax.set_xlabel("Trials per task, k")
+ax.set_ylabel("Share of 640 tasks")
 fl.save(fig)

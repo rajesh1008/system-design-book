@@ -1,0 +1,28 @@
+// Figure 25.12  The harness on one page
+// Reading order: top to bottom. The manifest and its tests live in the
+// repository; a passing build is registered and signed; the deploy check
+// starts only registered hashes; the running harness calls the model
+// through the Gateway and tools through the tool gateway; every trail
+// line carries the hash the on-call reads.
+digraph onepage {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  repo  [label="Manifest\nin the repository", class="ops store"];
+  test  [label="Harness tests", class="ops"];
+  reg   [label="Signed registry", class="policy store"];
+  dep   [label="Deploy check", class="policy gate"];
+  run   [label="Running harness", class="ops"];
+  model [label="Model via\nthe Gateway", class="model"];
+  tg    [label="Tools via\ntool gateway", class="ops"];
+  trail [label="Trail with\nthe hash", class="ops store"];
+  repo -> test [class="data"];
+  test -> reg [class="data"];
+  reg -> dep [class="data"];
+  repo -> dep [style="invis"];
+  dep -> run [class="emphasis"];
+  run -> model [class="data"];
+  run -> tg [class="data"];
+  run -> trail [class="trail"];
+  {rank=same; repo; test;}
+  {rank=same; reg; dep;}
+}

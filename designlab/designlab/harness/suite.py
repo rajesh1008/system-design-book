@@ -1,7 +1,7 @@
 """The harness test suite: what the harness does, with the model held
 still or replaced by a script that misbehaves on purpose.
 
-Four groups, as in Section 6: Stop Conditions, Budgets, tool errors and
+Four groups, as in Chapter 25: Stop Conditions, Budgets, tool errors and
 the context policy, plus transitions when the manifest declares a state
 machine. A check takes the resolved manifest and returns a reason when
 it fails. None of these checks asks whether the model is good.

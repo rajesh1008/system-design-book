@@ -1,4 +1,4 @@
-"""Six skills, four planes, and the gap analysis (section 3).
+"""Six skills, four planes, and the gap analysis (Chapter 41).
 
 A skill is covered when at least two seated people other than the
 lead hold it at level 2 or higher. The lead does not count: the lead

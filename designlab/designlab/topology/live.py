@@ -19,7 +19,7 @@ Five designs over the same tasks, each task once:
 The reviewer lines matter twice: they make the three requests differ,
 so the client's request-hash cache and the fixtures do not collapse
 three votes into one, and they are the only difference between the
-voters, which is the point of Section 5. Every call goes through the
+voters, which is the point of Chapter 27. Every call goes through the
 shared client and spend meter; the key is read by the transport and
 nowhere else. Fixtures hold redacted request and response bodies.
 """

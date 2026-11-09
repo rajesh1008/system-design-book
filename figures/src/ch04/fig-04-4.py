@@ -1,34 +1,27 @@
-"""Figure 4.4  Cost per change decomposed.
+"""Figure 4.5  Refund errors and disputes by month.
 
-Reading order: two stacked bars, person and self-service, each split into
-its cost pools; the dashed line is the blended cost per change. USD per
-change, 12 months to September 30, 2025. From baseline.cost.
+Reading order: left to right by month of refund. The solid bar is errors
+found by October 14, 2025; the dashed outline is errors that will
+eventually surface. The gap at the right is the dispute lag. Errors at
+1:200 scale times 200. From baseline.errors.
 """
 import figlib as fl
 
-person = [("Handle labor", 31.50), ("Repeat contacts", 8.40),
-          ("Supervision", 5.60), ("Seats", 4.80), ("Rework", 4.60)]
-selfs = [("Platform", 3.10), ("Fees", 2.90), ("Payments", 1.60),
-         ("Abandons", 1.90), ("Rework", 1.90)]
-toks = ["ops", "org", "evidence", "knowledge", "fail"]
-fig, ax = fl.figure(4.5, 4.4)
-for x, parts in ((0, person), (1, selfs)):
-    base = 0
-    for j, (name, v) in enumerate(parts):
-        tok = toks[j]
-        ax.bar(x, v, bottom=base, width=0.55, color=fl.FILL[tok],
-               edgecolor=fl.C[tok], hatch=fl.HATCH[j])
-        if x == 0:
-            ax.text(0.33, base + v / 2, f"{name} ${v:.2f}", va="center",
-                    fontsize=9)
-        base += v
-    fl.label_line(ax, x, base, f"${base:.2f}", dx=-14, dy=8)
-ax.axhline(37.94, color=fl.INK, ls="--", lw=1)
-ax.text(1.35, 39.2, "Blended $37.94", ha="right", fontsize=9)
-ax.set_xticks([0, 1])
-ax.set_xticklabels(["Person, 61%", "Self-service, 39%"])
-ax.set_xlim(-0.45, 1.45)
-ax.set_ylim(0, 62)
-ax.set_ylabel("USD per change")
+months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep"]
+found = [500, 600, 460, 440, 400, 440, 560, 320, 520, 460, 360, 40]
+eventual = [500, 600, 460, 440, 400, 440, 560, 320, 520, 460, 580, 320]
+fig, ax = fl.figure(4.5, 3.2)
+x = range(12)
+ax.bar(x, eventual, width=0.7, color="white", edgecolor=fl.C["fail"],
+       ls="--", lw=1.2)
+ax.bar(x, found, width=0.7, color=fl.C["ops"], edgecolor=fl.C["ops"])
+ax.set_xticks(list(x))
+ax.set_xticklabels(months, fontsize=9)
+ax.set_ylabel("Refund errors")
+ax.set_ylim(0, 800)
 ax.grid(axis="y")
+fl.note(ax, (11, 300), (6.2, 720), "Not yet disputed")
+ax.text(0, 700, "Solid: found by Oct 14", fontsize=9)
+ax.text(0, 625, "Dashed: eventual", fontsize=9)
 fl.save(fig)

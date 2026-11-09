@@ -3,7 +3,7 @@
 `Intake.check` returns a verdict. A passing verdict carries a digest of
 the canonical arguments; the proposal, any approval card and the
 redemption all name that digest, so a person who approves a call
-approves those exact arguments (Section 5). `Tool` stands in for the
+approves those exact arguments (Chapter 16). `Tool` stands in for the
 system of record's adapter and keeps its own log, which is how the
 scorecard counts world-invalid calls that reached a tool without
 trusting the intake's word for it.

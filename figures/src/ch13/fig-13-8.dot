@@ -1,24 +1,21 @@
-// Figure 13.8  The model inside the untrusted boundary
-// Reading order: the dashed boundary holds everything the model touches
-// or writes. Values and permission come from outside it: the fare tool
-// computes amounts and the control plane grants permission. Model text
-// crosses the boundary only through the output check.
-digraph untrusted {
+// Figure 13.7  Contract tests in the release path
+// Reading order: left to right. A change to the prompt, the pin or the
+// contract runs the golden suite live; a pass becomes the new baseline
+// and ships; a fail blocks. The nightly run compares against the same
+// baseline without any change from us.
+digraph release_path {
 #include "book.gv"
   rankdir=TB; nodesep=0.3; ranksep=0.3;
-  subgraph cluster_u { label="Untrusted: model in, model out"; class="plane-model"; style="dashed";
-    msg [label="Customer message", class="ops external"];
-    model [label="Hosted model", class="model external"];
-    text [label="Reason code,\nnote text", class="model"];
-  }
-  check [label="Output check", class="policy gate"];
-  fare [label="Fare tool\namount in cents", class="ops"];
-  cp [label="Control plane\npermission record", class="policy gate"];
-  exec [label="Executor", class="ops"];
-  msg -> model [class="data"];
-  model -> text [class="data"];
-  text -> check [class="emphasis"];
-  check -> cp [class="data", label="proposal"];
-  fare -> cp [class="data", label="amount"];
-  cp -> exec [class="policy", label="permission"];
+  change [label="Change\nprompt, pin, contract", class="model"];
+  nightly [label="Nightly run\n02:00 CT", class="model"];
+  suite [label="Golden suite\n42 cases, live", class="model gate"];
+  base [label="Baseline\necho, passes, shapes", class="verified store"];
+  ship [label="Ship new version", class="verified"];
+  block [label="Block and alert", class="fail"];
+  change -> suite [class="data"];
+  nightly -> suite [class="data"];
+  suite -> base [class="verified", label="pass"];
+  base -> ship [class="verified"];
+  suite -> block [class="fail", label="fail or drift"];
+  base -> suite [class="trail", label="compare"];
 }

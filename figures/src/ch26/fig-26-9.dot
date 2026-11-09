@@ -1,0 +1,20 @@
+// Figure 26.9  Tool search over the registry
+// Reading order: top to bottom. The model starts with a search tool
+// and a few always-loaded tools; a query searches only approved
+// entries in the caller's grant; the top hits' definitions load; the
+// call still goes through the gateway. From gateway.search.
+digraph hld {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  model [label="Model\nsearch tool +\nthree always loaded", class="model"];
+  reg [label="Registry\napproved only", class="knowledge store"];
+  grant [label="Caller's grant", class="policy gate"];
+  rank [label="Rank\nname, description", class="knowledge"];
+  defs [label="Top three\ndefinitions load", class="knowledge note"];
+  gw [label="Gateway\ncall checks", class="policy gate"];
+  model -> grant [class="data", label=" query"];
+  reg -> grant [class="control"];
+  grant -> rank -> defs [class="data"];
+  defs -> model [class="async"];
+  model -> gw [class="emphasis", label=" call"];
+}

@@ -1,4 +1,4 @@
-"""Retry policies by plane (Section 2).
+"""Retry policies by plane (Chapter 12).
 
 A retry is safe only when the operation is a read, or when the effect
 carries a key the supplier honors, minted once before the first

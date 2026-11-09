@@ -1,4 +1,4 @@
-"""The twelve change types and the 1,200-case golden set (Section 1).
+"""The twelve change types and the 1,200-case golden set (Chapter 27).
 
 Volumes are Chapter 4's baseline year, in thousands of changes. Each
 type has 100 cases in the golden set; what differs between types for

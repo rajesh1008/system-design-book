@@ -1,56 +1,41 @@
-"""Figure 23.4  Voice turn latency budget.
+"""Figure 23.4  Confidence thresholds and routing.
 
-Reading order: one bar per pipeline, stages left to right, against
-the two-second line. Mean stage times over 2,000 simulated turns
-(seed 23); the held bar is a streaming turn that says a holding
-phrase at 1.2 s while the tool call runs. From inputs.voice.
+Reading order: left to right along the threshold. Bars are the share
+of 2,000 seeded reads sent to review; the two lines are the error
+rate among accepted values, with and without the record check. From
+inputs.route.sweep (the lab's thresholds part).
 """
-import statistics
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "designlab"))
 import figlib as fl  # noqa: E402
-from inputs import voice  # noqa: E402
+from inputs.route import population, sweep  # noqa: E402
 
-b = voice.stage_means(voice.simulate(streaming=False))
-st = voice.simulate(streaming=True)
-s = voice.stage_means([x for x in st if not x.held])
-hold_ep = statistics.fmean(x.endpoint for x in st if x.held)
-stages = ("endpoint", "asr", "model", "tool", "tts")
-names = {"endpoint": "end of speech", "asr": "transcribe",
-         "model": "model", "tool": "tool", "tts": "speak"}
-tok = {"endpoint": "ops", "asr": "ops", "model": "model", "tool": "ops",
-       "tts": "ops"}
-bars = [("Batch", [b[k] for k in stages]),
-        ("Streaming,\nno hold", [s[k] for k in stages]),
-        ("Streaming,\nheld", [hold_ep, 0, 0, 0, voice.HOLD_AT_S])]
-fig, ax = fl.figure(4.5, 3.6)
-for i, (label, vals) in enumerate(bars):
-    y = len(bars) - 1 - i
-    left = 0.0
-    for j, (k, v) in enumerate(zip(stages, vals)):
-        if v <= 0:
-            continue
-        name = "holding phrase" if label.endswith("held") and k == "tts" \
-            else names[k]
-        ax.barh(y, v, left=left, height=0.55, color=fl.FILL[tok[k]],
-                edgecolor=fl.C[tok[k]], lw=0.75, hatch=fl.HATCH[j])
-        if i == 0:
-            ax.text(left + v / 2, y + 0.42, name, ha="center",
-                    va="bottom", fontsize=9, color=fl.INK, rotation=60)
-        elif i == 2 and k == "tts":
-            ax.text(left + v / 2, y - 0.32, name, ha="center",
-                    va="top", fontsize=9, color=fl.INK)
-        left += v
-    ax.text(max(left + 0.08, voice.BUDGET_S + 0.1), y, f"{left:.2f} s", va="center", fontsize=9,
-            color=fl.INK)
-ax.axvline(voice.BUDGET_S, color=fl.C["policy"], ls="--", lw=1.2)
-ax.text(voice.BUDGET_S + 0.1, 0.62, "2 s budget", fontsize=9,
-        color=fl.LABEL["policy"])
-ax.set_yticks(range(len(bars)))
-ax.set_yticklabels([x[0] for x in reversed(bars)], fontsize=9.5)
-ax.set_xlim(0, 6.2)
-ax.set_ylim(-0.75, 3.6)
-ax.set_xlabel("Mean seconds from last word to first audio")
+rows = sweep(population())
+t = [r["t"] for r in rows]
+fig, ax = fl.figure(4.5, 3.4)
+ax2 = ax.twinx()
+ax2.bar(range(len(t)), [r["review"] / 2000 * 100 for r in rows], width=0.6,
+        color=fl.FILL["knowledge"], edgecolor=fl.C["knowledge"], lw=0.75,
+        hatch=fl.HATCH[1], zorder=0)
+ax2.set_ylabel("Sent to review, % of reads", fontsize=9.5)
+ax2.set_ylim(0, 100)
+ax.set_zorder(ax2.get_zorder() + 1)
+ax.patch.set_visible(False)
+ax.plot(range(len(t)), [r["err"] * 100 for r in rows], color=fl.C["fail"],
+        marker=fl.MARKERS[0], ls=fl.LINESTYLES[0])
+ax.plot(range(len(t)), [r["err_chk"] * 100 for r in rows],
+        color=fl.C["verified"], marker=fl.MARKERS[1], ls=fl.LINESTYLES[1])
+ax.set_xticks(range(len(t)))
+ax.set_xticklabels([f"{x:.2f}" for x in t], fontsize=9, rotation=45)
+ax.set_xlabel("Accept threshold on extractor confidence")
+ax.set_ylabel("Error among accepted, %")
+ax.set_ylim(0, 14)
+fl.label_line(ax, 0.2, rows[0]["err"] * 100 + 0.6, "threshold only",
+              color=fl.LABEL["fail"])
+ax.annotate("with record check", xy=(1, 0.06), xytext=(1.6, 2.9),
+            fontsize=9.5, color=fl.LABEL["verified"],
+            bbox=dict(boxstyle="square,pad=0.2", fc="white", ec="none"),
+            arrowprops=dict(arrowstyle="-", color=fl.C["verified"], lw=0.75))
 fl.save(fig)

@@ -1,4 +1,4 @@
-"""The batch refund path, as injected and as fixed (Section 5, Lab).
+"""The batch refund path, as injected and as fixed (Chapter 12, lab).
 
 Injected (April 14): the involuntary-refund batch calls the processor
 through a framework payments adapter with its own credential. The

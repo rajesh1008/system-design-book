@@ -1,0 +1,24 @@
+// Figure 13.8  The model inside the untrusted boundary
+// Reading order: the dashed boundary holds everything the model touches
+// or writes. Values and permission come from outside it: the fare tool
+// computes amounts and the control plane grants permission. Model text
+// crosses the boundary only through the output check.
+digraph untrusted {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  subgraph cluster_u { label="Untrusted: model in, model out"; class="plane-model"; style="dashed";
+    msg [label="Customer message", class="ops external"];
+    model [label="Hosted model", class="model external"];
+    text [label="Reason code,\nnote text", class="model"];
+  }
+  check [label="Output check", class="policy gate"];
+  fare [label="Fare tool\namount in cents", class="ops"];
+  cp [label="Control plane\npermission record", class="policy gate"];
+  exec [label="Executor", class="ops"];
+  msg -> model [class="data"];
+  model -> text [class="data"];
+  text -> check [class="emphasis"];
+  check -> cp [class="data", label="proposal"];
+  fare -> cp [class="data", label="amount"];
+  cp -> exec [class="policy", label="permission"];
+}

@@ -1,4 +1,4 @@
-"""The rebooking saga, ordered by reversibility (Section 4).
+"""The rebooking saga, ordered by reversibility (Chapter 7).
 
 A rebooking touches four systems that cannot share a transaction. Each
 step is its own keyed effect with its own compensation. The order puts

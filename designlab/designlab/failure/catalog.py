@@ -1,4 +1,4 @@
-"""The failure catalog, by plane (Section 1).
+"""The failure catalog, by plane (Chapter 12).
 
 Each row names where a failure starts, what kind it is, how Lakeshore
 sees it, and the first move. Kinds follow a common chaos taxonomy:

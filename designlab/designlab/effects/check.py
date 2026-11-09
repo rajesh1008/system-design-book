@@ -1,4 +1,4 @@
-"""The ledger checker: two witnesses for every effect (Section 3).
+"""The ledger checker: two witnesses for every effect (Chapter 7).
 
 The ledger says what we believe happened. The supplier's own record
 (its reservation history, folio or settlement file) says what did. The

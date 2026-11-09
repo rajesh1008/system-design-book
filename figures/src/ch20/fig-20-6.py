@@ -1,27 +1,29 @@
-"""Figure 20.6  Refusals by reason.
+"""Figure 20.6  Estimated against actual bytes.
 
-Reading order: top to bottom. The 1,436 metric queries in the replay of
-May 21 to 31, 2026 (designlab, seed 20): 1,296 answered and 140
-refused, each with one reason. Cost refusals are 42, or 3 percent, all
-on the two event metrics; no query ran without an estimate.
+Reading order: left to right. Each bar counts answered queries in the
+replayed week of May 21 to 31, 2026, whose estimate was above 10 MB,
+by the ratio of estimated to actual bytes (designlab, seed 20). Most
+estimates run a little low, from 0.83 to 1.03; the median is 0.94. The
+marker shows the opening year scan at 0.91.
 """
 import figlib as fl
 
-rows = [("Entitlement", 55, "policy"),
-        ("Cost (over $1)", 42, "fail"),
-        ("Window too long", 32, "policy"),
-        ("Not in the layer", 11, "knowledge"),
-        ("No estimate", 0, "fail")]
+bins = [0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.00, 1.02]
+count = [27, 45, 26, 4, 17, 32, 85, 58, 21, 12, 5]
 
-fig, ax = fl.figure(4.5, 3.3)
-y = list(range(len(rows)))[::-1]
-for yi, (name, n, tok) in zip(y, rows):
-    ax.barh(yi, n, height=0.6, color=fl.FILL[tok], edgecolor=fl.C[tok],
-            lw=1.6 if tok == "fail" and n else 1.0,
-            hatch="///" if tok == "fail" else "")
-    ax.text(n + 1, yi, f"{n}", va="center", fontsize=9.5, color=fl.INK)
-ax.set_yticks(y, [r[0] for r in rows])
-ax.set_xlabel("Refused queries, of 1,436")
-ax.set_xlim(0, 65)
+fig, ax = fl.figure(4.5, 3.2)
+ax.bar([b + 0.01 for b in bins], count, width=0.017,
+       color=fl.FILL["knowledge"], edgecolor=fl.C["knowledge"], lw=1.0)
+ax.axvline(1.0, color=fl.INK, lw=0.75, ls="--")
+ax.text(1.003, 80, "estimate\n= actual", fontsize=9, color=fl.INK)
+ax.axvline(0.91, color=fl.C["fail"], lw=1.5)
+ax.text(0.905, 92, "year scan, 0.91", fontsize=9, ha="right",
+        color=fl.LABEL["fail"])
+ax.text(0.945, 87, "median 0.94", fontsize=9, ha="center",
+        color=fl.LABEL["knowledge"], va="bottom")
+ax.set_xlabel("Estimated / actual bytes")
+ax.set_ylabel("Answered queries")
+ax.set_xlim(0.8, 1.06)
+ax.set_ylim(0, 100)
 ax.spines[["top", "right"]].set_visible(False)
 fl.save(fig)
