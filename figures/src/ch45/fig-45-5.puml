@@ -1,0 +1,21 @@
+@startuml
+' Figure 45.5  Guarded text-to-SQL
+' Reading order: top to bottom. The analyst's question becomes a typed
+' metric request; the semantic layer compiles it and the row policy
+' checks the requester's role before any SQL runs; raw SQL from the
+' agent is refused; the answer names its metric version.
+' From designs/internal_specs/lakeshore-analytics.toml.
+!include plantuml-theme.puml
+participant "Analyst" as U <<org>>
+participant "Agent" as A <<knowledge>>
+participant "Semantic layer" as S <<knowledge>>
+participant "Row policy" as P <<policy>>
+U -> A : Question
+A -> S : Metric request
+S -> P : Requester's role
+P -> S : Allowed rows
+S -> A : Value, version
+A -[$POLICY]> S : Raw SQL
+S -[$POLICY]> A : Refused
+A -> U : Answer, source
+@enduml

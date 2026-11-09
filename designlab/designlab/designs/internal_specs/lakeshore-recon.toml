@@ -1,0 +1,364 @@
+# Lakeshore back-office reconciliation, the November 2, 2026 design: a
+# nightly loop that matches airline settlement lines to the booking
+# ledger and sorts the breaks into lanes for people. Item 6 of the
+# October internal backlog. The tolerance table is a signed finance
+# policy; the controller signs write-offs. Lakeshore figures are
+# illustrative; inputs are stated assumptions with named sources.
+
+[design]
+id = "lakeshore-recon"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "travel"
+setting = "back office"
+facing = "internal"
+org = "Lakeshore Travel Group, Chicago"
+author = "Daniel Price"
+owner = "Priya Natarajan"
+title = "Reconciliation agent: settlement lines against the ledger"
+summary = "Matches airline settlement lines; sorts breaks into lanes"
+out_of_scope = "tolerance changes, write-offs, payments to airlines"
+customer = "finance analyst"
+knowledge = "booking ledger, airline settlement statements, tolerances"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter", "Priya Natarajan"]
+
+[executor]
+label = "match writer"
+writes = ["match log"]
+
+[[effects]]
+name = "match"
+label = "pair a ledger line and a settlement line within tolerance"
+system = "reconciliation ledger"
+tier = "act"
+undo = "unmatched; both lines return to open"
+verifier = "gl-reconciler"
+
+[[effects]]
+name = "adjust"
+label = "journal entry for a known fee or timing difference"
+system = "general ledger"
+limit_usd = 250
+ladder = [[250, "notify"], [5000, "approve"]]
+tier = "notify"
+undo = "reversing entry"
+verifier = "gl-reconciler"
+
+[[effects]]
+name = "dispute"
+label = "debit memo dispute with an airline"
+system = "airline settlement portal"
+limit_usd = 5000
+ladder = [[1000, "notify"], [25000, "approve"]]
+tier = "approve"
+undo = "withdrawn before the airline answers"
+verifier = "statement-checker"
+
+[[effects]]
+name = "write_off"
+label = "write off an unmatched balance"
+system = "general ledger"
+tier = "suggest"
+undo = "reversing entry in the next period"
+reserved = "the controller signs write-offs"
+
+[[effects]]
+name = "tolerance_change"
+label = "change a match tolerance"
+system = "reconciliation ledger"
+tier = "never"
+undo = "previous table restored; false matches stay"
+reserved = "a tolerance is a signed finance policy"
+
+[[verifiers]]
+id = "gl-reconciler"
+reads = "general ledger posting file"
+written_by = "general ledger"
+
+[[verifiers]]
+id = "statement-checker"
+reads = "next airline settlement statement"
+written_by = "airline settlement portal"
+
+[human_gate]
+label = "finance desk"
+promise_minutes = 480
+cases = ["every dispute", "a break outside the tolerance table",
+         "a write-off proposal"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+order = "value at risk"
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "tolerance"
+rule = "tolerances come from the signed table; widening one is policy"
+plane = "control"
+enforced_by = "policy engine reads tolerance-v3; the agent cannot write it"
+
+[[obligations]]
+id = "segregation"
+rule = "whoever matches never posts the write-off"
+plane = "control"
+enforced_by = "write_off reserved; general ledger role check"
+
+[[obligations]]
+id = "close"
+rule = "the month closes on the controller's signature"
+plane = "control"
+enforced_by = "general ledger period lock"
+
+[[obligations]]
+id = "audit"
+rule = "matches, adjustments, and evidence kept seven years"
+plane = "trail"
+enforced_by = "trail retention"
+
+[requirements]
+A5 = { answer = "one match per line pair; the ledger refuses a second", source = "doc:integration-list" }
+A6 = { answer = "ledger read, statement read, match, adjust, dispute", source = "doc:tool-list" }
+C4 = { answer = "$15 and 3,000 steps a night, 16 a break, 4 hours", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one disputes, tier two all effects, tier three off", source = "doc:runbook" }
+C6 = { answer = "tolerance, segregation, close, audit", source = "doc:obligations" }
+K1 = { answer = "the line, its candidates, the tolerance row", source = "doc:context-plan" }
+K2 = { answer = "statements as filed; a refiled statement restarts the file", source = "doc:context-plan" }
+K3 = { answer = "free-text memo fields on airline statements", source = "doc:threat-list" }
+K4 = { answer = "the run store keeps the file cursor and the lanes", source = "doc:context-plan" }
+T1 = { answer = "which lines matched under which tolerance row, who signed", source = "doc:obligations" }
+T4 = { answer = "seven years; external audit reads it", source = "doc:obligations" }
+O1 = { answer = "cost per reconciled line and value at risk, Priya Natarajan", source = "doc:economics-card" }
+O2 = { answer = "about 2.4 million lines a year; the week after a storm is five", source = "doc:settlement-volumes-2026" }
+O3 = { answer = "$0.90 a line by hand; see the cost line", source = "doc:economics-card" }
+O4 = { answer = "a false match hides a real break until audit", source = "doc:incident-ch45" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 2400000
+low = 2000000
+high = 3000000
+unit = "lines a year"
+assumption = "airline settlement lines across 30 carriers"
+source = "doc:settlement-volumes-2026 (Priya Natarajan)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 5
+low = 3
+high = 7
+unit = "average days"
+assumption = "the week after a storm: refunds, reissues, memos"
+source = "doc:storm-2026-09-10 (settlement week)"
+
+[[estimate]]
+name = "window_hours"
+value = 4
+low = 3
+high = 6
+unit = "hours"
+assumption = "statements land by 1 a.m.; matching runs to 5 a.m."
+source = "doc:settlement-volumes-2026 (Priya Natarajan)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 0.1
+low = 0.05
+high = 0.3
+unit = "model calls"
+assumption = "code matches the line; the model reads only breaks"
+source = "doc:recon-shadow-traces (Daniel Price)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 2
+low = 2
+high = 4
+unit = "tool calls"
+assumption = "candidate read and match"
+source = "doc:recon-shadow-traces (Daniel Price)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.004
+low = 0.002
+high = 0.01
+unit = "of lines"
+assumption = "four lines in a thousand break outside the table"
+source = "doc:recon-shadow-traces (Daniel Price)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 5
+low = 1.3
+high = 30
+unit = "per person-hour"
+assumption = "a mix of 2-, 12-, and 45-minute breaks"
+source = "doc:recon-shadow-traces (Priya Natarajan)"
+
+[decision]
+id = "tolerance-policy"
+question = "Who decides what counts as a match?"
+criteria = ["a match means the lines agree", "auto-match rate",
+            "a person owns the threshold", "audit can re-derive it"]
+chosen = "signed tolerance table by fee class"
+owner = "Priya Natarajan"
+options = [
+  { name = "signed tolerance table by fee class", scores = [2, 1, 2, 2], why_not = "" },
+  { name = "widen tolerances to clear the backlog", scores = [0, 2, 1, 1], why_not = "auto-match rises because false matches rise" },
+  { name = "the agent proposes a tolerance per break", scores = [0, 2, 0, 0], why_not = "the agent would set its own pass mark" },
+]
+
+[deep_dive]
+id = "break-lanes"
+component = "break sorter and finance desk"
+owner = "Priya Natarajan"
+contract = "every break lands in one lane; progress reports value at risk"
+numbers = ["est:gate_items_per_hour", "est:reviewers_needed"]
+test = "replay the storm settlement week; lanes and hours match the desk"
+failure_modes = [
+  { mode = "specialist lane is the bottleneck", detect = "duplicate-charge lane hours above the rest", contain = "progress reported in value at risk", recover = "borrow a specialist; do not widen tolerance" },
+  { mode = "false match consumes a counterpart", detect = "sampled matches re-derived by the GL reconciler", contain = "match undone; both lines open", recover = "tolerance row reviewed by Priya" },
+  { mode = "memo field instructs the agent", detect = "source tag on the step", contain = "policy engine refuses", recover = "statement flagged to the airline desk" },
+  { mode = "night ends before the file", detect = "cursor short at 5 a.m.", contain = "rerun from the persisted cursor", recover = "desk told the file is partial" },
+]
+
+[record]
+id = "R-REC-1"
+review = "REV-15"
+date = "2026-11-02"
+title = "A tolerance is policy, not a setting"
+context = "the October request asked to widen tolerances to clear storm breaks"
+options = ["signed tolerance table by fee class", "widen tolerances to clear the backlog", "the agent proposes a tolerance per break"]
+decision = "matches use the signed table; breaks go to lanes by value at risk"
+consequences = "the storm backlog clears at the specialists' pace"
+reverse_if = "sampled false matches pass 0.1% under the signed table"
+evidence = ["dec:tolerance-policy", "dive:break-lanes", "est:reviewers_needed"]
+owner = "Priya Natarajan"
+signer = "Rachel Morgan"
+revisit_date = "2027-03-01"
+revisit_trigger = "false matches pass 0.1%, or a tolerance row changes"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "code proposes matches; the model reads only breaks", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "the policy engine reads the signed table; the controller signs", owner = "Owen Fletcher", evidence = ["node:policy", "node:desk"] }
+G3 = { answer = "one match per line pair; the file cursor persists", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "the GL reconciler reads the ledger's own posting file", owner = "Priya Natarajan", evidence = ["node:gl-reconciler"] }
+G5 = { answer = "cost per reconciled line and value at risk, monthly", owner = "Priya Natarajan", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 2400000
+agent_share = 0.97
+calls_per_case = 0.1
+in_tokens = 4000
+out_tokens = 300
+cached_share = 0.50
+fees_per_case = 0.0
+platform_month = 2500
+verify_per_case = 0.001
+approval_share = 0.004
+approval_min = 15.0
+handoff_share = 0.03
+pickup_min = 12.0
+error_rate = 0.0002
+rework_min = 40.0
+repeat_share = 0.0
+repeat_min = 0.0
+verified_rate = 0.995
+person_cost = 0.90
+build_usd = 220000
+
+[privilege]
+credential = "run token for one statement file"
+ttl_minutes = 60
+standing = []
+reads = ["booking ledger", "settlement statements", "tolerance table"]
+writes = ["reconciliation ledger", "general ledger",
+          "airline settlement portal"]
+
+[privilege.requested]
+date = "2026-10-05"
+credential = "finance integration account"
+ttl_minutes = 0
+standing = ["general ledger poster role", "tolerance table editor"]
+writes = ["reconciliation ledger", "general ledger",
+          "airline settlement portal"]
+
+[loop]
+loop = "recon-night"
+version = "1.0.0"
+actor = "loop:recon"
+
+[loop.trigger]
+kinds = ["event", "schedule"]
+event = "an airline settlement statement lands"
+schedule = "nightly sweep at 1 a.m. Chicago time"
+run_key = ["file_id", "file_digest"]
+max_runs_per_watch_hour = 1
+
+[[loop.stops]]
+id = "file-done"
+check = "state"
+test = "cursor reaches the last line of the file"
+[[loop.stops]]
+id = "outcome"
+check = "verifier"
+test = "GL reconciler re-derives the sampled matches"
+[[loop.stops]]
+id = "no-progress"
+check = "state"
+test = "cursor does not move for 16 steps"
+[[loop.stops]]
+id = "budget"
+check = "enforcer"
+test = "night or loop-day budget refuses"
+[[loop.stops]]
+id = "morning"
+check = "clock"
+test = "5 a.m. Chicago time"
+
+[loop.state]
+store = "run_store"
+schema = 1
+key = "file"
+fields = ["file_digest", "cursor", "matched", "lanes", "no_progress"]
+progress = ["cursor", "matched", "lanes"]
+
+[loop.verify]
+verifier = "gl-reconciler"
+reads = ["general ledger posting file",
+         "next airline settlement statement"]
+effects = []
+sample = 0.02
+on_mismatch = "match undone; finance desk told"
+
+[loop.budget]
+enforced_by = "budget enforcer"
+run_usd = 15.00
+run_steps = 3000
+sub_run_steps = 16
+loop_day_usd = 20.00
+alert = 0.80
+
+[loop.change]
+grant = ["ledger_read", "statement_read", "match", "adjust", "dispute"]
+effect_tools = ["match", "adjust", "dispute"]
+[loop.change.effects]
+match = { table = "tolerance-v3", per_line = 1 }
+adjust = { per_action_usd = 250.00, per_night_usd = 10000.00 }
+dispute = { per_action_usd = 5000.00, approval = "finance desk" }
+
+[loop.human]
+owner = "Priya Natarajan"
+pages = ["sampled false match", "night ends partial",
+         "loop-day budget at 80%"]
+hand_off = "finance desk"
+kill_switch = ["disputes", "all effects at the gateway", "loop off"]
+review = "Monday close review, loop card"

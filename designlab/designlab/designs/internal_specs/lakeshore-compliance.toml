@@ -1,0 +1,354 @@
+# Lakeshore compliance monitor, the November 2, 2026 design: a nightly
+# unattended loop that samples the trail and the permission store and
+# files findings for people. Item 5 of the October internal backlog.
+# It reads more than any other agent and may write only findings.
+# Lakeshore figures are illustrative; inputs are stated assumptions.
+
+[design]
+id = "lakeshore-compliance"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "travel"
+setting = "compliance"
+facing = "internal"
+org = "Lakeshore Travel Group, Chicago"
+author = "Daniel Price"
+owner = "Rachel Morgan"
+title = "Compliance monitor: a nightly sample of the trail"
+summary = "Samples effects against their permission records nightly"
+out_of_scope = "holding tools, closing findings, regulator reports"
+customer = "compliance analyst"
+knowledge = "trail, permission store, rules bundle, audit plan"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter", "Elena Vasquez"]
+
+[executor]
+label = "finding writer"
+writes = ["finding log"]
+
+[[effects]]
+name = "open_finding"
+label = "a finding in the compliance case system"
+system = "compliance case system"
+tier = "act"
+undo = "withdrawn by an auditor with a reason"
+verifier = "evidence-checker"
+
+[[effects]]
+name = "notify_owner"
+label = "message to the owner of the control that failed"
+system = "team chat"
+tier = "notify"
+undo = "a correction message"
+verifier = "ack-reconciler"
+
+[[effects]]
+name = "propose_hold"
+label = "a tier-one hold on one tool"
+system = "gateway"
+tier = "suggest"
+undo = "released by its owner"
+reserved = "Rachel Morgan or her deputy pulls a hold"
+
+[[effects]]
+name = "close_finding"
+label = "close a finding as resolved"
+system = "compliance case system"
+tier = "suggest"
+undo = "reopened"
+reserved = "an auditor closes findings"
+
+[[effects]]
+name = "regulator_report"
+label = "a report to a regulator"
+system = "mail relay"
+tier = "never"
+undo = "none once filed"
+
+[[verifiers]]
+id = "evidence-checker"
+reads = "gateway permission log"
+written_by = "gateway"
+
+[[verifiers]]
+id = "ack-reconciler"
+reads = "case system audit log"
+written_by = "compliance case system"
+
+[human_gate]
+label = "compliance desk"
+promise_minutes = 480
+cases = ["every finding", "a proposed hold", "a sample the loop could not finish"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "read-only"
+rule = "the monitor reads trails and writes only findings"
+plane = "control"
+enforced_by = "identity broker scopes the run token"
+
+[[obligations]]
+id = "sample-plan"
+rule = "the nightly sample follows the signed audit plan"
+plane = "control"
+enforced_by = "sampler reads the plan; the loop cannot change it"
+
+[[obligations]]
+id = "independence"
+rule = "the monitor never checks fixes to its own findings"
+plane = "control"
+enforced_by = "close_finding reserved for an auditor"
+
+[[obligations]]
+id = "retention"
+rule = "findings and their evidence kept seven years"
+plane = "trail"
+enforced_by = "trail retention"
+
+[requirements]
+A3 = { answer = "no money moves; a night is $25 and 4,000 steps", source = "doc:limits" }
+A5 = { answer = "one finding per effect and rule; a rerun finds it", source = "doc:integration-list" }
+A6 = { answer = "trail read, permission read, rules read, case write", source = "doc:tool-list" }
+C4 = { answer = "$25 and 4,000 steps a night, 16 a check, 5 hours", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one findings, tier two messages, tier three off", source = "doc:runbook" }
+C6 = { answer = "read-only, sample plan, independence, retention", source = "doc:obligations" }
+K1 = { answer = "one effect, its permission record, the rule version", source = "doc:context-plan" }
+K2 = { answer = "the night's trail closes at midnight Chicago time", source = "doc:context-plan" }
+K3 = { answer = "free text inside trail records, such as traveler notes", source = "doc:threat-list" }
+K4 = { answer = "the run store keeps the sample cursor and nothing else", source = "doc:context-plan" }
+T1 = { answer = "what was sampled, what was found, who closed it", source = "doc:obligations" }
+T4 = { answer = "seven years; audit and the regulator read it", source = "doc:obligations" }
+O1 = { answer = "cost per verified finding and per check, Rachel Morgan", source = "doc:economics-card" }
+O2 = { answer = "about 1,400 checks a night; month end doubles it", source = "doc:audit-plan-2026" }
+O3 = { answer = "$3.50 of an auditor's time a check; see the cost line", source = "doc:economics-card" }
+O4 = { answer = "a missed unauthorized effect found by a regulator", source = "doc:incident-ch17" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 520000
+low = 400000
+high = 700000
+unit = "checks a year"
+assumption = "the audit plan's nightly sample of effects"
+source = "doc:audit-plan-2026 (Elena Vasquez)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 3
+low = 2
+high = 4
+unit = "average days"
+assumption = "month end and storm days triple the sample"
+source = "doc:audit-plan-2026 (Elena Vasquez)"
+
+[[estimate]]
+name = "window_hours"
+value = 5
+low = 4
+high = 6
+unit = "hours"
+assumption = "the loop runs from 1 a.m. to 6 a.m. Chicago time"
+source = "doc:audit-plan-2026 (Elena Vasquez)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 1
+low = 0.5
+high = 3
+unit = "model calls"
+assumption = "most checks are code; the model reads free text"
+source = "doc:compliance-shadow-traces (Daniel Price)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 3
+low = 2
+high = 5
+unit = "tool calls"
+assumption = "trail, permission record, rule version"
+source = "doc:compliance-shadow-traces (Daniel Price)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.002
+low = 0.001
+high = 0.01
+unit = "of checks"
+assumption = "about two findings in a thousand checks"
+source = "doc:compliance-shadow-traces (Daniel Price)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 4
+low = 2
+high = 6
+unit = "per person-hour"
+assumption = "an analyst reviews a finding in 15 minutes"
+source = "doc:audit-plan-2026 (Elena Vasquez)"
+
+[decision]
+id = "monitor-scope"
+question = "What may an unattended compliance loop do?"
+criteria = ["it cannot hide what it finds", "people decide holds",
+            "coverage every night", "it does not grade its own fixes"]
+chosen = "read-only monitor that files findings"
+owner = "Rachel Morgan"
+options = [
+  { name = "read-only monitor that files findings", scores = [2, 2, 2, 2], why_not = "" },
+  { name = "monitor that holds a tool itself", scores = [1, 0, 2, 1], why_not = "a hold stops refunds; a person decides" },
+  { name = "quarterly manual sample", scores = [2, 2, 0, 2], why_not = "a quarter is too long to find a December tool" },
+]
+
+[deep_dive]
+id = "nightly-sample"
+component = "sampler and run store"
+owner = "Elena Vasquez"
+contract = "every night's sample finishes, or resumes where it stopped"
+numbers = ["est:peak_per_hour", "est:gate_items_per_hour"]
+test = "kill the loop at check 700; the rerun starts at check 701"
+failure_modes = [
+  { mode = "loop dies mid-night", detect = "cursor short of the sample size at 6 a.m.", contain = "rerun from the persisted cursor", recover = "desk told the night is partial" },
+  { mode = "finding duplicated", detect = "same effect and rule twice", contain = "case system key refuses", recover = "none needed" },
+  { mode = "trail text instructs the monitor", detect = "source tag on the step", contain = "policy engine refuses", recover = "record flagged to its owner" },
+  { mode = "budget spent before the sample", detect = "budget enforcer refusal", contain = "remaining checks carried", recover = "Rachel decides on a larger night" },
+]
+
+[record]
+id = "R-CMP-1"
+review = "REV-15"
+date = "2026-11-02"
+title = "The compliance monitor reads everything and writes findings"
+context = "the October request asked for read on every production database"
+options = ["read-only monitor that files findings", "monitor that holds a tool itself", "quarterly manual sample"]
+decision = "a nightly read-only loop files findings; people hold and close"
+consequences = "a finding at 2 a.m. waits for the desk at 8 a.m."
+reverse_if = "a finding that needed a hold waits past 8 a.m. twice"
+evidence = ["dec:monitor-scope", "dive:nightly-sample", "est:gate_items_per_hour"]
+owner = "Rachel Morgan"
+signer = "Owen Fletcher"
+revisit_date = "2027-02-01"
+revisit_trigger = "a night ends partial three times in a month"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits typed findings; the sampler is code", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "the identity broker scopes reads; auditors close", owner = "Owen Fletcher", evidence = ["node:policy", "node:desk"] }
+G3 = { answer = "the run store's cursor; one finding per effect and rule", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "the evidence checker re-reads the gateway's own log", owner = "Elena Vasquez", evidence = ["node:evidence-checker"] }
+G5 = { answer = "cost per verified finding and per check, monthly", owner = "Rachel Morgan", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 520000
+agent_share = 1.0
+calls_per_case = 1
+in_tokens = 3000
+out_tokens = 150
+cached_share = 0.80
+fees_per_case = 0.0
+platform_month = 1500
+verify_per_case = 0.002
+approval_share = 0.002
+approval_min = 15.0
+handoff_share = 0.002
+pickup_min = 20.0
+error_rate = 0.0005
+rework_min = 30.0
+repeat_share = 0.0
+repeat_min = 0.0
+verified_rate = 0.995
+person_cost = 3.50
+build_usd = 120000
+
+[privilege]
+credential = "run token, read on the trail and the permission store"
+ttl_minutes = 60
+standing = []
+reads = ["trail", "permission store", "rules bundle",
+         "audit plan"]
+writes = ["compliance case system", "team chat"]
+
+[privilege.requested]
+date = "2026-10-05"
+credential = "audit service account"
+ttl_minutes = 0
+standing = ["read on every production database",
+            "gateway hold API key"]
+writes = ["compliance case system", "team chat", "gateway"]
+
+[loop]
+loop = "compliance-night"
+version = "1.0.0"
+actor = "loop:compliance"
+
+[loop.trigger]
+kinds = ["schedule"]
+schedule = "nightly at 1 a.m. Chicago time"
+run_key = ["night", "sample_digest"]
+max_runs_per_watch_hour = 1
+
+[[loop.stops]]
+id = "sampled"
+check = "state"
+test = "cursor reaches the sample size"
+[[loop.stops]]
+id = "outcome"
+check = "verifier"
+test = "evidence checker confirms each finding's records"
+[[loop.stops]]
+id = "no-progress"
+check = "state"
+test = "cursor does not move for 16 steps"
+[[loop.stops]]
+id = "budget"
+check = "enforcer"
+test = "night or loop-day budget refuses"
+[[loop.stops]]
+id = "morning"
+check = "clock"
+test = "6 a.m. Chicago time"
+
+[loop.state]
+store = "run_store"
+schema = 1
+key = "night"
+fields = ["sample_digest", "cursor", "findings", "no_progress"]
+progress = ["cursor", "findings"]
+
+[loop.verify]
+verifier = "evidence-checker"
+reads = ["gateway permission log", "case system audit log"]
+effects = []
+sample = 1.0
+on_mismatch = "finding withdrawn to the desk; Rachel told"
+
+[loop.budget]
+enforced_by = "budget enforcer"
+run_usd = 25.00
+run_steps = 4000
+sub_run_steps = 16
+loop_day_usd = 30.00
+alert = 0.80
+
+[loop.change]
+grant = ["trail_read", "permission_read", "open_finding", "notify_owner"]
+effect_tools = ["open_finding", "notify_owner"]
+[loop.change.effects]
+open_finding = { per_effect_rule = 1, per_night = 50 }
+notify_owner = { per_finding = 1, hours = "8 a.m. to 6 p.m." }
+
+[loop.human]
+owner = "Rachel Morgan"
+pages = ["a finding names an unauthorized effect",
+         "night ends partial", "loop-day budget at 80%"]
+hand_off = "compliance desk"
+kill_switch = ["messages", "findings", "loop off"]
+review = "Monday compliance review, loop card"

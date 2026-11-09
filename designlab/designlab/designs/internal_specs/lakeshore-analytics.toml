@@ -1,0 +1,284 @@
+# Lakeshore analytics agent, the November 2, 2026 design: questions in
+# plain language answered from the semantic layer's certified metrics,
+# never from raw SQL. Item 3 of the October internal backlog. The one
+# internal design with no unattended loop: a person asks every time.
+# Lakeshore figures are illustrative; inputs are stated assumptions.
+
+[design]
+id = "lakeshore-analytics"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "travel"
+setting = "analytics"
+facing = "internal"
+org = "Lakeshore Travel Group, Chicago"
+author = "Daniel Price"
+owner = "Sarah Whitfield"
+title = "Analytics agent: answers from certified metrics"
+summary = "Answers metric questions through the semantic layer"
+out_of_scope = "raw SQL, new metric definitions, board and filing figures"
+customer = "analyst or manager"
+knowledge = "semantic layer: certified metrics and dimensions"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter", "Priya Natarajan"]
+
+[executor]
+label = "metric query runner"
+writes = ["query log"]
+
+[[effects]]
+name = "metric_query"
+label = "a metric request compiled by the semantic layer"
+system = "semantic layer"
+tier = "act"
+undo = "none needed; reads under the requester's row policy"
+verifier = "metric-reconciler"
+
+[[effects]]
+name = "schedule_report"
+label = "a recurring report to a team channel"
+system = "report scheduler"
+tier = "notify"
+undo = "unscheduled by its owner"
+verifier = "delivery-reconciler"
+
+[[effects]]
+name = "define_metric"
+label = "a new or changed metric definition"
+system = "semantic layer"
+tier = "suggest"
+undo = "previous version restored"
+reserved = "finance owns metric definitions (Priya Natarajan)"
+
+[[effects]]
+name = "raw_sql"
+label = "SQL against raw warehouse tables"
+system = "warehouse"
+tier = "never"
+undo = "none for what it disclosed"
+
+[[effects]]
+name = "board_figure"
+label = "a figure for the board or a regulator"
+system = "semantic layer"
+tier = "never"
+undo = "a correction letter"
+reserved = "a named finance owner certifies it"
+
+[[verifiers]]
+id = "metric-reconciler"
+reads = "warehouse query audit"
+written_by = "warehouse"
+
+[[verifiers]]
+id = "delivery-reconciler"
+reads = "scheduler delivery log"
+written_by = "report scheduler"
+
+[human_gate]
+label = "metrics desk"
+promise_minutes = 240
+cases = ["a question no certified metric answers",
+         "a new metric proposed", "a figure leaving the company"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "row-access"
+rule = "a requester sees only the rows their role allows"
+plane = "control"
+enforced_by = "semantic layer row policy, on the requester's identity"
+
+[[obligations]]
+id = "certified"
+rule = "answers use certified metrics; raw SQL is refused"
+plane = "control"
+enforced_by = "the semantic layer compiles; the agent never writes SQL"
+
+[[obligations]]
+id = "traveler-data"
+rule = "no traveler identifier appears in an answer"
+plane = "control"
+enforced_by = "column policy in the semantic layer"
+
+[[obligations]]
+id = "lineage"
+rule = "every answer names its metric and version"
+plane = "trail"
+enforced_by = "query log keeps the compiled request"
+
+[requirements]
+A3 = { answer = "no money moves; 30 seconds of warehouse time a query", source = "doc:limits" }
+A5 = { answer = "a repeated request returns the cached result", source = "doc:integration-list" }
+A6 = { answer = "metric catalog, metric request, schedule", source = "doc:tool-list" }
+C4 = { answer = "8 steps, $0.10, 60 seconds a question", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one schedules, tier two queries, tier three off", source = "doc:runbook" }
+C6 = { answer = "row access, certified metrics, no traveler data, lineage", source = "doc:obligations" }
+K1 = { answer = "the question, the metric catalog, the requester's role", source = "doc:context-plan" }
+K2 = { answer = "metrics refresh hourly; the answer states its as-of time", source = "doc:context-plan" }
+K3 = { answer = "column comments and dashboard titles", source = "doc:threat-list" }
+K4 = { answer = "nothing persists; the catalog is read each time", source = "doc:context-plan" }
+T1 = { answer = "who asked, which metric and version, which rows", source = "doc:obligations" }
+T4 = { answer = "one year; finance and audit read it", source = "doc:obligations" }
+O1 = { answer = "cost per answered question, Sarah Whitfield", source = "doc:economics-card" }
+O2 = { answer = "about 40,000 questions a year; month close is four days", source = "doc:analyst-tickets-2026" }
+O3 = { answer = "$62 by an analyst; see the cost line", source = "doc:economics-card" }
+O4 = { answer = "a wrong number in a decision deck", source = "doc:incident-ch34" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 40000
+low = 25000
+high = 60000
+unit = "questions a year"
+assumption = "the analyst queue's tickets plus dashboard questions"
+source = "doc:analyst-tickets-2026 (Priya Natarajan)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 4
+low = 2
+high = 6
+unit = "average days"
+assumption = "month close and the board pack"
+source = "doc:analyst-tickets-2026 (Priya Natarajan)"
+
+[[estimate]]
+name = "window_hours"
+value = 8
+low = 8
+high = 10
+unit = "hours"
+assumption = "questions arrive in working hours"
+source = "doc:analyst-tickets-2026 (Priya Natarajan)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 4
+low = 2
+high = 8
+unit = "model calls"
+assumption = "map the question, compile, read, answer"
+source = "doc:analytics-pilot-traces (Daniel Price)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 3
+low = 2
+high = 6
+unit = "tool calls"
+assumption = "catalog, metric request, and one follow-up"
+source = "doc:analytics-pilot-traces (Daniel Price)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.12
+low = 0.05
+high = 0.25
+unit = "of questions"
+assumption = "no certified metric answers about one question in eight"
+source = "doc:analytics-pilot-traces (Daniel Price)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 4
+low = 3
+high = 6
+unit = "per person-hour"
+assumption = "an analyst answers an uncovered question in 15 minutes"
+source = "doc:analyst-tickets-2026 (Priya Natarajan)"
+
+[decision]
+id = "query-path"
+question = "How does a question become a number?"
+criteria = ["row access holds", "one definition per metric",
+            "coverage", "the answer names its source"]
+chosen = "metric requests compiled by the semantic layer"
+owner = "Sarah Whitfield"
+options = [
+  { name = "metric requests compiled by the semantic layer", scores = [2, 2, 1, 2], why_not = "" },
+  { name = "text-to-SQL with a SQL linter", scores = [1, 0, 2, 1], why_not = "valid SQL can still compute the wrong revenue" },
+  { name = "an analyst writes every query", scores = [2, 1, 2, 2], why_not = "the queue is the problem being solved" },
+]
+
+[deep_dive]
+id = "guarded-query"
+component = "semantic layer compiler"
+owner = "Priya Natarajan"
+contract = "the agent names a metric, filters, and a grain; never SQL"
+numbers = ["est:gate_items_per_hour", "est:reviewers_needed"]
+test = "200 golden questions; each answer equals the certified figure"
+failure_modes = [
+  { mode = "no metric fits the question", detect = "compiler returns no match", contain = "agent says so; metrics desk", recover = "finance decides whether to certify one" },
+  { mode = "requester asks for rows beyond their role", detect = "row policy denies", contain = "answer at the allowed grain", recover = "access request through the owner" },
+  { mode = "definition drift", detect = "golden set fails after a metric change", contain = "old version pinned", recover = "Priya signs the new version" },
+  { mode = "a column comment instructs the agent", detect = "source tag on the step", contain = "policy engine refuses", recover = "comment removed by the data owner" },
+]
+
+[record]
+id = "R-ANA-1"
+review = "REV-15"
+date = "2026-11-02"
+title = "The analytics agent never writes SQL"
+context = "the October request asked for a read-only warehouse role"
+options = ["metric requests compiled by the semantic layer", "text-to-SQL with a SQL linter", "an analyst writes every query"]
+decision = "answers come only from certified metrics, under row policy"
+consequences = "one question in eight still goes to an analyst"
+reverse_if = "uncovered questions stay above 25% for a quarter"
+evidence = ["dec:query-path", "dive:guarded-query", "est:gate_items_per_hour"]
+owner = "Sarah Whitfield"
+signer = "Rachel Morgan"
+revisit_date = "2027-03-01"
+revisit_trigger = "coverage under 75%, or a golden answer drifts"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits a typed metric request, not SQL", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "row policy on the requester; finance owns definitions", owner = "Owen Fletcher", evidence = ["node:policy", "node:desk"] }
+G3 = { answer = "a request digest; a repeat returns the cached answer", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "the metric reconciler reads the warehouse's own audit", owner = "Priya Natarajan", evidence = ["node:metric-reconciler"] }
+G5 = { answer = "cost per answered question, monthly", owner = "Sarah Whitfield", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 40000
+agent_share = 0.70
+calls_per_case = 4
+in_tokens = 6000
+out_tokens = 400
+cached_share = 0.60
+fees_per_case = 0.02
+platform_month = 3000
+verify_per_case = 0.01
+approval_share = 0.12
+approval_min = 15.0
+handoff_share = 0.12
+pickup_min = 15.0
+error_rate = 0.01
+rework_min = 30.0
+repeat_share = 0.10
+repeat_min = 5.0
+verified_rate = 0.88
+person_cost = 62.00
+build_usd = 250000
+
+[privilege]
+credential = "requester's own identity, passed to the semantic layer"
+ttl_minutes = 15
+standing = []
+reads = ["certified metrics, at the requester's row policy"]
+writes = ["semantic layer", "report scheduler"]
+
+[privilege.requested]
+date = "2026-10-05"
+credential = "warehouse service role"
+ttl_minutes = 0
+standing = ["warehouse read on all schemas"]
+writes = ["warehouse", "report scheduler"]

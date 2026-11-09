@@ -122,6 +122,7 @@ From this directory:
     bash ch42/run.sh               # Chapter 42: checklist, verdict, decision records
     bash ch43/run.sh               # Chapter 43: six worked designs, linted, priced
     bash ch44/run.sh               # Chapter 44: the storm day replayed
+    bash ch45/run.sh               # Chapter 45: six internal designs, linted
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

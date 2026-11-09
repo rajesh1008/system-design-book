@@ -1,0 +1,33 @@
+// Figure 45.3  A coding-agent platform in the delivery pipeline
+// Reading order: top to bottom. A ticket tagged by its repo owner
+// starts a run in a fresh sandbox with a token scoped to one repo and
+// one branch prefix; the run opens a draft pull request; CI writes its
+// own result records, which the CI reconciler reads; a code owner who
+// did not ask approves; merge and deploy are never the agent's.
+// From designs/internal_specs/lakeshore-coding.toml.
+digraph coding {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  tk [label="Tagged ticket", class="org"];
+  subgraph cluster_a { label="Action plane"; class="plane-ops";
+    run [label="Coding run", class="model"];
+    sb [label="Fresh sandbox\nno secrets", class="ops"];
+  }
+  subgraph cluster_c { label="Control plane"; class="plane-policy";
+    pol [label="Policy engine\none repo, agent/ branch", class="policy gate"];
+    own [label="Code owner approves", class="policy human"];
+  }
+  host [label="Code host", class="ops external store"];
+  ci [label="CI runners", class="ops external"];
+  subgraph cluster_t { label="Trail"; class="plane-evidence";
+    rec [label="CI reconciler", class="verified gate"];
+  }
+  tk -> run [class="control"];
+  run -> pol [label=" proposal", class="control"];
+  pol -> sb [class="control"];
+  sb -> ci [class="control"];
+  pol -> host [label=" draft PR", class="control"];
+  ci -> rec [label=" results", class="data"];
+  host -> own [class="async"];
+  own -> host [label=" merge", class="emphasis"];
+}

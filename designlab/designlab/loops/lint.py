@@ -92,7 +92,9 @@ def _change(s) -> str:
     grant = set(c.get("grant", []))
     if not grant:
         return "no tool grant"
-    effects = grant & EFFECT_TOOLS
+    # A spec may name its own effect tools (Chapter 45's internal
+    # designs); the fare-watch and waiver-watch specs use the default.
+    effects = grant & (EFFECT_TOOLS | set(c.get("effect_tools", [])))
     for e in sorted(effects):
         lim = c.get("effects", {}).get(e)
         if not lim:

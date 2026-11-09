@@ -1,0 +1,30 @@
+// Figure 45.4  Data and analytics over the semantic layer
+// Reading order: top to bottom. The agent maps a question to a metric
+// request, never SQL; the semantic layer compiles it under the
+// requester's row policy; the warehouse runs only compiled queries and
+// writes its own audit, which the metric reconciler reads; a question
+// no certified metric answers goes to the metrics desk; raw SQL is
+// refused. From designs/internal_specs/lakeshore-analytics.toml.
+digraph analytics {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3; newrank=true;
+  who [label="Analyst or manager", class="org human"];
+  agent [label="Analytics agent", class="ops"];
+  subgraph cluster_k { label="Knowledge plane"; class="plane-knowledge";
+    sl [label="Semantic layer\ncertified metrics", class="knowledge gate"];
+  }
+  subgraph cluster_c { label="Control plane"; class="plane-policy";
+    row [label="Row policy\nrequester's identity", class="policy gate"];
+    desk [label="Metrics desk", class="policy human"];
+  }
+  wh [label="Warehouse", class="ops store"];
+  raw [label="Raw SQL", class="ops note"];
+  rec [label="Metric reconciler\nreads warehouse audit", class="verified gate"];
+  who -> agent [class="control"];
+  agent -> sl [label=" metric request", class="emphasis"];
+  sl -> row [class="control"];
+  row -> wh [label=" compiled query", class="control"];
+  wh -> rec [class="data"];
+  agent -> desk [class="async"];
+  agent -> raw [label=" refused", class="policy", style=dashed];
+}

@@ -1,0 +1,349 @@
+# Lakeshore coding-agent platform, the November 2, 2026 design: the
+# May 11 pilot on four repositories (DR-29.1) widened to the delivery
+# pipeline. Item 2 of the October internal backlog. The agent proposes
+# and never merges; each run gets a fresh sandbox. Lakeshore figures
+# are illustrative; inputs are stated assumptions with named sources.
+
+[design]
+id = "lakeshore-coding"
+version = "v2.0"
+as_of = "2026-11-02"
+industry = "travel"
+setting = "coding"
+facing = "internal"
+org = "Lakeshore Travel Group, Chicago"
+author = "Ben Carter"
+owner = "Daniel Price"
+title = "Coding agent: pull requests from tickets, in the pipeline"
+summary = "Turns a tagged ticket into a draft pull request with tests"
+out_of_scope = "merges, deploys, secrets, test deletion, infra changes"
+customer = "engineer"
+knowledge = "repositories, tickets, CI history, instruction files"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter"]
+
+[executor]
+label = "branch executor"
+writes = ["agent branch log"]
+
+[[effects]]
+name = "run_sandbox"
+label = "build and test run in a fresh sandbox"
+system = "CI runners"
+tier = "act"
+undo = "sandbox discarded at the end of the run"
+verifier = "ci-reconciler"
+
+[[effects]]
+name = "open_pr"
+label = "draft pull request from a branch the agent created"
+system = "code host"
+tier = "notify"
+undo = "closed; branch deleted"
+verifier = "review-reconciler"
+
+[[effects]]
+name = "edit_tests"
+label = "change or delete an existing test"
+system = "code host"
+tier = "suggest"
+undo = "revert in review"
+reserved = "a test change is the code owner's decision"
+
+[[effects]]
+name = "merge"
+label = "merge to a protected branch"
+system = "code host"
+tier = "never"
+undo = "revert commit; a deploy may already have run"
+reserved = "a code owner who did not ask approves (DR-29.1)"
+
+[[effects]]
+name = "deploy"
+label = "deploy to staging or production"
+system = "release pipeline"
+tier = "never"
+undo = "rollback"
+
+[[verifiers]]
+id = "ci-reconciler"
+reads = "CI result records"
+written_by = "CI runners"
+
+[[verifiers]]
+id = "review-reconciler"
+reads = "code host review record"
+written_by = "code host"
+
+[human_gate]
+label = "code owner review"
+promise_minutes = 480
+cases = ["every pull request", "a test change", "a dependency change"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "sandbox"
+rule = "each run in a fresh sandbox, no cached credentials (DR-29.1)"
+plane = "control"
+enforced_by = "runner pool policy; secret broker refuses run tokens"
+
+[[obligations]]
+id = "separation"
+rule = "the engineer who asked cannot approve the pull request"
+plane = "control"
+enforced_by = "code host branch protection"
+
+[[obligations]]
+id = "dependencies"
+rule = "a new dependency comes from the approved registry mirror"
+plane = "control"
+enforced_by = "sandbox egress allows the mirror only"
+
+[[obligations]]
+id = "session-log"
+rule = "the session log stays with the pull request"
+plane = "trail"
+enforced_by = "trail retention, one year"
+
+[requirements]
+A3 = { answer = "no money moves; the limit is $4 and 80 steps a run", source = "doc:limits" }
+A5 = { answer = "one branch per ticket and commit; a repeat reuses it", source = "doc:integration-list" }
+A6 = { answer = "repo read, ticket read, sandbox shell, CI status", source = "doc:tool-list" }
+C4 = { answer = "$4 and 80 steps a run, 5 sub-runs of 16, 40 minutes", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one a repo, tier two all PRs, tier three off", source = "doc:runbook" }
+C6 = { answer = "sandbox, separation, dependencies, session log", source = "doc:obligations" }
+K1 = { answer = "the ticket, the repo at a commit, its instruction file", source = "doc:context-plan" }
+K2 = { answer = "the commit the run started from; a rebase restarts it", source = "doc:context-plan" }
+K3 = { answer = "issue text, code comments, dependency readmes", source = "doc:threat-list" }
+K4 = { answer = "nothing persists between runs but the instruction file", source = "doc:context-plan" }
+T1 = { answer = "who asked, every command, every file, who merged", source = "doc:obligations" }
+T4 = { answer = "one year with the pull request; security reads it", source = "doc:obligations" }
+O1 = { answer = "cost per merged pull request, Daniel Price", source = "doc:economics-card" }
+O2 = { answer = "about 6,000 tagged tickets a year across 40 repos", source = "doc:ticket-tags-2026" }
+O3 = { answer = "$380 by an engineer; see the cost line", source = "doc:economics-card" }
+O4 = { answer = "a bad merge costs a rollback and an incident", source = "doc:incident-ch29" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 6000
+low = 4000
+high = 9000
+unit = "tickets a year"
+assumption = "tickets tagged agent-ok across 40 repositories"
+source = "doc:ticket-tags-2026 (Daniel Price)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 3
+low = 2
+high = 5
+unit = "average days"
+assumption = "the week before a release freeze"
+source = "doc:release-calendar-2026 (Ben Carter)"
+
+[[estimate]]
+name = "window_hours"
+value = 8
+low = 8
+high = 10
+unit = "hours"
+assumption = "tickets are tagged in working hours"
+source = "doc:ticket-tags-2026 (Daniel Price)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 40
+low = 15
+high = 80
+unit = "model calls"
+assumption = "a ticket takes two to five 16-step sub-runs"
+source = "doc:coding-pilot-traces (Ben Carter)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 60
+low = 20
+high = 120
+unit = "tool calls"
+assumption = "reads, edits, and test runs in the sandbox"
+source = "doc:coding-pilot-traces (Ben Carter)"
+
+[[estimate]]
+name = "gate_share"
+value = 1.0
+low = 1.0
+high = 1.0
+unit = "of pull requests"
+assumption = "every pull request waits for a code owner"
+source = "doc:DR-29.1"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 2.4
+low = 1.5
+high = 4
+unit = "per person-hour"
+assumption = "a code owner reviews a small pull request in 25 minutes"
+source = "doc:coding-pilot-reviews (Ben Carter)"
+
+[decision]
+id = "merge-boundary"
+question = "Where does the agent's authority end in the pipeline?"
+criteria = ["no unreviewed code ships", "the requester cannot approve",
+            "throughput", "the trail names a person"]
+chosen = "propose, never merge"
+owner = "Daniel Price"
+options = [
+  { name = "propose, never merge", scores = [2, 2, 1, 2], why_not = "" },
+  { name = "auto-merge green low-risk changes", scores = [0, 1, 2, 0], why_not = "green tests pass code the tests never checked" },
+  { name = "a second agent reviews and merges", scores = [0, 1, 2, 0], why_not = "the verifier shares the actor's blind spots" },
+]
+
+[deep_dive]
+id = "sandbox-per-run"
+component = "runner pool"
+owner = "Ben Carter"
+contract = "a run starts clean, holds no secret, and leaves nothing behind"
+numbers = ["est:calls_per_case", "est:reviewers_needed"]
+test = "a run that reads the runner's environment finds no token"
+failure_modes = [
+  { mode = "cached credential on a reused runner", detect = "secret scan of the image at start", contain = "runner quarantined", recover = "rebuild from the pinned image" },
+  { mode = "test edited to pass", detect = "diff touches a test file", contain = "edit_tests needs the code owner", recover = "pull request returned with the reason" },
+  { mode = "instruction in an issue comment", detect = "source tag on the step", contain = "policy engine refuses", recover = "comment flagged to the repo owner" },
+  { mode = "review by habit", detect = "an owner approves 95% in under 5 minutes", contain = "second review on a sample", recover = "smaller pull requests" },
+]
+
+[record]
+id = "R-COD-1"
+review = "REV-15"
+date = "2026-11-02"
+title = "The coding agent leaves four repositories, not its sandbox"
+context = "the October request asked for 40 repos and the build account"
+options = ["propose, never merge", "auto-merge green low-risk changes", "a second agent reviews and merges"]
+decision = "the agent opens draft pull requests in 40 repos; people merge"
+consequences = "review hours grow with volume; DR-29.1's trigger fired"
+reverse_if = "merged-then-reverted passes 3% for a quarter"
+evidence = ["dec:merge-boundary", "dive:sandbox-per-run", "est:reviewers_needed"]
+owner = "Daniel Price"
+signer = "Sarah Whitfield"
+revisit_date = "2027-02-01"
+revisit_trigger = "reverts pass 3%, or a run finds a credential"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits typed sandbox and pull request calls", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "branch protection and the policy engine; owners merge", owner = "Owen Fletcher", evidence = ["node:policy", "node:desk"] }
+G3 = { answer = "one branch per ticket and commit; a rerun reuses it", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "the CI reconciler reads CI's own result records", owner = "Ben Carter", evidence = ["node:ci-reconciler"] }
+G5 = { answer = "cost per merged pull request, monthly", owner = "Daniel Price", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 6000
+agent_share = 0.60
+calls_per_case = 40
+in_tokens = 30000
+out_tokens = 2000
+cached_share = 0.70
+fees_per_case = 0.90
+platform_month = 6000
+verify_per_case = 0.05
+approval_share = 1.0
+approval_min = 25.0
+handoff_share = 0.25
+pickup_min = 30.0
+error_rate = 0.04
+rework_min = 60.0
+repeat_share = 0.05
+repeat_min = 30.0
+verified_rate = 0.70
+person_cost = 380.00
+build_usd = 400000
+
+[privilege]
+credential = "run token scoped to one repo and one branch prefix"
+ttl_minutes = 40
+standing = []
+reads = ["one repository at one commit", "the ticket", "CI history"]
+writes = ["CI runners", "code host"]
+
+[privilege.requested]
+date = "2026-10-05"
+credential = "build service account"
+ttl_minutes = 0
+standing = ["build runner cached credentials", "repo admin token",
+            "staging network access"]
+writes = ["CI runners", "code host", "release pipeline"]
+
+[loop]
+loop = "coding-run"
+version = "2.0.0"
+actor = "loop:coding"
+
+[loop.trigger]
+kinds = ["event"]
+event = "a ticket is tagged agent-ok by its repo owner"
+run_key = ["ticket_id", "base_commit"]
+max_runs_per_watch_hour = 1
+
+[[loop.stops]]
+id = "green"
+check = "verifier"
+test = "CI result records show the run's commit passing"
+[[loop.stops]]
+id = "no-progress"
+check = "state"
+test = "a sub-run changes no file and no test result"
+[[loop.stops]]
+id = "budget"
+check = "enforcer"
+test = "run budget, steps, or loop-day budget refuses"
+[[loop.stops]]
+id = "expired"
+check = "clock"
+test = "40 minutes of wall time"
+
+[loop.state]
+store = "run_store"
+schema = 1
+key = "ticket"
+fields = ["base_commit", "branch", "diff_digest", "test_results",
+          "no_progress"]
+progress = ["diff_digest", "test_results"]
+
+[loop.verify]
+verifier = "ci-reconciler"
+reads = ["CI result records", "code host review record"]
+effects = []
+sample = 1.0
+on_mismatch = "pull request marked unverified; owner told"
+
+[loop.budget]
+enforced_by = "budget enforcer"
+run_usd = 4.00
+run_steps = 80
+sub_run_steps = 16
+loop_day_usd = 300.00
+alert = 0.80
+
+[loop.change]
+grant = ["repo_read", "run_sandbox", "open_pr"]
+effect_tools = ["run_sandbox", "open_pr"]
+[loop.change.effects]
+run_sandbox = { image = "pinned", minutes = 40, egress = "mirror" }
+open_pr = { per_run = 1, draft = true, branch_prefix = "agent/" }
+
+[loop.human]
+owner = "Daniel Price"
+pages = ["a run finds a credential", "loop-day budget at 80%"]
+hand_off = "code owner review"
+kill_switch = ["one repo", "all agent pull requests", "loop off"]
+review = "Monday platform review, loop card"

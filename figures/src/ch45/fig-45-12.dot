@@ -1,0 +1,26 @@
+// Figure 45.12  Twelve designs on one chain (signature S11)
+// Reading order: top to bottom, the chain of Chapter 2. The links are
+// the same for the twelve designs; beside permission sit the two
+// controls the internal six added, a credential that expires and a
+// loop with a budget; beside the verified outcome sit the records the
+// six internal verifiers read. From designs.demo45 --part card.
+digraph chain12 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  o [label="Output", class="model"];
+  p [label="Proposal", class="model"];
+  m [label="Permission", class="policy gate"];
+  e [label="Execution", class="model"];
+  v [label="Verified outcome", class="verified gate"];
+  r [label="Business result", class="verified"];
+  who [label="Expiring token,\nbudgeted loop", class="policy note"];
+  rec [label="Archive, CI,\naudit, health,\ngateway, ledger", class="verified note"];
+  card [label="12 designs,\n60 gaps", class="evidence note"];
+  o -> p -> m -> e -> v -> r [class="emphasis"];
+  who -> m [class="policy", constraint=false];
+  rec -> v [class="verified", constraint=false];
+  card -> r [class="trail", constraint=false];
+  { rank=same; m; who; }
+  { rank=same; v; rec; }
+  { rank=same; r; card; }
+}

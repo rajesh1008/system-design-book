@@ -1,0 +1,26 @@
+// Figure 45.7  Compliance monitoring as an unattended loop
+// Reading order: top to bottom, then around. A schedule at 1 a.m.
+// Chicago time starts the night; the sampler reads the audit plan and
+// the trail; each check's progress persists in the run store, so a
+// rerun resumes; findings go to the case system; the evidence checker
+// re-reads the gateway's own log; people decide holds and close
+// findings. From designs/internal_specs/lakeshore-compliance.toml.
+digraph compliance {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  sch [label="Nightly at 1 a.m.", class="ops"];
+  loop [label="Compliance loop\nread-only token", class="ops"];
+  rs [label="Run store\ncursor, findings", class="ops store"];
+  tr [label="Trail and\npermission store", class="ops store"];
+  cs [label="Case system", class="policy gate"];
+  ev [label="Evidence checker", class="verified gate"];
+  desk [label="Compliance desk\nholds and closes", class="org human"];
+  sch -> loop [class="control"];
+  tr -> loop [class="data"];
+  loop -> rs [label=" each check", class="emphasis"];
+  rs -> loop [label=" resume", class="data", constraint=false];
+  loop -> cs [label=" finding", class="control"];
+  tr -> ev [class="data"];
+  ev -> cs [class="data"];
+  cs -> desk [class="async"];
+}

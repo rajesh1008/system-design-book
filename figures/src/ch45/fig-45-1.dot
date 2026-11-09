@@ -1,0 +1,33 @@
+// Figure 45.1  The method applied six times more
+// Reading order: top to bottom. Six internal designs enter the same six
+// steps as Chapter 43's six; two blocks are new, privilege and loop,
+// and both feed the same linter, now with thirteen rules; the card
+// counts twelve designs. From designs.demo45 --part method and card.
+digraph method45 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  designs [label="Six internal designs", class="ops store"];
+  s1 [label="1 Frame the effect", class="org"];
+  s2 [label="2 Estimate", class="org"];
+  s3 [label="3 Draw the chain", class="org"];
+  s4 [label="4 Close five gaps", class="org gate"];
+  s5 [label="5 Cost it", class="org"];
+  s6 [label="6 Record, signed", class="org"];
+  prv [label="Privilege block", class="policy"];
+  lp [label="Loop block", class="policy"];
+  lint [label="designs.lint\n13 rules", class="verified gate"];
+  card [label="12 designs, 12 records,\n60 gaps closed", class="ops"];
+  designs -> s1 [class="data"];
+  designs -> s4 [class="data"];
+  s1 -> s2 -> s3 [class="control"];
+  s4 -> s5 -> s6 [class="control"];
+  designs -> prv [class="data"];
+  designs -> lp [class="data"];
+  s3 -> lint [class="data"];
+  s6 -> lint [class="data"];
+  prv -> lint [class="data"];
+  lp -> lint [class="data"];
+  lint -> card [class="emphasis"];
+  { rank=same; s1; s4; prv; }
+  { rank=same; s3; s6; lp; }
+}

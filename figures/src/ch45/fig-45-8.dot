@@ -1,0 +1,26 @@
+// Figure 45.8  Back-office reconciliation
+// Reading order: top to bottom. A settlement statement lands; code
+// matches lines to the booking ledger under the signed tolerance
+// table; breaks are sorted into three lanes and reported in value at
+// risk; the general ledger reconciler reads the ledger's own posting
+// file; the controller signs write-offs; the agent cannot change a
+// tolerance. From designs/internal_specs/lakeshore-recon.toml.
+digraph recon {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  st [label="Airline statement", class="ops"];
+  led [label="Booking ledger", class="ops store"];
+  tol [label="Signed tolerance\ntable", class="evidence store"];
+  m [label="Matcher", class="ops"];
+  lanes [label="Breaks in three lanes\nvalue at risk", class="ops"];
+  gl [label="General ledger", class="ops store"];
+  glr [label="GL reconciler", class="verified gate"];
+  ctl [label="Controller signs\nwrite-offs", class="org human"];
+  st -> m [class="data"];
+  led -> m [class="data"];
+  tol -> m [class="control"];
+  m -> gl [label=" match, adjust", class="control"];
+  m -> lanes [class="emphasis"];
+  gl -> glr [class="data"];
+  lanes -> ctl [class="async"];
+}

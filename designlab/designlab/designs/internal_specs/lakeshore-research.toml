@@ -1,0 +1,344 @@
+# Lakeshore research agent, the November 2, 2026 design: cited briefs
+# on airline policy and waiver changes for the people who own
+# Lakeshore's rules. Item 1 of the October internal backlog. An
+# internal design: a requester instead of a customer, a privilege
+# block, and a loop block in the Chapter 28 format. Lakeshore figures
+# are illustrative; inputs are stated assumptions with named sources.
+
+[design]
+id = "lakeshore-research"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "travel"
+setting = "research"
+facing = "internal"
+org = "Lakeshore Travel Group, Chicago"
+author = "Dr. Hannah Clarke"
+owner = "Marcus Bell"
+title = "Research agent: cited briefs on airline policy changes"
+summary = "Reads airline notices and the web; writes cited briefs"
+out_of_scope = "changing a rule, fare, or waiver; any traveler message"
+customer = "rule owner"
+knowledge = "airline notices archive, fare rules extract, past briefs"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter"]
+
+[executor]
+label = "research executor"
+writes = ["publish log"]
+
+[[effects]]
+name = "web_fetch"
+label = "search or page fetch through the egress proxy"
+system = "egress proxy"
+tier = "act"
+undo = "none; the request has left the building"
+verifier = "egress-auditor"
+
+[[effects]]
+name = "publish_brief"
+label = "cited brief in the research library"
+system = "research library"
+tier = "notify"
+undo = "withdrawn by the owner; readers told"
+verifier = "citation-checker"
+
+[[effects]]
+name = "promote_fact"
+label = "a fact added to the policy knowledge base"
+system = "policy knowledge base"
+tier = "suggest"
+undo = "superseded by a dated fact"
+reserved = "the fact's owner signs it (Chapter 42, K4)"
+
+[[effects]]
+name = "contact_airline"
+label = "email to an airline or a vendor"
+system = "mail relay"
+tier = "never"
+undo = "none once sent"
+
+[[verifiers]]
+id = "citation-checker"
+reads = "fetch archive"
+written_by = "egress proxy"
+
+[[verifiers]]
+id = "egress-auditor"
+reads = "proxy access log"
+written_by = "egress proxy"
+
+[human_gate]
+label = "rule owner's review"
+promise_minutes = 480
+cases = ["a brief that proposes a knowledge-base fact",
+         "a source behind a login or a paywall",
+         "a run stopped by its budget"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "egress"
+rule = "fetches go only to allowlisted domains, no Lakeshore data out"
+plane = "control"
+enforced_by = "egress proxy policy, outside the harness"
+
+[[obligations]]
+id = "untrusted-text"
+rule = "fetched text is data, never instruction"
+plane = "control"
+enforced_by = "source tags on tool results; policy engine (R-0722)"
+
+[[obligations]]
+id = "provenance"
+rule = "every claim in a brief cites an archived source"
+plane = "trail"
+enforced_by = "citation checker before publish; archive kept two years"
+
+[requirements]
+A3 = { answer = "no money moves; the limit is the run budget, $6", source = "doc:limits" }
+A5 = { answer = "the proxy archives each fetch under the run key", source = "doc:integration-list" }
+A6 = { answer = "notices archive, fare rules extract, search, page fetch", source = "doc:tool-list" }
+C4 = { answer = "$6 a run, 8 sub-runs of 16 steps, 45 minutes", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one fetch, tier two publish, tier three off", source = "doc:runbook" }
+C6 = { answer = "egress allowlist, untrusted text, provenance", source = "doc:obligations" }
+K1 = { answer = "the question, the plan, archived sources, past briefs", source = "doc:context-plan" }
+K2 = { answer = "a source older than its notice date is re-fetched", source = "doc:context-plan" }
+K3 = { answer = "every fetched page; it is tagged and never obeyed", source = "doc:threat-list" }
+K4 = { answer = "only signed facts persist; a brief is not a fact", source = "doc:context-plan" }
+T1 = { answer = "who asked, every fetch, every claim and its source", source = "doc:obligations" }
+T4 = { answer = "two years; the rule owner and audit read it", source = "doc:obligations" }
+O1 = { answer = "cost per brief that passes citation check, Marcus Bell", source = "doc:economics-card" }
+O2 = { answer = "about 50 briefs a week; a storm week brings five times that", source = "doc:research-requests-2026" }
+O3 = { answer = "$210 by an analyst; see the cost line", source = "doc:economics-card" }
+O4 = { answer = "a wrong brief becomes a wrong rule a week later", source = "doc:incident-ch24" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 2600
+low = 1800
+high = 4000
+unit = "briefs a year"
+assumption = "about 50 requests a week from rule owners"
+source = "doc:research-requests-2026 (Marcus Bell)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 5
+low = 3
+high = 8
+unit = "average days"
+assumption = "a waiver wave after a storm brings a week of questions"
+source = "doc:storm-2026-09-10 (waiver notices)"
+
+[[estimate]]
+name = "window_hours"
+value = 10
+low = 8
+high = 12
+unit = "hours"
+assumption = "requests arrive across the working day"
+source = "doc:research-requests-2026 (Marcus Bell)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 60
+low = 30
+high = 128
+unit = "model calls"
+assumption = "8 sub-runs of up to 16 steps; most stop early"
+source = "doc:research-pilot-traces (Dr. Hannah Clarke)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 50
+low = 20
+high = 200
+unit = "tool calls"
+assumption = "searches and page fetches through the proxy"
+source = "doc:research-pilot-traces (Dr. Hannah Clarke)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.25
+low = 0.1
+high = 0.5
+unit = "of briefs"
+assumption = "one brief in four proposes a knowledge-base fact"
+source = "doc:research-pilot-traces (Dr. Hannah Clarke)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 2
+low = 1
+high = 4
+unit = "per person-hour"
+assumption = "a rule owner reads a brief and its sources in 30 minutes"
+source = "doc:rule-owner-survey (Marcus Bell)"
+
+[decision]
+id = "research-budget"
+question = "How is a research run bounded?"
+criteria = ["spend has a ceiling", "a person can predict it",
+            "the brief still answers", "the trail shows why it stopped"]
+chosen = "budget per run, 16 steps per sub-run"
+owner = "Dr. Hannah Clarke"
+options = [
+  { name = "budget per run, 16 steps per sub-run", scores = [2, 2, 1, 2], why_not = "" },
+  { name = "time box only", scores = [0, 1, 1, 1], why_not = "an hour of parallel fetches has no price" },
+  { name = "no budget; the requester watches", scores = [0, 0, 2, 0], why_not = "a person watching is not a stop" },
+]
+
+[deep_dive]
+id = "citation-check"
+component = "citation checker"
+owner = "Dr. Hannah Clarke"
+contract = "no brief publishes with a claim whose source is not archived"
+numbers = ["est:calls_per_case", "est:tools_per_case"]
+test = "seed ten briefs with one unsupported claim each; all ten held"
+failure_modes = [
+  { mode = "claim cites a page it never fetched", detect = "citation not in the fetch archive", contain = "brief held", recover = "sub-run re-fetches or drops the claim" },
+  { mode = "page told the agent to do something", detect = "source tag on the instruction", contain = "policy engine refuses the step", recover = "domain off the allowlist pending review" },
+  { mode = "budget spent mid-plan", detect = "budget enforcer refusal", contain = "partial brief marked partial", recover = "owner decides whether to fund a second run" },
+  { mode = "stale source", detect = "fetch date before the notice date", contain = "claim flagged", recover = "re-fetch on the next run" },
+]
+
+[record]
+id = "R-RES-1"
+review = "REV-15"
+date = "2026-11-02"
+title = "A research run has a price before it starts"
+context = "the October request asked for unlimited search on a shared key"
+options = ["budget per run, 16 steps per sub-run", "time box only", "no budget; the requester watches"]
+decision = "each run gets $6, 8 sub-runs of 16 steps, and a 45-minute clock"
+consequences = "about one brief in ten stops partial and asks for more"
+reverse_if = "partial briefs pass 20% of runs for a month"
+evidence = ["dec:research-budget", "dive:citation-check", "est:calls_per_case"]
+owner = "Marcus Bell"
+signer = "Owen Fletcher"
+revisit_date = "2027-02-01"
+revisit_trigger = "partial briefs pass 20%, or a fetch leaves the allowlist"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits typed fetch and publish requests", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "the proxy holds the allowlist; owners sign facts", owner = "Owen Fletcher", evidence = ["node:policy", "node:desk"] }
+G3 = { answer = "each fetch keyed by run and URL; a repeat reads the archive", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "the citation checker reads the proxy's archive", owner = "Dr. Hannah Clarke", evidence = ["node:citation-checker"] }
+G5 = { answer = "cost per brief that passes the check, monthly", owner = "Marcus Bell", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 2600
+agent_share = 0.80
+calls_per_case = 60
+in_tokens = 9000
+out_tokens = 700
+cached_share = 0.50
+fees_per_case = 0.40
+platform_month = 2000
+verify_per_case = 0.20
+approval_share = 0.25
+approval_min = 30.0
+handoff_share = 0.10
+pickup_min = 60.0
+error_rate = 0.02
+rework_min = 45.0
+repeat_share = 0.05
+repeat_min = 20.0
+verified_rate = 0.90
+person_cost = 210.00
+build_usd = 180000
+
+[privilege]
+credential = "run token from the identity broker"
+ttl_minutes = 15
+standing = []
+reads = ["notices archive", "fare rules extract", "allowlisted web"]
+writes = ["egress proxy", "research library"]
+
+[privilege.requested]
+date = "2026-10-05"
+credential = "shared service account"
+ttl_minutes = 0
+standing = ["search API key", "research library admin",
+            "knowledge base editor"]
+writes = ["egress proxy", "research library", "policy knowledge base"]
+
+[loop]
+loop = "research-run"
+version = "1.0.0"
+actor = "loop:research"
+
+[loop.trigger]
+kinds = ["event"]
+event = "a rule owner files a research request"
+run_key = ["request_id"]
+max_runs_per_watch_hour = 1
+
+[[loop.stops]]
+id = "covered"
+check = "trail"
+test = "every question in the plan has an archived source"
+[[loop.stops]]
+id = "outcome"
+check = "verifier"
+test = "citation checker passes the draft"
+[[loop.stops]]
+id = "no-progress"
+check = "state"
+test = "a sub-run adds no source and no claim"
+[[loop.stops]]
+id = "budget"
+check = "enforcer"
+test = "run budget, sub-run steps, or loop-day budget refuses"
+[[loop.stops]]
+id = "expired"
+check = "clock"
+test = "45 minutes of wall time"
+
+[loop.state]
+store = "run_store"
+schema = 1
+key = "request"
+fields = ["plan", "sources", "claims", "draft", "spent_usd",
+          "no_progress"]
+progress = ["plan", "sources", "claims", "draft"]
+
+[loop.verify]
+verifier = "citation-checker"
+reads = ["fetch archive", "proxy access log"]
+effects = []
+sample = 1.0
+on_mismatch = "brief held; rule owner told"
+
+[loop.budget]
+enforced_by = "budget enforcer"
+run_usd = 6.00
+run_steps = 128
+sub_run_steps = 16
+loop_day_usd = 150.00
+alert = 0.80
+
+[loop.change]
+grant = ["notice_read", "web_fetch", "publish_brief"]
+effect_tools = ["web_fetch", "publish_brief"]
+[loop.change.effects]
+web_fetch = { allowlist = "research-domains-v1", per_run = 200 }
+publish_brief = { per_run = 1, library = "drafts" }
+
+[loop.human]
+owner = "Marcus Bell"
+pages = ["citation checker holds three briefs in a day",
+         "loop-day budget at 80%"]
+hand_off = "rule owner's review"
+kill_switch = ["fetch at the proxy", "publish at the gateway",
+               "loop off"]
+review = "Monday research review, loop card"

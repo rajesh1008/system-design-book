@@ -1,0 +1,37 @@
+// Figure 45.2  Deep research: the high-level design
+// Reading order: top to bottom, one plane per cluster. A rule owner's
+// question starts a budgeted run; sub-runs of 16 steps fetch through
+// the egress proxy, which holds the allowlist and archives every page;
+// the citation checker reads the archive, not the draft, before a
+// brief publishes; a fact for the knowledge base waits for its owner.
+// From designs/internal_specs/lakeshore-research.toml.
+digraph research {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  owner [label="Rule owner", class="org human"];
+  subgraph cluster_k { label="Knowledge plane"; class="plane-knowledge";
+    kb [label="Notices, fare rules,\npast briefs", class="knowledge store"];
+  }
+  subgraph cluster_a { label="Action plane"; class="plane-ops";
+    run [label="Research run\nsub-runs of 16 steps", class="model"];
+    proxy [label="Egress proxy\nallowlist", class="ops gate"];
+  }
+  subgraph cluster_c { label="Control plane"; class="plane-policy";
+    bud [label="Budget enforcer\n$6 a run", class="policy gate"];
+    rev [label="Owner signs a fact", class="policy human"];
+  }
+  web [label="Web", class="ops external"];
+  subgraph cluster_t { label="Trail"; class="plane-evidence";
+    arc [label="Fetch archive", class="evidence store"];
+    chk [label="Citation checker", class="verified gate"];
+  }
+  owner -> run [class="control"];
+  kb -> run [class="data"];
+  bud -> run [class="control"];
+  run -> proxy [label=" fetch", class="control"];
+  proxy -> web [class="control"];
+  proxy -> arc [class="trail"];
+  arc -> chk [class="emphasis"];
+  chk -> owner [label=" brief", class="data", constraint=false];
+  run -> rev [class="async"];
+}

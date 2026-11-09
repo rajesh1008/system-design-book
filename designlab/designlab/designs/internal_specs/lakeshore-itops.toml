@@ -1,0 +1,359 @@
+# Lakeshore IT operations agent, the November 2, 2026 design: alert
+# triage and runbook steps for the platform on-call, behind the same
+# change-control boundary as people. Item 4 of the October internal
+# backlog. A production change is a release under DR-39.1: canary, or
+# a written exception signed by a person (R-0803; pb-2026.09.10.1).
+# Lakeshore figures are illustrative; inputs are stated assumptions.
+
+[design]
+id = "lakeshore-itops"
+version = "v1.0"
+as_of = "2026-11-02"
+industry = "travel"
+setting = "IT operations"
+facing = "internal"
+org = "Lakeshore Travel Group, Chicago"
+author = "Daniel Price"
+owner = "Ben Carter"
+title = "IT operations agent: triage and runbook steps"
+summary = "Triages alerts and runs bounded runbook steps for on-call"
+out_of_scope = "config and policy changes, deploys, kill switches, access"
+customer = "on-call engineer"
+knowledge = "runbooks, service catalog, metrics, deploy history"
+people = ["Daniel Price", "Sarah Whitfield", "Marcus Bell",
+          "Dr. Hannah Clarke", "Owen Fletcher", "Rachel Morgan",
+          "Ben Carter"]
+
+[executor]
+label = "runbook executor"
+writes = ["action log"]
+
+[[effects]]
+name = "restart"
+label = "restart one instance of a service a runbook names"
+system = "container platform"
+tier = "notify"
+undo = "none needed; the instance returns from its image"
+verifier = "health-reconciler"
+
+[[effects]]
+name = "scale"
+label = "scale a service within its declared bounds"
+system = "container platform"
+tier = "notify"
+undo = "scale back"
+verifier = "health-reconciler"
+
+[[effects]]
+name = "silence"
+label = "silence a duplicate alert for up to 60 minutes"
+system = "alerting"
+tier = "act"
+undo = "silence lifted"
+verifier = "alert-reconciler"
+
+[[effects]]
+name = "config_change"
+label = "production configuration or policy bundle change"
+system = "release pipeline"
+tier = "suggest"
+undo = "rollback through the release pipeline"
+reserved = "a production change is a release, DR-39.1"
+
+[[effects]]
+name = "kill_switch"
+label = "pull a kill-switch tier"
+system = "gateway"
+tier = "never"
+undo = "released by its owner"
+reserved = "kill-switch tiers are pulled by people"
+
+[[verifiers]]
+id = "health-reconciler"
+reads = "platform health checks"
+written_by = "container platform"
+
+[[verifiers]]
+id = "alert-reconciler"
+reads = "alert history"
+written_by = "alerting"
+
+[human_gate]
+label = "on-call engineer"
+promise_minutes = 15
+sync_seconds = 60
+cases = ["a change record drafted for the release pipeline",
+         "a restart limit reached", "an alert no runbook names"]
+summary = ["asked", "proposed", "stopped because", "evidence", "deadline"]
+
+[customer]
+received = "proposal"
+waiting = "permission store"
+person = "desk queue"
+progress = "execution log"
+done = "verifier"
+declined = "permission store"
+
+[[obligations]]
+id = "change-control"
+rule = "a production change is a release: canary or written exception"
+plane = "control"
+enforced_by = "release pipeline refuses a change the agent signed"
+
+[[obligations]]
+id = "blast-radius"
+rule = "one instance at a time; two restarts a service an hour"
+plane = "control"
+enforced_by = "policy engine counters per service"
+
+[[obligations]]
+id = "kill-switch"
+rule = "kill-switch tiers belong to people"
+plane = "control"
+enforced_by = "gateway refuses the agent's identity on the switch"
+
+[[obligations]]
+id = "timeline"
+rule = "every action lands on the incident timeline"
+plane = "trail"
+enforced_by = "trail retention, one year"
+
+[requirements]
+A3 = { answer = "no money moves; one instance, two restarts an hour", source = "doc:limits" }
+A5 = { answer = "one run per alert fingerprint and hour", source = "doc:integration-list" }
+A6 = { answer = "metrics read, logs read, runbook read, restart, scale, silence", source = "doc:tool-list" }
+C4 = { answer = "16 steps, $0.80, 10 minutes a run", source = "doc:loop-limits" }
+C5 = { answer = "Ben Carter: tier one restarts, tier two all effects, tier three off", source = "doc:runbook" }
+C6 = { answer = "change control, blast radius, kill switch, timeline", source = "doc:obligations" }
+K1 = { answer = "the alert, the runbook, the service's recent deploys", source = "doc:context-plan" }
+K2 = { answer = "metrics read at each step; a stale reading is refused", source = "doc:context-plan" }
+K3 = { answer = "log lines and alert annotations", source = "doc:threat-list" }
+K4 = { answer = "nothing persists but the run state and the timeline", source = "doc:context-plan" }
+T1 = { answer = "which alert, which runbook step, what changed, who approved", source = "doc:obligations" }
+T4 = { answer = "one year; the Monday on-call review reads it", source = "doc:obligations" }
+O1 = { answer = "cost per alert resolved and verified, Ben Carter", source = "doc:economics-card" }
+O2 = { answer = "about 9,000 actionable alerts a year; a storm day is eight", source = "doc:alert-history-2026" }
+O3 = { answer = "$48 of on-call time an alert; see the cost line", source = "doc:economics-card" }
+O4 = { answer = "a wrong restart in a storm hour is an outage", source = "doc:incident-ch39" }
+
+[[estimate]]
+name = "cases_per_year"
+value = 9000
+low = 6000
+high = 14000
+unit = "alerts a year"
+assumption = "actionable alerts after deduplication"
+source = "doc:alert-history-2026 (Ben Carter)"
+
+[[estimate]]
+name = "worst_day_factor"
+value = 8
+low = 4
+high = 12
+unit = "average days"
+assumption = "a storm day brings a week of alerts"
+source = "doc:storm-2026-09-10 (alert history)"
+
+[[estimate]]
+name = "window_hours"
+value = 6
+low = 4
+high = 8
+unit = "hours"
+assumption = "storm alerts cluster in the closure window"
+source = "doc:storm-2026-09-10 (Ben Carter)"
+
+[[estimate]]
+name = "calls_per_case"
+value = 12
+low = 6
+high = 16
+unit = "model calls"
+assumption = "one 16-step run, most stop early"
+source = "doc:itops-shadow-traces (Ben Carter)"
+
+[[estimate]]
+name = "tools_per_case"
+value = 20
+low = 10
+high = 30
+unit = "tool calls"
+assumption = "metric and log reads, one runbook step"
+source = "doc:itops-shadow-traces (Ben Carter)"
+
+[[estimate]]
+name = "gate_share"
+value = 0.30
+low = 0.15
+high = 0.50
+unit = "of alerts"
+assumption = "three alerts in ten need a person or a change"
+source = "doc:itops-shadow-traces (Ben Carter)"
+
+[[estimate]]
+name = "reviews_per_hour"
+value = 6
+low = 4
+high = 10
+unit = "per person-hour"
+assumption = "an on-call engineer clears a summary in 10 minutes"
+source = "doc:itops-shadow-traces (Ben Carter)"
+
+[decision]
+id = "change-boundary"
+question = "What may the agent change in production?"
+criteria = ["no unreleased change", "faster first response",
+            "blast radius bounded", "a person on every change"]
+chosen = "runbook steps only; changes drafted for the pipeline"
+owner = "Ben Carter"
+options = [
+  { name = "runbook steps only; changes drafted for the pipeline", scores = [2, 1, 2, 2], why_not = "" },
+  { name = "apply config with an automatic rollback timer", scores = [0, 2, 1, 0], why_not = "a timer is not a canary, and nobody writes the exception" },
+  { name = "read and summarize only", scores = [2, 0, 2, 2], why_not = "leaves restarts at 3 a.m. to a person" },
+]
+
+[deep_dive]
+id = "restart-limits"
+component = "policy engine counters"
+owner = "Ben Carter"
+contract = "no service restarts more than twice an hour by the agent"
+numbers = ["est:peak_per_hour", "est:reviewers_needed"]
+test = "replay September 10 alerts; restarts capped, changes drafted"
+failure_modes = [
+  { mode = "restart loop", detect = "counter at two for the service", contain = "policy engine refuses a third", recover = "on-call paged with the run summary" },
+  { mode = "fix needs a config change", detect = "runbook step names a change", contain = "change record drafted, not applied", recover = "release pipeline: canary or signed exception" },
+  { mode = "log line instructs the agent", detect = "source tag on the step", contain = "policy engine refuses", recover = "log source reviewed" },
+  { mode = "silence hides a real outage", detect = "SLO burn while silenced", contain = "silence lifted by the alert reconciler page", recover = "silence rule reviewed Monday" },
+]
+
+[record]
+id = "R-OPS-1"
+review = "REV-15"
+date = "2026-11-02"
+title = "The operations agent is not a way around a release"
+context = "the October request asked for production admin on the cluster"
+options = ["runbook steps only; changes drafted for the pipeline", "apply config with an automatic rollback timer", "read and summarize only"]
+decision = "restart, scale, and silence within limits; changes go through release"
+consequences = "a fix that needs config waits for a person and a canary"
+reverse_if = "a drafted change waits past 30 minutes in a storm hour twice"
+evidence = ["dec:change-boundary", "dive:restart-limits", "est:reviewers_needed"]
+owner = "Ben Carter"
+signer = "Owen Fletcher"
+revisit_date = "2027-02-01"
+revisit_trigger = "a change ships outside the pipeline, or a restart loop"
+status = "accepted"
+
+[gaps]
+G1 = { answer = "the harness emits typed runbook steps", owner = "Daniel Price", evidence = ["node:loop"] }
+G2 = { answer = "the release pipeline and the policy engine's counters", owner = "Owen Fletcher", evidence = ["node:policy", "node:desk"] }
+G3 = { answer = "one run per alert fingerprint and hour", owner = "Ben Carter", evidence = ["req:A5"] }
+G4 = { answer = "the health reconciler reads the platform's own checks", owner = "Ben Carter", evidence = ["node:health-reconciler"] }
+G5 = { answer = "cost per alert resolved and verified, monthly", owner = "Ben Carter", evidence = ["req:O1"] }
+
+[economics]
+cases_per_year = 9000
+agent_share = 0.50
+calls_per_case = 12
+in_tokens = 15000
+out_tokens = 800
+cached_share = 0.60
+fees_per_case = 0.01
+platform_month = 2000
+verify_per_case = 0.02
+approval_share = 0.30
+approval_min = 10.0
+handoff_share = 0.40
+pickup_min = 15.0
+error_rate = 0.01
+rework_min = 60.0
+repeat_share = 0.05
+repeat_min = 15.0
+verified_rate = 0.85
+person_cost = 48.00
+build_usd = 150000
+
+[privilege]
+credential = "run token scoped to the alerting service"
+ttl_minutes = 10
+standing = []
+reads = ["metrics", "logs", "runbooks", "deploy history"]
+writes = ["container platform", "alerting"]
+
+[privilege.requested]
+date = "2026-10-05"
+credential = "cluster admin service account"
+ttl_minutes = 0
+standing = ["cluster admin", "release pipeline deploy key",
+            "gateway kill-switch API"]
+writes = ["container platform", "alerting", "release pipeline",
+          "gateway"]
+
+[loop]
+loop = "itops-triage"
+version = "1.0.0"
+actor = "loop:itops"
+
+[loop.trigger]
+kinds = ["event", "threshold"]
+event = "an actionable alert fires"
+run_key = ["alert_fingerprint", "hour"]
+max_runs_per_watch_hour = 2
+
+[[loop.stops]]
+id = "healthy"
+check = "verifier"
+test = "platform health checks green for 10 minutes"
+[[loop.stops]]
+id = "no-progress"
+check = "state"
+test = "two steps with no change in the alert's state"
+[[loop.stops]]
+id = "limit"
+check = "enforcer"
+test = "restart counter at two for the service"
+[[loop.stops]]
+id = "budget"
+check = "enforcer"
+test = "run or loop-day budget refuses"
+[[loop.stops]]
+id = "expired"
+check = "clock"
+test = "10 minutes of wall time"
+
+[loop.state]
+store = "run_store"
+schema = 1
+key = "alert"
+fields = ["fingerprint", "runbook_step", "actions", "health",
+          "no_progress"]
+progress = ["runbook_step", "actions", "health"]
+
+[loop.verify]
+verifier = "health-reconciler"
+reads = ["platform health checks", "alert history"]
+effects = []
+sample = 1.0
+on_mismatch = "on-call paged; effects hold"
+
+[loop.budget]
+enforced_by = "budget enforcer"
+run_usd = 0.80
+run_steps = 16
+loop_day_usd = 60.00
+alert = 0.80
+
+[loop.change]
+grant = ["metrics_read", "restart", "scale", "silence"]
+effect_tools = ["restart", "scale", "silence"]
+[loop.change.effects]
+restart = { instances = 1, per_service_hour = 2 }
+scale = { bound = "service catalog max", step = 1 }
+silence = { minutes = 60, duplicates_only = true }
+
+[loop.human]
+owner = "Ben Carter"
+pages = ["a restart limit reached", "a change record drafted",
+         "verifier mismatch on an effect"]
+hand_off = "on-call engineer"
+kill_switch = ["restarts", "all effects at the gateway", "loop off"]
+review = "Monday on-call review, loop card"

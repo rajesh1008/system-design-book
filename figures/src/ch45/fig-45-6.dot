@@ -1,0 +1,27 @@
+// Figure 45.6  IT operations behind the change-control boundary
+// Reading order: top to bottom. An alert starts a run keyed on its
+// fingerprint and hour; restart, scale, and silence pass the policy
+// engine's counters and act; a configuration change crosses the
+// boundary only as a drafted change record into the release pipeline,
+// where a canary or a person's written exception decides; the health
+// reconciler reads the platform's own checks; kill switches are
+// people's. From designs/internal_specs/lakeshore-itops.toml.
+digraph itops {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3; newrank=true;
+  alert [label="Alert", class="ops"];
+  run [label="Triage run\n16 steps, 10 minutes", class="ops"];
+  pol [label="Policy engine\n2 restarts an hour", class="policy gate"];
+  plat [label="Container platform", class="ops store"];
+  rel [label="Release pipeline\ncanary or exception", class="policy gate"];
+  oncall [label="On-call engineer", class="org human"];
+  hr [label="Health reconciler", class="verified gate"];
+  alert -> run [class="control"];
+  run -> pol [label=" runbook step", class="control"];
+  pol -> plat [label=" restart, scale", class="control"];
+  run -> rel [label=" change record", class="emphasis"];
+  oncall -> rel [label=" signs", class="control"];
+  plat -> hr [class="data"];
+  hr -> oncall [class="async", constraint=false];
+  { rank=same; pol; rel; }
+}
