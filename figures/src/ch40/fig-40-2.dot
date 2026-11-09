@@ -1,0 +1,29 @@
+// Figure 40.2  What to centralize
+// Reading order: top to bottom. Each use case brings its own prompts,
+// retrieval, model choice, and tool servers. Every call passes the
+// shared control plane: identity mints the run token, the gateway
+// forwards only tools the registry approved, the policy engine
+// decides, and the trail, traces, and evaluation record and check.
+// From agentplatform.plane.
+digraph centralize {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  uc [label="Use cases", class="org"];
+  team [label="Team owned\nprompts, models", class="org"];
+  id [label="Identity\nrun tokens", class="policy"];
+  gw [label="Shared gateway", class="ops"];
+  reg [label="Registry", class="policy"];
+  pe [label="Policy engine", class="policy"];
+  srv [label="Tool servers", class="ops"];
+  ev [label="Trail, traces,\nevaluation", class="evidence store"];
+  {rank=same; uc; team;}
+  {rank=same; gw; reg;}
+  {rank=same; srv; ev;}
+  uc -> team [class="data"];
+  uc -> id [class="control"];
+  id -> gw [class="emphasis"];
+  reg -> gw [class="control"];
+  gw -> pe [class="control"];
+  pe -> srv [class="emphasis"];
+  pe -> ev [class="trail"];
+}

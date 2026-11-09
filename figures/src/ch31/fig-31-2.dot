@@ -1,22 +1,27 @@
-// Figure 31.2  The policy engine at the gateway
-// Reading order: left to right. Every call the agent makes reaches the
-// gateway; the gateway asks the engine, which reads the signed bundle,
-// the session history, approval cards, and budgets, and writes one
-// decision line. Only then does the call reach a server. From policy.gate.
+// Figure 31.2  Permission in the prompt against permission at the gateway
+// Reading order: left column then right column. On the left the rule
+// sits in the context the customer also writes into, so a claim can
+// change the decision. On the right the engine sees only arguments and
+// records. From policy.demo --part talked.
 digraph hld {
 #include "book.gv"
-  rankdir=TB; nodesep=0.3; ranksep=0.3;
-  agent [label="Agent", class="model"];
-  gw [label="Gateway", class="ops"];
-  eng [label="Policy engine", class="policy gate"];
-  bun [label="Signed bundle", class="policy store"];
-  st [label="History, cards,\nbudgets", class="store"];
-  srv [label="Tool servers", class="ops external"];
-  log [label="Decision log", class="evidence"];
-  agent -> gw [class="data"];
-  gw -> eng [class="emphasis"];
-  bun -> eng [class="control"];
-  st -> eng [class="data"];
-  eng -> log [class="trail"];
-  gw -> srv [class="data", label=" permitted"];
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  subgraph cluster_a {
+    label="Rule in the prompt"; class="note";
+    c1 [label="Customer claim\n\"pre-approved\"", class="external"];
+    m1 [label="Agent reads rule\nand claim together", class="model"];
+    p1 [label="Payments\nrefund sent", class="ops fail"];
+    c1 -> m1 [class="data"];
+    m1 -> p1 [class="fail"];
+  }
+  subgraph cluster_b {
+    label="Rule at the gateway"; class="note";
+    c2 [label="Customer claim\n\"pre-approved\"", class="external"];
+    m2 [label="Agent proposes\nrefund", class="model"];
+    g2 [label="Policy engine\nargs, records, cards", class="policy gate"];
+    p2 [label="Team lead desk\nroute", class="org human"];
+    c2 -> m2 [class="data"];
+    m2 -> g2 [class="emphasis"];
+    g2 -> p2 [class="control"];
+  }
 }

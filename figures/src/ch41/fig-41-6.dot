@@ -1,0 +1,26 @@
+// Figure 41.6  Operating rhythm
+// Reading order: the week runs top to bottom, Monday to Thursday; each
+// forum has one owner and names the decisions it reviews. The monthly
+// forums sit to the right and feed card day at the end of the month.
+// Times are Chicago (CDT). From org.rhythm.
+digraph rhythm {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.28;
+  mon1 [label="Mon 9:30 on-call handover\nBen Carter: stops, restores,\nreleases", class="ops"];
+  mon2 [label="Mon 11:00 platform review\nDaniel Price: tools, use cases,\nloop budgets", class="org"];
+  tue [label="Tue access review\nOwen Fletcher: scopes,\nthreat models", class="org"];
+  wed [label="Wed gate review\nHannah Clarke: the gate", class="org"];
+  thu [label="Thu rules review\nMarcus Bell: rules, autonomy,\nmessages, activation", class="org"];
+  drill [label="Thu kill-switch drill\nBen Carter", class="ops"];
+  bill [label="Monthly bill review\nPriya Natarajan", class="org"];
+  risk [label="Monthly risk review\nRachel Morgan", class="org"];
+  card [label="Card day, last workday\nDaniel Price", class="org gate"];
+  mon1 -> mon2 -> tue -> wed -> thu [class="control"];
+  thu -> drill [class="data"];
+  thu -> card [class="async", label="weekly notes"];
+  bill -> card [class="data"];
+  risk -> card [class="data"];
+  card -> mon2 [class="emphasis", label="next month's\nquestions"];
+  {rank=same; mon1; bill;}
+  {rank=same; tue; risk;}
+}

@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import random
 from dataclasses import dataclass, field
-from math import comb
+from math import exp, lgamma, log, log1p
 
 # Daily volume by task type, late July 2026.
 VOLUME = {"rebooking": 760, "refund": 200, "cancellation": 150,
@@ -25,8 +25,13 @@ ALPHA = 0.01
 
 def tail(x: int, n: int, p: float) -> float:
     """P(X >= x) for X ~ Binomial(n, p)."""
-    return sum(comb(n, k) * p ** k * (1 - p) ** (n - k)
-               for k in range(x, n + 1))
+    if x <= 0:
+        return 1.0
+
+    def pmf(k: int) -> float:
+        return exp(lgamma(n + 1) - lgamma(k + 1) - lgamma(n - k + 1)
+                   + k * log(p) + (n - k) * log1p(-p))
+    return max(0.0, min(1.0, sum(pmf(k) for k in range(x, n + 1))))
 
 
 def p_detect(rate: float, n: int) -> float:

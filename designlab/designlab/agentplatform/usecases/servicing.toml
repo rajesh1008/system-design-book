@@ -1,0 +1,97 @@
+# The first use case: the servicing agent the control plane was built
+# for. Extracted, not onboarded: its tools, rules, and golden set
+# existed before the platform did.
+
+[use_case]
+name = "servicing"
+owner = "Daniel Price"
+team = "Agent Platform (servicing)"
+business_unit = "Customer Operations"
+identity = "agent:servicing"
+caller_key = "wl-servicing-agent"
+harness = "servicing harness 3.4"
+resource = "itinerary"
+
+[team_owned]
+prompts = "servicing harness repository"
+retrieval = "fare rules index"
+models = "claude-sonnet-5-5, claude-haiku-5-5 for triage"
+tool_servers = "booking, fares, offers, status, payments, messaging"
+
+[[tools]]
+server = "booking"
+name = "booking_read"
+[[tools]]
+server = "booking"
+name = "rebook_ticket"
+[[tools]]
+server = "fares"
+name = "fare_calc"
+[[tools]]
+server = "fares"
+name = "fare_rules_search"
+[[tools]]
+server = "offers"
+name = "offers_search"
+[[tools]]
+server = "status"
+name = "flight_status"
+[[tools]]
+server = "status"
+name = "notice_read"
+[[tools]]
+server = "documents"
+name = "doc_intake"
+[[tools]]
+server = "sandbox"
+name = "code_run"
+[[tools]]
+server = "payments"
+name = "refund_ticket"
+[[tools]]
+server = "payments"
+name = "credit_issue"
+[[tools]]
+server = "payments"
+name = "voucher_issue"
+[[tools]]
+server = "messaging"
+name = "customer_notify"
+[[tools]]
+server = "desk"
+name = "handoff_to_desk"
+
+[policy]
+rules = []
+
+[evaluation]
+golden_set = "servicing golden set v7"
+trials = 8
+k = 4
+threshold = 0.90
+successes = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+             8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+             8, 8, 8, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+             8, 8, 8, 8, 8, 8, 8, 7]
+
+[verify]
+source = "carrier booking record, read by the reconciler"
+reads_through = "carrier-records"
+owner = "Ben Carter"
+
+[result]
+measure = "changes closed without a second contact"
+owner = "Marcus Bell"
+
+[[script]]
+server = "booking"
+tool = "booking_read"
+args = { booking_ref = "LTG-44{n:05d}" }
+[[script]]
+server = "payments"
+tool = "credit_issue"
+args = { itinerary_id = "LTG-44{n:05d}", ticket_number = "TKT-2{n:04d}" }
+[[script]]
+server = "messaging"
+tool = "customer_notify"
+args = { itinerary_id = "LTG-44{n:05d}", template = "credited" }

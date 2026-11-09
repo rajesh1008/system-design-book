@@ -7,24 +7,24 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 PY=${PYTHON:-python3}
 echo "== one run as spans =="
-"$PY" -m trace.demo --part spans
+"$PY" -m tracing.demo --part spans
 echo "== the June 9 gap: no policy span =="
-"$PY" -m trace.demo --part gap
+"$PY" -m tracing.demo --part gap
 echo "== cost on spans, cost per decision =="
-"$PY" -m trace.demo --part cost
+"$PY" -m tracing.demo --part cost
 echo "== completeness check =="
-"$PY" -m trace.demo --part complete
+"$PY" -m tracing.demo --part complete
 echo "== failure injection: a tool call outside the trace =="
-"$PY" -m trace.demo --part inject
+"$PY" -m tracing.demo --part inject
 echo "== strict replay from the trace =="
-"$PY" -m trace.demo --part replay
+"$PY" -m tracing.demo --part replay
 echo "== what-if replay: other harness and policy versions =="
-"$PY" -m trace.demo --part version
+"$PY" -m tracing.demo --part version
 echo "== alerts that mean something =="
-"$PY" -m trace.demo --part alerts
+"$PY" -m tracing.demo --part alerts
 echo "== sampling and the tail buffer =="
-"$PY" -m trace.demo --part sampling
+"$PY" -m tracing.demo --part sampling
 echo "== observability card =="
-"$PY" -m trace.demo --part card
+"$PY" -m tracing.demo --part card
 echo "== tests =="
-DESIGNLAB_OFFLINE=1 "$PY" -m unittest trace.test_trace -v
+DESIGNLAB_OFFLINE=1 "$PY" -m unittest tracing.test_tracing -v

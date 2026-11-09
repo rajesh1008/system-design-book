@@ -1,0 +1,22 @@
+// Figure 39.6  Regression as a gate
+// Reading order: top to bottom. The candidate runs the golden set
+// three times per task; each task is compared with the last bundle
+// that passed it; a task that passed then and fails now is a
+// regression and blocks; otherwise the gate passes, bound to the
+// hash. Only the CTO can override a block, in the record. From
+// release.gate.
+digraph regress {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  cand [label="Candidate bundle", class="ops"];
+  gs [label="Golden set\n647 tasks, 3 trials", class="evidence store"];
+  cmp [label="Compare per task\nwith last pass", class="verified gate"];
+  reg [label="Regression\npassed then, fails now", class="fail"];
+  block [label="Blocked\noverride: CTO only", class="fail"];
+  pass [label="Gate pass\nbound to hash", class="verified"];
+  cand -> cmp [class="control"];
+  gs -> cmp [class="data"];
+  cmp -> reg [class="emphasis"];
+  reg -> block [class="emphasis"];
+  cmp -> pass [class="control", label="none"];
+}

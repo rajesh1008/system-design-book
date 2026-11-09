@@ -1,0 +1,23 @@
+// Figure 39.9  Order of exposure by effect
+// Reading order: top to bottom. Every release passes the gate and
+// shadow first. A release with no effect on the world (a notice's
+// wording, the order of options) can take a fixed-horizon test, and a
+// bandit only for order; a reversible effect on a booking or money
+// takes a canary by task type with a signed way back; an effect that
+// cannot be undone takes the strongest gate and a forward repair
+// planned before exposure. From release.pipeline.
+digraph exposure {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  first [label="Gate, then shadow", class="verified gate"];
+  q1 [label="Any effect?", class="policy gate"];
+  ab [label="Fixed-horizon test\nbandit for order only", class="ops"];
+  q2 [label="Reversible?", class="policy gate"];
+  can [label="Canary by task type\nway back signed", class="verified"];
+  fwd [label="Strongest gate\nforward repair", class="policy"];
+  first -> q1 [class="emphasis"];
+  q1 -> ab [class="control", label="no"];
+  q1 -> q2 [class="emphasis", label="yes"];
+  q2 -> can [class="emphasis", label="yes"];
+  q2 -> fwd [class="control", label="no"];
+}

@@ -4,6 +4,9 @@ Reading order: one row per obligation that reaches a refund the agent
 proposes, top to bottom; where it comes from and which pack questions
 answer it. Read November 2, 2026; counsel, not this table, decides
 what applies. Rows marked "not yet" do not reach Lakeshore's refunds.
+Labels are short (US DOT is 14 CFR 260; AI Act is Art. 50, and Arts.
+12 and 14 with Annex III from December 2, 2027; GDPR is Art. 22); the
+text and the alt text carry the detail.
 """
 import sys
 from pathlib import Path
@@ -12,14 +15,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "design
 import figlib as fl  # noqa: E402
 from matplotlib.patches import Rectangle  # noqa: E402
 
-rows = (("Refund promptly, to the\noriginal form of payment", "US DOT, 14 CFR 260", "P1, P5, P6", "policy"),
-        ("Card numbers unreadable\nwherever stored", "PCI DSS", "Tokens only", "policy"),
-        ("Tell people they are\ntalking to an AI system", "EU AI Act Art. 50,\nfrom Aug 2, 2026", "P10", "policy"),
-        ("A person can contest an\nautomated decision", "GDPR Art. 22", "P4, P7", "policy"),
-        ("Controls over reported\nrevenue and refunds", "External auditor", "P1, P6, P8", "policy"),
-        ("Logs and oversight for\nhigh-risk systems", "EU AI Act Arts. 12, 14;\nAnnex III, Dec 2, 2027", "Not yet", "org"))
+rows = (("Prompt refund", "US DOT", "P1, P5, P6", "policy"),
+        ("Card data unreadable", "PCI DSS", "Tokens", "policy"),
+        ("AI disclosure", "AI Act", "P10", "policy"),
+        ("Contest decisions", "GDPR", "P4, P7", "policy"),
+        ("Refund controls", "Auditor", "P1, P6, P8", "policy"),
+        ("High-risk logging", "AI Act, 2027", "Not yet", "org"))
 cols = (0.0, 2.2, 3.85)
-heads = ("Obligation", "Source", "Pack answers")
+heads = ("Obligation", "Source", "Pack")
 fig, ax = fl.figure(5.0, 3.6)
 n = len(rows)
 ax.set_xlim(0, 5.0)
@@ -34,7 +37,7 @@ for i, (*cells, tok) in enumerate(rows):
                            edgecolor=fl.GREY_LIGHT, lw=0.75))
     ax.add_patch(Rectangle((0.0, y + 0.06), cols[1] - 0.05, 0.88,
                            facecolor=fl.FILL[tok] if tok == "policy" else "white",
-                           edgecolor=fl.C[tok], lw=0.75,
+                           edgecolor=fl.C[tok] if tok == "policy" else fl.GREY_DARK, lw=0.75,
                            ls="-" if tok == "policy" else "--"))
     for x, t in zip(cols, cells):
         ax.text(x + 0.05, y + 0.5, t, va="center", fontsize=9, color=fl.INK,

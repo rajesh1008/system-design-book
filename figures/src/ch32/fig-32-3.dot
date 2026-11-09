@@ -1,0 +1,22 @@
+// Figure 32.3  The service account with everything
+// Reading order: top to bottom. As found on June 16, 2026: every run
+// went through the gateway on one standing account, and the account
+// held read and write on four systems of record, three scopes never
+// used. The systems saw only the account. From identity.standing.
+digraph flow {
+#include "book.gv"
+  rankdir=TB; nodesep=0.2; ranksep=0.35;
+  runs [label="Every run", class="model"];
+  gw [label="Gateway", class="policy gate"];
+  svc [label="svc-agent-gw\n225 days", class="fail code"];
+  pay [label="Payments\nread, write", class="ops store external"];
+  book [label="Bookings\nread, write", class="ops store external"];
+  prof [label="Profiles\nread, write", class="ops store external"];
+  led [label="Ledger\nread, write", class="ops store external"];
+  runs -> gw [class="data"];
+  gw -> svc [class="emphasis"];
+  svc -> pay [class="fail"];
+  svc -> book [class="fail"];
+  svc -> prof [class="fail"];
+  svc -> led [class="fail"];
+}

@@ -1,0 +1,29 @@
+// Figure 39.3  The release pipeline
+// Reading order: top to bottom. A candidate bundle gets a release
+// record signed by someone other than its author; the gate runs the
+// golden set and the what-if over last week's runs; shadow runs it on
+// live inputs with effects refused; exposure is a fixed-horizon test
+// where effects are reversible and a canary by task type where they
+// are not; full exposure follows. Rollback returns the whole bundle.
+// Every step writes the trail. From release.pipeline.
+digraph pipeline {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  cand [label="Candidate bundle\nhash over six parts", class="ops"];
+  rec [label="Release record\nsigned, not by author", class="policy gate"];
+  gate [label="Gate\ngolden set, what-if", class="verified gate"];
+  shadow [label="Shadow\neffects refused", class="ops"];
+  ab [label="Fixed-horizon test\nreversible effects", class="ops"];
+  can [label="Canary by task type\n5%, 25%, 50%", class="ops"];
+  full [label="Full exposure", class="verified"];
+  trail [label="Trail\nbundle hash per run", class="evidence store"];
+  cand -> rec [class="control"];
+  rec -> gate [class="emphasis"];
+  gate -> shadow [class="emphasis"];
+  shadow -> ab [class="control"];
+  shadow -> can [class="emphasis"];
+  ab -> full [class="control"];
+  can -> full [class="emphasis"];
+  can -> cand [class="control", label="rollback"];
+  full -> trail [class="trail"];
+}

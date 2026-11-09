@@ -3,7 +3,7 @@
 // the agent, a span per step, and inside each step the model call and
 // the tool call, policy decision or verification it led to. Content
 // sits in the evidence store by reference; an effect span carries the
-// hash of its gateway trail line. From trace.run and trace.spans.
+// hash of its gateway trail line. From tracing.run and tracing.spans.
 digraph hld {
 #include "book.gv"
   rankdir=TB; nodesep=0.35; ranksep=0.3;

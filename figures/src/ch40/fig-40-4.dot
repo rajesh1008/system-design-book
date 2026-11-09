@@ -1,0 +1,26 @@
+// Figure 40.4  The paved road
+// Reading order: top to bottom. A manifest passes the template, gets
+// an identity, has any new tool reviewed in the registry, goes to one
+// review of tools, rules, and golden set, runs in staging, and passes
+// six conformance tests before it goes live. A failed test sends it
+// back. From agentplatform.onboard.
+digraph paved {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.28;
+  m [label="Manifest\nwritten by the team", class="org"];
+  t [label="Template check", class="ops"];
+  i [label="Identity\nfrom the manifest", class="ops"];
+  r [label="Registry\nnew tools only", class="ops"];
+  rv [label="One review\ntools, rules, golden set", class="org human"];
+  s [label="Staging\nshadow runs", class="ops"];
+  k [label="Conformance\nsix tests", class="ops gate"];
+  l [label="Live", class="ops"];
+  m -> t [class="data"];
+  t -> i [class="control"];
+  i -> r [class="control"];
+  r -> rv [class="control"];
+  rv -> s [class="control"];
+  s -> k [class="control"];
+  k -> l [class="emphasis", label="6 of 6"];
+  k -> m [class="control", label="any fail", constraint=false];
+}

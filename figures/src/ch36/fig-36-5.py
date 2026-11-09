@@ -17,13 +17,13 @@ from evals import golden as G  # noqa: E402
 
 june = gaps.table(G.build())
 july = gaps.table(gaps.july())
-short = ("Card that paid", "Another card on\nthe profile",
+short = ("Card that paid", "Another profile card",
          "Newer card, expired\noriginal", "Card named in chat",
-         "Card in a tool result\nor document")
+         "In a tool result\nor document")
 rows = [(s, t, f"{a}", f"{b}") for s, (_, t, a), (_, _, b)
         in zip(short, june, july)]
 cols = (0.0, 1.75, 2.85, 3.85)
-heads = ("Destination from", "Trust", "June", "July")
+heads = ("Came from", "Trust", "June", "July")
 fig, ax = fl.figure(4.6, 3.3)
 n = len(rows)
 ax.set_xlim(0, 4.6)

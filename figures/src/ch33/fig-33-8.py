@@ -1,45 +1,40 @@
-"""Figure 33.8  Battery results: how far each attack traveled.
+"""Figure 33.8  Controls by plane.
 
-Reading order: one stacked bar per attack class, top to bottom; each
-segment is the furthest stage the attack reached. Values from
-threats.demo --part battery (61 attacks, 0 effects).
+Reading order: one row per plane, top to bottom; the control that
+plane owns and what it guarantees whatever the model reads.
+From threats.controls and the gateway.
 """
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "designlab"))
 import figlib as fl  # noqa: E402
-from matplotlib.patches import Patch  # noqa: E402
+from matplotlib.patches import Rectangle  # noqa: E402
 
-classes = ("Direct", "Indirect", "Poisoning", "Memory", "Exfiltration",
-           "Deputy")
-data = {"Entry": (0, 12, 7, 6, 0, 0),
-        "Context": (2, 0, 0, 0, 0, 0),
-        "Refused": (5, 2, 3, 1, 10, 9),
-        "Proposal": (1, 2, 0, 1, 0, 0),
-        "Effect": (0, 0, 0, 0, 0, 0)}
-face = {"Entry": fl.C["verified"], "Context": fl.FILL["verified"],
-        "Refused": fl.FILL["policy"], "Proposal": fl.FILL["fail"],
-        "Effect": fl.C["fail"]}
-edge = {"Entry": fl.C["verified"], "Context": fl.C["verified"],
-        "Refused": fl.C["policy"], "Proposal": fl.C["fail"],
-        "Effect": fl.C["fail"]}
-fig, ax = fl.figure(4.5, 3.0)
-ys = [len(classes) - 1 - i for i in range(len(classes))]
-left = [0] * len(classes)
-for stage, vals in data.items():
-    ax.barh(ys, vals, left=left, color=face[stage], edgecolor=edge[stage],
-            height=0.6)
-    left = [a + b for a, b in zip(left, vals)]
-for y, total in zip(ys, left):
-    fl.label_line(ax, total, y, str(total))
-ax.set_yticks(ys)
-ax.set_yticklabels(classes)
-ax.set_xlim(0, 19)
-ax.legend(handles=[Patch(facecolor=face[s], edgecolor=edge[s], label=s)
-                   for s in data],
-          loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=3,
-          fontsize=9, frameon=False)
-ax.set_xlabel("Attacks (61; 0 reach an effect)")
-ax.grid(axis="x")
+rows = (("Action", "Input contract,\nreply filter", "Fields in,\ntext out", "policy"),
+        ("Control", "Policy, binding", "Exact permits", "policy"),
+        ("Gateway", "Egress, hash", "No way out", "verified"),
+        ("Knowledge", "Write gate", "No note rules", "verified"),
+        ("Trail", "Both identities", "Replayable", "verified"))
+cols = (0.0, 1.2, 2.85)
+heads = ("Plane", "Control", "Guarantee")
+H = 3.2
+n = len(rows)
+fig, ax = fl.figure(4.5, H)
+ax.set_xlim(0, 4.6)
+ax.set_ylim(-0.1, n + 0.9)
+ax.axis("off")
+for x, h in zip(cols, heads):
+    ax.text(x + 0.05, n + 0.45, h, va="center", fontsize=10,
+            fontweight="bold", color=fl.INK)
+for i, row in enumerate(rows):
+    y = n - 1 - i
+    tok = row[-1]
+    ax.add_patch(Rectangle((0.0, y + 0.06), 4.6, 0.88,
+                           facecolor=fl.FILL[tok], edgecolor=fl.C[tok],
+                           lw=0.75))
+    for x, t in zip(cols, row[:-1]):
+        ax.text(x + 0.05, y + 0.5, t, va="center", fontsize=9,
+                color=fl.INK, fontweight="bold" if x == cols[0] else None)
 fl.save(fig)
+

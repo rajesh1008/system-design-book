@@ -1,18 +1,16 @@
 @startuml
-' Figure 31.4  The approval gate
-' Reading order: top to bottom. A $940 refund files a card; the agent
-' and an over-limit approver are refused; the team lead approves the
-' digest she saw; the retry gets a 15-minute permission. From policy.demo --part approval.
+' Figure 31.4  Policy bundle versioning
+' Reading order: top to bottom. A bundle is proposed by its author,
+' signed by someone else, runs in shadow beside the active bundle,
+' becomes active, and is superseded; a revoked policy version stops its
+' unspent permissions. From policy.bundle.
 !include plantuml-theme.puml
-participant "Agent" as A <<model>>
-participant "Policy engine" as E <<policy>>
-participant "Team lead" as T <<org>>
-A -> E : Refund 940.00
-E --> A : Approve needed, card
-E -> T : Card with arguments
-A -[$FAIL]> E : Approves own card
-E --> A : Refused
-T -> E : Approve this digest
-A -> E : Retry same arguments
-E --> A : Permission, 15 min
+hide empty description
+[*] -down-> Draft : Author proposes
+Draft -down-> Signed : Other person signs
+Signed -right-> Shadow : Beside active
+Shadow -down-> Active : Differences reviewed
+Active -down-> Superseded : Next bundle active
+Active -right-> Revoked : Version revoked
+Superseded --> [*]
 @enduml

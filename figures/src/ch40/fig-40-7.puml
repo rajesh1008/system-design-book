@@ -1,0 +1,20 @@
+@startuml
+' Figure 40.7  The bypassing use case
+' Reading order: top to bottom. Ten loyalty calls go through the shared
+' gateway, which records each in the trail. One call goes straight to
+' the points server on the old ledger key. The server's own count says
+' eleven; the trail says ten; conformance test K2 compares the two and
+' fails, so the use case does not go live. From agentplatform.onboard
+' and agentplatform.conformance.
+!include plantuml-theme.puml
+participant "Loyalty agent" as A <<org>>
+participant "Shared gateway" as G <<ops>>
+participant "Points server" as S <<ops>>
+participant "Conformance" as K <<ops>>
+A -> G : 10 calls
+G -> S : 10 forwarded
+A -[$FAIL]> S : 1 on old key
+K -> S : Count: 11
+K -> G : Trail: 10
+K -[$FAIL]> A : K2 fails
+@enduml

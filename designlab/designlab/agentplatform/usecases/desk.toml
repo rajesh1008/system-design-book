@@ -1,0 +1,73 @@
+# The second use case: the desk assistant. Onboarded by meeting from
+# June 22 to July 23, 2026, before the platform existed; extracted
+# onto it with a narrowed grant. The pilot's grant was every approved
+# tool, the master key.
+
+[use_case]
+name = "desk"
+owner = "Keisha Navarro"
+team = "Agent desk (Customer Operations)"
+business_unit = "Customer Operations"
+identity = "desk:assistant"
+caller_key = "wl-desk-assistant"
+harness = "desk assistant 1.2"
+resource = "itinerary"
+
+[team_owned]
+prompts = "desk assistant repository"
+retrieval = "fare rules index, desk notes"
+models = "claude-haiku-5-5"
+tool_servers = "none of its own"
+
+[[tools]]
+server = "booking"
+name = "booking_read"
+[[tools]]
+server = "status"
+name = "flight_status"
+[[tools]]
+server = "status"
+name = "notice_read"
+[[tools]]
+server = "fares"
+name = "fare_rules_search"
+[[tools]]
+server = "offers"
+name = "offers_search"
+[[tools]]
+server = "messaging"
+name = "customer_notify"
+
+[policy]
+rules = []
+
+[evaluation]
+golden_set = "desk golden set v2"
+trials = 8
+k = 4
+threshold = 0.90
+successes = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+             8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 7, 8, 8, 8, 8, 8,
+             8, 8, 8, 8]
+
+[verify]
+source = "carrier booking record, read by the reconciler"
+reads_through = "carrier-records"
+owner = "Ben Carter"
+
+[result]
+measure = "desk handle time per case"
+owner = "Marcus Bell"
+
+[[script]]
+server = "booking"
+tool = "booking_read"
+args = { booking_ref = "LTG-45{n:05d}" }
+[[script]]
+server = "offers"
+tool = "offers_search"
+args = { booking_ref = "LTG-45{n:05d}", segment = 1, kind = "flight" }
+[[script]]
+server = "messaging"
+tool = "customer_notify"
+args = { itinerary_id = "LTG-45{n:05d}", template = "update" }

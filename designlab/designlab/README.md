@@ -44,10 +44,11 @@ the key is read from the environment only.
 | `identity/` | 32 | Per-run identity: run tokens minted at grant (delegation, not impersonation), the secret broker, data classes, the identity test and the trail check |
 | `threats/` | 33 | The injection and poisoning battery: 61 attacks in six classes against an obedient stand-in model, the four controls (session binding, reply filter, egress, memory gate), the gateway's quote check, the trifecta and Rule of Two from configuration, and a recorded small-model replay |
 | `evals/` | 34 | The release gate: a versioned golden set (640 tasks, eight classes), four-part scoring (outcome, trajectory, effects, forbidden effects), pass^k over three trials, a wording judge calibrated against people (kappa), online signals, and the improvement loop with release cuts |
-| `trace/` | 35 | The run as a trace: spans named by the GenAI semantic conventions with local `lakeshore.*` attributes and content by reference, the completeness check against the gateway trail, tail sampling, cost per decision and per harness version, the alerts, and strict and what-if replay |
+| `tracing/` | 35 | The run as a trace: spans named by the GenAI semantic conventions with local `lakeshore.*` attributes and content by reference, the completeness check against the gateway trail, tail sampling, cost per decision and per harness version, the alerts, and strict and what-if replay |
 | `assurance/` | 36 | Assurance on the record: period questions for the auditor answered from the trail, daily Merkle anchors held by audit, the sealed evidence pack with a seeded sample of chains, the June 24 production injection replayed, the destination-v1 rule, admissibility of evidence, and the finding from opened to closed |
 | `reliability/` | 37 | Reliability on outcomes: five service objectives read from records the agent does not write, multiwindow burn-rate alerts on the rebooking slice, the error budget and freeze rule, the July 8 model update and the July 25 retry storm replayed, time to stop by kill-switch tier, the game day with one falsified hypothesis, runbooks, and reviews |
 | `economics/` | 38 | The economics in operation: the July invoice by identity and the storm inside it, cost per verified outcome by kind of change, the worst case before the first call, spend policies at the model gateway with unknown usage settled at its worst case, the July 25 storm replayed in dollars, chargeback by identity, and the economics card |
+| `agentplatform/` | 40 | The agent platform: the project control plane of August 10 and why loyalty could not join it, the manifest template and its twelve problems, servicing and the desk extracted onto manifests, loyalty on the golden path, six conformance tests (K1 to K6) with the old ledger key failing K2, evidence-chain coverage, the two onboarding logs, platform economics and the charge table, and the platform card (named `agentplatform` because `platform` is a standard-library module) |
 
 ## Install
 
@@ -110,6 +111,7 @@ From this directory:
     bash ch36/run.sh               # Chapter 36: evidence pack, injection, finding
     bash ch37/run.sh               # Chapter 37: objectives, budgets, incidents, runbooks
     bash ch38/run.sh               # Chapter 38: unit cost, budgets, spend policies, the bill
+    bash ch40/run.sh               # Chapter 40: the platform, paved road, conformance
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

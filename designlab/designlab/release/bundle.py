@@ -34,9 +34,8 @@ PROMPTS = {
     "booking, the request, the amounts from fare_calc, and the open "
     "question. No more than five lines.",
     "change-intent@1.0": "Classify the change the carrier made to the "
-    "itinerary. A schedule change and an equipment change on the same "
-    "segment is one combined change.",
-    "notice@7": "Tell the traveler what changed, what we did, and what "
+    "itinerary into one code from the list.",
+    "notice@6": "Tell the traveler what changed, what we did, and what "
     "happens next, in that order, in plain words.",
 }
 
@@ -119,7 +118,7 @@ def base() -> Bundle:
               ("credits", "1.2+b09"), ("offers", "1.3+b22"),
               ("registry", "2026-06-19")),
         harness=("servicing-1.0.0", harness_hash("servicing-1.0.0")),
-        policy="pb-2026.06.22",
+        policy="pb-2026.06.22.2",
         memory=(("fare_rules", "extract@2026-06"),
                 ("traveler", "schema@2;retention@2")),
     )

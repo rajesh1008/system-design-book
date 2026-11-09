@@ -1,0 +1,100 @@
+# The third use case: the loyalty points assistant, onboarded on the
+# paved road from Monday, August 17 to Wednesday, August 26, 2026.
+# Scope: balance reads and goodwill credits. Points transfers to
+# partners are out of scope.
+
+[use_case]
+name = "loyalty"
+owner = "Arjun Mehta"
+team = "Loyalty engineering"
+business_unit = "Loyalty"
+identity = "agent:loyalty"
+caller_key = "wl-loyalty-agent"
+harness = "points assistant 0.9"
+resource = "member"
+
+[team_owned]
+prompts = "points assistant repository"
+retrieval = "program terms index"
+models = "claude-haiku-5-5"
+tool_servers = "loyalty-points"
+
+[[tools]]
+server = "loyalty-points"
+name = "points_balance"
+version = "1.0"
+kind = "read"
+description = "Get a member's points balance and tier."
+[tools.input_schema]
+type = "object"
+required = ["member_id"]
+additionalProperties = false
+[tools.input_schema.properties.member_id]
+type = "string"
+pattern = "^MBR-[0-9]{8}$"
+
+[[tools]]
+server = "loyalty-points"
+name = "points_credit"
+version = "1.0"
+kind = "effect"
+description = "Post goodwill points to a member's account with a reason code."
+[tools.input_schema]
+type = "object"
+required = ["member_id", "points", "reason"]
+additionalProperties = false
+[tools.input_schema.properties.member_id]
+type = "string"
+pattern = "^MBR-[0-9]{8}$"
+[tools.input_schema.properties.points]
+type = "integer"
+minimum = 1
+maximum = 20000
+[tools.input_schema.properties.reason]
+type = "string"
+enum = ["delay", "missing_activity", "service"]
+
+[[policy.rules]]
+id = "points-read"
+policy = "loyalty-reads-v1"
+type = "read"
+tools = ["points_balance"]
+[[policy.rules]]
+id = "points-limit"
+policy = "points-v1"
+type = "limit"
+tools = ["points_credit"]
+field = "points"
+max = 5000
+route = "loyalty desk"
+[[policy.rules]]
+id = "points-allow"
+policy = "points-v1"
+type = "allow"
+tools = ["points_credit"]
+
+[evaluation]
+golden_set = "loyalty golden set v1"
+trials = 8
+k = 4
+threshold = 0.90
+successes = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+             8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 7, 7, 8]
+
+[verify]
+source = "loyalty ledger, read through the points service"
+reads_through = "loyalty-points"
+owner = "Sofia Lindqvist"
+
+[result]
+measure = "complaints closed by a goodwill credit"
+owner = "Arjun Mehta"
+
+[[script]]
+server = "loyalty-points"
+tool = "points_balance"
+args = { member_id = "MBR-3{n:07d}" }
+[[script]]
+server = "loyalty-points"
+tool = "points_credit"
+args = { member_id = "MBR-3{n:07d}", points = 2500, reason = "delay" }

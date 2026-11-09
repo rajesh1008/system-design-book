@@ -1,29 +1,19 @@
 @startuml
-' Figure 32.8  Identity in the trail
-' Reading order: the trail line in the middle. It carries the three
-' identities from the run token, the permission it spent, and a
-' signature over them and the argument digest, so neither a person
-' nor a key can be swapped after the fact.
+' Figure 32.8  The secret broker
+' Reading order: top to bottom. The context assembler refuses any
+' held key or run token before the model sees it; the broker fills
+' a system-of-record key only after the run token covers this tool
+' and this itinerary, and drops it from the result.
 !include plantuml-theme.puml
-hide circle
-class "Run token" as T <<policy>> {
-  sub: C-118204
-  act: servicing-1.0.0
-  run: run-20260622T...
-  itinerary: LTG-5208877
-  exp: 15 minutes
-}
-class "Trail line" as L <<evidence>> {
-  tool, verdict
-  user, agent, run
-  perm, args_digest
-  sig, prev
-}
-class "Permission" as P <<policy>> {
-  perm-0622-001
-  one tool, one digest
-  single use
-}
-T --> L : identities
-P --> L : spent by
+participant "Context\nassembler" as A <<ops>>
+participant "Gateway" as G <<policy>>
+participant "Broker" as B <<policy>>
+participant "System\nof record" as S <<ops>>
+A -[$FAIL]> A : Key in note:\nrefused
+A -> G : Tool call
+G -> B : Run claims
+B -> S : Key filled
+S --> B : Result
+B --> G : Key dropped
+B -[$FAIL]> G : Other trip:\nrefused
 @enduml

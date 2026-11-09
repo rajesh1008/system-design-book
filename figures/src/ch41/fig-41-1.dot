@@ -1,0 +1,28 @@
+// Figure 41.1  The team's new product
+// Reading order: top to bottom. Partners decide what the rules, scopes,
+// gate and tiers say; the platform team builds the place where those
+// decisions take effect; four kinds of evidence join into one record
+// that says the agent may act; only then does the agent act. From the
+// charter of August 17, 2026 (org.card).
+digraph product {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.3;
+  partners [label="Partners decide\nrisk, security,\nresearch, operations", class="org human"];
+  team [label="Platform team\nbuilds and runs\nthe four planes", class="org"];
+  rule [label="Signed rule", class="evidence"];
+  scope [label="Scoped identity", class="evidence"];
+  gate [label="Gate result", class="evidence"];
+  trail [label="Trail record", class="evidence store"];
+  may [label="Evidence that\nthe agent may act", class="evidence gate"];
+  act [label="Agent acts", class="model"];
+  partners -> team [class="control", label="one owner\neach"];
+  team -> rule [class="data"];
+  team -> scope [class="data"];
+  team -> gate [class="data"];
+  team -> trail [class="trail"];
+  rule -> may [class="data"];
+  scope -> may [class="data"];
+  gate -> may [class="data"];
+  trail -> may [class="trail"];
+  may -> act [class="emphasis"];
+}

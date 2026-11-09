@@ -1,0 +1,21 @@
+@startuml
+' Figure 32.4  Non-human identity lifecycle
+' Reading order: left to right from requested to retired. Every
+' identity has an owner before it is issued, a date it must be
+' rotated or reviewed by, and a way out; a run token skips rotation
+' and simply expires.
+!include plantuml-theme.puml
+hide empty description
+[*] --> Requested
+Requested --> Issued : Owner named,\nscopes reviewed
+Issued --> Active : First use
+Active --> Active : Rotated\nby its date
+Active --> Suspended : Finding opened
+Suspended --> Active : Finding closed
+Active --> Revoked : Unused, or\nowner gone
+Suspended --> Revoked : Not closed\nby its date
+Issued --> Expired : Run token,\n15 minutes
+Active --> Expired : Run token,\n15 minutes
+Revoked --> [*]
+Expired --> [*]
+@enduml

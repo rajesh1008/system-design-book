@@ -1,24 +1,21 @@
-// Figure 31.7  The three-tier kill switch (signature figure S8)
-// Reading order: top to bottom. The operator writes one flag; every
-// gateway replica reads it. Tier one holds one tool, tier two holds all
-// effects at the gateway, tier three turns the agent off and revokes
-// its run tokens. The drill observes the safe state. From policy.kill.
-digraph hld {
+// Figure 31.7  Temporal and sequence policies
+// Reading order: top to bottom. A proposed effect is checked against
+// what already happened in the window, then against quiet periods,
+// then against what the session has read. From policy.temporal.
+digraph flow {
 #include "book.gv"
-  rankdir=TB; nodesep=0.3; ranksep=0.3;
-  op [label="Ben Carter\npulls a tier", class="org human"];
-  flag [label="Flag\nkill/servicing", class="policy store"];
-  gw [label="Gateway replicas\nread every 5 s", class="ops"];
-  t1 [label="Tier one\none tool held", class="policy"];
-  t2 [label="Tier two\nall effects held", class="policy"];
-  t3 [label="Tier three\nagent off, tokens revoked", class="policy"];
-  obs [label="Drill observes\nsafe state", class="verified"];
-  op -> flag [class="control"];
-  flag -> gw [class="emphasis"];
-  gw -> t1 [class="control"];
-  gw -> t2 [class="control"];
-  gw -> t3 [class="control"];
-  t1 -> obs [class="trail"];
-  t2 -> obs [class="trail"];
-  t3 -> obs [class="trail"];
+  rankdir=TB; nodesep=0.3; ranksep=0.28;
+  prop [label="Proposed effect", class="model"];
+  rep [label="Same key in window?\nrefund once per 24 h", class="policy"];
+  qui [label="Quiet period?\nno voucher after refund", class="policy"];
+  ses [label="Session read upload?\nescalate money", class="policy"];
+  ok [label="Other rules", class="policy gate"];
+  desk [label="Route to desk", class="org human"];
+  prop -> rep [class="data"];
+  rep -> qui [class="data", label=" no"];
+  qui -> ses [class="data", label=" no"];
+  ses -> ok [class="emphasis", label=" no"];
+  rep -> desk [class="control", label=" yes"];
+  qui -> desk [class="control", label=" yes"];
+  ses -> desk [class="control", label=" yes"];
 }

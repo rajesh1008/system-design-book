@@ -1,0 +1,21 @@
+@startuml
+' Figure 39.5  Rollback with runs in flight
+' Reading order: top to bottom, Thursday, July 30, 2026, 8:40 a.m.
+' CDT. The release owner rolls R-0723 back; the router sends queued
+' refunds to the parent bundle; started runs restart there; approval
+' cards bound to the old proposal are cancelled and re-proposed; runs
+' awaiting a verdict go to the reconciler; done runs are audited by
+' bundle hash. From release.rollback.
+!include plantuml-theme.puml
+participant "Owner" as O <<org>>
+participant "Router" as R <<ops>>
+participant "R-0723 runs" as A <<fail>>
+participant "Reconciler" as V <<evidence>>
+O -[$FAIL]> R : Roll back
+R -> R : 4 queued
+R -> A : 7 restart
+A -> R : 6 re-propose
+A -> V : 23 verdicts
+V -> O : 59 audited
+note over R, A $F_OPS : 17 trail lines
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+' Figure 39.2  The release bundle (class diagram)
+' Reading order: the bundle at the top with its six parts, then the
+' release record and the trail line below it. The hash is taken over
+' all six parts; the record names its parent and is signed by someone
+' other than the author; every run's trail line carries the hash.
+' Values from release.bundle for R-0723.
+!include plantuml-theme.puml
+hide empty methods
+hide circle
+class "Bundle d8ecba1c27cc" as B <<ops>> {
+  prompts: 4 digests
+  models: dated snapshots
+  tools: version and build
+  harness: a905acf1f532
+  policy: pb-2026.07.13
+  memory: schema 2
+}
+class "Release record" as R <<evidence>> {
+  parent dfeab713c28b
+  signer not author
+}
+class "Trail line" as L <<evidence>> {
+  run, bundle, stage
+}
+B <.. R
+B <.. L
+@enduml

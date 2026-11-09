@@ -21,17 +21,22 @@ from decimal import Decimal
 from evals.score import forbidden, score
 from harness.manifest import apply_overrides
 from harness.world import cases
-from trace import replay
-from trace.run import fleet, harness
-from trace.spans import export
+try:                                    # renamed from `trace`
+    from tracing import replay
+    from tracing.run import fleet, harness
+    from tracing.spans import export
+except ImportError:                     # a checkout before the rename
+    from trace import replay
+    from trace.run import fleet, harness
+    from trace.spans import export
 
 from .bundle import Bundle
 
 # Which model role answers for each prompt contract.
-PROMPT_ROLE = {"refund-reason@1.3": "claude-haiku-5-5",
-               "change-intent@1.0": "claude-haiku-5-5",
-               "desk-note@2.1": "claude-sonnet-5-5",
-               "notice@7": "claude-sonnet-5-5"}
+PROMPT_ROLE = {"refund-reason": "claude-haiku-5-5",
+               "change-intent": "claude-haiku-5-5",
+               "desk-note": "claude-sonnet-5-5",
+               "notice": "claude-sonnet-5-5"}
 ROLE_MODEL = {"small": "claude-haiku-5-5", "mid": "claude-sonnet-5-5",
               "frontier": "claude-opus-5-5"}
 
@@ -141,7 +146,7 @@ def whatif(active: Bundle, cand: Bundle, overrides: dict | None = None,
     h = apply_overrides(harness(), overrides or {})
     w = WhatIf(n)
     a, b = active.parts(), cand.parts()
-    touched = {PROMPT_ROLE[k] for k in set(a["prompt"]) | set(b["prompt"])
+    touched = {PROMPT_ROLE[k.split("@")[0]] for k in set(a["prompt"]) | set(b["prompt"])
                if a["prompt"].get(k) != b["prompt"].get(k)}
     touched |= {ROLE_MODEL[r] for r in a["model"]
                 if a["model"][r] != b["model"].get(r)}
@@ -160,10 +165,10 @@ def whatif(active: Bundle, cand: Bundle, overrides: dict | None = None,
             w.marked_spans += marks
             w.marked_runs += 1
         if not rp.diff.same:
-            row = (r.cid, rp.diff.index, rp.diff.note)
+            row = (r.cid, rp.diff.index,
+                   f"{rp.diff.production} -> {rp.diff.replay}")
             w.divergent.append(row)
-            kind = r.trace[0].attrs.get("lakeshore.outcome", "")
-            if not any(s in rp.diff.production or s in kind
-                       for s in scope):
+            seen = f"{rp.diff.production} {rp.diff.replay} {rp.stop}"
+            if not any(s in seen for s in scope):
                 w.unexpected.append(row)
     return w

@@ -6,7 +6,7 @@
 ' number into a valid reference, and the proposal reaches the desk,
 ' where the approver rejects it. From assurance.case and the trail.
 !include plantuml-theme.puml
-participant "Hotel email" as E <<fail>>
+participant "Hotel email" as E <<org>>
 participant "Booking notes" as N <<knowledge>>
 participant "Agent" as A <<model>>
 participant "Approver desk" as D <<policy>>

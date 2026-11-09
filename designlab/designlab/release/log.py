@@ -28,15 +28,15 @@ class Entry:
 
 
 LOG = (
-    Entry("R-0713", "07-13", "policy", "pb-2026.07.13", False,
-          "gate>shadow>full", "full", "Owen Fletcher"),
-    Entry("R-0714", "07-14", "tool", "payments 3.1: split refunds",
+    Entry("R-0713", "07-13", "tool", "payments 3.1: split refunds",
           True, "gate>full", "full", "Daniel Price"),
+    Entry("R-0715", "07-15", "policy", "pb-2026.07.13", False,
+          "gate>shadow>full", "full", "Owen Fletcher"),
     Entry("R-0716", "07-16", "prompt", "notice@7 wording", False,
           "gate>full", "full", "Dr. Hannah Clarke"),
     Entry("R-0721", "07-21", "memory", "traveler memory re-index",
           False, "gate>shadow>full", "full", "Dr. Hannah Clarke"),
-    Entry("R-0722", "07-22", "harness", "settings: keep_turns 8 to 10",
+    Entry("R-0722", "07-22", "harness", "harness 1.0.1: steps 24 to 16",
           False, "gate>shadow>full", "full", "Daniel Price"),
     Entry("R-0723", "07-23", "harness", "harness 1.1.0: refund machine",
           True, "gate>shadow>canary", "rolled_back", "Daniel Price"),

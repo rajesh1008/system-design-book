@@ -12,7 +12,7 @@ digraph flow {
   q [label="Questions P1 to P11\nmapped to records", class="evidence"];
   seed [label="Auditor's seed", class="org human"];
   ans [label="Answers\ncount, exceptions, lines", class="evidence"];
-  smp [label="Sample of 60 chains\nproof to each day's root", class="evidence"];
+  smp [label="60 sampled chains\nproved to daily roots", class="evidence"];
   man [label="Manifest of hashes\nand seal", class="policy gate"];
   roots [label="30 daily roots\nheld by audit", class="evidence store"];
   ver [label="Auditor verifies\nseal, manifest, proofs", class="verified gate"];

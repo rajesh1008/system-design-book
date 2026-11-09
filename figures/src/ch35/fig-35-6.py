@@ -1,41 +1,41 @@
-"""Figure 35.6  Alerts that mean something.
+"""Figure 35.6  Cost per decision distribution.
 
-Reading order: one row per rule, top to bottom; who it pages and what
-they do. The last three rows are the pilot's alerts, kept as
-dashboards because each fired on an ordinary day. From trace.alerts.
+Reading order: left to right, cost per decision in USD over 1,000 lab
+runs, one histogram per kind of decision. The dashed line is the p95
+on a normal day; the solid line is the alert at $0.12. With the
+prefix cache off the p95 moves past the alert. From tracing.cost.
 """
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "04-code" / "designlab"))
 import figlib as fl  # noqa: E402
-from matplotlib.patches import Rectangle  # noqa: E402
+from tracing import cost  # noqa: E402
+from tracing.run import fleet  # noqa: E402
 
-rows = (("Trace incomplete", "Ben Carter", "Freeze the release", "policy"),
-        ("Effect not verified", "Marcus Bell", "Desk rechecks each refund", "policy"),
-        ("Reads refused > 5%", "Daniel Price", "Tier one: tool off", "policy"),
-        ("Cost/decision p95\n> $0.12", "Daniel Price", "Diff cache and prompt\nby version", "policy"),
-        ("Hand-offs > 8%", "Marcus Bell", "Staff the desk;\nread the stops", "policy"),
-        ("Call latency p95", "Dashboard", "Fires every day", "fail"),
-        ("Any tool error", "Dashboard", "Fires every day", "fail"),
-        ("Tokens per call", "Dashboard", "Fires every day", "fail"))
-cols = (0.0, 1.55, 2.7)
-heads = ("Rule", "Pages", "Action")
-fig, ax = fl.figure(4.5, 3.8)
-n = len(rows)
-ax.set_xlim(0, 4.6)
-ax.set_ylim(-0.1, n + 0.9)
-ax.axis("off")
-for x, h in zip(cols, heads):
-    ax.text(x + 0.05, n + 0.45, h, va="center", fontsize=10,
-            fontweight="bold", color=fl.INK)
-for i, (*cells, tok) in enumerate(rows):
-    y = n - 1 - i
-    ax.add_patch(Rectangle((0.0, y + 0.06), 4.6, 0.88,
-                           facecolor=fl.FILL[tok] if tok == "fail" else "white",
-                           edgecolor=fl.C[tok] if tok == "fail" else fl.GREY_LIGHT,
-                           lw=0.75))
-    for x, t in zip(cols, cells):
-        ax.text(x + 0.05, y + 0.5, t, va="center", fontsize=9,
-                color=fl.INK, fontweight="bold" if x == cols[0] else None)
+normal = fleet(1000)
+off = cost.distribution(fleet(1000, cache=False).results)["all"]["p95"]
+by = {}
+for r in normal.results:
+    for d in cost.decisions(r.trace, r.evidence):
+        by.setdefault(d["kind"], []).append(float(d["usd"]))
+p95 = cost.distribution(normal.results)["all"]["p95"]
+
+fig, ax = fl.figure(4.5, 3.2)
+bins = [i * 0.005 for i in range(0, 46)]
+for i, (k, tok) in enumerate((("refund", "policy"), ("decline", "ops"),
+                              ("handoff", "fail"))):
+    ax.hist(by[k], bins=bins, color=fl.FILL[tok], edgecolor=fl.C[tok],
+            lw=0.75, hatch=fl.HATCH[i], label=f"{k.replace('handoff', 'hand-off')} ({len(by[k])})")
+ax.axvline(p95, color=fl.INK, ls="--", lw=1.0)
+fl.label_line(ax, p95, 118, f"p95 ${p95:.3f}", dx=3)
+ax.axvline(0.12, color=fl.C["fail"], lw=1.5)
+fl.label_line(ax, 0.12, 100, "alert $0.12", dx=3)
+ax.axvline(off, color=fl.C["fail"], ls=":", lw=1.25)
+fl.label_line(ax, off, 120, f"cache off\np95 ${off:.2f}", dx=-48)
+ax.set_xlim(0, 0.23)
+ax.set_xlabel("Cost per decision (USD)")
+ax.set_ylabel("Decisions")
+ax.legend(loc="upper left", bbox_to_anchor=(0.54, 0.72), frameon=False,
+          fontsize=9)
 fl.save(fig)

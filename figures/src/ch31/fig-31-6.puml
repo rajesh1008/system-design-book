@@ -1,0 +1,18 @@
+@startuml
+' Figure 31.6  The approval gate
+' Reading order: top to bottom. A $940 refund files a card; the agent
+' and an over-limit approver are refused; the team lead approves the
+' digest she saw; the retry gets a 15-minute permission. From policy.demo --part approval.
+!include plantuml-theme.puml
+participant "Agent" as A <<model>>
+participant "Policy engine" as E <<policy>>
+participant "Team lead" as T <<org>>
+A -> E : Refund 940.00
+E --> A : Approve needed, card
+E -> T : Card with arguments
+A -[$FAIL]> E : Approves own card
+E --> A : Refused
+T -> E : Approve this digest
+A -> E : Retry same arguments
+E --> A : Permission, 15 min
+@enduml
