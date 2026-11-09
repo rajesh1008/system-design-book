@@ -54,6 +54,8 @@ the key is read from the environment only.
 | `review/` | 42 | Architecture reviews: the production checklist by plane (sixteen items, executable over a design submission), the five gap questions, the verdict rule (a failing shape item declines, a failing value item changes), the decision record and its validator, the record store with its revisit queue, the review log, and the review card |
 | `designs/` | 43 | Worked architectures: six customer-facing designs as data (telecom care, Lakeshore rebooking and refunds, bank payments, insurer claims, lender collections), templates that expand a design into Chapter 5's eight artifacts, a linter that runs `method.lint` plus eight worked rules (independent verifier, tier by amount, person gate, customer states, hand-off, obligations, economics), economics in seven lines with payback, the pattern table, faults for failure injection, and the worked card; extensible with `register` and `register_rule` |
 | `golive/` | 44 | Go-live and the fall: the pilot and its numbers, the ramp by task type gated on verified outcomes against a ramp by traffic share, the storm day of September 10, 2026 as seeded records (41,000 changes in six hours), the approval queue replayed minute by minute with its order, seats, budget, kill-switch tier, and surge rule, named scenarios (as run, no prioritization, fare order, no emergency budget, autonomy widened, redesigned), the incident record as a trace, recovery measured, and the fall card with three changed designs |
+| `ladder/` | 46 | The design interview as a ladder: seven levels and twelve prompts, the clock's four marks over Chapter 5's eight slices, twenty-four answer notes, the rubric (seven criteria, 0 to 2 each) and the component-list rubric it replaced, two-scorer calibration with exact agreement and kappa, the pinned small model as a third scorer (replayed), the timed drill with a mock interviewer (`models/interviewer.py`) held to a one-question contract, tiers onto levels, and the ladder card; extensible with `prompts.register` |
+| `plan/` | 48 | The five-year plan as a decision record: the final card checked against itself, the four links named from a shipped design, the renaming table, what runtimes have absorbed and what stays, mandates that narrow down a hire chain, Lakeshore's year two (DR-48.1), the pinned-model window, and the plan linter (PLN-1 to PLN-9) with five faults |
 
 ## Install
 
@@ -123,6 +125,8 @@ From this directory:
     bash ch43/run.sh               # Chapter 43: six worked designs, linted, priced
     bash ch44/run.sh               # Chapter 44: the storm day replayed
     bash ch45/run.sh               # Chapter 45: six internal designs, linted
+    bash ch46/run.sh               # Chapter 46: the interview ladder, drilled
+    bash ch48/run.sh               # Chapter 48: final card, year-two plan, linted
 
 Each chapter also has a script that runs its tests and demos, for example
 `bash ch05/run.sh`.

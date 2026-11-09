@@ -1,0 +1,102 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A08a"
+prompt = "P08"
+candidate = "V15"
+session = "2026-10-15"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effects: rebook alone within $250; refunds with approval"
+effects = ["rebook", "refund_issue"]
+owner = "operations"
+autonomy = "per type"
+
+[[said]]
+at = 2
+kind = "question"
+text = "What did the worst day last year look like?"
+
+[[said]]
+at = 3
+kind = "estimate"
+text = "41,000 changes in six hours: about 6,800 an hour"
+source = "the prompt and last winter's ground stop"
+drives = "peak rate"
+shows = ["peak from history"]
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "17,000 need a person; at 30 an hour, 95 seats for six hours"
+source = "desk timing"
+drives = "people at peak"
+shows = ["people at peak"]
+
+[[said]]
+at = 11
+kind = "chain"
+text = "intake gate with a cap; queue ordered by departure; desk; gateway; reconcilers"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["intake gate", "queue", "policy engine", "approval desk", "gateway", "reconcilers", "trail"]
+shows = ["order by departure", "backpressure"]
+
+[[said]]
+at = 16
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed proposals"
+
+[[said]]
+at = 18
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "surge rule pre-reviewed, signed by risk, 12-hour expiry"
+
+[[said]]
+at = 21
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "held requests keep their keys"
+
+[[said]]
+at = 24
+kind = "gap"
+gap = "G4"
+owner = "operations"
+text = "reconcilers; verified rate hourly"
+
+[[said]]
+at = 27
+kind = "gap"
+gap = "G5"
+owner = "operations"
+text = "missed departures, the board's number"
+
+[[said]]
+at = 31
+kind = "tradeoff"
+text = "more seats, a surge rule, or fare order: departure order and a pre-reviewed rule"
+options = 3
+why_not = true
+
+[[said]]
+at = 37
+kind = "cost"
+text = "$1.83 per verified outcome on the day"
+unit = "verified outcome"
+
+[[said]]
+at = 41
+kind = "record"
+text = "order by departure; revisit if misses rise"
+reverse = true

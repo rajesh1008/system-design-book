@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 2000,
+    "messages": [
+      {
+        "content": "Prompt (L7): Your company will run fifty agent use cases in two years, built by many teams. Design the platform and the operating model.\n\nInterviewer's note:\n[02 min] frame: a central AI platform for the company (effects: platform; owner: CTO)\n[07 min] drew: a central platform team approves every agent\n[15 min] note: central review of every design\n[18 min] G1 (teams): schemas\n[22 min] G2 (platform team): the platform team approves every policy\n[26 min] G4 (platform team): evaluation before launch\n[29 min] G5 (finance): platform budget\n[34 min] tradeoff: central or federated: central\n[41 min] cost: $3 million a year platform budget\n[44 min] record: central approval; revisit yearly",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You score one answer from a 45-minute system design interview about an AI agent that acts. You are given the prompt and the interviewer's minute-by-minute note. Score seven criteria, each 0, 1, or 2:\nframing: 2 if the effect the agent may cause is named first, with an owner, by minute 5; 1 if named later or without an owner; 0 if never.\nestimation: 2 if a number with a stated source changes the design; 1 if a number without a source or that changes nothing; 0 if none.\nchain: 2 if the drawing puts permission before the effect and a verifier that did not act after it; 1 if only one; 0 if no drawing.\ngaps: the five gaps (G1 output to proposal, G2 proposal to permission, G3 permission to execution, G4 execution to verified outcome, G5 verified outcome to business result). 2 if all five are closed correctly with an owner; 1 if three or four; 0 otherwise. A gap closed with a wrong answer does not count.\ntradeoffs: 2 if two or more options are weighed and the losers' reasons are given; 1 if options without reasons; 0 if none.\ncost: 2 if cost is per verified outcome; 1 if per token, per month, or vague; 0 if none.\ncommunication: 2 if the answer frames by 5, draws by 15, closes the gaps by 30, and ends with a decision and what would reverse it; 1 if partly; 0 if not.\nReply with JSON only, keys in this order: framing, estimation, chain, gaps, tradeoffs, cost, communication."
+  },
+  "request_hash": "7607b09f4b001eed",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"framing\":1,\"estimation\":1,\"chain\":1,\"gaps\":0,\"tradeoffs\":1,\"cost\":1,\"communication\":1}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgsbfCYLRHzP4ZXbBReyo",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 767,
+      "output_tokens": 714,
+      "output_tokens_details": {
+        "thinking_tokens": 663
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

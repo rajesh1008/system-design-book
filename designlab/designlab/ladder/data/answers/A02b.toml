@@ -1,0 +1,67 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A02b"
+prompt = "P02"
+candidate = "V04"
+session = "2026-10-08"
+
+[[said]]
+at = 3
+kind = "frame"
+text = "the agent cancels through the hotel API"
+effects = ["hotel_cancel"]
+owner = "agent team"
+autonomy = "act"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "fewer than a hundred a week"
+source = ""
+drives = ""
+
+[[said]]
+at = 14
+kind = "chain"
+text = "agent cancels via the hotel API and tells the traveler"
+gate_before_effect = false
+verifier_not_actor = false
+names = ["LLM", "hotel API", "notification service"]
+
+[[said]]
+at = 20
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "structured tool call"
+
+[[said]]
+at = 27
+kind = "gap"
+gap = "G2"
+owner = "agent team"
+text = "confidence threshold of 0.9"
+right = false
+
+[[said]]
+at = 34
+kind = "gap"
+gap = "G5"
+owner = "product"
+text = "count cancellations"
+
+[[said]]
+at = 40
+kind = "cost"
+text = "cheap: a few cents"
+unit = "token"
+
+[[said]]
+at = 44
+kind = "record"
+text = "ship it"
+reverse = false

@@ -1,0 +1,89 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A04b"
+prompt = "P04"
+candidate = "V08"
+session = "2026-10-08"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "the agent rebooks after schedule changes"
+effects = ["rebook"]
+owner = "operations"
+autonomy = "act"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "a lot during storms"
+source = ""
+drives = ""
+
+[[said]]
+at = 9
+kind = "chain"
+text = "agent proposes; engine checks the $250 rule; airline API rebooks"
+gate_before_effect = true
+verifier_not_actor = false
+names = ["agent", "policy engine", "airline API"]
+
+[[said]]
+at = 15
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed rebook proposal"
+
+[[said]]
+at = 18
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "the $250 rule in the engine"
+
+[[said]]
+at = 24
+kind = "gap"
+gap = "G3"
+owner = "platform"
+text = "retry with backoff"
+right = false
+
+[[said]]
+at = 29
+kind = "gap"
+gap = "G4"
+owner = "agent team"
+text = "the agent re-reads the booking"
+right = false
+
+[[said]]
+at = 35
+kind = "gap"
+gap = "G5"
+owner = "product"
+text = "rebookings per day"
+
+[[said]]
+at = 39
+kind = "tradeoff"
+text = "one agent or one per airline: one agent"
+options = 2
+why_not = true
+
+[[said]]
+at = 42
+kind = "cost"
+text = "$0.05 per rebooking in tokens"
+unit = "token"
+
+[[said]]
+at = 44
+kind = "record"
+text = "go live"
+reverse = false

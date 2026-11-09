@@ -1,0 +1,101 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A11a"
+prompt = "P11"
+candidate = "V21"
+session = "2026-10-29"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effects unchanged: rebook and refund; the change is the pin"
+effects = ["rebook", "refund_issue"]
+owner = ""
+autonomy = "unchanged"
+
+[[said]]
+at = 3
+kind = "estimate"
+text = "640 golden tasks, three trials: 1,920 runs, about $40"
+source = "gate history"
+drives = "gate time and cost"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "a 5% canary on R1 rebookings: about 120 a day"
+source = "August volume"
+drives = "days to signal"
+
+[[said]]
+at = 10
+kind = "chain"
+text = "candidate pinned; golden set with pass^k; canary by task type on verified outcomes; rollback keeps runs in flight"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["model gateway", "release gate", "golden set", "canary", "policy engine", "reconcilers", "trail"]
+shows = ["golden set", "pass^k", "canary by task type"]
+
+[[said]]
+at = 15
+kind = "note"
+text = "runs in flight finish on the old pin after a rollback"
+shows = ["rollback with runs in flight"]
+
+[[said]]
+at = 17
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "contract test on the proposal schema"
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "forbidden effects zero in the gate"
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key per permission"
+
+[[said]]
+at = 25
+kind = "gap"
+gap = "G4"
+owner = "evaluation lead"
+text = "verified outcomes, not the words"
+
+[[said]]
+at = 28
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "cost per verified outcome before and after"
+
+[[said]]
+at = 32
+kind = "tradeoff"
+text = "take Tuesday or pin the old snapshot: pin, then gate"
+options = 2
+why_not = true
+
+[[said]]
+at = 37
+kind = "cost"
+text = "$1.61 now; refuse a candidate above $1.75"
+unit = "verified outcome"
+
+[[said]]
+at = 42
+kind = "record"
+text = "pin and gate; revisit when the old snapshot retires"
+reverse = true

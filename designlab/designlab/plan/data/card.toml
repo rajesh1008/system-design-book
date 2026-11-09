@@ -1,0 +1,108 @@
+# Lakeshore's final scoreboard: the October 14, 2025 baseline (Chapter
+# 4), the targets the owners set then, and the year-end card filed
+# September 30, 2026 for the board of Thursday, October 22, 2026
+# (Chapter 44). Lakeshore figures are illustrative.
+
+[meta]
+baseline_date = "2025-10-14"
+card_date = "2026-09-30"
+board_date = "2026-10-22"
+changes_per_year = 2100000
+
+[split]
+agent = 44
+assisted = 24
+self_service = 23
+person = 9
+
+[[row]]
+key = "cost_blended"
+label = "Cost per change, blended"
+baseline = "$37.94"
+target = "below $10"
+year_end = "$9.76"
+owner = "Sarah Whitfield"
+met = true
+
+[[row]]
+key = "cost_agent"
+label = "Cost per verified outcome"
+baseline = "none"
+target = "below $54.90"
+year_end = "$1.61"
+owner = "Sarah Whitfield"
+met = true
+
+[[row]]
+key = "people_share"
+label = "Changes a person handles"
+baseline = "61%"
+target = "lower, safely"
+year_end = "9%"
+owner = "Marcus Bell"
+met = true
+
+[[row]]
+key = "verified"
+label = "Verified outcomes"
+baseline = "none"
+target = "99.5%"
+year_end = "99.5%"
+owner = "Marcus Bell"
+met = true
+
+[[row]]
+key = "unauthorized"
+label = "Unauthorized actions"
+baseline = "unknown"
+target = "0"
+year_end = "0"
+owner = "Owen Fletcher"
+met = true
+
+[[row]]
+key = "refund_error"
+label = "Refund error"
+baseline = "0.8%"
+target = "below 0.8%"
+year_end = "0.3%"
+owner = "Rachel Morgan"
+met = true
+
+[[row]]
+key = "duplicates"
+label = "Duplicate effects"
+baseline = "unknown"
+target = "none new"
+year_end = "212"
+owner = "Rachel Morgan"
+met = true
+note = "all 212 on April 14, 2026; none since"
+
+[[row]]
+key = "incidents"
+label = "Incidents"
+baseline = "4"
+target = "each rebuilt"
+year_end = "7"
+owner = "Ben Carter"
+met = true
+
+[[row]]
+key = "p95"
+label = "Task p95"
+baseline = "52 s"
+target = "none set"
+year_end = "38 s"
+owner = "Ben Carter"
+met = true
+note = "baseline is the December 2025 pilot row"
+
+[[row]]
+key = "annual"
+label = "Annual handling cost"
+baseline = "$80M"
+target = "below $21M"
+year_end = "$20.5M"
+owner = "Sarah Whitfield"
+met = true

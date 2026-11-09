@@ -1,0 +1,101 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A05a"
+prompt = "P05"
+candidate = "V09"
+session = "2026-10-08"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effect: a free change, made when the rule says free"
+effects = ["rebook"]
+owner = "fare-rules owner"
+autonomy = "act and notify when free"
+
+[[said]]
+at = 3
+kind = "estimate"
+text = "about 9,000 rule questions a day across 140 airlines"
+source = "contact mix"
+drives = "index size and freshness"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "some carrier changes a rule most days; 15-minute freshness"
+source = "rule feed history"
+drives = "stale budget"
+
+[[said]]
+at = 10
+kind = "chain"
+text = "retrieval with an as-of date set by code; passages carry source and version; the proposal cites them; policy checks freshness; gateway changes; PNR reconciler verifies"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["retriever", "rules index", "agent loop", "policy engine", "gateway", "pnr reconciler", "trail"]
+shows = ["effect named", "as-of date", "provenance"]
+
+[[said]]
+at = 14
+kind = "note"
+text = "a stale or conflicting rule sends the case to a person"
+shows = ["stale sends to person"]
+
+[[said]]
+at = 16
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "proposal carries rule id and version"
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "engine refuses a rule out of effect"
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key per permission"
+
+[[said]]
+at = 25
+kind = "gap"
+gap = "G4"
+owner = "operations"
+text = "PNR reconciler; weekly answer sample"
+
+[[said]]
+at = 28
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "free changes granted against owed"
+
+[[said]]
+at = 32
+kind = "tradeoff"
+text = "long context, retrieval, or a rules engine: retrieval with an ingest check"
+options = 3
+why_not = false
+
+[[said]]
+at = 37
+kind = "cost"
+text = "$0.40 per verified answer"
+unit = "verified outcome"
+
+[[said]]
+at = 41
+kind = "record"
+text = "retrieval with as-of; revisit if wrong-rule rate passes 0.5%"
+reverse = true

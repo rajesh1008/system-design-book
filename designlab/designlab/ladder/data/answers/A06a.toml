@@ -1,0 +1,107 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A06a"
+prompt = "P06"
+candidate = "V11"
+session = "2026-10-15"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "memory feeds rebook proposals; the effect is still the rebook"
+effects = ["rebook"]
+owner = "agent team"
+autonomy = "memory informs, never permits"
+
+[[said]]
+at = 3
+kind = "estimate"
+text = "1.2 million frequent travelers, about six facts each"
+source = "loyalty base"
+drives = "store size and deletion load"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "home airport changes for about 3% a year"
+source = "profile change log"
+drives = "supersession rate"
+
+[[said]]
+at = 11
+kind = "chain"
+text = "a write gate on new facts; facts carry source and date; proposal cites the memory; the booking record wins a conflict"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["write gate", "memory store", "agent loop", "policy engine", "gateway", "pnr reconciler", "trail"]
+shows = ["write gate", "provenance"]
+
+[[said]]
+at = 14
+kind = "note"
+text = "a newer fact supersedes by compare-and-set; the old is kept"
+shows = ["supersession"]
+
+[[said]]
+at = 15
+kind = "note"
+text = "memory is a hint; the booking record is authority"
+shows = ["memory is not authority"]
+
+[[said]]
+at = 17
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "proposal names the memory it used"
+
+[[said]]
+at = 20
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "engine refuses a city taken only from memory"
+
+[[said]]
+at = 23
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key per permission"
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G4"
+owner = "operations"
+text = "PNR reconciler"
+
+[[said]]
+at = 29
+kind = "gap"
+gap = "G5"
+owner = "operations"
+text = "wrong-city rebookings, target zero"
+
+[[said]]
+at = 33
+kind = "tradeoff"
+text = "remember everything or gated facts: gated"
+options = 2
+why_not = true
+
+[[said]]
+at = 37
+kind = "cost"
+text = "adds about $0.03 per verified rebooking"
+unit = "verified outcome"
+
+[[said]]
+at = 42
+kind = "record"
+text = "write gate and supersession; revisit on a wrong-city repeat"
+reverse = true

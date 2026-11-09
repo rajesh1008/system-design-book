@@ -1,0 +1,22 @@
+@startuml
+' Figure 48.4  Agents that hire agents
+' Reading order: top to bottom. A traveler's flight moves (cap $400);
+' Lakeshore's rebooking agent asks the policy engine for a narrower
+' mandate, hires the partner's hotel agent with it, and the
+' partner's agent may only narrow it again. A mandate that widens is
+' refused. Lakeshore's verifier reads the hotel's signed folio, not
+' the partner agent's reply. From plan/data/hire.toml.
+!include plantuml-theme.puml
+participant "Agent" as A <<ops>>
+participant "Policy" as P <<policy>>
+participant "Partner" as H <<ops>>
+participant "Verifier" as V <<ops>>
+A -> P : Mandate?
+P -> A : $180, 30 min
+A -> H : Task
+H -[$POLICY]> P : Wider?
+P -[$POLICY]> H : Refused
+H -> A : Moved
+V -> V : Read folio
+V -> A : Verified
+@enduml

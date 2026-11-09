@@ -1,0 +1,24 @@
+// Figure 46.3  Level one: one agent, one tool, one permission
+// Reading order: top to bottom. A customer's request reaches the agent;
+// the agent's only effect is a typed refund proposal; a gate checks the
+// permission the finance owner granted outside the loop, up to $1,500;
+// the ledger records the refund and a separate verifier reads it.
+// From the P01 prompt and the A01a note.
+digraph l1 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  cust [label="Customer", class="ops human"];
+  agent [label="Refund agent", class="model"];
+  prop [label="Typed proposal", class="ops"];
+  gate [label="Permission\nto $1,500", class="policy gate"];
+  owner [label="Finance owner", class="policy human"];
+  ledger [label="Ledger", class="ops store"];
+  ver [label="Verifier", class="ops"];
+  cust -> agent [class="data"];
+  agent -> prop [class="data"];
+  prop -> gate [class="emphasis"];
+  owner -> gate [class="policy"];
+  gate -> ledger [class="control"];
+  ledger -> ver [class="data"];
+  { rank=same; gate; owner; }
+}

@@ -1,0 +1,130 @@
+# Calibration scores, Chapter 46. Illustrative.
+# Daniel Price and Dr. Hannah Clarke scored each answer blind,
+# from the note alone, on the seven criteria in this order:
+# framing, estimation, chain, gaps, tradeoffs, cost, communication.
+# Sessions of October 8 and 15 were scored before the
+# calibration meeting of Monday, October 19, 2026; the session
+# of October 29 after it.
+
+criteria = ["framing", "estimation", "chain", "gaps", "tradeoffs", "cost", "communication"]
+calibrated = "2026-10-19"
+
+[A01a]
+session = "2026-10-08"
+daniel = [2, 2, 2, 2, 2, 2, 2]
+hannah = [2, 1, 1, 1, 2, 2, 2]
+
+[A01b]
+session = "2026-10-08"
+daniel = [1, 1, 1, 0, 1, 1, 0]
+hannah = [1, 1, 2, 0, 2, 1, 0]
+
+[A02a]
+session = "2026-10-08"
+daniel = [2, 2, 2, 2, 2, 1, 2]
+hannah = [1, 2, 2, 2, 2, 2, 1]
+
+[A02b]
+session = "2026-10-08"
+daniel = [2, 1, 1, 0, 0, 1, 1]
+hannah = [2, 1, 1, 0, 0, 1, 1]
+
+[A03a]
+session = "2026-10-29"
+daniel = [2, 2, 2, 2, 2, 2, 2]
+hannah = [2, 2, 2, 2, 2, 2, 1]
+
+[A03b]
+session = "2026-10-29"
+daniel = [0, 1, 1, 0, 0, 1, 0]
+hannah = [0, 1, 1, 0, 1, 1, 0]
+
+[A04a]
+session = "2026-10-08"
+daniel = [2, 2, 2, 2, 2, 2, 2]
+hannah = [2, 2, 2, 2, 1, 2, 2]
+
+[A04b]
+session = "2026-10-08"
+daniel = [2, 1, 1, 1, 2, 1, 1]
+hannah = [2, 1, 1, 1, 1, 1, 1]
+
+[A05a]
+session = "2026-10-08"
+daniel = [2, 2, 2, 2, 1, 2, 2]
+hannah = [2, 2, 2, 2, 1, 2, 2]
+
+[A05b]
+session = "2026-10-08"
+daniel = [0, 0, 1, 0, 1, 1, 0]
+hannah = [0, 0, 1, 0, 1, 1, 1]
+
+[A06a]
+session = "2026-10-15"
+daniel = [2, 2, 2, 2, 2, 2, 2]
+hannah = [2, 2, 2, 2, 1, 2, 2]
+
+[A06b]
+session = "2026-10-15"
+daniel = [2, 1, 1, 1, 1, 1, 1]
+hannah = [2, 0, 1, 1, 1, 1, 1]
+
+[A07a]
+session = "2026-10-15"
+daniel = [2, 2, 2, 2, 2, 2, 1]
+hannah = [2, 2, 2, 2, 2, 2, 1]
+
+[A07b]
+session = "2026-10-15"
+daniel = [2, 1, 1, 0, 2, 1, 0]
+hannah = [2, 1, 1, 0, 2, 2, 1]
+
+[A08a]
+session = "2026-10-15"
+daniel = [2, 2, 2, 2, 2, 2, 2]
+hannah = [2, 1, 1, 2, 2, 2, 2]
+
+[A08b]
+session = "2026-10-15"
+daniel = [2, 1, 2, 1, 1, 2, 1]
+hannah = [2, 0, 2, 1, 1, 2, 1]
+
+[A09a]
+session = "2026-10-29"
+daniel = [2, 1, 2, 2, 2, 2, 2]
+hannah = [2, 1, 2, 2, 2, 2, 1]
+
+[A09b]
+session = "2026-10-29"
+daniel = [0, 0, 1, 0, 1, 1, 0]
+hannah = [0, 0, 1, 0, 2, 1, 0]
+
+[A10a]
+session = "2026-10-15"
+daniel = [2, 2, 2, 2, 2, 2, 2]
+hannah = [2, 2, 2, 2, 1, 2, 2]
+
+[A10b]
+session = "2026-10-15"
+daniel = [2, 1, 1, 0, 1, 1, 1]
+hannah = [2, 1, 0, 0, 2, 1, 1]
+
+[A11a]
+session = "2026-10-29"
+daniel = [1, 2, 2, 2, 2, 2, 2]
+hannah = [1, 2, 2, 2, 2, 2, 2]
+
+[A11b]
+session = "2026-10-29"
+daniel = [0, 1, 1, 0, 1, 1, 1]
+hannah = [0, 1, 1, 0, 1, 1, 1]
+
+[A12a]
+session = "2026-10-29"
+daniel = [2, 2, 2, 2, 2, 1, 2]
+hannah = [2, 2, 2, 2, 2, 1, 2]
+
+[A12b]
+session = "2026-10-29"
+daniel = [1, 0, 1, 1, 2, 1, 1]
+hannah = [1, 0, 1, 1, 1, 2, 1]

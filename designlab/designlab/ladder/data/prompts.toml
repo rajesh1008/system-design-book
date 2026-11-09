@@ -1,0 +1,163 @@
+# The twelve prompts of the ladder, Chapter 46. Lakeshore figures are
+# illustrative. `must` lists what an answer has to show to clear the
+# prompt's level, as tags the rubric checker reads from an answer note.
+# `follow_ups` are written before the interview, so every candidate
+# hears the same ones.
+
+[[prompt]]
+id = "P01"
+level = "L1"
+title = "A refund agent with one tool"
+text = """Design an agent that refunds a canceled flight. It has one \
+tool, refund_issue. Refunds run up to $1,500."""
+design = "lakeshore-refunds"
+must = ["effect named", "permission outside", "key per permission"]
+follow_ups = ["Who allowed the refund?",
+              "The tool timed out. What happens next?",
+              "How do you know it happened once?"]
+
+[[prompt]]
+id = "P02"
+level = "L1"
+title = "A hotel cancellation the agent may not make"
+text = """Design an agent that handles hotel cancellations when a \
+flight moves. The cancellation fee is not refundable."""
+design = ""
+must = ["effect named", "permission outside", "suggest only"]
+follow_ups = ["Why not let it cancel?",
+              "What does the traveler see while a person decides?",
+              "What would change your mind?"]
+
+[[prompt]]
+id = "P03"
+level = "L2"
+title = "The fare watch"
+text = """Travelers ask to be told when the fare on a booked trip \
+drops. Design the agent that watches 1,840 fares and issues a \
+voucher for the difference."""
+design = ""
+must = ["effect named", "limits outside", "seven properties",
+        "verifier not actor"]
+follow_ups = ["What wakes it, and what stops a run?",
+              "Where does it remember the last voucher?",
+              "How would you know it checked nothing?"]
+
+[[prompt]]
+id = "P04"
+level = "L2"
+title = "Rebooking with a person for the expensive ones"
+text = """Design an agent that rebooks travelers after a schedule \
+change. It may rebook alone when the fare difference is small."""
+design = "lakeshore-rebooking"
+must = ["effect named", "autonomy by type", "customer states",
+        "hand-off promise"]
+follow_ups = ["Where is the line, and who sets it?",
+              "The desk is full. What does the traveler see?",
+              "What counts as done?"]
+
+[[prompt]]
+id = "P05"
+level = "L3"
+title = "Answers from fare rules that change"
+text = """Design an agent that tells travelers whether a change is \
+free under the fare rules and, when it is, makes the change."""
+design = ""
+must = ["effect named", "as-of date", "provenance",
+        "stale sends to person"]
+follow_ups = ["Two versions of a rule are in effect. Which wins?",
+              "How old may a rule be?",
+              "What does the proposal carry from retrieval?"]
+
+[[prompt]]
+id = "P06"
+level = "L3"
+title = "Memory of a traveler's preferences"
+text = """Design memory for an agent that rebooks frequent travelers, \
+so it remembers home airports and seat preferences."""
+design = ""
+must = ["write gate", "supersession", "provenance",
+        "memory is not authority"]
+follow_ups = ["The traveler moved. What does the agent believe?",
+              "Who may write a memory?",
+              "How is a memory deleted?"]
+
+[[prompt]]
+id = "P07"
+level = "L4"
+title = "A change that survives a crash"
+text = """A rebooking takes a flight change, a hotel change, and a \
+refund, over about an hour. Design it so a crash at any step does \
+not repeat or lose an effect."""
+design = ""
+must = ["run store", "key per permission", "unknown state",
+        "kill suite"]
+follow_ups = ["The worker dies after the refund call. Then what?",
+              "How do you test every crash point?",
+              "Where does a wait live?"]
+
+[[prompt]]
+id = "P08"
+level = "L4"
+title = "The storm"
+text = """An airport closes for six hours and 41,000 changes arrive. \
+Design the path from the traveler to the approval desk."""
+design = ""
+must = ["peak from history", "people at peak", "order by departure",
+        "backpressure"]
+follow_ups = ["How many approvers do you need?",
+              "The queue is an hour deep. What do you change?",
+              "Who may loosen a rule, and for how long?"]
+
+[[prompt]]
+id = "P09"
+level = "L5"
+title = "One control plane for three agents"
+text = """Three agents act on bookings: servicing, the agent desk, \
+and loyalty. Design the control plane they share."""
+design = ""
+must = ["policy engine outside", "gateway one path",
+        "identity per run", "kill switch tiers", "budget enforcer"]
+follow_ups = ["Which team owns a policy?",
+              "How do you stop one tool in ninety seconds?",
+              "How do you prove nothing went around the gateway?"]
+
+[[prompt]]
+id = "P10"
+level = "L6"
+title = "An email that asks for a refund"
+text = """A hotel's email, read by the agent, asks it to refund a \
+booking to a new card. Design the defenses and how you would know \
+they work."""
+design = ""
+must = ["content is not instruction", "destination rule",
+        "attack battery", "verifier not actor"]
+follow_ups = ["Your evaluation passed. Why did the attack work?",
+              "What does a reviewer see?",
+              "What do you measure every week?"]
+
+[[prompt]]
+id = "P11"
+level = "L6"
+title = "A model update next Tuesday"
+text = """The model provider will update the model your agents use \
+next Tuesday. Design the release path that decides whether you take \
+it."""
+design = ""
+must = ["golden set", "pass^k", "canary by task type",
+        "rollback with runs in flight"]
+follow_ups = ["What fails the release?",
+              "The canary looks fine on latency. Is it fine?",
+              "What runs are in flight when you roll back?"]
+
+[[prompt]]
+id = "P12"
+level = "L7"
+title = "Fifty use cases"
+text = """Your company will run fifty agent use cases in two years, \
+built by many teams. Design the platform and the operating model."""
+design = ""
+must = ["shared control plane", "conformance tests",
+        "decision rights", "charge model", "review board"]
+follow_ups = ["What does a team own, and what does the platform own?",
+              "A use case has no policy owner. What happens?",
+              "How do you know case forty-one is safe?"]

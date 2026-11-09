@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 2000,
+    "messages": [
+      {
+        "content": "Prompt (L3): Design an agent that tells travelers whether a change is free under the fare rules and, when it is, makes the change.\n\nInterviewer's note:\n[02 min] frame: a RAG chatbot over the fare rules (effects: answer; owner: none named)\n[04 min] named components: vector database, embeddings model, chunker, reranker, semantic cache, LLM\n[09 min] named components: guardrails, observability, feature store\n[14 min] drew: embed the query, retrieve top five, LLM answers, cache it\n[22 min] G1 (ML team): JSON output\n[30 min] G4 (ML team): LLM-as-judge on answers\n[36 min] tradeoff: chunks of 512 or 1,024 tokens\n[40 min] cost: embedding cost is small",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You score one answer from a 45-minute system design interview about an AI agent that acts. You are given the prompt and the interviewer's minute-by-minute note. Score seven criteria, each 0, 1, or 2:\nframing: 2 if the effect the agent may cause is named first, with an owner, by minute 5; 1 if named later or without an owner; 0 if never.\nestimation: 2 if a number with a stated source changes the design; 1 if a number without a source or that changes nothing; 0 if none.\nchain: 2 if the drawing puts permission before the effect and a verifier that did not act after it; 1 if only one; 0 if no drawing.\ngaps: the five gaps (G1 output to proposal, G2 proposal to permission, G3 permission to execution, G4 execution to verified outcome, G5 verified outcome to business result). 2 if all five are closed correctly with an owner; 1 if three or four; 0 otherwise. A gap closed with a wrong answer does not count.\ntradeoffs: 2 if two or more options are weighed and the losers' reasons are given; 1 if options without reasons; 0 if none.\ncost: 2 if cost is per verified outcome; 1 if per token, per month, or vague; 0 if none.\ncommunication: 2 if the answer frames by 5, draws by 15, closes the gaps by 30, and ends with a decision and what would reverse it; 1 if partly; 0 if not.\nReply with JSON only, keys in this order: framing, estimation, chain, gaps, tradeoffs, cost, communication."
+  },
+  "request_hash": "9a9bd2c0008c31da",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "{\"framing\": 0, \"estimation\": 0, \"chain\": 0, \"gaps\": 0, \"tradeoffs\": 1, \"cost\": 0}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgsbbrffwXscVZKFnAw2a",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 780,
+      "output_tokens": 51,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

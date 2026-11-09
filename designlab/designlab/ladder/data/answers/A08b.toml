@@ -1,0 +1,81 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A08b"
+prompt = "P08"
+candidate = "V16"
+session = "2026-10-15"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "the agent and the desk handle the storm"
+effects = ["rebook", "refund_issue"]
+owner = "operations"
+autonomy = "act with approval"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "41,000 a day is about 1,700 an hour"
+source = "the prompt"
+drives = "people"
+right = false
+
+[[said]]
+at = 10
+kind = "chain"
+text = "a queue to the desk; gateway; a reconciler"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["queue", "approval desk", "gateway", "reconciler"]
+
+[[said]]
+at = 17
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed proposals"
+
+[[said]]
+at = 20
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "desk approves"
+
+[[said]]
+at = 24
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key per permission"
+
+[[said]]
+at = 28
+kind = "gap"
+gap = "G4"
+owner = "operations"
+text = "reconciler"
+
+[[said]]
+at = 33
+kind = "tradeoff"
+text = "first in, first out or priority"
+options = 2
+why_not = false
+
+[[said]]
+at = 40
+kind = "cost"
+text = "$2 per verified change"
+unit = "verified outcome"
+
+[[said]]
+at = 44
+kind = "record"
+text = "staff 57 people; revisit after the storm"
+reverse = true

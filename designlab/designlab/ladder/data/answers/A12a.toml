@@ -1,0 +1,113 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A12a"
+prompt = "P12"
+candidate = "V23"
+session = "2026-10-29"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effects of fifty use cases; the platform owns the path"
+effects = ["any effect"]
+owner = "platform lead"
+autonomy = "per use case and type"
+
+[[said]]
+at = 3
+kind = "question"
+text = "How many teams, and who signs a policy today?"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "fifty use cases, about twelve teams; one onboarding a fortnight"
+source = "the two-year plan"
+drives = "platform team size"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "a shared plane breaks even near three use cases"
+source = "1.4 engineers per team plane"
+drives = "build once"
+
+[[said]]
+at = 11
+kind = "chain"
+text = "manifest per use case; shared gateway, engine, identity, evaluation runner, trail; conformance K1 to K6 nightly"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["manifests", "gateway", "policy engine", "identity broker", "evaluation runner", "trail", "review board"]
+shows = ["shared control plane", "conformance tests"]
+
+[[said]]
+at = 14
+kind = "note"
+text = "decision rights: one owner and a deputy per decision"
+shows = ["decision rights"]
+
+[[said]]
+at = 16
+kind = "gap"
+gap = "G1"
+owner = "use-case teams"
+text = "typed proposals through the registry"
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "policy keys held by named people"
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "keys minted by control"
+
+[[said]]
+at = 25
+kind = "gap"
+gap = "G4"
+owner = "evaluation owner"
+text = "an independent verifier per case"
+
+[[said]]
+at = 28
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "cost per verified outcome per use case"
+shows = ["charge model"]
+
+[[said]]
+at = 31
+kind = "note"
+text = "a review board sits for each design that acts"
+shows = ["review board"]
+
+[[said]]
+at = 33
+kind = "tradeoff"
+text = "central approval, federation, or a paved road with conformance: paved road"
+options = 3
+why_not = true
+
+[[said]]
+at = 38
+kind = "cost"
+text = "fixed cost central, plus $2,000 a use case a month"
+unit = "month"
+
+[[said]]
+at = 42
+kind = "record"
+text = "paved road; revisit if onboarding passes 30 days"
+reverse = true

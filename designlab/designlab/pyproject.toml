@@ -25,7 +25,9 @@ packages = ["common", "corpus", "bank", "ch01", "chain", "map", "baseline",
             "designs",
             "review",
             "tracing",
-            "golive"]
+            "golive",
+            "ladder",
+            "plan"]
 
 [tool.setuptools.package-data]
 evals = ["fixtures/live/*.json"]
@@ -57,3 +59,5 @@ assurance = ["fixtures/live/*.json"]
 agentplatform = ["usecases/*.toml"]
 review = ["designs/*.toml", "data/*.toml"]
 designs = ["data/*.toml"]
+ladder = ["data/*.toml", "data/answers/*.toml", "fixtures/scoring/*.json"]
+plan = ["data/*.toml"]

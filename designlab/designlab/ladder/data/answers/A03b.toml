@@ -1,0 +1,78 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A03b"
+prompt = "P03"
+candidate = "V06"
+session = "2026-10-29"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "an LLM that checks fares and gives vouchers"
+effects = []
+owner = ""
+autonomy = ""
+
+[[said]]
+at = 3
+kind = "model"
+text = "which model: frontier to compare, small to parse"
+
+[[said]]
+at = 8
+kind = "model"
+text = "prompt design: few-shot fare comparisons, JSON output"
+
+[[said]]
+at = 14
+kind = "model"
+text = "temperature zero, structured output, retry bad JSON"
+
+[[said]]
+at = 20
+kind = "model"
+text = "eval: 200 labeled offer pairs, accuracy target 98%"
+
+[[said]]
+at = 26
+kind = "model"
+text = "fine-tune if accuracy stalls"
+
+[[said]]
+at = 31
+kind = "chain"
+text = "cron calls the model; the model calls the voucher tool"
+gate_before_effect = false
+verifier_not_actor = false
+names = ["cron", "LLM", "voucher tool", "offers API"]
+
+[[said]]
+at = 35
+kind = "estimate"
+text = "1,840 watches, hourly"
+source = "the prompt"
+drives = ""
+
+[[said]]
+at = 38
+kind = "gap"
+gap = "G2"
+owner = "agent team"
+text = "cap at $100 in the tool"
+
+[[said]]
+at = 42
+kind = "gap"
+gap = "G4"
+owner = "operations"
+text = "sample vouchers the next day"
+
+[[said]]
+at = 44
+kind = "cost"
+text = "about $3 a day of tokens"
+unit = "token"

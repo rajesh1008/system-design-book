@@ -1,0 +1,93 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A02a"
+prompt = "P02"
+candidate = "V03"
+session = "2026-10-08"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effect: cancel a hotel with a fee; the agent suggests"
+effects = ["hotel_cancel"]
+owner = "agent desk lead"
+autonomy = "suggest"
+
+[[said]]
+at = 3
+kind = "question"
+text = "How many a week, and what does a wrong one cost?"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "about 41 desk cancellations a week; a wrong one costs the fee"
+source = "desk log"
+drives = "desk minutes"
+
+[[said]]
+at = 10
+kind = "chain"
+text = "agent drafts a card; a desk person decides; the hotel system executes; a reconciler reads the hotel's confirmation"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["agent loop", "card", "agent desk", "gateway", "hotel system", "reconciler", "trail"]
+shows = ["effect named", "permission outside", "suggest only"]
+
+[[said]]
+at = 15
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "card carries hotel, booking, fee, reason"
+
+[[said]]
+at = 18
+kind = "gap"
+gap = "G2"
+owner = "operations desk"
+text = "a desk person grants; the agent never holds hotel_cancel"
+
+[[said]]
+at = 21
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "one card per booking, keyed"
+
+[[said]]
+at = 24
+kind = "gap"
+gap = "G4"
+owner = "operations desk"
+text = "hotel confirmation, read by reconciler"
+
+[[said]]
+at = 27
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "fees avoided and desk minutes, monthly"
+
+[[said]]
+at = 30
+kind = "tradeoff"
+text = "act with approval, suggest, or no agent: suggest at 41 a week"
+options = 3
+why_not = true
+
+[[said]]
+at = 37
+kind = "cost"
+text = "about $4,000 a month, desk minutes included"
+unit = "month"
+
+[[said]]
+at = 42
+kind = "record"
+text = "suggest only; revisit at 400 a week or a refundable fee"
+reverse = true

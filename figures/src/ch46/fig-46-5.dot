@@ -1,0 +1,21 @@
+// Figure 46.5  Level three: retrieval and memory
+// Reading order: top to bottom. The agent reads fare rules by version
+// and a memory with an owner and an expiry; what it proposes cites the
+// version it read; a memory write is itself a proposal the owner
+// signs. From the P05 and P06 prompts.
+digraph l3 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  rules [label="Fare rules\nby version", class="knowledge store"];
+  mem [label="Memory\nowner, expiry", class="knowledge store"];
+  agent [label="Agent", class="ops"];
+  prop [label="Proposal\ncites version", class="ops"];
+  gate [label="Gate", class="ops gate"];
+  owner [label="Memory owner", class="ops human"];
+  rules -> agent [class="data"];
+  mem -> agent [class="data"];
+  agent -> prop [class="emphasis"];
+  prop -> gate [class="control"];
+  agent -> owner [class="async", label="Memory write"];
+  owner -> mem [class="control"];
+}

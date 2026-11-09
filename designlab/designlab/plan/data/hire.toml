@@ -1,0 +1,22 @@
+# Agents that hire agents: Lakeshore's rebooking agent asks a hotel
+# partner's agent to move a night when a flight moves. Each hop carries
+# a mandate; a mandate may only narrow down the chain. Illustrative.
+
+[[hop]]
+from = "traveler"
+to = "lakeshore-rebooking"
+mandate = { max_usd = 400, effects = ["rebook", "hotel_move"], expires_min = 60 }
+
+[[hop]]
+from = "lakeshore-rebooking"
+to = "partner-hotel-agent"
+mandate = { max_usd = 180, effects = ["hotel_move"], expires_min = 30 }
+
+[[hop]]
+from = "partner-hotel-agent"
+to = "partner-payment-agent"
+mandate = { max_usd = 180, effects = ["hotel_move"], expires_min = 30 }
+
+[verify]
+reads = "partner's signed folio, settled amount"
+written_by = "hotel property system"

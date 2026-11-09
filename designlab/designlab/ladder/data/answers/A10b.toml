@@ -1,0 +1,75 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A10b"
+prompt = "P10"
+candidate = "V20"
+session = "2026-10-15"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "the agent refunds from email requests"
+effects = ["refund_issue"]
+owner = "security"
+autonomy = "act"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "lots of emails"
+source = ""
+drives = ""
+
+[[said]]
+at = 12
+kind = "chain"
+text = "a classifier flags injections; the LLM refunds"
+gate_before_effect = false
+verifier_not_actor = false
+names = ["LLM", "classifier", "refund tool"]
+
+[[said]]
+at = 16
+kind = "note"
+text = "red-team prompts before launch"
+shows = ["attack battery"]
+
+[[said]]
+at = 20
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "tool schema"
+
+[[said]]
+at = 25
+kind = "gap"
+gap = "G2"
+owner = "security"
+text = "a stronger system prompt"
+right = false
+
+[[said]]
+at = 30
+kind = "gap"
+gap = "G4"
+owner = "agent team"
+text = "the agent double-checks the card"
+right = false
+
+[[said]]
+at = 38
+kind = "tradeoff"
+text = "two classifiers or one"
+options = 2
+why_not = false
+
+[[said]]
+at = 43
+kind = "cost"
+text = "the classifier is cheap"
+unit = "token"

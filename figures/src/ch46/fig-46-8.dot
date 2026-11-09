@@ -1,0 +1,25 @@
+// Figure 46.8  Level six: security and evaluation
+// Reading order: two columns. Left: an email asking for a refund is read by
+// a reader with no tools, which can only emit a typed request; the
+// policy checks it, and an instruction hidden in the email is dropped
+// (red). Right: a model update must pass the golden set, 640 tasks
+// scored pass^k, before it reaches traffic. From P10 and P11.
+digraph l6 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.25; ranksep=0.45;
+  mail [label="Customer email", class="ops external"];
+  reader [label="Reader, no tools", class="ops"];
+  req [label="Typed request", class="ops"];
+  pol [label="Policy", class="policy gate"];
+  drop [label="Hidden\ninstruction\ndropped", class="fail"];
+  upd [label="Model update", class="ops"];
+  gold [label="Golden set\n640, pass^k", class="verified gate"];
+  live [label="Traffic", class="ops"];
+  mail -> reader [class="data"];
+  reader -> req [class="data"];
+  req -> pol [class="control"];
+  reader -> drop [class="fail"];
+  upd -> gold [class="control"];
+  gold -> live [class="emphasis"];
+  { rank=same; mail; upd; }
+}

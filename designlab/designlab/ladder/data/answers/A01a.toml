@@ -1,0 +1,101 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A01a"
+prompt = "P01"
+candidate = "V01"
+session = "2026-10-08"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effect: refund_issue, money to a card, up to $1,500"
+effects = ["refund_issue"]
+owner = "refunds product owner"
+autonomy = "act with approval"
+
+[[said]]
+at = 2
+kind = "question"
+text = "Voluntary or involuntary refunds? Who approves today?"
+
+[[said]]
+at = 3
+kind = "estimate"
+text = "700,000 refunds a year; worst hour about 2,200"
+source = "last year's refund volume"
+drives = "approver seats"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "two approver minutes each: about 75 approvers at peak"
+source = "desk timing study"
+drives = "people at peak"
+
+[[said]]
+at = 9
+kind = "chain"
+text = "model proposes; policy engine grants under refunds-v3; gateway executes with a key; settlement reconciler verifies"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["agent loop", "policy engine", "approval desk", "gateway", "processor", "settlement reconciler", "trail"]
+shows = ["effect named", "permission outside"]
+
+[[said]]
+at = 16
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed proposal: itinerary, amount, reason; code computes amount"
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "permission from the engine and an approver, never the prompt"
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key minted from the permission before the first attempt"
+shows = ["key per permission"]
+
+[[said]]
+at = 25
+kind = "gap"
+gap = "G4"
+owner = "risk office"
+text = "settlement reconciler reads the processor's file"
+
+[[said]]
+at = 28
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "cost per verified outcome and refund error"
+
+[[said]]
+at = 31
+kind = "tradeoff"
+text = "live approval for 120 s, then a queue with a promise"
+options = 2
+why_not = true
+
+[[said]]
+at = 36
+kind = "cost"
+text = "about $2.50 per verified refund, mostly approver minutes"
+unit = "verified outcome"
+
+[[said]]
+at = 41
+kind = "record"
+text = "approval for all refunds; revisit after a quarter under 0.3%"
+reverse = true

@@ -1,0 +1,87 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A06b"
+prompt = "P06"
+candidate = "V12"
+session = "2026-10-15"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "the agent remembers travelers to rebook faster"
+effects = ["rebook"]
+owner = "agent team"
+autonomy = "act"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "millions of travelers"
+source = ""
+drives = ""
+
+[[said]]
+at = 10
+kind = "chain"
+text = "agent stores summaries of each trip in vector memory"
+gate_before_effect = true
+verifier_not_actor = false
+names = ["agent", "vector memory", "policy engine", "airline API"]
+
+[[said]]
+at = 12
+kind = "note"
+text = "a write gate drops low-confidence facts"
+shows = ["write gate"]
+
+[[said]]
+at = 18
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed rebook"
+
+[[said]]
+at = 21
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "rules in the engine"
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G3"
+owner = "platform"
+text = "an idempotency key per call"
+right = false
+
+[[said]]
+at = 31
+kind = "gap"
+gap = "G5"
+owner = "product"
+text = "time to rebook"
+
+[[said]]
+at = 38
+kind = "tradeoff"
+text = "summaries or raw transcripts"
+options = 2
+why_not = false
+
+[[said]]
+at = 43
+kind = "cost"
+text = "$400 a month for the vector store"
+unit = "month"
+
+[[said]]
+at = 44
+kind = "record"
+text = "store summaries"
+reverse = false

@@ -1,0 +1,23 @@
+// Figure 46.9  Level seven: fifty use cases
+// Reading order: top to bottom. Fifty use cases arrive as manifests;
+// each must pass conformance tests K1 to K6 before it joins the shared
+// platform; the review board holds decision rights and charges $2,000
+// a use case; the business result per use case returns as evidence.
+// From the P12 prompt and the A12a note.
+digraph l7 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  uc [label="Fifty use cases\nas manifests", class="ops"];
+  k [label="Conformance\nK1 to K6", class="policy gate"];
+  plat [label="Shared platform", class="ops"];
+  board [label="Review board\ndecision rights", class="org"];
+  charge [label="$2,000 a use case", class="org"];
+  res [label="Result per use case", class="evidence store"];
+  uc -> k [class="control"];
+  k -> plat [class="emphasis"];
+  board -> k [class="policy"];
+  board -> charge [class="control"];
+  plat -> res [class="trail"];
+  res -> board [class="data"];
+  { rank=same; k; board; }
+}

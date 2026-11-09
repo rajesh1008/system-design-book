@@ -1,0 +1,131 @@
+# Lakeshore's year two as a five-year plan record (DR-48.1). Commitments
+# sit on the four links that stay and do not wait on a model release;
+# bets are dated predictions about models, runtimes, protocols, and the
+# role, each with a test, an owner, and a revisit. Lakeshore figures
+# are illustrative.
+
+[plan]
+id = "lakeshore-year-two"
+record = "DR-48.1"
+date = "2026-11-02"
+year_two_end = "2027-09-30"
+horizon = "2031-09-30"
+owner = "Daniel Price"
+signer = "Sarah Whitfield"
+reviewers = ["Rachel Morgan", "Owen Fletcher"]
+changes_per_year = 2100000
+
+[targets]
+agent = 52
+assisted = 20
+self_service = 21
+person = 7
+blended_usd = 8.90
+
+[[commitment]]
+id = "C1"
+link = "effect"
+text = "every effect typed, limited, and undoable or gated"
+measure = "kill switch stops a use case in 90 s"
+owner = "Ben Carter"
+
+[[commitment]]
+id = "C2"
+link = "permission"
+text = "permission decided outside the model, by rule"
+measure = "unauthorized actions 0; no standing privilege"
+owner = "Owen Fletcher"
+
+[[commitment]]
+id = "C3"
+link = "verification"
+text = "a verifier reads a record the agent cannot write"
+measure = "verified 99.5% or better; no queue over an hour"
+owner = "Marcus Bell"
+
+[[commitment]]
+id = "C4"
+link = "trail"
+text = "one record per change, from request to settlement"
+measure = "every refund traceable to its permission"
+owner = "Rachel Morgan"
+
+[[commitment]]
+id = "C5"
+link = "effect"
+text = "cost per change measured on verified outcomes"
+measure = "blended below $8.90 by September 30, 2027"
+owner = "Sarah Whitfield"
+
+[[bet]]
+id = "B1"
+area = "models"
+claim = "a pinned model gets a retirement date before Oct 31, 2027"
+made = "2026-11-02"
+due = "2027-09-30"
+test = "deprecations page lists a date for a pin"
+if_true = "migrate through the release gate, six weeks"
+if_false = "keep the pins; rerun the gate on the next release"
+owner = "Dr. Hannah Clarke"
+revisit = "2027-04-14"
+models = ["claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5"]
+
+[[bet]]
+id = "B2"
+area = "models"
+claim = "the next frontier release cuts escalations a fifth"
+made = "2026-11-02"
+due = "2027-09-30"
+test = "replay the golden set; count stops for doubt"
+if_true = "fewer cards to the desk; tiers unchanged"
+if_false = "keep the pin; spend on summaries, not models"
+owner = "Dr. Hannah Clarke"
+revisit = "2027-05-17"
+
+[[bet]]
+id = "B3"
+area = "runtimes"
+claim = "the rented runtime offers payment mandates"
+made = "2026-11-02"
+due = "2028-09-30"
+test = "vendor documentation names a mandate check"
+if_true = "retire our mandate code; keep the limits"
+if_false = "keep our mandate code"
+owner = "Daniel Price"
+revisit = "2027-06-14"
+
+[[bet]]
+id = "B4"
+area = "protocols"
+claim = "one hotel partner exposes an A2A agent endpoint"
+made = "2026-11-02"
+due = "2027-06-30"
+test = "a partner contract names a signed Agent Card"
+if_true = "pilot the hire flow with narrowed mandates"
+if_false = "keep calling the partner's API"
+owner = "Owen Fletcher"
+revisit = "2027-04-14"
+
+[[bet]]
+id = "B5"
+area = "protocols"
+claim = "our processor accepts an agent payment mandate"
+made = "2026-11-02"
+due = "2027-09-30"
+test = "processor documentation and a sandbox charge"
+if_true = "attach mandates to refunds; verifier unchanged"
+if_false = "refunds stay on the processor API with our limits"
+owner = "Rachel Morgan"
+revisit = "2027-07-12"
+
+[[bet]]
+id = "B6"
+area = "role"
+claim = "desk decision time falls a third; desk seats stay"
+made = "2026-11-02"
+due = "2027-09-30"
+test = "median decision time on cards, monthly"
+if_true = "move the time to reviewing rules"
+if_false = "redesign the card summary"
+owner = "Marcus Bell"
+revisit = "2027-05-17"

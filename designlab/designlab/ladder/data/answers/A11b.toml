@@ -1,0 +1,68 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A11b"
+prompt = "P11"
+candidate = "V22"
+session = "2026-10-29"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "we upgrade to the new model"
+effects = []
+owner = ""
+autonomy = ""
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "latency p95 under 2 s"
+source = ""
+drives = ""
+
+[[said]]
+at = 9
+kind = "chain"
+text = "run evals on latency and cost, then switch"
+gate_before_effect = false
+verifier_not_actor = false
+names = ["LLM", "eval harness", "dashboard"]
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G4"
+owner = "ML team"
+text = "the dashboard shows success"
+right = false
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "cost per token"
+right = false
+
+[[said]]
+at = 33
+kind = "tradeoff"
+text = "canary at 10% of traffic or all at once"
+options = 2
+why_not = true
+
+[[said]]
+at = 40
+kind = "cost"
+text = "the new model is 20% cheaper per token"
+unit = "token"
+
+[[said]]
+at = 44
+kind = "record"
+text = "switch Tuesday"
+reverse = false

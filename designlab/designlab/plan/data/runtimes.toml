@@ -1,0 +1,61 @@
+# What managed agent runtimes have absorbed, and what they are
+# predicted to absorb, per piece of plumbing Lakeshore built or rented
+# in 2026. "since" is the general-availability date of at least one
+# managed offering, from vendor pages fetched November 9, 2026 (IST);
+# "by" is Lakeshore's dated bet for an item not yet offered; "never"
+# is a claim that the item cannot move to a vendor. "still_owned" is
+# what stays with Lakeshore whichever way the bet lands.
+
+as_of = "2026-11-09"
+
+[[item]]
+name = "session hosting"
+since = "2025-10-13"
+source = "AgentCore Runtime GA"
+still_owned = "budget per run"
+
+[[item]]
+name = "tool gateway"
+since = "2025-10-13"
+source = "AgentCore Gateway GA"
+still_owned = "which tools, which scopes"
+
+[[item]]
+name = "agent identity"
+since = "2025-10-13"
+source = "AgentCore Identity GA"
+still_owned = "who it acts for"
+
+[[item]]
+name = "traces"
+since = "2025-10-13"
+source = "AgentCore Observability GA"
+still_owned = "the chain record"
+
+[[item]]
+name = "durable steps"
+since = "2025-12-02"
+source = "Lambda durable functions"
+still_owned = "the idempotency key"
+
+[[item]]
+name = "policy engine"
+since = "2026-03-03"
+source = "AgentCore Policy GA"
+still_owned = "the rules and the tiers"
+
+[[item]]
+name = "eval runs"
+since = "2026-03-31"
+source = "AgentCore Evaluations GA"
+still_owned = "the golden set"
+
+[[item]]
+name = "payment mandates"
+by = "2028-09-30"
+still_owned = "the limit per effect"
+
+[[item]]
+name = "outcome check"
+by = "never"
+still_owned = "the verifier and its source"

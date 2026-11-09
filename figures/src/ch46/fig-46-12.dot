@@ -1,0 +1,25 @@
+// Figure 46.12  The ladder (signature S12)
+// Reading order: bottom to top, level one to level seven; each rung
+// names what the level adds and the gap it leads with. The clock and
+// the rubric are the same on every rung; the bold path is the climb;
+// the card at the top reads twelve worked, seven levels, one rubric.
+// From ladder.demo --part card.
+digraph ladder {
+#include "book.gv"
+  rankdir=BT; nodesep=0.3; ranksep=0.2; newrank=true;
+  l1 [label="L1  One tool, G2", class="ops"];
+  l2 [label="L2  Acts alone, G2", class="ops"];
+  l3 [label="L3  Retrieval, G1", class="ops"];
+  l4 [label="L4  Durability, G3", class="ops"];
+  l5 [label="L5  Control plane, G2", class="policy"];
+  l6 [label="L6  Security, G4", class="policy"];
+  l7 [label="L7  Fifty use cases, G5", class="org"];
+  card [label="12 worked, 7 levels,\n1 rubric", class="verified"];
+  clk [label="Clock\n5, 15, 30, 45", class="org note"];
+  rub [label="Rubric\n7 criteria", class="org note"];
+  l1 -> l2 -> l3 -> l4 -> l5 -> l6 -> l7 -> card [class="emphasis"];
+  clk -> l3 [class="control", style=dashed];
+  rub -> l5 [class="control", style=dashed];
+  { rank=same; l3; clk; }
+  { rank=same; l5; rub; }
+}

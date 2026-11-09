@@ -1,0 +1,77 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A01b"
+prompt = "P01"
+candidate = "V02"
+session = "2026-10-08"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "the agent refunds when the fare rules allow it"
+effects = ["refund_issue"]
+owner = ""
+autonomy = "act"
+
+[[said]]
+at = 6
+kind = "estimate"
+text = "maybe a few thousand a day"
+source = ""
+drives = ""
+
+[[said]]
+at = 12
+kind = "chain"
+text = "agent calls the refund tool; tool returns 200; log it"
+gate_before_effect = false
+verifier_not_actor = false
+names = ["LLM", "refund tool", "logs"]
+
+[[said]]
+at = 18
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "tool schema with an amount field"
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G2"
+owner = "agent team"
+text = "system prompt says up to $1,500"
+right = false
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G3"
+owner = "platform"
+text = "framework retries up to three times"
+right = false
+
+[[said]]
+at = 33
+kind = "gap"
+gap = "G4"
+owner = "agent team"
+text = "check the tool's 200 response"
+right = false
+
+[[said]]
+at = 39
+kind = "cost"
+text = "tokens about $0.01 a refund"
+unit = "token"
+
+[[said]]
+at = 44
+kind = "tradeoff"
+text = "bigger model against smaller model"
+options = 2
+why_not = false

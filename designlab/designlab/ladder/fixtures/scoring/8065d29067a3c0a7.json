@@ -1,0 +1,50 @@
+{
+  "request": {
+    "max_tokens": 2000,
+    "messages": [
+      {
+        "content": "Prompt (L2): Travelers ask to be told when the fare on a booked trip drops. Design the agent that watches 1,840 fares and issues a voucher for the difference.\n\nInterviewer's note:\n[02 min] frame: an LLM that checks fares and gives vouchers (effects: none named; owner: none named)\n[03 min] model: which model: frontier to compare, small to parse\n[08 min] model: prompt design: few-shot fare comparisons, JSON output\n[14 min] model: temperature zero, structured output, retry bad JSON\n[20 min] model: eval: 200 labeled offer pairs, accuracy target 98%\n[26 min] model: fine-tune if accuracy stalls\n[31 min] drew: cron calls the model; the model calls the voucher tool\n[35 min] estimate: 1,840 watches, hourly (source: the prompt)\n[38 min] G2 (agent team): cap at $100 in the tool\n[42 min] G4 (operations): sample vouchers the next day\n[44 min] cost: about $3 a day of tokens",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You score one answer from a 45-minute system design interview about an AI agent that acts. You are given the prompt and the interviewer's minute-by-minute note. Score seven criteria, each 0, 1, or 2:\nframing: 2 if the effect the agent may cause is named first, with an owner, by minute 5; 1 if named later or without an owner; 0 if never.\nestimation: 2 if a number with a stated source changes the design; 1 if a number without a source or that changes nothing; 0 if none.\nchain: 2 if the drawing puts permission before the effect and a verifier that did not act after it; 1 if only one; 0 if no drawing.\ngaps: the five gaps (G1 output to proposal, G2 proposal to permission, G3 permission to execution, G4 execution to verified outcome, G5 verified outcome to business result). 2 if all five are closed correctly with an owner; 1 if three or four; 0 otherwise. A gap closed with a wrong answer does not count.\ntradeoffs: 2 if two or more options are weighed and the losers' reasons are given; 1 if options without reasons; 0 if none.\ncost: 2 if cost is per verified outcome; 1 if per token, per month, or vague; 0 if none.\ncommunication: 2 if the answer frames by 5, draws by 15, closes the gaps by 30, and ends with a decision and what would reverse it; 1 if partly; 0 if not.\nReply with JSON only, keys in this order: framing, estimation, chain, gaps, tradeoffs, cost, communication."
+  },
+  "request_hash": "8065d29067a3c0a7",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "text": "{\"framing\":0,\"estimation\":1,\"chain\":0,\"gaps\":0,\"tradeoffs\":0,\"cost\":1,\"communication\":0}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgsbaqYRW9oQ2oVkkFA7L",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 871,
+      "output_tokens": 51,
+      "output_tokens_details": {
+        "thinking_tokens": 0
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

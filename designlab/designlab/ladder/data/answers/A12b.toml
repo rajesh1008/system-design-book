@@ -1,0 +1,81 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A12b"
+prompt = "P12"
+candidate = "V24"
+session = "2026-10-29"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "a central AI platform for the company"
+effects = ["platform"]
+owner = "CTO"
+autonomy = ""
+right = false
+
+[[said]]
+at = 7
+kind = "chain"
+text = "a central platform team approves every agent"
+gate_before_effect = true
+verifier_not_actor = false
+names = ["platform team", "gateway", "policy engine", "model gateway", "evaluation"]
+
+[[said]]
+at = 15
+kind = "note"
+text = "central review of every design"
+shows = ["shared control plane", "review board"]
+
+[[said]]
+at = 18
+kind = "gap"
+gap = "G1"
+owner = "teams"
+text = "schemas"
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G2"
+owner = "platform team"
+text = "the platform team approves every policy"
+right = false
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G4"
+owner = "platform team"
+text = "evaluation before launch"
+
+[[said]]
+at = 29
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "platform budget"
+
+[[said]]
+at = 34
+kind = "tradeoff"
+text = "central or federated: central"
+options = 2
+why_not = true
+
+[[said]]
+at = 41
+kind = "cost"
+text = "$3 million a year platform budget"
+unit = "month"
+
+[[said]]
+at = 44
+kind = "record"
+text = "central approval; revisit yearly"
+reverse = true

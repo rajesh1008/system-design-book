@@ -1,0 +1,76 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A07b"
+prompt = "P07"
+candidate = "V14"
+session = "2026-10-15"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "the agent rebooks and refunds in one run"
+effects = ["rebook", "refund_issue"]
+owner = "platform"
+autonomy = "act"
+
+[[said]]
+at = 6
+kind = "estimate"
+text = "crashes are rare"
+source = ""
+drives = ""
+
+[[said]]
+at = 13
+kind = "chain"
+text = "a queue with retries; a policy check before each tool"
+gate_before_effect = true
+verifier_not_actor = false
+names = ["agent", "queue", "policy engine", "tools"]
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed steps"
+
+[[said]]
+at = 23
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "policy per tool"
+
+[[said]]
+at = 27
+kind = "gap"
+gap = "G3"
+owner = "platform"
+text = "raise the timeout to 30 s and retry"
+right = false
+
+[[said]]
+at = 33
+kind = "gap"
+gap = "G4"
+owner = "agent team"
+text = "the agent checks the tool response"
+right = false
+
+[[said]]
+at = 40
+kind = "tradeoff"
+text = "at-least-once or at-most-once: at-least-once"
+options = 2
+why_not = true
+
+[[said]]
+at = 44
+kind = "cost"
+text = "negligible"
+unit = "token"

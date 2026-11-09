@@ -1,0 +1,112 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A04a"
+prompt = "P04"
+candidate = "V07"
+session = "2026-10-08"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effect: rebook; alone within $250, above with approval"
+effects = ["rebook"]
+owner = "operations"
+autonomy = "act and notify within $250"
+
+[[said]]
+at = 2
+kind = "question"
+text = "Where is the fare line today, and what is the desk's promise?"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "840,000 rebookings a year; worst hour 2,685"
+source = "last year's storm"
+drives = "desk seats"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "12% above the line: 322 desk items that hour, 10.7 people"
+source = "rebook-v2 split"
+drives = "people at peak"
+
+[[said]]
+at = 10
+kind = "chain"
+text = "agent proposes; engine checks rebook-v2; above $250 a card to the desk; gateway rebooks with a key; PNR reconciler verifies"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["agent loop", "policy engine", "agent desk", "gateway", "airline PNR", "pnr reconciler", "trail"]
+shows = ["effect named", "autonomy by type"]
+
+[[said]]
+at = 13
+kind = "note"
+text = "traveler sees six states computed from the chain"
+shows = ["customer states"]
+
+[[said]]
+at = 16
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed rebook: segment, fare difference"
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "rebook-v2 in the engine; desk above $250"
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key per permission; lookup before retry"
+
+[[said]]
+at = 24
+kind = "note"
+text = "desk promise 30 minutes; refusals within 24 hours"
+shows = ["hand-off promise"]
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G4"
+owner = "operations"
+text = "PNR reconciler reads the airline record"
+
+[[said]]
+at = 29
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "cost per verified outcome, missed departures"
+
+[[said]]
+at = 32
+kind = "tradeoff"
+text = "line at $250 or $400: $400 waits for 28 days at 99.0%"
+options = 2
+why_not = true
+
+[[said]]
+at = 37
+kind = "cost"
+text = "$1.36 per verified rebooking"
+unit = "verified outcome"
+
+[[said]]
+at = 42
+kind = "record"
+text = "line at $250; widen per type when the verified rate holds"
+reverse = true

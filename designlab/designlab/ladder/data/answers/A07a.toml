@@ -1,0 +1,113 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A07a"
+prompt = "P07"
+candidate = "V13"
+session = "2026-10-15"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effects: rebook, hotel change, refund, in one hour"
+effects = ["rebook", "hotel_change", "refund_issue"]
+owner = "platform"
+autonomy = "per type"
+
+[[said]]
+at = 3
+kind = "question"
+text = "Which can be undone, and which tools honor a key?"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "about 6% of changes take three effects; restarts weekly"
+source = "March restart incident and deploy log"
+drives = "kill-suite size"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "an hour a run: about 35,000 runs in flight on a storm day"
+source = "storm-day replay"
+drives = "run store load"
+
+[[said]]
+at = 10
+kind = "chain"
+text = "run store journal; an intent row with its key before each effect; gateway ledger; a reconciler per system"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["run store", "journal", "agent loop", "policy engine", "gateway", "effect ledger", "reconcilers", "trail"]
+shows = ["run store"]
+
+[[said]]
+at = 14
+kind = "note"
+text = "after a crash the step is unknown until the lookup answers"
+shows = ["unknown state"]
+
+[[said]]
+at = 16
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "each step a typed proposal in the journal"
+
+[[said]]
+at = 19
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "permission per step, single use"
+
+[[said]]
+at = 21
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key minted at permission; lookup first"
+shows = ["key per permission"]
+
+[[said]]
+at = 25
+kind = "gap"
+gap = "G4"
+owner = "operations"
+text = "three reconcilers: PNR, hotel, settlement"
+
+[[said]]
+at = 28
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "verified outcomes per change"
+
+[[said]]
+at = 30
+kind = "note"
+text = "kill suite kills the run at every step, expects one effect"
+shows = ["kill suite"]
+
+[[said]]
+at = 33
+kind = "tradeoff"
+text = "workflow engine, run store, or queue only: run store with durable timers"
+options = 3
+why_not = true
+
+[[said]]
+at = 38
+kind = "cost"
+text = "$0.12 per verified change for store and reconcilers"
+unit = "verified outcome"
+
+[[said]]
+at = 47
+kind = "record"
+text = "run store; revisit if replay divergence passes 0.1%"
+reverse = true

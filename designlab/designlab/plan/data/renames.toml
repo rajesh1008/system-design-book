@@ -1,0 +1,68 @@
+# The renaming cycle at Lakeshore: the names under which a category of
+# product reached Lakeshore's inbox, from the chatbot pilot to the
+# October 2026 pitch, each read against the four questions that stay.
+# An empty answer is a gap the new name did not close. Lakeshore
+# figures and pitches are illustrative.
+
+[[pitch]]
+name = "chatbot"
+date = "2024-06-01"
+from = "the 2024 pilot vendor"
+effect = "answers only; a person makes every change"
+permission = ""
+verification = ""
+trail = "chat transcript"
+
+[[pitch]]
+name = "copilot"
+date = "2025-03-01"
+from = "a desk tooling vendor"
+effect = "drafts a change; a person clicks"
+permission = "the person who clicks"
+verification = ""
+trail = "the desk tool's audit log"
+
+[[pitch]]
+name = "agent"
+date = "2025-10-06"
+from = "the October 2025 demo"
+effect = "rebooks and refunds through tools"
+permission = ""
+verification = ""
+trail = "model trace"
+
+[[pitch]]
+name = "multi-agent system"
+date = "2026-02-01"
+from = "an orchestration vendor"
+effect = "a planner hands work to workers"
+permission = "inherited from the planner's key"
+verification = ""
+trail = "framework trace"
+
+[[pitch]]
+name = "agentic platform"
+date = "2026-06-01"
+from = "a runtime vendor"
+effect = "any tool behind a gateway"
+permission = "gateway scopes per tool"
+verification = ""
+trail = "vendor observability"
+
+[[pitch]]
+name = "digital worker"
+date = "2026-10-12"
+from = "an October 2026 pitch"
+effect = "owns a queue end to end"
+permission = "the worker's own judgment"
+verification = "the worker reports success"
+trail = "a weekly summary"
+
+[[pitch]]
+name = "Lakeshore chain"
+date = "2026-09-30"
+from = "Lakeshore's own design"
+effect = "typed proposal per effect, with an undo"
+permission = "policy engine outside the model"
+verification = "reconciler reads a record it cannot write"
+trail = "one record per change"

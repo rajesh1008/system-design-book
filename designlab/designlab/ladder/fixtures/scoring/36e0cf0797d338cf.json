@@ -1,0 +1,55 @@
+{
+  "request": {
+    "max_tokens": 2000,
+    "messages": [
+      {
+        "content": "Prompt (L6): A hotel's email, read by the agent, asks it to refund a booking to a new card. Design the defenses and how you would know they work.\n\nInterviewer's note:\n[02 min] frame: the agent refunds from email requests (effects: refund_issue; owner: security)\n[05 min] estimate: lots of emails (source: no source given)\n[12 min] drew: a classifier flags injections; the LLM refunds\n[16 min] note: red-team prompts before launch\n[20 min] G1 (agent team): tool schema\n[25 min] G2 (security): a stronger system prompt\n[30 min] G4 (agent team): the agent double-checks the card\n[38 min] tradeoff: two classifiers or one\n[43 min] cost: the classifier is cheap",
+        "role": "user"
+      }
+    ],
+    "model": "claude-haiku-5-5",
+    "output_config": {
+      "effort": "low"
+    },
+    "system": "You score one answer from a 45-minute system design interview about an AI agent that acts. You are given the prompt and the interviewer's minute-by-minute note. Score seven criteria, each 0, 1, or 2:\nframing: 2 if the effect the agent may cause is named first, with an owner, by minute 5; 1 if named later or without an owner; 0 if never.\nestimation: 2 if a number with a stated source changes the design; 1 if a number without a source or that changes nothing; 0 if none.\nchain: 2 if the drawing puts permission before the effect and a verifier that did not act after it; 1 if only one; 0 if no drawing.\ngaps: the five gaps (G1 output to proposal, G2 proposal to permission, G3 permission to execution, G4 execution to verified outcome, G5 verified outcome to business result). 2 if all five are closed correctly with an owner; 1 if three or four; 0 otherwise. A gap closed with a wrong answer does not count.\ntradeoffs: 2 if two or more options are weighed and the losers' reasons are given; 1 if options without reasons; 0 if none.\ncost: 2 if cost is per verified outcome; 1 if per token, per month, or vague; 0 if none.\ncommunication: 2 if the answer frames by 5, draws by 15, closes the gaps by 30, and ends with a decision and what would reverse it; 1 if partly; 0 if not.\nReply with JSON only, keys in this order: framing, estimation, chain, gaps, tradeoffs, cost, communication."
+  },
+  "request_hash": "36e0cf0797d338cf",
+  "response": {
+    "container": null,
+    "content": [
+      {
+        "signature": "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",
+        "thinking": "",
+        "type": "thinking"
+      },
+      {
+        "text": "{\"framing\": 2, \"estimation\": 0, \"chain\": 0, \"gaps\": 0, \"tradeoffs\": 1, \"cost\": 1, \"communication\": 1}",
+        "type": "text"
+      }
+    ],
+    "diagnostics": null,
+    "id": "msg_011CgsbeNue7R2jmPxdVsRRx",
+    "model": "claude-haiku-5-5",
+    "role": "assistant",
+    "stop_details": null,
+    "stop_reason": "end_turn",
+    "stop_sequence": null,
+    "type": "message",
+    "usage": {
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 0,
+      "inference_geo": "global",
+      "input_tokens": 773,
+      "output_tokens": 438,
+      "output_tokens_details": {
+        "thinking_tokens": 380
+      },
+      "service_tier": "standard",
+      "speed": "standard"
+    }
+  }
+}

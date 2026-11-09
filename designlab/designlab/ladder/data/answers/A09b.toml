@@ -1,0 +1,58 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A09b"
+prompt = "P09"
+candidate = "V18"
+session = "2026-10-29"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "a platform with all the standard pieces"
+effects = []
+owner = ""
+autonomy = ""
+
+[[said]]
+at = 3
+kind = "component"
+names = ["API gateway", "service mesh", "OPA", "Vault", "Kafka", "Redis"]
+text = ""
+
+[[said]]
+at = 6
+kind = "component"
+names = ["vector database", "LLM router", "observability stack", "feature store", "Kubernetes", "model registry"]
+text = ""
+
+[[said]]
+at = 14
+kind = "chain"
+text = "API gateway, OPA, router, Kafka to the tools"
+gate_before_effect = true
+verifier_not_actor = false
+names = ["API gateway", "OPA", "LLM router", "Kafka", "tools"]
+
+[[said]]
+at = 24
+kind = "gap"
+gap = "G2"
+owner = "security"
+text = "OPA policies"
+
+[[said]]
+at = 31
+kind = "tradeoff"
+text = "build or buy: buy the gateway"
+options = 2
+why_not = true
+
+[[said]]
+at = 40
+kind = "cost"
+text = "the router picks the cheapest model"
+unit = "token"

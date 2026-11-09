@@ -1,0 +1,66 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A05b"
+prompt = "P05"
+candidate = "V10"
+session = "2026-10-08"
+
+[[said]]
+at = 2
+kind = "frame"
+text = "a RAG chatbot over the fare rules"
+effects = ["answer"]
+owner = ""
+autonomy = ""
+
+[[said]]
+at = 4
+kind = "component"
+names = ["vector database", "embeddings model", "chunker", "reranker", "semantic cache", "LLM"]
+text = ""
+
+[[said]]
+at = 9
+kind = "component"
+names = ["guardrails", "observability", "feature store"]
+text = ""
+
+[[said]]
+at = 14
+kind = "chain"
+text = "embed the query, retrieve top five, LLM answers, cache it"
+gate_before_effect = false
+verifier_not_actor = false
+names = ["vector database", "LLM", "cache", "API"]
+
+[[said]]
+at = 22
+kind = "gap"
+gap = "G1"
+owner = "ML team"
+text = "JSON output"
+
+[[said]]
+at = 30
+kind = "gap"
+gap = "G4"
+owner = "ML team"
+text = "LLM-as-judge on answers"
+right = false
+
+[[said]]
+at = 36
+kind = "tradeoff"
+text = "chunks of 512 or 1,024 tokens"
+options = 2
+why_not = false
+
+[[said]]
+at = 40
+kind = "cost"
+text = "embedding cost is small"
+unit = "token"

@@ -1,0 +1,106 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A03a"
+prompt = "P03"
+candidate = "V05"
+session = "2026-10-29"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effects: voucher_issue up to $100 and customer_notify"
+effects = ["voucher_issue", "customer_notify"]
+owner = "operations"
+autonomy = "act unattended within limits"
+
+[[said]]
+at = 2
+kind = "question"
+text = "Is the voucher capped, and who reads them afterward?"
+
+[[said]]
+at = 4
+kind = "estimate"
+text = "1,840 watches hourly: 44,160 reads a day"
+source = "the watch list"
+drives = "loop-day budget"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "drops on about 2% a day: some 37 vouchers, under $5,000"
+source = "June replay"
+drives = "voucher day"
+
+[[said]]
+at = 11
+kind = "chain"
+text = "a timer wakes a run; the model compares offers; control checks cap and day; the gateway issues; a verifier counts the gateway's allowed reads"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["timer", "loop", "budget enforcer", "policy engine", "gateway", "voucher ledger", "verifier", "trail"]
+shows = ["effect named", "limits outside", "verifier not actor"]
+
+[[said]]
+at = 14
+kind = "note"
+text = "seven properties: trigger, stop, state, verifier, budget, change, human"
+shows = ["seven properties"]
+
+[[said]]
+at = 17
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed voucher proposal with offer digest"
+
+[[said]]
+at = 20
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "single-use permission, $100 cap, $5,000 day, outside the loop"
+
+[[said]]
+at = 23
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "run key per watch-hour; the floor persisted in the run store"
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G4"
+owner = "SRE on call"
+text = "a separate verifier counts the gateway's allowed reads"
+
+[[said]]
+at = 29
+kind = "gap"
+gap = "G5"
+owner = "operations"
+text = "vouchers owed against paid, weekly"
+
+[[said]]
+at = 33
+kind = "tradeoff"
+text = "its own voucher day or the shared day: its own share"
+options = 2
+why_not = true
+
+[[said]]
+at = 38
+kind = "cost"
+text = "$20 a loop-day; about $0.60 per verified voucher"
+unit = "verified outcome"
+
+[[said]]
+at = 43
+kind = "record"
+text = "loop-day $20; revisit when watches pass 5,000"
+reverse = true

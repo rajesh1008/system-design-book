@@ -1,0 +1,30 @@
+// Figure 46.7  Level five: the control plane
+// Reading order: left to right. Three agents, refunds, rebooking, and
+// the fare watch, send every effect through one gateway; the control
+// plane above it holds policy, budget, and the kill switch, set by
+// owners outside any loop; every call lands in one trail.
+// From the P09 prompt and the A09a note.
+digraph l5 {
+#include "book.gv"
+  rankdir=LR; nodesep=0.3; ranksep=0.45; newrank=true;
+  r [label="Refunds agent", class="ops"];
+  b [label="Rebooking agent", class="ops"];
+  f [label="Fare watch", class="ops"];
+  gw [label="Gateway\n14 tools", class="ops gate"];
+  subgraph cluster_cp {
+    class="plane-policy"; label="Control plane";
+    pol [label="Policy", class="policy"];
+    bud [label="Budget", class="policy"];
+    ks [label="Kill switch", class="policy"];
+  }
+  trail [label="One trail", class="evidence store"];
+  tools [label="Tools", class="ops external"];
+  r -> gw [class="control"];
+  b -> gw [class="control"];
+  f -> gw [class="control"];
+  pol -> gw [class="policy"];
+  bud -> gw [class="policy"];
+  ks -> gw [class="policy"];
+  gw -> tools [class="emphasis"];
+  gw -> trail [class="trail"];
+}

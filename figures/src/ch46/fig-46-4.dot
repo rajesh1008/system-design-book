@@ -1,0 +1,25 @@
+// Figure 46.4  Level two answer: the agent acts on its own
+// Reading order: top to bottom. An hourly trigger starts the fare watch
+// over 1,840 watches; each voucher is a proposal checked against the
+// limits ($100 a voucher, $5,000 a day); a verifier with its own
+// identity reads the result; the owner watches on the loop and holds
+// the kill switch. From the P03 prompt and the A03a note.
+digraph l2 {
+#include "book.gv"
+  rankdir=TB; nodesep=0.3; ranksep=0.3;
+  trig [label="Hourly trigger\n1,840 watches", class="ops"];
+  loop [label="Fare-watch loop", class="ops"];
+  lim [label="$100 a voucher\n$5,000 a day", class="policy gate"];
+  issue [label="voucher_issue", class="ops"];
+  ver [label="verifier:fare-watch", class="ops"];
+  owner [label="Owner on the loop", class="policy human"];
+  kill [label="Kill switch", class="policy"];
+  trig -> loop [class="control"];
+  loop -> lim [class="emphasis"];
+  lim -> issue [class="control"];
+  issue -> ver [class="data"];
+  ver -> owner [class="data"];
+  owner -> kill [class="policy"];
+  kill -> loop [class="policy"];
+  { rank=same; ver; owner; }
+}

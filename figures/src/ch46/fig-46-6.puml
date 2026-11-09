@@ -1,0 +1,19 @@
+@startuml
+' Figure 46.6  Level four: durability
+' Reading order: top to bottom. The worker writes the step and its key
+' to the log before the call; the worker dies; the resumed worker reads
+' the log and sends the same key; the tool returns the first result
+' instead of acting twice. From the P07 prompt and the A07a note.
+!include plantuml-theme.puml
+participant "Worker" as W <<ops>>
+participant "Durable log" as L <<evidence>>
+participant "Rebook tool" as T <<ops>>
+W -> L : Step 4, key k
+W -> T : Rebook, key k
+W -[$FAIL]> W : Crash
+W -> L : Read step 4
+L -> W : Key k
+W -> T : Rebook, key k
+T -> W : First result
+W -> L : Step 4 done
+@enduml

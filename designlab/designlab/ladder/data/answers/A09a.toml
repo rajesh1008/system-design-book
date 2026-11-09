@@ -1,0 +1,101 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A09a"
+prompt = "P09"
+candidate = "V17"
+session = "2026-10-29"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effects of three agents: refunds, rebookings, points"
+effects = ["refund_issue", "rebook", "points_credit"]
+owner = "platform"
+autonomy = "per use case and type"
+
+[[said]]
+at = 3
+kind = "estimate"
+text = "2.8 million gateway calls a month; about 3 ms a hop"
+source = ""
+drives = "policy latency budget"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "fourteen tools, three callers, nine key holders"
+source = ""
+drives = "decision rights"
+
+[[said]]
+at = 11
+kind = "chain"
+text = "every call through the gateway; policy engine with signed bundles; identity broker mints run tokens; budget enforcer"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["identity broker", "gateway", "policy engine", "budget enforcer", "registry", "kill switch", "trail"]
+shows = ["policy engine outside", "gateway one path", "identity per run", "budget enforcer"]
+
+[[said]]
+at = 15
+kind = "note"
+text = "kill switch tiers: one tool, all effects, the agent off"
+shows = ["kill switch tiers"]
+
+[[said]]
+at = 17
+kind = "gap"
+gap = "G1"
+owner = "agent teams"
+text = "typed proposals per registry schema"
+
+[[said]]
+at = 20
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "engine outside every loop; teams propose rules, risk signs"
+
+[[said]]
+at = 23
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "keys minted by control, honored by ledger"
+
+[[said]]
+at = 26
+kind = "gap"
+gap = "G4"
+owner = "SRE on call"
+text = "path test and nightly call counts"
+
+[[said]]
+at = 29
+kind = "gap"
+gap = "G5"
+owner = "finance"
+text = "cost per verified outcome per use case"
+
+[[said]]
+at = 32
+kind = "tradeoff"
+text = "a plane per team, a shared plane, or a vendor's: shared, break-even near three"
+options = 3
+why_not = true
+
+[[said]]
+at = 38
+kind = "cost"
+text = "$2,000 a use case a month plus model spend; per verified outcome by use case"
+unit = "verified outcome"
+
+[[said]]
+at = 42
+kind = "record"
+text = "shared plane; revisit at a use case that cannot conform"
+reverse = true

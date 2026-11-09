@@ -1,0 +1,102 @@
+# Answer note, Chapter 46 calibration set. Illustrative.
+# Written by the interviewer as the candidate spoke; `at`
+# is the minute. `right = false` marks an answer a person
+# judged wrong; the rubric checker does not read it.
+
+[answer]
+id = "A10a"
+prompt = "P10"
+candidate = "V19"
+session = "2026-10-15"
+
+[[said]]
+at = 1
+kind = "frame"
+text = "effect: refund_issue, with approval"
+effects = ["refund_issue"]
+owner = "risk office"
+autonomy = "act with approval"
+
+[[said]]
+at = 3
+kind = "estimate"
+text = "about 30,000 supplier emails a month reach the agent"
+source = "June mail volume"
+drives = "battery size and review load"
+
+[[said]]
+at = 5
+kind = "estimate"
+text = "a reviewer reads a refund card in under two minutes"
+source = "desk timing"
+drives = "people"
+
+[[said]]
+at = 10
+kind = "chain"
+text = "email quoted as data; refunds only to the card on file; engine; reviewer sees the source; settlement reconciler"
+gate_before_effect = true
+verifier_not_actor = true
+names = ["inbox reader", "quote boundary", "agent loop", "policy engine", "reviewer", "gateway", "settlement reconciler", "trail"]
+shows = ["content is not instruction", "destination rule"]
+
+[[said]]
+at = 14
+kind = "note"
+text = "61 attacks run on every release"
+shows = ["attack battery"]
+
+[[said]]
+at = 16
+kind = "gap"
+gap = "G1"
+owner = "agent team"
+text = "typed refund; destination a field"
+
+[[said]]
+at = 18
+kind = "gap"
+gap = "G2"
+owner = "risk office"
+text = "destination rule in the engine"
+
+[[said]]
+at = 21
+kind = "gap"
+gap = "G3"
+owner = "platform SRE"
+text = "key per permission"
+
+[[said]]
+at = 24
+kind = "gap"
+gap = "G4"
+owner = "risk office"
+text = "settlement reconciler, not the actor"
+shows = ["verifier not actor"]
+
+[[said]]
+at = 27
+kind = "gap"
+gap = "G5"
+owner = "risk office"
+text = "unauthorized actions, must read zero"
+
+[[said]]
+at = 31
+kind = "tradeoff"
+text = "filter what comes in or bind where money goes: bind"
+options = 2
+why_not = true
+
+[[said]]
+at = 37
+kind = "cost"
+text = "$0.04 per verified refund for battery and review"
+unit = "verified outcome"
+
+[[said]]
+at = 41
+kind = "record"
+text = "revisit if any refund reaches a card not on file"
+reverse = true

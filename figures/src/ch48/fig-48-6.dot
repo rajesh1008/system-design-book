@@ -1,0 +1,24 @@
+// Figure 48.6  The evidence chain that stays
+// Reading order: top to bottom. The model and the runtime sit at the
+// top in dashed boxes because they will be replaced; the chain below
+// them is the part Lakeshore designs and keeps: the effect, the
+// permission outside the model, the verification by something that
+// did not act, and the trail that ties them to the business result.
+digraph stays {
+#include "book.gv"
+  rankdir=TB; nodesep=0.35; ranksep=0.3;
+  m [label="Next model", class="model external"];
+  rt [label="Rented runtime", class="model external"];
+  e [label="Effect, typed\nand limited", class="ops"];
+  p [label="Permission,\noutside the model", class="policy gate"];
+  v [label="Verification, by\nwhat did not act", class="verified gate"];
+  t [label="Trail, one record\nper change", class="evidence store"];
+  r [label="Business result", class="verified"];
+  note [label="Replaced\nevery year", class="note"];
+  m -> e; rt -> e;
+  e -> p -> v -> r [class="emphasis"];
+  e -> t [class="trail"]; p -> t [class="trail"]; v -> t [class="trail"];
+  note -> m [class="async", constraint=false];
+  { rank=same; m; rt; note; }
+  { rank=same; v; t; }
+}
