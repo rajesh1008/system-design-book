@@ -21,14 +21,9 @@ from decimal import Decimal
 from evals.score import forbidden, score
 from harness.manifest import apply_overrides
 from harness.world import cases
-try:                                    # renamed from `trace`
-    from tracing import replay
-    from tracing.run import fleet, harness
-    from tracing.spans import export
-except ImportError:                     # a checkout before the rename
-    from trace import replay
-    from trace.run import fleet, harness
-    from trace.spans import export
+from tracing import replay
+from tracing.run import fleet, harness
+from tracing.spans import export
 
 from .bundle import Bundle
 
